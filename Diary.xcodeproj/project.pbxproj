@@ -14,6 +14,8 @@
 		0AE202381A8B0B310012AAED /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AE202371A8B0B310012AAED /* Images.xcassets */; };
 		0AE2023B1A8B0B310012AAED /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AE202391A8B0B310012AAED /* LaunchScreen.xib */; };
 		0AE202471A8B0B310012AAED /* DiaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202461A8B0B310012AAED /* DiaryTests.swift */; };
+		0AE202511A8B0D280012AAED /* DiaryHomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202501A8B0D280012AAED /* DiaryHomeCollectionViewController.swift */; };
+		0AE202561A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202551A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,8 @@
 		0AE202401A8B0B310012AAED /* DiaryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiaryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE202451A8B0B310012AAED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AE202461A8B0B310012AAED /* DiaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTests.swift; sourceTree = "<group>"; };
+		0AE202501A8B0D280012AAED /* DiaryHomeCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryHomeCollectionViewController.swift; path = Controllers/Home/DiaryHomeCollectionViewController.swift; sourceTree = "<group>"; };
+		0AE202551A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeYearCollectionViewCell.swift; path = Cell/YearCell/HomeYearCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,8 @@
 		0AE2022A1A8B0B310012AAED /* Diary */ = {
 			isa = PBXGroup;
 			children = (
+				0AE202541A8B0D9E0012AAED /* Cell */,
+				0AE202521A8B0D5E0012AAED /* Controllers */,
 				0AE2022D1A8B0B310012AAED /* AppDelegate.swift */,
 				0AE202321A8B0B310012AAED /* ViewController.swift */,
 				0AE202341A8B0B310012AAED /* Main.storyboard */,
@@ -113,6 +119,30 @@
 				0AE202451A8B0B310012AAED /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0AE202521A8B0D5E0012AAED /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0AE202531A8B0D630012AAED /* Home */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		0AE202531A8B0D630012AAED /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				0AE202501A8B0D280012AAED /* DiaryHomeCollectionViewController.swift */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		0AE202541A8B0D9E0012AAED /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				0AE202551A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,6 +248,8 @@
 				0AE202331A8B0B310012AAED /* ViewController.swift in Sources */,
 				0AE2022E1A8B0B310012AAED /* AppDelegate.swift in Sources */,
 				0AE202311A8B0B310012AAED /* Diary.xcdatamodeld in Sources */,
+				0AE202511A8B0D280012AAED /* DiaryHomeCollectionViewController.swift in Sources */,
+				0AE202561A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
