@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A2F5E181A8C59E5007461C1 /* STSongti-SC-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A2F5E171A8C59E5007461C1 /* STSongti-SC-Bold.ttf */; };
 		0AE2022E1A8B0B310012AAED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE2022D1A8B0B310012AAED /* AppDelegate.swift */; };
 		0AE202311A8B0B310012AAED /* Diary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0AE2022F1A8B0B310012AAED /* Diary.xcdatamodeld */; };
 		0AE202331A8B0B310012AAED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202321A8B0B310012AAED /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 		0AE202471A8B0B310012AAED /* DiaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202461A8B0B310012AAED /* DiaryTests.swift */; };
 		0AE202511A8B0D280012AAED /* DiaryHomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202501A8B0D280012AAED /* DiaryHomeCollectionViewController.swift */; };
 		0AE202561A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202551A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift */; };
+		0AE202591A8B0E420012AAED /* DiaryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202581A8B0E420012AAED /* DiaryHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A2F5E171A8C59E5007461C1 /* STSongti-SC-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "STSongti-SC-Bold.ttf"; sourceTree = "<group>"; };
 		0AE202281A8B0B310012AAED /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE2022C1A8B0B310012AAED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AE2022D1A8B0B310012AAED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,6 +45,8 @@
 		0AE202461A8B0B310012AAED /* DiaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTests.swift; sourceTree = "<group>"; };
 		0AE202501A8B0D280012AAED /* DiaryHomeCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryHomeCollectionViewController.swift; path = Controllers/Home/DiaryHomeCollectionViewController.swift; sourceTree = "<group>"; };
 		0AE202551A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeYearCollectionViewCell.swift; path = Cell/YearCell/HomeYearCollectionViewCell.swift; sourceTree = "<group>"; };
+		0AE202581A8B0E420012AAED /* DiaryHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryHelper.swift; path = Helper/DiaryHelper.swift; sourceTree = "<group>"; };
+		0AF0E4271A903D6C0027592E /* VerticalTextPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = VerticalTextPlayground.playground; path = Playgrounds/VerticalTextPlayground.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,12 +88,15 @@
 		0AE2022A1A8B0B310012AAED /* Diary */ = {
 			isa = PBXGroup;
 			children = (
+				0AF0E4261A9032500027592E /* Playgrounds */,
+				0AE202571A8B0E150012AAED /* Helper */,
 				0AE202541A8B0D9E0012AAED /* Cell */,
 				0AE202521A8B0D5E0012AAED /* Controllers */,
 				0AE2022D1A8B0B310012AAED /* AppDelegate.swift */,
 				0AE202321A8B0B310012AAED /* ViewController.swift */,
 				0AE202341A8B0B310012AAED /* Main.storyboard */,
 				0AE202371A8B0B310012AAED /* Images.xcassets */,
+				0A2F5E171A8C59E5007461C1 /* STSongti-SC-Bold.ttf */,
 				0AE202391A8B0B310012AAED /* LaunchScreen.xib */,
 				0AE2022F1A8B0B310012AAED /* Diary.xcdatamodeld */,
 				0AE2022B1A8B0B310012AAED /* Supporting Files */,
@@ -143,6 +151,22 @@
 				0AE202551A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift */,
 			);
 			name = Cell;
+			sourceTree = "<group>";
+		};
+		0AE202571A8B0E150012AAED /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				0AE202581A8B0E420012AAED /* DiaryHelper.swift */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		0AF0E4261A9032500027592E /* Playgrounds */ = {
+			isa = PBXGroup;
+			children = (
+				0AF0E4271A903D6C0027592E /* VerticalTextPlayground.playground */,
+			);
+			name = Playgrounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,6 +249,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A2F5E181A8C59E5007461C1 /* STSongti-SC-Bold.ttf in Resources */,
 				0AE202361A8B0B310012AAED /* Main.storyboard in Resources */,
 				0AE2023B1A8B0B310012AAED /* LaunchScreen.xib in Resources */,
 				0AE202381A8B0B310012AAED /* Images.xcassets in Resources */,
@@ -246,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AE202331A8B0B310012AAED /* ViewController.swift in Sources */,
+				0AE202591A8B0E420012AAED /* DiaryHelper.swift in Sources */,
 				0AE2022E1A8B0B310012AAED /* AppDelegate.swift in Sources */,
 				0AE202311A8B0B310012AAED /* Diary.xcdatamodeld in Sources */,
 				0AE202511A8B0D280012AAED /* DiaryHomeCollectionViewController.swift in Sources */,
@@ -445,6 +471,7 @@
 				0AE2024C1A8B0B310012AAED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0AE2024D1A8B0B310012AAED /* Build configuration list for PBXNativeTarget "DiaryTests" */ = {
 			isa = XCConfigurationList;
@@ -453,6 +480,7 @@
 				0AE2024F1A8B0B310012AAED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
