@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A2F5E181A8C59E5007461C1 /* STSongti-SC-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A2F5E171A8C59E5007461C1 /* STSongti-SC-Bold.ttf */; };
+		0A0B100F1A9180460012604C /* DiaryLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0B100E1A9180460012604C /* DiaryLayout.swift */; };
+		0A0B10121A9180D70012604C /* STSongti-SC-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A0B10111A9180D70012604C /* STSongti-SC-Bold.ttf */; };
 		0AE2022E1A8B0B310012AAED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE2022D1A8B0B310012AAED /* AppDelegate.swift */; };
 		0AE202311A8B0B310012AAED /* Diary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0AE2022F1A8B0B310012AAED /* Diary.xcdatamodeld */; };
-		0AE202331A8B0B310012AAED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202321A8B0B310012AAED /* ViewController.swift */; };
 		0AE202361A8B0B310012AAED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AE202341A8B0B310012AAED /* Main.storyboard */; };
 		0AE202381A8B0B310012AAED /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AE202371A8B0B310012AAED /* Images.xcassets */; };
 		0AE2023B1A8B0B310012AAED /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AE202391A8B0B310012AAED /* LaunchScreen.xib */; };
@@ -31,12 +31,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0A2F5E171A8C59E5007461C1 /* STSongti-SC-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "STSongti-SC-Bold.ttf"; sourceTree = "<group>"; };
+		0A0B10091A915F1F0012604C /* Diary-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Diary-Bridging-Header.h"; sourceTree = "<group>"; };
+		0A0B100E1A9180460012604C /* DiaryLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryLayout.swift; path = Layout/DiaryLayout.swift; sourceTree = "<group>"; };
+		0A0B10111A9180D70012604C /* STSongti-SC-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "STSongti-SC-Bold.ttf"; sourceTree = "<group>"; };
 		0AE202281A8B0B310012AAED /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE2022C1A8B0B310012AAED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AE2022D1A8B0B310012AAED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AE202301A8B0B310012AAED /* Diary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Diary.xcdatamodel; sourceTree = "<group>"; };
-		0AE202321A8B0B310012AAED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0AE202351A8B0B310012AAED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0AE202371A8B0B310012AAED /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0AE2023A1A8B0B310012AAED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -67,6 +68,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A0B10101A91804F0012604C /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				0A0B100E1A9180460012604C /* DiaryLayout.swift */,
+			);
+			name = Layout;
+			sourceTree = "<group>";
+		};
 		0AE2021F1A8B0B310012AAED = {
 			isa = PBXGroup;
 			children = (
@@ -88,18 +97,19 @@
 		0AE2022A1A8B0B310012AAED /* Diary */ = {
 			isa = PBXGroup;
 			children = (
+				0A0B10101A91804F0012604C /* Layout */,
 				0AF0E4261A9032500027592E /* Playgrounds */,
 				0AE202571A8B0E150012AAED /* Helper */,
 				0AE202541A8B0D9E0012AAED /* Cell */,
 				0AE202521A8B0D5E0012AAED /* Controllers */,
 				0AE2022D1A8B0B310012AAED /* AppDelegate.swift */,
-				0AE202321A8B0B310012AAED /* ViewController.swift */,
 				0AE202341A8B0B310012AAED /* Main.storyboard */,
 				0AE202371A8B0B310012AAED /* Images.xcassets */,
-				0A2F5E171A8C59E5007461C1 /* STSongti-SC-Bold.ttf */,
 				0AE202391A8B0B310012AAED /* LaunchScreen.xib */,
 				0AE2022F1A8B0B310012AAED /* Diary.xcdatamodeld */,
+				0A0B10111A9180D70012604C /* STSongti-SC-Bold.ttf */,
 				0AE2022B1A8B0B310012AAED /* Supporting Files */,
+				0A0B10091A915F1F0012604C /* Diary-Bridging-Header.h */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -249,7 +259,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A2F5E181A8C59E5007461C1 /* STSongti-SC-Bold.ttf in Resources */,
+				0A0B10121A9180D70012604C /* STSongti-SC-Bold.ttf in Resources */,
 				0AE202361A8B0B310012AAED /* Main.storyboard in Resources */,
 				0AE2023B1A8B0B310012AAED /* LaunchScreen.xib in Resources */,
 				0AE202381A8B0B310012AAED /* Images.xcassets in Resources */,
@@ -270,7 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AE202331A8B0B310012AAED /* ViewController.swift in Sources */,
+				0A0B100F1A9180460012604C /* DiaryLayout.swift in Sources */,
 				0AE202591A8B0E420012AAED /* DiaryHelper.swift in Sources */,
 				0AE2022E1A8B0B310012AAED /* AppDelegate.swift in Sources */,
 				0AE202311A8B0B310012AAED /* Diary.xcdatamodeld in Sources */,
@@ -400,10 +410,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Diary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Diary/Diary-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -411,10 +424,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Diary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Diary/Diary-Bridging-Header.h";
 			};
 			name = Release;
 		};
