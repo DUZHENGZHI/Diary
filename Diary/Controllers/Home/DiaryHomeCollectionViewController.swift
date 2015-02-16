@@ -11,7 +11,7 @@ import CoreData
 
 let reuseIdentifier = "HomeYearCollectionViewCell"
 
-class DiaryHomeCollectionViewController: UICollectionViewController {
+class DiaryHomeCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var diarys = [NSManagedObject]()
     
@@ -69,6 +69,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController {
         
         
         var yearLayout = DiaryLayout.new()
+
         yearLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         self.collectionView?.setCollectionViewLayout(yearLayout, animated: false)
 
@@ -124,6 +125,22 @@ class DiaryHomeCollectionViewController: UICollectionViewController {
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        
+        var screenRect = UIScreen.mainScreen().bounds
+        var screenWidth = screenRect.size.width
+        var screenHeight = screenRect.size.height
+        
+        
+        var numberOfCells = screenWidth / 20.0
+        var edgeInsets = (CGFloat(screenWidth) - CGFloat(self.diarysGroupInYear.keys.array.count) * 20.0) / 2.0
+        
+
+        var itemHeight = 150.0
+        
+        
+        return UIEdgeInsetsMake((screenHeight - 150.0) / 2.0 , edgeInsets, 0, edgeInsets);
+    }
 
     // MARK: UICollectionViewDelegate
 

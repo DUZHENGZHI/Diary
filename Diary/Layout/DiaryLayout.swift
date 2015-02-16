@@ -12,13 +12,8 @@ class DiaryLayout: UICollectionViewFlowLayout {
     override func prepareLayout() {
         super.prepareLayout()
         
-        var screenRect = UIScreen.mainScreen().bounds
-        var screenWidth = screenRect.size.width
-        var screenHeight = screenRect.size.height
         
         var itemHeight = 150.0
-        
-        self.sectionInset = UIEdgeInsetsMake( (screenHeight - 150.0) / 2.0 , 0, 0, 0)
         
         var itemSize = CGSizeMake(20.0, CGFloat( itemHeight))
         
