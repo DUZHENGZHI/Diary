@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0A0B100F1A9180460012604C /* DiaryLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0B100E1A9180460012604C /* DiaryLayout.swift */; };
 		0A0B10121A9180D70012604C /* STSongti-SC-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A0B10111A9180D70012604C /* STSongti-SC-Bold.ttf */; };
+		0A3572E11A9467E70037C6A0 /* DiaryAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3572E01A9467E70037C6A0 /* DiaryAnimator.swift */; };
+		0A3572E31A9471750037C6A0 /* DiaryYearCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3572E21A9471750037C6A0 /* DiaryYearCollectionViewController.swift */; };
 		0AE2022E1A8B0B310012AAED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE2022D1A8B0B310012AAED /* AppDelegate.swift */; };
 		0AE202311A8B0B310012AAED /* Diary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0AE2022F1A8B0B310012AAED /* Diary.xcdatamodeld */; };
 		0AE202361A8B0B310012AAED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AE202341A8B0B310012AAED /* Main.storyboard */; };
@@ -34,6 +36,8 @@
 		0A0B10091A915F1F0012604C /* Diary-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Diary-Bridging-Header.h"; sourceTree = "<group>"; };
 		0A0B100E1A9180460012604C /* DiaryLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryLayout.swift; path = Layout/DiaryLayout.swift; sourceTree = "<group>"; };
 		0A0B10111A9180D70012604C /* STSongti-SC-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "STSongti-SC-Bold.ttf"; sourceTree = "<group>"; };
+		0A3572E01A9467E70037C6A0 /* DiaryAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryAnimator.swift; path = Animator/DiaryAnimator.swift; sourceTree = "<group>"; };
+		0A3572E21A9471750037C6A0 /* DiaryYearCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryYearCollectionViewController.swift; path = Controllers/Year/DiaryYearCollectionViewController.swift; sourceTree = "<group>"; };
 		0AE202281A8B0B310012AAED /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE2022C1A8B0B310012AAED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AE2022D1A8B0B310012AAED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +80,22 @@
 			name = Layout;
 			sourceTree = "<group>";
 		};
+		0A3572DF1A9467CB0037C6A0 /* Animator */ = {
+			isa = PBXGroup;
+			children = (
+				0A3572E01A9467E70037C6A0 /* DiaryAnimator.swift */,
+			);
+			name = Animator;
+			sourceTree = "<group>";
+		};
+		0A3572E41A94717B0037C6A0 /* Year */ = {
+			isa = PBXGroup;
+			children = (
+				0A3572E21A9471750037C6A0 /* DiaryYearCollectionViewController.swift */,
+			);
+			name = Year;
+			sourceTree = "<group>";
+		};
 		0AE2021F1A8B0B310012AAED = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +117,7 @@
 		0AE2022A1A8B0B310012AAED /* Diary */ = {
 			isa = PBXGroup;
 			children = (
+				0A3572DF1A9467CB0037C6A0 /* Animator */,
 				0A0B10101A91804F0012604C /* Layout */,
 				0AF0E4261A9032500027592E /* Playgrounds */,
 				0AE202571A8B0E150012AAED /* Helper */,
@@ -142,6 +163,7 @@
 		0AE202521A8B0D5E0012AAED /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0A3572E41A94717B0037C6A0 /* Year */,
 				0AE202531A8B0D630012AAED /* Home */,
 			);
 			name = Controllers;
@@ -285,7 +307,9 @@
 				0AE2022E1A8B0B310012AAED /* AppDelegate.swift in Sources */,
 				0AE202311A8B0B310012AAED /* Diary.xcdatamodeld in Sources */,
 				0AE202511A8B0D280012AAED /* DiaryHomeCollectionViewController.swift in Sources */,
+				0A3572E11A9467E70037C6A0 /* DiaryAnimator.swift in Sources */,
 				0AE202561A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift in Sources */,
+				0A3572E31A9471750037C6A0 /* DiaryYearCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

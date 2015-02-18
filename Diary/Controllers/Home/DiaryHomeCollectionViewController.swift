@@ -11,17 +11,19 @@ import CoreData
 
 let reuseIdentifier = "HomeYearCollectionViewCell"
 
-class DiaryHomeCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class DiaryHomeCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
     
     var diarys = [NSManagedObject]()
     
     var years = 1
     
     var diarysGroupInYear = [Int: Int]()
+    
+    var sourceCollectionView: UICollectionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.delegate = self
         //1
         let appDelegate =
         UIApplication.sharedApplication().delegate as! AppDelegate
@@ -116,10 +118,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         var yearText = diarysGroupInYear.keys.array[indexPath.row]
         
         cell.yearText = "二零一五年"
-        
-        print(cell)
-        
-        print("new cell \(yearText)")
+
         // Configure the cell
     
         return cell
@@ -142,6 +141,36 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         return UIEdgeInsetsMake((screenHeight - 150.0) / 2.0 , edgeInsets, 0, edgeInsets);
     }
 
+    
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        print("Push view controller")
+        
+        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as! DiaryYearCollectionViewController
+        
+        dvc.collectionView?.dataSource = collectionView.dataSource
+        
+        self.sourceCollectionView = collectionView
+        
+        self.navigationController?.pushViewController(dvc, animated: true)
+        
+        print("Pushed")
+        
+    }
+    
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        if (fromVC == self && operation == UINavigationControllerOperation.Push) {
+            var animator = DiaryAnimator.new()
+            animator.fromCollectionView = self.sourceCollectionView
+            return animator
+        }
+        else {
+            return nil;
+        }
+    }
+    
+    
     // MARK: UICollectionViewDelegate
 
     /*
