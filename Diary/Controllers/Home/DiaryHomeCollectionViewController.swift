@@ -43,7 +43,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         if let results = fetchedResults {
             diarys = results
         } else {
-            println("Could not fetch \(error), \(error!.userInfo)")
+            NSLog("Could not fetch \(error), \(error!.userInfo)")
         }
         
         for diary in diarys {
@@ -112,6 +112,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> HomeYearCollectionViewCell {
         
+        NSLog("Show cell")
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! HomeYearCollectionViewCell
         
@@ -144,23 +145,26 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        print("Push view controller")
+        NSLog("Push view controller")
         
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as! DiaryYearCollectionViewController
         
-        dvc.collectionView?.dataSource = collectionView.dataSource
+//        dvc.collectionView?.dataSource = collectionView.dataSource
         
         self.sourceCollectionView = collectionView
         
         self.navigationController?.pushViewController(dvc, animated: true)
         
-        print("Pushed")
+        NSLog("Pushed")
         
     }
     
     func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         if (fromVC == self && operation == UINavigationControllerOperation.Push) {
+            
+
+            NSLog("Do animtion")
             var animator = DiaryAnimator.new()
             animator.fromCollectionView = self.sourceCollectionView
             return animator

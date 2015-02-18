@@ -8,7 +8,7 @@
 
 import UIKit
 
-let reuseYearIdentifier = "Cell"
+let reuseYearIdentifier = "Daycell"
 
 class DiaryYearCollectionViewController: UICollectionViewController {
 
@@ -17,7 +17,7 @@ class DiaryYearCollectionViewController: UICollectionViewController {
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-        print("Here")
+        NSLog("Here")
         // Register cell classes
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
@@ -25,7 +25,7 @@ class DiaryYearCollectionViewController: UICollectionViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        print("Year did show")
+        NSLog("Year did show")
     }
 
     override func didReceiveMemoryWarning() {
