@@ -7,19 +7,70 @@
 //
 
 import UIKit
+import CoreData
 
 let reuseYearIdentifier = "Daycell"
 
-class DiaryYearCollectionViewController: UICollectionViewController {
-
+class DiaryYearCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
+    
+    var diarys = [NSManagedObject]()
+    
+    var year:Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.navigationController?.delegate = self
+        //1
+        let appDelegate =
+        UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let managedContext = appDelegate.managedObjectContext!
+        
+        //2
+        let fetchRequest = NSFetchRequest(entityName:"Diary")
+        fetchRequest.predicate = NSPredicate(format: "", argumentArray: nil)
+        //3
+        var error: NSError?
+        
+        let fetchedResults =
+        managedContext.executeFetchRequest(fetchRequest,
+            error: &error) as! [NSManagedObject]?
+        
+        if let results = fetchedResults {
+            diarys = results
+        } else {
+            NSLog("Could not fetch \(error), \(error!.userInfo)")
+        }
+        
+        for diary in diarys {
+            var date = diary.valueForKey("created_at") as! NSDate
+            var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: date)
+            
+//            if diarysGroupInYear[components] == nil {
+//                diarysGroupInYear[components] = 1
+//            }else{
+//                diarysGroupInYear[components] = diarysGroupInYear[components]! + 1
+//            }
+        }
+        
+//        if  diarysGroupInYear.keys.array.count == 0 {
+//            var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: NSDate.new())
+//            diarysGroupInYear[components] = 1
+//        }
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-        NSLog("Here")
+        
         // Register cell classes
-        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        //Dont use this if you are using storyboard
+        //        self.collectionView!.registerClass(HomeYearCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        
+        
+        var yearLayout = DiaryLayout.new()
+        
+        yearLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
+        self.collectionView?.setCollectionViewLayout(yearLayout, animated: false)
 
         // Do any additional setup after loading the view.
     }
@@ -63,6 +114,24 @@ class DiaryYearCollectionViewController: UICollectionViewController {
     
         return cell
     }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        
+        var screenRect = UIScreen.mainScreen().bounds
+        var screenWidth = screenRect.size.width
+        var screenHeight = screenRect.size.height
+        
+        
+        var numberOfCells = screenWidth / 20.0
+//        var edgeInsets = (CGFloat(screenWidth) - CGFloat(self.diarysGroupInYear.keys.array.count) * 20.0) / 2.0
+        
+        
+        var itemHeight = 150.0
+        
+        
+        return UIEdgeInsetsMake((screenHeight - 150.0) / 2.0 , 0, 0, 50.0);
+    }
+
 
     // MARK: UICollectionViewDelegate
 

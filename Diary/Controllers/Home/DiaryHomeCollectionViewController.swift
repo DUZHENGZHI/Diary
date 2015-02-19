@@ -32,6 +32,8 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         
         //2
         let fetchRequest = NSFetchRequest(entityName:"Diary")
+
+        
         
         //3
         var error: NSError?
@@ -117,7 +119,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! HomeYearCollectionViewCell
         
         var yearText = diarysGroupInYear.keys.array[indexPath.row]
-        
+        cell.yearInt = diarysGroupInYear.keys.array[indexPath.row]
         cell.yearText = "二零一五年"
 
         // Configure the cell
@@ -148,7 +150,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         NSLog("Push view controller")
         
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as! DiaryYearCollectionViewController
-        
+        dvc.year = diarysGroupInYear.keys.array[indexPath.row]
 //        dvc.collectionView?.dataSource = collectionView.dataSource
         
         self.sourceCollectionView = collectionView
