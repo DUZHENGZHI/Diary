@@ -14,5 +14,7 @@ class Diary: NSManagedObject {
     @NSManaged var content: String
     @NSManaged var created_at: NSDate
     @NSManaged var location: String
+    @NSManaged var year: NSNumber
+    @NSManaged var month: NSNumber
 
 }

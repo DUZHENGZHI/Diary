@@ -4,8 +4,10 @@
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="created_at" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="month" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="year" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Diary" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="Diary" positionX="-63" positionY="-18" width="128" height="120"/>
     </elements>
 </model>

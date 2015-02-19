@@ -17,6 +17,8 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
     
     var year:Int = 0
     
+    var fetchedResultsController : NSFetchedResultsController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,51 +32,26 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         //2
         let fetchRequest = NSFetchRequest(entityName:"Diary")
         
-        var beginDay = "01/01/\(year)"
-        var endDay = "12/31/\(year)"
-        var formatter = NSDateFormatter.new()
-        formatter.dateFormat = "MM/dd/yyyy"
-
-        var beginDate = formatter.dateFromString(beginDay)
-        var endDate = formatter.dateFromString(endDay)
+//        var beginDay = "01/01/\(year)"
+//        var endDay = "12/31/\(year)"
+//        var formatter = NSDateFormatter.new()
+//        formatter.dateFormat = "MM/dd/yyyy"
+//
+//        var beginDate = formatter.dateFromString(beginDay)
+//        var endDate = formatter.dateFromString(endDay)
         
-        fetchRequest.predicate = NSPredicate(format: "created_at >= %@ AND created_at <= %@", beginDate!, endDate!)
+        fetchRequest.predicate = NSPredicate(format: "year = \(year)")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
+        
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: managedContext, sectionNameKeyPath: "year",
+            cacheName: nil)
         //3
-        var error: NSError?
-        
-        let fetchedResults =
-        managedContext.executeFetchRequest(fetchRequest,
-            error: &error) as! [NSManagedObject]?
-        
-        if let results = fetchedResults {
-            diarys = results
-        } else {
-            NSLog("Could not fetch \(error), \(error!.userInfo)")
+        var error: NSError? = nil
+        if (!fetchedResultsController.performFetch(&error)){
+                println("Error: \(error?.localizedDescription)")
         }
-        
-        for diary in diarys {
-            var date = diary.valueForKey("created_at") as! NSDate
-            var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: date)
-            
-//            if diarysGroupInYear[components] == nil {
-//                diarysGroupInYear[components] = 1
-//            }else{
-//                diarysGroupInYear[components] = diarysGroupInYear[components]! + 1
-//            }
-        }
-        
-//        if  diarysGroupInYear.keys.array.count == 0 {
-//            var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: NSDate.new())
-//            diarysGroupInYear[components] = 1
-//        }
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Register cell classes
-        //Dont use this if you are using storyboard
-        //        self.collectionView!.registerClass(HomeYearCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
         
         var yearLayout = DiaryLayout.new()
         
@@ -107,18 +84,20 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
-        return 0
+        return fetchedResultsController.sections!.count
     }
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        return 0
+        
+        return fetchedResultsController.sections![section].count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseYearIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
-    
+        
+        var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
         // Configure the cell
     
         return cell
