@@ -48,8 +48,9 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
             NSLog("Could not fetch \(error), \(error!.userInfo)")
         }
         
-        for diary in diarys {
-            var date = diary.valueForKey("created_at") as! NSDate
+        for diary in diarys{
+            var diary = diary as! Diary
+            var date = diary.created_at
             var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: date)
             
             if diarysGroupInYear[components] == nil {

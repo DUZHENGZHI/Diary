@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-let reuseYearIdentifier = "Daycell"
+let reuseYearIdentifier = "DayCell"
 
 class DiaryYearCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
     
@@ -29,7 +29,16 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         
         //2
         let fetchRequest = NSFetchRequest(entityName:"Diary")
-        fetchRequest.predicate = NSPredicate(format: "", argumentArray: nil)
+        
+        var beginDay = "01/01/\(year)"
+        var endDay = "12/31/\(year)"
+        var formatter = NSDateFormatter.new()
+        formatter.dateFormat = "MM/dd/yyyy"
+
+        var beginDate = formatter.dateFromString(beginDay)
+        var endDate = formatter.dateFromString(endDay)
+        
+        fetchRequest.predicate = NSPredicate(format: "created_at >= %@ AND created_at <= %@", beginDate!, endDate!)
         //3
         var error: NSError?
         
