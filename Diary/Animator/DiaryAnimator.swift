@@ -29,6 +29,9 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+        
+        NSLog("Do animation 2")
+        
         var inview = transitionContext.containerView()
         var fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) as! UICollectionViewController
         var fromView = fromVC.view
@@ -37,7 +40,11 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         self.toCollectionView = toVC.collectionView
         
-        var initialRect = inview.window?.convertRect(fromCollectionView!.frame, fromView: fromCollectionView?.superview)
+        toView.alpha = 0.0
+        
+        var initialRect = CGRectMake(fromVC.view.frame.size.width/2.0, fromVC.view.frame.size.height/2.0, 0, 0)
+        
+        //inview.window?.convertRect(fromCollectionView!.frame, fromView: fromCollectionView?.superview)
         
         var finalRect   = transitionContext.finalFrameForViewController(toVC)
         
@@ -61,12 +68,13 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         self.toCollectionView.contentInset = contentInset;
         self.toCollectionView.setCollectionViewLayout(currentLayout, animated: false)
-        toView.frame = initialRect!
+        toView.frame = initialRect
         inview.insertSubview(toView, aboveSubview: fromView)
 
         UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, options: UIViewAnimationOptions.BeginFromCurrentState, animations:
             {
                 toView.frame = finalRect
+                toView.alpha = 1.0
                 self.toCollectionView.performBatchUpdates({
                     self.toCollectionView.setCollectionViewLayout(toLayout, animated: false)
                 }, completion: { finished in

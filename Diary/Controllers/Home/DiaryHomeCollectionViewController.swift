@@ -162,10 +162,9 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
     func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         if (fromVC == self && operation == UINavigationControllerOperation.Push) {
-            
 
             NSLog("Do animtion")
-            var animator = DiaryAnimator.new()
+            var animator = DiaryAnimator()
             animator.fromCollectionView = self.sourceCollectionView
             return animator
         }
