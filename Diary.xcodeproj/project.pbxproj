@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0A0B100F1A9180460012604C /* DiaryLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0B100E1A9180460012604C /* DiaryLayout.swift */; };
-		0A0B10121A9180D70012604C /* STSongti-SC-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A0B10111A9180D70012604C /* STSongti-SC-Bold.ttf */; };
 		0A3572E11A9467E70037C6A0 /* DiaryAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3572E01A9467E70037C6A0 /* DiaryAnimator.swift */; };
 		0A3572E31A9471750037C6A0 /* DiaryYearCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3572E21A9471750037C6A0 /* DiaryYearCollectionViewController.swift */; };
+		0A916FFA1AA6097700E987A4 /* TpldKhangXiDictTrial.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A916FF91AA6097700E987A4 /* TpldKhangXiDictTrial.otf */; };
+		0A916FFC1AA6099700E987A4 /* Wyue-GutiFangsong-NC_deliverable.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A916FFB1AA6099700E987A4 /* Wyue-GutiFangsong-NC_deliverable.otf */; };
 		0A9CD0431A9643910082D677 /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9CD0421A9643910082D677 /* Diary.swift */; };
 		0AE2022E1A8B0B310012AAED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE2022D1A8B0B310012AAED /* AppDelegate.swift */; };
 		0AE202311A8B0B310012AAED /* Diary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0AE2022F1A8B0B310012AAED /* Diary.xcdatamodeld */; };
@@ -36,9 +37,10 @@
 /* Begin PBXFileReference section */
 		0A0B10091A915F1F0012604C /* Diary-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Diary-Bridging-Header.h"; sourceTree = "<group>"; };
 		0A0B100E1A9180460012604C /* DiaryLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryLayout.swift; path = Layout/DiaryLayout.swift; sourceTree = "<group>"; };
-		0A0B10111A9180D70012604C /* STSongti-SC-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "STSongti-SC-Bold.ttf"; sourceTree = "<group>"; };
 		0A3572E01A9467E70037C6A0 /* DiaryAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryAnimator.swift; path = Animator/DiaryAnimator.swift; sourceTree = "<group>"; };
 		0A3572E21A9471750037C6A0 /* DiaryYearCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryYearCollectionViewController.swift; path = Controllers/Year/DiaryYearCollectionViewController.swift; sourceTree = "<group>"; };
+		0A916FF91AA6097700E987A4 /* TpldKhangXiDictTrial.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = TpldKhangXiDictTrial.otf; sourceTree = "<group>"; };
+		0A916FFB1AA6099700E987A4 /* Wyue-GutiFangsong-NC_deliverable.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Wyue-GutiFangsong-NC_deliverable.otf"; sourceTree = "<group>"; };
 		0A9CD0421A9643910082D677 /* Diary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Diary.swift; path = Models/Diary.swift; sourceTree = "<group>"; };
 		0AE202281A8B0B310012AAED /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE2022C1A8B0B310012AAED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -139,7 +141,8 @@
 				0AE202371A8B0B310012AAED /* Images.xcassets */,
 				0AE202391A8B0B310012AAED /* LaunchScreen.xib */,
 				0AE2022F1A8B0B310012AAED /* Diary.xcdatamodeld */,
-				0A0B10111A9180D70012604C /* STSongti-SC-Bold.ttf */,
+				0A916FFB1AA6099700E987A4 /* Wyue-GutiFangsong-NC_deliverable.otf */,
+				0A916FF91AA6097700E987A4 /* TpldKhangXiDictTrial.otf */,
 				0AE2022B1A8B0B310012AAED /* Supporting Files */,
 				0A0B10091A915F1F0012604C /* Diary-Bridging-Header.h */,
 			);
@@ -292,9 +295,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A0B10121A9180D70012604C /* STSongti-SC-Bold.ttf in Resources */,
 				0AE202361A8B0B310012AAED /* Main.storyboard in Resources */,
+				0A916FFC1AA6099700E987A4 /* Wyue-GutiFangsong-NC_deliverable.otf in Resources */,
 				0AE2023B1A8B0B310012AAED /* LaunchScreen.xib in Resources */,
+				0A916FFA1AA6097700E987A4 /* TpldKhangXiDictTrial.otf in Resources */,
 				0AE202381A8B0B310012AAED /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

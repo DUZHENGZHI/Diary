@@ -18,7 +18,10 @@ extension UILabel {
     convenience init(fontname:String ,labelText:String, fontSize : CGFloat){
         let font = UIFont(name: fontname, size: fontSize) as UIFont!
         
-        let textAttributes: [NSObject : AnyObject] = [NSFontAttributeName: font]
+        var paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
+        
+        let textAttributes: [NSObject : AnyObject] = [NSFontAttributeName: font, NSParagraphStyleAttributeName: paragraphStyle]
         var labelSize = sizeHeightWithText(labelText, fontSize ,textAttributes)
         
         self.init(frame: labelSize)

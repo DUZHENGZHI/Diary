@@ -18,7 +18,7 @@ class HomeYearCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         
-        self.yearLabel = UILabel(fontname: "STSongti-SC-Bold", labelText: yearText, fontSize: 16.0)
+        self.yearLabel = UILabel(fontname: "TpldKhangXiDictTrial", labelText: yearText, fontSize: 16.0)
         
         self.addSubview(yearLabel)
     }

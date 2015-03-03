@@ -11,26 +11,27 @@
       "scale" : "3x"
     },
     {
-      "idiom" : "iphone",
       "size" : "40x40",
+      "idiom" : "iphone",
+      "filename" : "Icon40@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "Desktop40@3x.png",
+      "filename" : "Icon40@3x.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "Desktop60@2x.png",
+      "filename" : "Icon60@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "Desktop60@3x.png",
+      "filename" : "Icon60@3x.png",
       "scale" : "3x"
     },
     {
@@ -41,7 +42,7 @@
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "Desktop40@2x.png",
+      "filename" : "Icon40@2x-1.png",
       "scale" : "2x"
     },
     {
@@ -61,30 +62,22 @@
     {
       "size" : "29x29",
       "idiom" : "watch",
-      "filename" : "Desktop29@2x.png",
+      "filename" : "Icon29@2x.png",
       "role" : "companionSettings",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "watch",
-      "filename" : "Desktop29@3x.png",
+      "filename" : "Icon29@3x.png",
       "role" : "companionSettings",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "watch",
-      "scale" : "2x",
       "role" : "appLauncher",
-      "subtype" : "38mm"
-    },
-    {
-      "size" : "44x44",
-      "idiom" : "watch",
-      "scale" : "2x",
-      "role" : "appLauncher",
-      "subtype" : "42mm"
+      "scale" : "2x"
     },
     {
       "size" : "86x86",
@@ -98,6 +91,21 @@
       "idiom" : "watch",
       "scale" : "2x",
       "role" : "quickLook",
+      "subtype" : "42mm"
+    },
+    {
+      "size" : "40x40",
+      "idiom" : "watch",
+      "scale" : "2x",
+      "unassigned" : true,
+      "role" : "appLauncher",
+      "subtype" : "38mm"
+    },
+    {
+      "scale" : "2x",
+      "idiom" : "watch",
+      "unassigned" : true,
+      "role" : "appLauncher",
       "subtype" : "42mm"
     }
   ],
