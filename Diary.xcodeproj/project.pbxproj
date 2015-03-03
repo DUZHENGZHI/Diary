@@ -15,6 +15,7 @@
 		0A9170001AA6200D00E987A4 /* YearMonthCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A916FFF1AA6200D00E987A4 /* YearMonthCollectionViewCell.swift */; };
 		0A9170021AA6216D00E987A4 /* DiaryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9170011AA6216D00E987A4 /* DiaryLabel.swift */; };
 		0A9170041AA6259000E987A4 /* DiaryDayCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9170031AA6259000E987A4 /* DiaryDayCollectionViewController.swift */; };
+		0A9170071AA6297600E987A4 /* DiaryComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9170061AA6297600E987A4 /* DiaryComposeViewController.swift */; };
 		0A9CD0431A9643910082D677 /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9CD0421A9643910082D677 /* Diary.swift */; };
 		0AE2022E1A8B0B310012AAED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE2022D1A8B0B310012AAED /* AppDelegate.swift */; };
 		0AE202311A8B0B310012AAED /* Diary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0AE2022F1A8B0B310012AAED /* Diary.xcdatamodeld */; };
@@ -47,6 +48,7 @@
 		0A916FFF1AA6200D00E987A4 /* YearMonthCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YearMonthCollectionViewCell.swift; path = Cell/YearMonthCollectionViewCell.swift; sourceTree = "<group>"; };
 		0A9170011AA6216D00E987A4 /* DiaryLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryLabel.swift; path = Helper/DiaryLabel.swift; sourceTree = "<group>"; };
 		0A9170031AA6259000E987A4 /* DiaryDayCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryDayCollectionViewController.swift; path = Controllers/Day/DiaryDayCollectionViewController.swift; sourceTree = "<group>"; };
+		0A9170061AA6297600E987A4 /* DiaryComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryComposeViewController.swift; path = Controllers/Compose/DiaryComposeViewController.swift; sourceTree = "<group>"; };
 		0A9CD0421A9643910082D677 /* Diary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Diary.swift; path = Models/Diary.swift; sourceTree = "<group>"; };
 		0AE202281A8B0B310012AAED /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE2022C1A8B0B310012AAED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -112,6 +114,14 @@
 				0A9170031AA6259000E987A4 /* DiaryDayCollectionViewController.swift */,
 			);
 			name = Day;
+			sourceTree = "<group>";
+		};
+		0A9170081AA62B4400E987A4 /* Compose */ = {
+			isa = PBXGroup;
+			children = (
+				0A9170061AA6297600E987A4 /* DiaryComposeViewController.swift */,
+			);
+			name = Compose;
 			sourceTree = "<group>";
 		};
 		0A9CD0441A9643990082D677 /* Models */ = {
@@ -191,6 +201,7 @@
 		0AE202521A8B0D5E0012AAED /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0A9170081AA62B4400E987A4 /* Compose */,
 				0A3572E41A94717B0037C6A0 /* Year */,
 				0AE202531A8B0D630012AAED /* Home */,
 				0A9170051AA6259500E987A4 /* Day */,
@@ -344,6 +355,7 @@
 				0AE202511A8B0D280012AAED /* DiaryHomeCollectionViewController.swift in Sources */,
 				0A9CD0431A9643910082D677 /* Diary.swift in Sources */,
 				0A3572E11A9467E70037C6A0 /* DiaryAnimator.swift in Sources */,
+				0A9170071AA6297600E987A4 /* DiaryComposeViewController.swift in Sources */,
 				0AE202561A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift in Sources */,
 				0A3572E31A9471750037C6A0 /* DiaryYearCollectionViewController.swift in Sources */,
 			);
@@ -422,7 +434,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -459,7 +471,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
