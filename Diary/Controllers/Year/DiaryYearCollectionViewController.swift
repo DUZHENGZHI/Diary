@@ -26,12 +26,31 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Add year label
         
         yearLabel = UILabel(fontname: "TpldKhangXiDictTrial", labelText: "二零一五年", fontSize: 16.0)
         
         yearLabel.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 20 + yearLabel.frame.size.height/2.0 )
         
         self.view.addSubview(yearLabel)
+        
+        //Add compose button
+        
+        composeButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        composeButton.frame = CGRectMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15 - 26.0/2.0, 20 + yearLabel.frame.size.height + 26.0/2.0, 26.0, 26.0)
+
+        var font = UIFont(name: "Wyue-GutiFangsong-NC", size: 14.0) as UIFont!
+        let textAttributes: [NSObject : AnyObject] = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
+        var attributedText = NSAttributedString(string: "撰", attributes: textAttributes)
+        composeButton.setAttributedTitle(attributedText, forState: UIControlState.Normal)
+        
+        composeButton.setBackgroundImage(UIImage(named: "Oval"), forState: UIControlState.Normal)
+        composeButton.setBackgroundImage(UIImage(named: "Oval_pressed"), forState: UIControlState.Highlighted)
+//        composeButton.roundRectColor = UIColor(red: 192.0/255.0, green: 23.0/255.0, blue: 48.0/255.0, alpha: 1.0)
+//        composeButton.roundRectCornerRadius = composeButton.frame.size.height/2.0
+        
+        self.view.addSubview(composeButton)
+        //
         
         
         self.navigationController?.delegate = self
