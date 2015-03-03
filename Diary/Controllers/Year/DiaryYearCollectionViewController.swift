@@ -17,10 +17,22 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
     
     var year:Int = 0
     
+    var yearLabel:UILabel!
+    
+    var composeButton:UIButton!
+    
     var fetchedResultsController : NSFetchedResultsController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        yearLabel = UILabel(fontname: "TpldKhangXiDictTrial", labelText: "二零一五年", fontSize: 16.0)
+        
+        yearLabel.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 20 + yearLabel.frame.size.height/2.0 )
+        
+        self.view.addSubview(yearLabel)
+        
         
         self.navigationController?.delegate = self
         //1
@@ -51,6 +63,10 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         var error: NSError? = nil
         if (!fetchedResultsController.performFetch(&error)){
                 println("Error: \(error?.localizedDescription)")
+        }else{
+            if (fetchedResultsController.fetchedObjects?.count == 0){
+                NSLog("Present empty year")
+            }
         }
         
         var yearLayout = DiaryLayout.new()
@@ -105,19 +121,17 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         
-        var screenRect = UIScreen.mainScreen().bounds
-        var screenWidth = screenRect.size.width
-        var screenHeight = screenRect.size.height
+
         
         
-        var numberOfCells = screenWidth / 20.0
+        var numberOfCells = screenRect.width / 20.0
 //        var edgeInsets = (CGFloat(screenWidth) - CGFloat(self.diarysGroupInYear.keys.array.count) * 20.0) / 2.0
         
         
         var itemHeight = 150.0
         
         
-        return UIEdgeInsetsMake((screenHeight - 150.0) / 2.0 , 0, 0, 50.0);
+        return UIEdgeInsetsMake((screenRect.height - 150.0) / 2.0 , 0, 0, 50.0);
     }
 
 
