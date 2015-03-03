@@ -10,19 +10,21 @@ import UIKit
 
 class HomeYearCollectionViewCell: UICollectionViewCell {
     
-    var yearLabel: UILabel!
+    var yearLabel: DiaryLabel!
     
-    var yearText: String = "二零一五年"
+    var yearText: String = "" {
+        didSet {
+            self.yearLabel.updateText(yearText)
+        }
+    }
     
     var yearInt: Int = 0
     
     override func awakeFromNib() {
         
-        self.yearLabel = UILabel(fontname: "TpldKhangXiDictTrial", labelText: yearText, fontSize: 16.0)
+        self.yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: yearText, fontSize: 16.0,lineHeight: 5.0)
         
         self.addSubview(yearLabel)
     }
-    
-    
     
 }

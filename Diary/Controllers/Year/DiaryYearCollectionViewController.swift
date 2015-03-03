@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-let reuseYearIdentifier = "DayCell"
+let reuseYearIdentifier = "YearMonthCollectionViewCell"
 
 class DiaryYearCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
     
@@ -23,12 +23,14 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
     
     var fetchedResultsController : NSFetchedResultsController!
     
+    var diarysGroupInMonth = [Int: Int]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //Add year label
         
-        yearLabel = UILabel(fontname: "TpldKhangXiDictTrial", labelText: "二零一五年", fontSize: 16.0)
+        yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: "二零一五年", fontSize: 16.0,lineHeight: 5.0)
         
         yearLabel.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 20 + yearLabel.frame.size.height/2.0 )
         
@@ -37,7 +39,7 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         //Add compose button
         
         composeButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        composeButton.frame = CGRectMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15 - 26.0/2.0, 20 + yearLabel.frame.size.height + 26.0/2.0, 26.0, 26.0)
+        composeButton.frame = CGRectMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15 - 26.0/2.0, 25 + yearLabel.frame.size.height + 26.0/2.0, 26.0, 26.0)
 
         var font = UIFont(name: "Wyue-GutiFangsong-NC", size: 14.0) as UIFont!
         let textAttributes: [NSObject : AnyObject] = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
@@ -46,8 +48,8 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         
         composeButton.setBackgroundImage(UIImage(named: "Oval"), forState: UIControlState.Normal)
         composeButton.setBackgroundImage(UIImage(named: "Oval_pressed"), forState: UIControlState.Highlighted)
-//        composeButton.roundRectColor = UIColor(red: 192.0/255.0, green: 23.0/255.0, blue: 48.0/255.0, alpha: 1.0)
-//        composeButton.roundRectCornerRadius = composeButton.frame.size.height/2.0
+
+
         
         self.view.addSubview(composeButton)
         //
@@ -83,8 +85,23 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         if (!fetchedResultsController.performFetch(&error)){
                 println("Error: \(error?.localizedDescription)")
         }else{
-            if (fetchedResultsController.fetchedObjects?.count == 0){
+            
+            var fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
+            if (fetchedResults.count == 0){
                 NSLog("Present empty year")
+            }else{
+                diarys = fetchedResults
+                for diary in diarys{
+                    var diary = diary as! Diary
+                    var date = diary.created_at
+                    var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: date)
+                    
+                    if diarysGroupInMonth[components] == nil {
+                        diarysGroupInMonth[components] = 1
+                    }else{
+                        diarysGroupInMonth[components] = diarysGroupInMonth[components]! + 1
+                    }
+                }
             }
         }
         
@@ -119,39 +136,49 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
-        return fetchedResultsController.sections!.count
+        return 1
     }
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
         
-        return fetchedResultsController.sections![section].count
+        if diarysGroupInMonth.keys.array.count == 0 {
+            return 1
+        }else{
+            return diarysGroupInMonth.keys.array.count
+        }
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseYearIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
         
-        var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
-        // Configure the cell
-    
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseYearIdentifier, forIndexPath: indexPath) as! YearMonthCollectionViewCell
+        if diarysGroupInMonth.keys.array.count == 0 {
+            
+            cell.monthText = "三 月"
+
+        }else{
+            
+            var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
+            // Configure the cell
+            
+        }
+        
         return cell
+
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         
-
-        
         
         var numberOfCells = screenRect.width / 20.0
-//        var edgeInsets = (CGFloat(screenWidth) - CGFloat(self.diarysGroupInYear.keys.array.count) * 20.0) / 2.0
-        
+        var edgeInsets = (CGFloat(screenRect.width) - CGFloat(self.diarysGroupInMonth.keys.array.count) * 20.0) / 2.0
         
         var itemHeight = 150.0
         
-        
-        return UIEdgeInsetsMake((screenRect.height - 150.0) / 2.0 , 0, 0, 50.0);
+        return UIEdgeInsetsMake((screenRect.height - 150.0) / 2.0 , edgeInsets, 0, edgeInsets);
     }
+
 
 
     // MARK: UICollectionViewDelegate
