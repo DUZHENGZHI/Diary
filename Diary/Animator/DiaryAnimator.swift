@@ -23,7 +23,7 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
-        return 0.6
+        return 0.4
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
@@ -65,11 +65,14 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 //        self.toCollectionView.contentInset = contentInset;
 //        self.toCollectionView.setCollectionViewLayout(currentLayout, animated: false)
 //        toView.frame = initialRect
+        toView.transform = CGAffineTransformMakeScale(0.3,0.3);
+
         inview.insertSubview(toView, aboveSubview: fromView)
 
         UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, options: UIViewAnimationOptions.BeginFromCurrentState, animations:
             {
 //                toView.frame = finalRect
+                toView.transform = CGAffineTransformMakeScale(1,1);
                 toView.alpha = 1.0
 //                self.toCollectionView.performBatchUpdates({
 //                    self.toCollectionView.setCollectionViewLayout(toLayout, animated: false)

@@ -23,6 +23,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationController?.delegate = self
         //1
         let appDelegate =
