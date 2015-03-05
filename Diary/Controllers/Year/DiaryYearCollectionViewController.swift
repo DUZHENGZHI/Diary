@@ -41,6 +41,8 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         composeButton = diaryButtonWith(text: "撰",  fontSize: 14.0,  width: 26.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
         composeButton.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 35 + yearLabel.frame.size.height + 26.0/2.0)
+        
+        composeButton.addTarget(self, action: "newCompose", forControlEvents: UIControlEvents.TouchUpInside)
 
         
         self.view.addSubview(composeButton)
@@ -105,6 +107,13 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         // Do any additional setup after loading the view.
     }
     
+    func newCompose() {
+        var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
+        
+        self.presentViewController(composeViewController, animated: true, completion: nil)
+        
+    }
+    
     override func viewDidAppear(animated: Bool) {
         NSLog("Year did show")
     }
@@ -153,6 +162,7 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
             
             var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
             // Configure the cell
+            cell.monthText = "三 月"
             
         }
         

@@ -24,3 +24,11 @@ func diaryButtonWith(#text: String, #fontSize: CGFloat, #width: CGFloat, #normal
     return button
 
 }
+
+extension Diary {
+    func updateTimeWithDate(date: NSDate){
+        self.created_at = date
+        self.year = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: date)
+        self.month = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: date)
+    }
+}

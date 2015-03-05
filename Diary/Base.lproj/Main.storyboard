@@ -23,7 +23,7 @@
         <!--Diary Compose View Controller-->
         <scene sceneID="Kd2-8h-Eml">
             <objects>
-                <viewController id="yXm-Xz-Rx3" customClass="DiaryComposeViewController" customModule="Diary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DiaryComposeViewController" id="yXm-Xz-Rx3" customClass="DiaryComposeViewController" customModule="Diary" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="siZ-kO-A4Y"/>
                         <viewControllerLayoutGuide type="bottom" id="5ix-xC-Xms"/>

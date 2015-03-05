@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 
+@objc(Diary)
 class Diary: NSManagedObject {
 
     @NSManaged var content: String
