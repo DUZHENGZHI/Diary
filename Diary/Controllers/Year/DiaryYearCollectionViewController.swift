@@ -38,17 +38,9 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         
         //Add compose button
         
-        composeButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        composeButton.frame = CGRectMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15 - 26.0/2.0, 25 + yearLabel.frame.size.height + 26.0/2.0, 26.0, 26.0)
-
-        var font = UIFont(name: "Wyue-GutiFangsong-NC", size: 14.0) as UIFont!
-        let textAttributes: [NSObject : AnyObject] = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
-        var attributedText = NSAttributedString(string: "撰", attributes: textAttributes)
-        composeButton.setAttributedTitle(attributedText, forState: UIControlState.Normal)
+        composeButton = diaryButtonWith(text: "撰",  fontSize: 14.0,  width: 26.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
-        composeButton.setBackgroundImage(UIImage(named: "Oval"), forState: UIControlState.Normal)
-        composeButton.setBackgroundImage(UIImage(named: "Oval_pressed"), forState: UIControlState.Highlighted)
-
+        composeButton.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 35 + yearLabel.frame.size.height + 26.0/2.0)
 
         
         self.view.addSubview(composeButton)

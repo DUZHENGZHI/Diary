@@ -36,7 +36,7 @@ class DiaryLabel: UILabel {
         self.numberOfLines = 0
     }
     
-    func resizeLabelWithFontName(fontname:String ,labelText:String, fontSize : CGFloat, lineHeight: CGFloat ){
+    func resizeLabelWithFontName(fontname:String, labelText:String, fontSize : CGFloat, lineHeight: CGFloat ){
         let font = UIFont(name: fontname, size: fontSize) as UIFont!
         
         var paragraphStyle = NSMutableParagraphStyle()

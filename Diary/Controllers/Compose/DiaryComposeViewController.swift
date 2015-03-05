@@ -15,6 +15,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
     
     var composeView:UITextView!
     var storage:NSTextStorage!
+    var keyboardSize:CGSize!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,9 +53,11 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
     }
     
     
-    override func viewDidLayoutSubviews() {
-
-        composeView.frame = CGRectMake(0, 0, view.bounds.width, view.bounds.height)
+    func textViewDidChange(textView: UITextView) {
+        if (keyboardSize != nil){
+            updateTextViewSizeForKeyboardHeight(keyboardSize.height)
+        }
+        
     }
     
 
@@ -69,7 +72,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
     
     func keyboardDidShow(notification: NSNotification) {
         if let rectValue = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue {
-            let keyboardSize = rectValue.CGRectValue().size
+            keyboardSize = rectValue.CGRectValue().size
             updateTextViewSizeForKeyboardHeight(keyboardSize.height)
         }
     }
