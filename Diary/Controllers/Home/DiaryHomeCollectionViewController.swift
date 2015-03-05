@@ -15,8 +15,6 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
     
     var diarys = [NSManagedObject]()
     
-    var years = 1
-    
     var diarysGroupInYear = [Int: Int]()
     
     var sourceCollectionView: UICollectionView!

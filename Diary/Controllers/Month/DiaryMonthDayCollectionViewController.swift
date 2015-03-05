@@ -1,21 +1,23 @@
 //
-//  DiaryYearCollectionViewController.swift
+//  DiaryMonthDayCollectionViewController.swift
 //  Diary
 //
-//  Created by kevinzhow on 15/2/18.
+//  Created by kevinzhow on 15/3/6.
 //  Copyright (c) 2015年 kevinzhow. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-let reuseYearIdentifier = "YearMonthCollectionViewCell"
+let reuseMonthDayCellIdentifier = "MonthDayCollectionViewCell"
 
-class DiaryYearCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
+class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
     
     var diarys = [NSManagedObject]()
     
     var year:Int = 0
+    
+    var month:Int = 1
     
     var yearLabel:UILabel!
     
@@ -24,12 +26,12 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
     var fetchedResultsController : NSFetchedResultsController!
     
     var diarysGroupInMonth = [Int: Int]()
-    
-    var sourceCollectionView: UICollectionView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
         //Add year label
         
         yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: "二零一五年", fontSize: 16.0,lineHeight: 5.0)
@@ -45,7 +47,7 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         composeButton.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 35 + yearLabel.frame.size.height + 26.0/2.0)
         
         composeButton.addTarget(self, action: "newCompose", forControlEvents: UIControlEvents.TouchUpInside)
-
+        
         
         self.view.addSubview(composeButton)
         //
@@ -61,13 +63,13 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         //2
         let fetchRequest = NSFetchRequest(entityName:"Diary")
         
-//        var beginDay = "01/01/\(year)"
-//        var endDay = "12/31/\(year)"
-//        var formatter = NSDateFormatter.new()
-//        formatter.dateFormat = "MM/dd/yyyy"
-//
-//        var beginDate = formatter.dateFromString(beginDay)
-//        var endDate = formatter.dateFromString(endDay)
+        //        var beginDay = "01/01/\(year)"
+        //        var endDay = "12/31/\(year)"
+        //        var formatter = NSDateFormatter.new()
+        //        formatter.dateFormat = "MM/dd/yyyy"
+        //
+        //        var beginDate = formatter.dateFromString(beginDay)
+        //        var endDate = formatter.dateFromString(endDay)
         
         fetchRequest.predicate = NSPredicate(format: "year = \(year)")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
@@ -79,7 +81,7 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         //3
         var error: NSError? = nil
         if (!fetchedResultsController.performFetch(&error)){
-                println("Error: \(error?.localizedDescription)")
+            println("Error: \(error?.localizedDescription)")
         }else{
             
             var fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
@@ -106,18 +108,10 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         yearLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         self.collectionView?.setCollectionViewLayout(yearLayout, animated: false)
 
+        // Register cell classes
+//        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseMonthDayCellIdentifier)
+
         // Do any additional setup after loading the view.
-    }
-    
-    func newCompose() {
-        var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
-        
-        self.presentViewController(composeViewController, animated: true, completion: nil)
-        
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        NSLog("Year did show")
     }
 
     override func didReceiveMemoryWarning() {
@@ -139,81 +133,22 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
-        return 1
+        return 0
     }
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        
-        if diarysGroupInMonth.keys.array.count == 0 {
-            return 1
-        }else{
-            return diarysGroupInMonth.keys.array.count
-        }
+        return 0
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseYearIdentifier, forIndexPath: indexPath) as! DiaryCollectionViewCell
-        if diarysGroupInMonth.keys.array.count == 0 {
-            
-            cell.labelText = "三 月"
-
-        }else{
-            
-            var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
-            // Configure the cell
-            cell.labelText = "三 月"
-            
-        }
-        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseMonthDayCellIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
+    
+        // Configure the cell
+    
         return cell
-
     }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        
-        
-        var numberOfCells = screenRect.width / 20.0
-        var edgeInsets = (CGFloat(screenRect.width) - CGFloat(self.diarysGroupInMonth.keys.array.count) * 20.0) / 2.0
-        
-        var itemHeight = 150.0
-        
-        return UIEdgeInsetsMake((screenRect.height - 150.0) / 2.0 , edgeInsets, 0, edgeInsets);
-    }
-
-    
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
-        NSLog("Push view controller")
-        
-        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
-        dvc.year = diarysGroupInMonth.keys.array[indexPath.row]
-        //        dvc.collectionView?.dataSource = collectionView.dataSource
-        
-        self.sourceCollectionView = collectionView
-        
-        self.navigationController?.pushViewController(dvc, animated: true)
-        
-        NSLog("Pushed")
-        
-    }
-    
-    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
-        if (fromVC == self && operation == UINavigationControllerOperation.Push) {
-            
-            NSLog("Do animtion")
-            var animator = DiaryAnimator()
-            animator.fromCollectionView = self.sourceCollectionView
-            return animator
-        }
-        else {
-            return nil;
-        }
-    }
-    
 
     // MARK: UICollectionViewDelegate
 

@@ -89,7 +89,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="YearMonthCollectionViewCell" id="94W-vz-g5l" customClass="YearMonthCollectionViewCell" customModule="Diary" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="YearMonthCollectionViewCell" id="94W-vz-g5l" customClass="DiaryCollectionViewCell" customModule="Diary" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -109,10 +109,10 @@
             </objects>
             <point key="canvasLocation" x="880" y="369"/>
         </scene>
-        <!--Diary Day Collection View Controller-->
+        <!--Diary Month Day Collection View Controller-->
         <scene sceneID="QQx-xc-Vnw">
             <objects>
-                <collectionViewController id="O7r-Gr-6jW" customClass="DiaryDayCollectionViewController" customModule="Diary" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="DiaryMonthDayCollectionViewController" id="O7r-Gr-6jW" customClass="DiaryMonthDayCollectionViewController" customModule="Diary" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="hIu-9p-JVW">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -124,7 +124,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="DUe-7z-OHV">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MonthDayCollectionViewCell" id="DUe-7z-OHV" customClass="DiaryCollectionViewCell" customModule="Diary" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
