@@ -19,7 +19,11 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     
     var month:Int = 1
     
-    var yearLabel:UILabel!
+    var yearLabel:DiaryLabel!
+    
+    var monthLabel:DiaryLabel!
+    
+    var monthLabelContainer: UIView!
     
     var composeButton:UIButton!
     
@@ -51,6 +55,17 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         
         self.view.addSubview(composeButton)
         //
+        monthLabelContainer = UIView(frame: CGRectMake(0, 0, 0, 0))
+        monthLabelContainer.backgroundColor = UIColor.whiteColor()
+        monthLabel = DiaryLabel(fontname: "Wyue-GutiFangsong-NC", labelText: "三月", fontSize: 16.0,lineHeight: 5.0)
+        
+        monthLabel.updateLabelColor(DiaryRed)
+        
+
+        monthLabelContainer.addSubview(monthLabel)
+        self.view.addSubview(monthLabelContainer)
+        
+        //
         
         
         self.navigationController?.delegate = self
@@ -71,7 +86,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         //        var beginDate = formatter.dateFromString(beginDay)
         //        var endDate = formatter.dateFromString(endDay)
         
-        fetchRequest.predicate = NSPredicate(format: "year = \(year)")
+        fetchRequest.predicate = NSPredicate(format: "year = \(year) AND month = \(month)")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
         
         
@@ -82,31 +97,16 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         var error: NSError? = nil
         if (!fetchedResultsController.performFetch(&error)){
             println("Error: \(error?.localizedDescription)")
-        }else{
-            
-            var fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
-            if (fetchedResults.count == 0){
-                NSLog("Present empty year")
-            }else{
-                diarys = fetchedResults
-                for diary in diarys{
-                    var diary = diary as! Diary
-                    var date = diary.created_at
-                    var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: date)
-                    
-                    if diarysGroupInMonth[components] == nil {
-                        diarysGroupInMonth[components] = 1
-                    }else{
-                        diarysGroupInMonth[components] = diarysGroupInMonth[components]! + 1
-                    }
-                }
-            }
         }
         
-        var yearLayout = DiaryLayout.new()
+        var fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
+        diarys = fetchedResults
+        print("This month have \(diarys.count) \n")
+        var monthLayout = DiaryLayout.new()
         
-        yearLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        self.collectionView?.setCollectionViewLayout(yearLayout, animated: false)
+        monthLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
+
+        self.collectionView?.setCollectionViewLayout(monthLayout, animated: false)
 
         // Register cell classes
 //        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseMonthDayCellIdentifier)
@@ -133,22 +133,43 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        return 0
+        return diarys.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseMonthDayCellIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
-    
+
         // Configure the cell
-    
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseMonthDayCellIdentifier, forIndexPath: indexPath) as! DiaryCollectionViewCell
+        var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
+        // Configure the cell
+
+        cell.labelText = "三十一日"
+        
         return cell
     }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        
+        
+        var numberOfCells = screenRect.width / 20.0
+        var edgeInsets = (CGFloat(screenRect.width) - CGFloat(3) * 20.0 - CGFloat(2) * 30.0) / 2.0
+        print("\(edgeInsets) for section ")
+
+        
+        monthLabelContainer.frame = CGRectMake(screenRect.width - edgeInsets,(screenRect.height - 150.0) / 2.0 , edgeInsets, 150.0)
+        
+        monthLabel.center = CGPointMake(edgeInsets - monthLabel.frame.size.width/2.0 - 15.0, monthLabel.frame.size.height/2.0)
+        var itemHeight = 150.0
+        
+        return UIEdgeInsetsMake((screenRect.height - 150.0) / 2.0 , edgeInsets, 0, edgeInsets);
+    }
+
 
     // MARK: UICollectionViewDelegate
 

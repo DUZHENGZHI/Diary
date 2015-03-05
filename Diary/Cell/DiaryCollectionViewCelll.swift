@@ -22,7 +22,9 @@ class DiaryCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         
         self.textLabel = DiaryLabel(fontname: "Wyue-GutiFangsong-NC", labelText: labelText, fontSize: 16.0, lineHeight: 5.0)
+
         
         self.addSubview(textLabel)
     }
+    
 }

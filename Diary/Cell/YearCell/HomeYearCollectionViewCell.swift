@@ -27,4 +27,9 @@ class HomeYearCollectionViewCell: UICollectionViewCell {
         self.addSubview(yearLabel)
     }
     
+    override func layoutSubviews() {
+        
+        self.yearLabel.center = CGPointMake(20.0/2.0, 150.0/2.0)
+    }
+    
 }

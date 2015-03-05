@@ -89,6 +89,7 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
                 diarys = fetchedResults
                 for diary in diarys{
                     var diary = diary as! Diary
+
                     var date = diary.created_at
                     var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: date)
                     
@@ -189,7 +190,10 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         NSLog("Push view controller")
         
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
-        dvc.year = diarysGroupInMonth.keys.array[indexPath.row]
+        dvc.month = diarysGroupInMonth.keys.array[indexPath.row]
+        dvc.year = year
+        
+
         //        dvc.collectionView?.dataSource = collectionView.dataSource
         
         self.sourceCollectionView = collectionView

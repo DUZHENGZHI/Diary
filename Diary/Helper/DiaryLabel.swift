@@ -58,6 +58,11 @@ class DiaryLabel: UILabel {
         self.frame = CGRectMake(0, 0, labelSize.width, labelSize.height)
         self.attributedText = NSAttributedString(string: labelText, attributes: textAttributes)
     }
+    
+    func updateLabelColor(color: UIColor) {
+        textAttributes[NSForegroundColorAttributeName] = color
+        self.attributedText = NSAttributedString(string: self.attributedText.string, attributes: textAttributes)
+    }
 
 
     /*
