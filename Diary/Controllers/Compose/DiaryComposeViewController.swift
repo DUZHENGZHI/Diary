@@ -11,36 +11,34 @@ import UIKit
 
 
 
-class DiaryComposeViewController: UIViewController ,UITextViewDelegate{
+class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayoutManagerDelegate{
     
     var composeView:UITextView!
+    var storage:NSTextStorage!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let storage = NSTextStorage()
+        storage = DiaryTextStorage()
 
         let containerSize = CGSize(width: screenRect.width, height: CGFloat.max)
         let container = NSTextContainer(size: containerSize)
+
         container.widthTracksTextView = true
-        let layoutManager = NSLayoutManager()
+        let layoutManager = DiaryVerticalTextLayout()
+        layoutManager.delegate = self
+
 
         storage.addLayoutManager(layoutManager)
         layoutManager.addTextContainer(container)
-        let font = UIFont(name: "Wyue-GutiFangsong-NC", size: 16.0) as UIFont!
-        
-        var paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 5
-        var textAttributes: [NSObject : AnyObject]! = [NSFontAttributeName: font, NSVerticalGlyphFormAttributeName: 1, NSParagraphStyleAttributeName: paragraphStyle]
-        
 
-        storage.appendAttributedString(NSAttributedString(string: "asdasdsad我主动奥", attributes: textAttributes))
-        
         composeView = UITextView(frame: CGRectMake(0, 0, screenRect.width, 300), textContainer: container)
-
+        composeView.font = DiaryFont
         composeView.editable = true
         composeView.userInteractionEnabled = true
         composeView.delegate = self
-
+        composeView.textContainerInset = UIEdgeInsetsMake(20, 20, 20, 20)
+//        composeView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (CGFloat)((90.0) / 180.0 * M_PI))
+        composeView.becomeFirstResponder()
         self.view.addSubview(composeView)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -53,14 +51,22 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate{
         // Do any additional setup after loading the view.
     }
     
-    
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+
         return true
     }
+    
+    func textViewDidChange(textView: UITextView) {
 
+    }
+    
+
+    
+
+    
     override func viewDidLayoutSubviews() {
 
-        composeView.frame = view.bounds
+        composeView.frame = CGRectMake(0, 0, view.bounds.width, view.bounds.height)
     }
     
 
@@ -83,6 +89,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate{
     func keyboardDidHide(notification: NSNotification) {
         updateTextViewSizeForKeyboardHeight(0)
     }
+    
     
 
     /*
