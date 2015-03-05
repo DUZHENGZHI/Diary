@@ -20,7 +20,7 @@ class DiaryTextStorage: NSTextStorage {
     }
     
     override func replaceCharactersInRange(range: NSRange, withString str: String) {
-//        println("replaceCharactersInRange:\(range) withString:\(str)")
+//        println("replaceCharactersInRange:\(range) withString:\(str)")z
         
         beginEditing()
         backingStore.replaceCharactersInRange(range, withString:str)

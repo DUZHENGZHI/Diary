@@ -36,7 +36,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         composeView.editable = true
         composeView.userInteractionEnabled = true
         composeView.delegate = self
-        composeView.textContainerInset = UIEdgeInsetsMake(20, 20, 20, 20)
+        composeView.textContainerInset = UIEdgeInsetsMake(20, 20, 50, 20)
 //        composeView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (CGFloat)((90.0) / 180.0 * M_PI))
         composeView.becomeFirstResponder()
         self.view.addSubview(composeView)
@@ -51,18 +51,6 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         // Do any additional setup after loading the view.
     }
     
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
-
-        return true
-    }
-    
-    func textViewDidChange(textView: UITextView) {
-
-    }
-    
-
-    
-
     
     override func viewDidLayoutSubviews() {
 
