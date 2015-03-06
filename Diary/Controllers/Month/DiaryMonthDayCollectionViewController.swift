@@ -157,7 +157,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
         // Configure the cell
 
-        cell.labelText = "三十一日"
+        cell.labelText = "\(numberToChinese(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: diary.created_at))) 日"
         
         return cell
     }

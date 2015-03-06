@@ -9,7 +9,7 @@
 import UIKit
 
 let screenRect = UIScreen.mainScreen().bounds
-let DiaryFont = UIFont(name: "Wyue-GutiFangsong-NC", size: 16.0) as UIFont!
+let DiaryFont = UIFont(name: "Wyue-GutiFangsong-NC", size: 18) as UIFont!
 let DiaryRed = UIColor(red: 192.0/255.0, green: 23.0/255.0, blue: 48.0/255.0, alpha: 1.0)
 let itemHeight:CGFloat = 150.0
 let itemSpacing:CGFloat = 30
@@ -31,6 +31,46 @@ func diaryButtonWith(#text: String, #fontSize: CGFloat, #width: CGFloat, #normal
     
     return button
 
+}
+
+func numberToChinese(number:Int) -> String {
+    var stringNumber = Array(String(number))
+    var finalString = ""
+    var i:Int
+    for i = 0; i < stringNumber.count; ++i {
+        var string = singleNumberToChinese(stringNumber[i])
+        finalString = "\(finalString)\(string)"
+    }
+    
+    return finalString
+
+}
+
+func singleNumberToChinese(number:Character) -> String {
+    switch number {
+    case "0":
+        return "零"
+    case "1":
+        return "一"
+    case "2":
+        return "二"
+    case "3":
+        return "三"
+    case "4":
+        return "四"
+    case "5":
+        return "五"
+    case "6":
+        return "六"
+    case "7":
+        return "七"
+    case "8":
+        return "八"
+    case "9":
+        return "九"
+    default:
+        return ""
+    }
 }
 
 extension Diary {

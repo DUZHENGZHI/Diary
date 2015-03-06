@@ -16,7 +16,7 @@ class DiaryVerticalTextView: UIView {
     var text: NSString = ""
     var titleText: NSString = ""
     
-    var fontSize: CGFloat = 16.0 {
+    var fontSize: CGFloat = 20.0 {
         didSet {
             self.setNeedsDisplay()
         }

@@ -160,13 +160,13 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseYearIdentifier, forIndexPath: indexPath) as! DiaryCollectionViewCell
         if diarysGroupInMonth.keys.array.count == 0 {
             
-            cell.labelText = "三 月"
+            cell.labelText = "\(numberToChinese(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: NSDate.new()))) 月"
 
         }else{
             
             var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
             // Configure the cell
-            cell.labelText = "三 月"
+            cell.labelText = "\(numberToChinese(diary.month.integerValue)) 月"
             
         }
         

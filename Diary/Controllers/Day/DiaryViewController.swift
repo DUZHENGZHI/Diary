@@ -21,7 +21,8 @@ class DiaryViewController: UIViewController {
         self.textview.fontName = "Wyue-GutiFangsong-NC"
         self.textview.lineSpace = 15.0
         self.textview.letterSpace = 8.0
-        self.textview.titleText = "借口"
+        self.textview.fontSize = 18.0
+//        self.textview.titleText = "借口"
         self.textview.backgroundColor = UIColor.clearColor()
         self.textview.bounds = CGRectInset(self.textview.frame, 20.0,0.0)
         self.textview.text = diary.content
@@ -42,7 +43,7 @@ class DiaryViewController: UIViewController {
     
     func hideDiary() {
         println("Hide diary")
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
     }
 
     override func didReceiveMemoryWarning() {

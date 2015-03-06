@@ -117,13 +117,11 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> HomeYearCollectionViewCell {
         
-        NSLog("Show cell")
-        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! HomeYearCollectionViewCell
         
         var yearText = diarysGroupInYear.keys.array[indexPath.row]
         cell.yearInt = diarysGroupInYear.keys.array[indexPath.row]
-        cell.yearText = "二零一五年"
+        cell.yearText = "\(numberToChinese(cell.yearInt)) 年"
 
         // Configure the cell
     
