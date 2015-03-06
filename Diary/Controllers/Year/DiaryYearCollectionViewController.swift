@@ -29,7 +29,7 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = UIColor.whiteColor()
         //Add year label
         
         yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: "二零一五年", fontSize: 16.0,lineHeight: 5.0)
@@ -50,6 +50,7 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         self.view.addSubview(composeButton)
         //
         
+        self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
         
         self.navigationController?.delegate = self
         //1
@@ -174,16 +175,20 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        var numberOfCells:Int = 1
+        if diarysGroupInMonth.keys.array.count != 0 {
+            numberOfCells = diarysGroupInMonth.keys.array.count
+        }
         
-        
-        var numberOfCells = screenRect.width / 20.0
-        var edgeInsets = (CGFloat(screenRect.width) - CGFloat(self.diarysGroupInMonth.keys.array.count) * 20.0) / 2.0
-        
-        var itemHeight = 150.0
-        
-        return UIEdgeInsetsMake((screenRect.height - 150.0) / 2.0 , edgeInsets, 0, edgeInsets);
+        if (numberOfCells < 3) {
+            var edgeInsets = (collectionViewWidth - ((CGFloat(numberOfCells)*itemWidth)+(CGFloat(numberOfCells)-1) * itemSpacing))/2.0
+            return UIEdgeInsetsMake(0, edgeInsets, 0, edgeInsets);
+        }else{
+            return UIEdgeInsetsMake(0, 0, 0, 0);
+        }
     }
-
+    
+    
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         

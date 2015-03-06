@@ -22,6 +22,8 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor.whiteColor()
+        
         self.navigationController?.delegate = self
         //1
         let appDelegate =
@@ -64,6 +66,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
             diarysGroupInYear[components] = 1
         }
 
+        self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -128,18 +131,20 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        var numberOfCells:Int = 1
         
-
-        var numberOfCells = screenRect.width / 20.0
-        var edgeInsets = (CGFloat(screenRect.width) - CGFloat(self.diarysGroupInYear.keys.array.count) * 20.0) / 2.0
+        if diarysGroupInYear.keys.array.count != 0 {
+            numberOfCells = diarysGroupInYear.keys.array.count
+        }
         
-
-        var itemHeight = 150.0
-        
-        
-        return UIEdgeInsetsMake((screenRect.height - 150.0) / 2.0 , edgeInsets, 0, edgeInsets);
+        if (numberOfCells < 3) {
+            var edgeInsets = (collectionViewWidth - ((CGFloat(numberOfCells)*itemWidth)+(CGFloat(numberOfCells)-1) * itemSpacing))/2.0
+            return UIEdgeInsetsMake(0, edgeInsets, 0, edgeInsets);
+        }else{
+            return UIEdgeInsetsMake(0, 0, 0, 0);
+        }
     }
-
+    
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         

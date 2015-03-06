@@ -14,6 +14,7 @@ let DiaryRed = UIColor(red: 192.0/255.0, green: 23.0/255.0, blue: 48.0/255.0, al
 let itemHeight:CGFloat = 150.0
 let itemSpacing:CGFloat = 30
 let itemWidth:CGFloat = 20
+let collectionViewWidth = itemWidth * 3 + itemSpacing * 2
 
 func diaryButtonWith(#text: String, #fontSize: CGFloat, #width: CGFloat, #normalImageName: String, #highlightedImageName: String) -> UIButton {
     

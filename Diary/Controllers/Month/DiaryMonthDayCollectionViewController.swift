@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 let reuseMonthDayCellIdentifier = "MonthDayCollectionViewCell"
-let dayCollectionViewWidth = itemWidth * 3 + itemSpacing * 2
+
 
 class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate , NSFetchedResultsControllerDelegate{
     
@@ -63,7 +63,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         
 
         self.view.addSubview(monthLabel)
-        self.collectionView?.frame = CGRectMake((screenRect.width - dayCollectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, dayCollectionViewWidth, itemHeight)
+        self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
         //
         
         
@@ -163,18 +163,13 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        
-        
         var numberOfCells:Int = self.diarys.count
         if (numberOfCells < 3) {
-            var edgeInsets = (dayCollectionViewWidth - ((CGFloat(numberOfCells)*itemWidth)+(CGFloat(numberOfCells)-1) * itemSpacing))/2.0
+            var edgeInsets = (collectionViewWidth - ((CGFloat(numberOfCells)*itemWidth)+(CGFloat(numberOfCells)-1) * itemSpacing))/2.0
             return UIEdgeInsetsMake(0, edgeInsets, 0, edgeInsets);
         }else{
             return UIEdgeInsetsMake(0, 0, 0, 0);
         }
-        
-        
-        
     }
     
     
