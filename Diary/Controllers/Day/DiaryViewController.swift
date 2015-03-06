@@ -20,6 +20,7 @@ class DiaryViewController: UIViewController {
         self.textview = DiaryVerticalTextView(frame: CGRectMake(0,0, self.view.frame.size.width * 2, self.view.frame.size.height - 10))
         self.textview.fontName = "Wyue-GutiFangsong-NC"
         self.textview.lineSpace = 15.0
+        self.textview.letterSpace = 8.0
         self.textview.titleText = "借口"
         self.textview.backgroundColor = UIColor.clearColor()
         self.textview.bounds = CGRectInset(self.textview.frame, 20.0,0.0)

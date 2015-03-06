@@ -40,7 +40,8 @@ class DiaryTextStorage: NSTextStorage {
     override func processEditing() {
         var paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 8
-        var textAttributes: [NSObject : AnyObject]! = [NSFontAttributeName: DiaryFont, NSVerticalGlyphFormAttributeName: 1, NSParagraphStyleAttributeName: paragraphStyle]
+
+        var textAttributes: [NSObject : AnyObject]! = [NSFontAttributeName: DiaryFont, NSVerticalGlyphFormAttributeName: 1, NSParagraphStyleAttributeName: paragraphStyle, NSKernAttributeName: 3.0]
         
         
         self.addAttributes(textAttributes, range: self.editedRange)

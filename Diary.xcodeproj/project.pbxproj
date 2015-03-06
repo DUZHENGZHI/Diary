@@ -14,7 +14,6 @@
 		0A3572E31A9471750037C6A0 /* DiaryYearCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3572E21A9471750037C6A0 /* DiaryYearCollectionViewController.swift */; };
 		0A5E38111AA9E9B000935E29 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5E38101AA9E9B000935E29 /* DiaryViewController.swift */; };
 		0A5E38151AA9EB0500935E29 /* DiaryVerticalTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */; };
-		0A5E38171AAA0B9F00935E29 /* STSongti-SC-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5E38161AAA0B9F00935E29 /* STSongti-SC-Bold.ttf */; };
 		0A605C2B1AA893460030B493 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A605C2A1AA893460030B493 /* CloudKit.framework */; };
 		0A916FFA1AA6097700E987A4 /* TpldKhangXiDictTrial.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A916FF91AA6097700E987A4 /* TpldKhangXiDictTrial.otf */; };
 		0A916FFC1AA6099700E987A4 /* Wyue-GutiFangsong-NC_deliverable.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A916FFB1AA6099700E987A4 /* Wyue-GutiFangsong-NC_deliverable.otf */; };
@@ -53,7 +52,6 @@
 		0A3572E21A9471750037C6A0 /* DiaryYearCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryYearCollectionViewController.swift; path = Controllers/Year/DiaryYearCollectionViewController.swift; sourceTree = "<group>"; };
 		0A5E38101AA9E9B000935E29 /* DiaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewController.swift; path = Controllers/Day/DiaryViewController.swift; sourceTree = "<group>"; };
 		0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryVerticalTextView.swift; path = Helper/DiaryVerticalTextView.swift; sourceTree = "<group>"; };
-		0A5E38161AAA0B9F00935E29 /* STSongti-SC-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "STSongti-SC-Bold.ttf"; sourceTree = "<group>"; };
 		0A605C291AA893330030B493 /* Diary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Diary.entitlements; sourceTree = "<group>"; };
 		0A605C2A1AA893460030B493 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		0A916FF91AA6097700E987A4 /* TpldKhangXiDictTrial.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = TpldKhangXiDictTrial.otf; sourceTree = "<group>"; };
@@ -190,7 +188,6 @@
 				0AE202371A8B0B310012AAED /* Images.xcassets */,
 				0AE202391A8B0B310012AAED /* LaunchScreen.xib */,
 				0AE2022F1A8B0B310012AAED /* Diary.xcdatamodeld */,
-				0A5E38161AAA0B9F00935E29 /* STSongti-SC-Bold.ttf */,
 				0A916FFB1AA6099700E987A4 /* Wyue-GutiFangsong-NC_deliverable.otf */,
 				0A916FF91AA6097700E987A4 /* TpldKhangXiDictTrial.otf */,
 				0AE2022B1A8B0B310012AAED /* Supporting Files */,
@@ -360,7 +357,6 @@
 			files = (
 				0AE202361A8B0B310012AAED /* Main.storyboard in Resources */,
 				0A916FFC1AA6099700E987A4 /* Wyue-GutiFangsong-NC_deliverable.otf in Resources */,
-				0A5E38171AAA0B9F00935E29 /* STSongti-SC-Bold.ttf in Resources */,
 				0AE2023B1A8B0B310012AAED /* LaunchScreen.xib in Resources */,
 				0A916FFA1AA6097700E987A4 /* TpldKhangXiDictTrial.otf in Resources */,
 				0AE202381A8B0B310012AAED /* Images.xcassets in Resources */,

@@ -40,7 +40,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         //Add year label
         self.view.backgroundColor = UIColor.whiteColor()
         
-        yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: "二零一五年", fontSize: 16.0,lineHeight: 5.0)
+        yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: "二零一五年", fontSize: 19.0,lineHeight: 5.0)
         
         yearLabel.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 20 + yearLabel.frame.size.height/2.0 )
         
@@ -48,9 +48,9 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         
         //Add compose button
         
-        composeButton = diaryButtonWith(text: "撰",  fontSize: 14.0,  width: 26.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        composeButton = diaryButtonWith(text: "撰",  fontSize: 14.0,  width: 28.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
-        composeButton.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 35 + yearLabel.frame.size.height + 26.0/2.0)
+        composeButton.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 38 + yearLabel.frame.size.height + 26.0/2.0)
         
         composeButton.addTarget(self, action: "newCompose", forControlEvents: UIControlEvents.TouchUpInside)
         
