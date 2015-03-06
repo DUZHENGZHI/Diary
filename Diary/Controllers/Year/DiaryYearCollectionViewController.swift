@@ -190,7 +190,12 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         NSLog("Push view controller")
         
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
-        dvc.month = diarysGroupInMonth.keys.array[indexPath.row]
+        
+        if diarysGroupInMonth.keys.array.count == 0 {
+            dvc.month = 3
+        }else{
+            dvc.month = diarysGroupInMonth.keys.array[indexPath.row]
+        }
         dvc.year = year
         
 

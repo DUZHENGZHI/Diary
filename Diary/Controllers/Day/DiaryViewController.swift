@@ -19,7 +19,8 @@ class DiaryViewController: UIViewController {
         super.viewDidLoad()
         self.textview = DiaryVerticalTextView(frame: CGRectMake(0,0, self.view.frame.size.width * 2, self.view.frame.size.height - 10))
         self.textview.fontName = "Wyue-GutiFangsong-NC"
-        self.textview.lineSpace = 10.0
+        self.textview.lineSpace = 15.0
+        self.textview.titleText = "借口"
         self.textview.backgroundColor = UIColor.clearColor()
         self.textview.bounds = CGRectInset(self.textview.frame, 20.0,0.0)
         self.textview.text = diary.content
@@ -30,6 +31,9 @@ class DiaryViewController: UIViewController {
         self.scrollview.contentOffset = CGPointMake(1000, -10)
         
         self.scrollview.addSubview(self.textview)
+        
+        
+        
         // Do any additional setup after loading the view.
     }
 

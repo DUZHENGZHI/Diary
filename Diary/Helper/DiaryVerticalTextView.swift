@@ -21,12 +21,12 @@ class DiaryVerticalTextView: UIView {
             self.setNeedsDisplay()
         }
     }
-    var lineSpace: CGFloat = 5.0 {
+    var lineSpace: CGFloat = 10.0 {
         didSet {
             self.setNeedsDisplay()
         }
     }
-    var letterSpace: CGFloat = 3.0 {
+    var letterSpace: CGFloat = 8.0 {
         didSet {
             self.setNeedsDisplay()
         }
@@ -44,8 +44,8 @@ class DiaryVerticalTextView: UIView {
         var attrString = NSMutableAttributedString()
         
         if (self.titleText.length > 0) {
-            var fontSize = self.text.length < 1 ? 27.0 : self.fontSize * titleSizeRate
-            var titleFont = CTFontCreateWithName(self.fontName, fontSize, nil)
+            var fontSize = 27.0 as CGFloat
+            var titleFont = CTFontCreateWithName(fontName, fontSize, nil)
             var titleAttrDict = getAttributedStringSourceWithString(self.titleText as String, font: titleFont)
             
             var titleAttrString = NSMutableAttributedString(string: (self.titleText as String), attributes: titleAttrDict)
@@ -104,11 +104,7 @@ class DiaryVerticalTextView: UIView {
     {
 
 
-        var glyphInfo = CTGlyphInfoCreateWithCharacterIdentifier(CGFontIndex.min,CTCharacterCollection.CharacterCollectionAdobeGB1, stringRef as CFString)
-        
-        if (glyphInfo == nil){
-            println("Create glyphInfo failed")
-        }
+        var glyphInfo = CTGlyphInfoCreateWithCharacterIdentifier(CGFontIndex.min,CTCharacterCollection.CharacterCollectionAdobeCNS1, stringRef as CFString)
 
         var alignment = CTTextAlignment.TextAlignmentJustified
         var lineBreakMode = CTLineBreakMode.ByWordWrapping
@@ -121,15 +117,15 @@ class DiaryVerticalTextView: UIView {
         
         let ParagraphSpacingSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.ParagraphSpacing, valueSize: sizeof(CGFloat), value: &paragraphSpace)
         
-        let MinimumLineHeightSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.MinimumLineHeight, valueSize: sizeof(CGFloat), value: &lineSpace)
+        let MinimumLineSpacingSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.MinimumLineSpacing, valueSize: sizeof(CGFloat), value: &lineSpace)
         
-        let MaximumLineHeightSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.MaximumLineHeight, valueSize: sizeof(CGFloat), value: &lineSpace)
+        let MaximumLineSpacingSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.MaximumLineSpacing, valueSize: sizeof(CGFloat), value: &lineSpace)
         
-        var paragraphStypeSettings = [alignmentSet, LineBreakModeSet, ParagraphSpacingSet, MinimumLineHeightSet, MaximumLineHeightSet]
+        var paragraphStypeSettings = [alignmentSet, LineBreakModeSet, ParagraphSpacingSet, MinimumLineSpacingSet, MaximumLineSpacingSet]
         
-        var size1 = paragraphStypeSettings.count
+//        var size1 = sizeof(paragraphStypeSettings)
         var size2 = sizeof(CTParagraphStyleSetting)
-        var paragraphStyle = CTParagraphStyleCreate(paragraphStypeSettings, size1/size2 );
+        var paragraphStyle = CTParagraphStyleCreate(paragraphStypeSettings, paragraphStypeSettings.count);
     
 
         var attrDict: [NSString: AnyObject] = [
