@@ -25,7 +25,7 @@ class DiaryViewController: UIViewController {
         self.textview.bounds = CGRectInset(self.textview.frame, 20.0,0.0)
         self.textview.text = diary.content
         
-        self.textview.userInteractionEnabled = false
+//        self.textview.userInteractionEnabled = false
         self.scrollview.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
         self.scrollview.contentSize = CGSizeMake(self.textview.bounds.size.width + 20.0, self.textview.bounds.size.height - 10)
         self.scrollview.contentOffset = CGPointMake(1000, -10)
@@ -33,8 +33,15 @@ class DiaryViewController: UIViewController {
         self.scrollview.addSubview(self.textview)
         
         
-        
+        var mSwipeUpRecognizer = UITapGestureRecognizer(target: self, action: "hideDiary")
+        mSwipeUpRecognizer.numberOfTapsRequired = 2
+        self.scrollview.addGestureRecognizer(mSwipeUpRecognizer)
         // Do any additional setup after loading the view.
+    }
+    
+    func hideDiary() {
+        println("Hide diary")
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {

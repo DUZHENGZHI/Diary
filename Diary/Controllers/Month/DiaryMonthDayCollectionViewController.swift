@@ -10,8 +10,9 @@ import UIKit
 import CoreData
 
 let reuseMonthDayCellIdentifier = "MonthDayCollectionViewCell"
+let dayCollectionViewWidth = itemWidth * 3 + itemSpacing * 2
 
-class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
+class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate , NSFetchedResultsControllerDelegate{
     
     var diarys = [NSManagedObject]()
     
@@ -22,8 +23,6 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     var yearLabel:DiaryLabel!
     
     var monthLabel:DiaryLabel!
-    
-    var monthLabelContainer: UIView!
     
     var composeButton:UIButton!
     
@@ -39,6 +38,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         //Add year label
+        self.view.backgroundColor = UIColor.whiteColor()
         
         yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: "二零一五年", fontSize: 16.0,lineHeight: 5.0)
         
@@ -57,16 +57,13 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         
         self.view.addSubview(composeButton)
         //
-        monthLabelContainer = UIView(frame: CGRectMake(0, 0, 0, 0))
-        monthLabelContainer.backgroundColor = UIColor.whiteColor()
         monthLabel = DiaryLabel(fontname: "Wyue-GutiFangsong-NC", labelText: "三月", fontSize: 16.0,lineHeight: 5.0)
-        
+        monthLabel.frame = CGRectMake(screenRect.width - 15.0 - monthLabel.frame.size.width, (screenRect.height - 150)/2.0, monthLabel.frame.size.width, monthLabel.frame.size.height)
         monthLabel.updateLabelColor(DiaryRed)
         
 
-        monthLabelContainer.addSubview(monthLabel)
-        self.view.addSubview(monthLabelContainer)
-        
+        self.view.addSubview(monthLabel)
+        self.collectionView?.frame = CGRectMake((screenRect.width - dayCollectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, dayCollectionViewWidth, itemHeight)
         //
         
         
@@ -95,6 +92,8 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
             managedObjectContext: managedContext, sectionNameKeyPath: "year",
             cacheName: nil)
+        
+        fetchedResultsController.delegate = self
         //3
         var error: NSError? = nil
         if (!fetchedResultsController.performFetch(&error)){
@@ -166,17 +165,16 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         
         
-        var numberOfCells = screenRect.width / 20.0
-        var edgeInsets = (CGFloat(screenRect.width) - CGFloat(3) * 20.0 - CGFloat(2) * 30.0) / 2.0
-        print("\(edgeInsets) for section ")
-
+        var numberOfCells:Int = self.diarys.count
+        if (numberOfCells < 3) {
+            var edgeInsets = (dayCollectionViewWidth - ((CGFloat(numberOfCells)*itemWidth)+(CGFloat(numberOfCells)-1) * itemSpacing))/2.0
+            return UIEdgeInsetsMake(0, edgeInsets, 0, edgeInsets);
+        }else{
+            return UIEdgeInsetsMake(0, 0, 0, 0);
+        }
         
-        monthLabelContainer.frame = CGRectMake(screenRect.width - edgeInsets,(screenRect.height - 150.0) / 2.0 , edgeInsets, 150.0)
         
-        monthLabel.center = CGPointMake(edgeInsets - monthLabel.frame.size.width/2.0 - 15.0, monthLabel.frame.size.height/2.0)
-        var itemHeight = 150.0
         
-        return UIEdgeInsetsMake((screenRect.height - 150.0) / 2.0 , edgeInsets, 0, edgeInsets);
     }
     
     
@@ -215,6 +213,12 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     }
     
 
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+
+        var fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
+        diarys = fetchedResults
+        self.collectionView?.reloadData()
+    }
 
     // MARK: UICollectionViewDelegate
 

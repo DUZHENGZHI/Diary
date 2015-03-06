@@ -123,8 +123,6 @@ class DiaryVerticalTextView: UIView {
         
         var paragraphStypeSettings = [alignmentSet, LineBreakModeSet, ParagraphSpacingSet, MinimumLineSpacingSet, MaximumLineSpacingSet]
         
-//        var size1 = sizeof(paragraphStypeSettings)
-        var size2 = sizeof(CTParagraphStyleSetting)
         var paragraphStyle = CTParagraphStyleCreate(paragraphStypeSettings, paragraphStypeSettings.count);
     
 

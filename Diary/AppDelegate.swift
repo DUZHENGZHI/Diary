@@ -9,10 +9,6 @@
 import UIKit
 import CoreData
 
-let screenRect = UIScreen.mainScreen().bounds
-let DiaryFont = UIFont(name: "Wyue-GutiFangsong-NC", size: 16.0) as UIFont!
-let DiaryRed = UIColor(red: 192.0/255.0, green: 23.0/255.0, blue: 48.0/255.0, alpha: 1.0)
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
