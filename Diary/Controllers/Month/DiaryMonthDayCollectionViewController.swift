@@ -30,6 +30,8 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     var fetchedResultsController : NSFetchedResultsController!
     
     var diarysGroupInMonth = [Int: Int]()
+    
+    var sourceCollectionView: UICollectionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,6 +120,13 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func newCompose() {
+        var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
+        
+        self.presentViewController(composeViewController, animated: true, completion: nil)
+        
+    }
 
     /*
     // MARK: - Navigation
@@ -169,6 +178,42 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         
         return UIEdgeInsetsMake((screenRect.height - 150.0) / 2.0 , edgeInsets, 0, edgeInsets);
     }
+    
+    
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        NSLog("Push DiaryViewController controller")
+        
+        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryViewController") as! DiaryViewController
+
+        var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
+
+        dvc.diary = diary
+        
+        //        dvc.collectionView?.dataSource = collectionView.dataSource
+        
+        self.sourceCollectionView = collectionView
+        
+        self.navigationController?.pushViewController(dvc, animated: true)
+        
+        NSLog("Pushed")
+        
+    }
+    
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        if (fromVC == self && operation == UINavigationControllerOperation.Push) {
+            
+            NSLog("Do animtion")
+            var animator = DiaryAnimator()
+            animator.fromCollectionView = self.sourceCollectionView
+            return animator
+        }
+        else {
+            return nil;
+        }
+    }
+    
 
 
     // MARK: UICollectionViewDelegate
