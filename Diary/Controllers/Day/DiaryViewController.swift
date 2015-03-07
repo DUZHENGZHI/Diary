@@ -8,37 +8,35 @@
 
 import UIKit
 
-class DiaryViewController: UIViewController {
+class DiaryViewController: UIViewController,UIGestureRecognizerDelegate {
     
     var diary:Diary!
     
-    var textview: DiaryVerticalTextView!
+    var webview: UIWebView!
     
-    @IBOutlet weak var scrollview: UIScrollView!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
-        self.textview = DiaryVerticalTextView(frame: CGRectMake(0,0, self.view.frame.size.width * 2, self.view.frame.size.height - 10))
-        self.textview.fontName = "Wyue-GutiFangsong-NC"
-        self.textview.lineSpace = 15.0
-        self.textview.letterSpace = 8.0
-        self.textview.fontSize = 18.0
-//        self.textview.titleText = "借口"
-        self.textview.backgroundColor = UIColor.clearColor()
-        self.textview.bounds = CGRectInset(self.textview.frame, 20.0,0.0)
-        self.textview.text = diary.content
         
-//        self.textview.userInteractionEnabled = false
-        self.scrollview.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
-        self.scrollview.contentSize = CGSizeMake(self.textview.bounds.size.width + 20.0, self.textview.bounds.size.height - 10)
-        self.scrollview.contentOffset = CGPointMake(1000, -10)
         
-        self.scrollview.addSubview(self.textview)
+        var timeString = "\(numberToChinese(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: NSDate.new())))年 \(numberToChinese(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: NSDate.new())))月 \(numberToChinese(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: NSDate.new())))日"
+
         
+        //WebView method
+        
+        var newDiaryString = diary.content.stringByReplacingOccurrencesOfString("\n", withString: "<br>", options: NSStringCompareOptions.LiteralSearch, range: nil)
+    
+        
+        webview = UIWebView(frame: CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height))
+        webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:20px 0 20px 20px;} * { margin:0; font-family: 'Wyue-GutiFangsong-NC'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(self.view.frame.size.width - 115)px; margin-right: 5px;} .content p{ font-size: 14pt; line-height: 28pt;} .extra{ font-size:12pt; line-height: 15pt; margin-right:50px;}</style></head><body><div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString)</div></body></html>", baseURL: nil)
+        webview.scrollView.bounces = false
+        
+        self.view.addSubview(self.webview)
         
         var mSwipeUpRecognizer = UITapGestureRecognizer(target: self, action: "hideDiary")
+        mSwipeUpRecognizer.delegate = self
         mSwipeUpRecognizer.numberOfTapsRequired = 2
-        self.scrollview.addGestureRecognizer(mSwipeUpRecognizer)
+        self.webview.addGestureRecognizer(mSwipeUpRecognizer)
         // Do any additional setup after loading the view.
     }
     
@@ -52,6 +50,12 @@ class DiaryViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if (otherGestureRecognizer.isKindOfClass(UILongPressGestureRecognizer)){
+            return false
+        }
+        return true
+    }
 
     /*
     // MARK: - Navigation

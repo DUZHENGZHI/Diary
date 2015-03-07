@@ -32,7 +32,7 @@ class DiaryVerticalTextView: UIView {
         }
     }
     
-    var fontName: NSString = "Avenir-Roman" {
+    var fontName: NSString = "Wyue-GutiFangsong-NC" {
         didSet {
             self.setNeedsDisplay()
         }
@@ -67,6 +67,8 @@ class DiaryVerticalTextView: UIView {
         
         var path = CGPathCreateMutable()
         var pathSize = rect.size
+        
+        println("draw text size \(rect.size)")
         
         var reversingDiff = 0.0 as CGFloat
         
@@ -138,6 +140,23 @@ class DiaryVerticalTextView: UIView {
     
         return attrDict
     }
+    
+    func linesSizeWithString(aString:String, font:UIFont!) -> CGSize{
+        var font = CTFontCreateWithName(font.fontName, font.pointSize, nil)
+        var textAttrDict = getAttributedStringSourceWithString(aString, font:font)
+        var textAttrString  = NSMutableAttributedString(string: aString, attributes: textAttrDict)
+        
+        var framesetter = CTFramesetterCreateWithAttributedString(textAttrString)
+        var constraints = CGSizeMake(self.bounds.size.height, CGFloat.max)
+        var size = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, 0), nil, constraints, nil)
+        return size
+    }
+    
+    func linesSizeWithTextString(aString: String) -> CGSize {
+        var aFont = UIFont(name: fontName as String, size: fontSize)
+        return linesSizeWithString(aString, font: aFont)
+    }
+    
 
     /*
     // Only override drawRect: if you perform custom drawing.

@@ -85,22 +85,8 @@
                     <view key="view" contentMode="scaleToFill" id="adk-bR-y04">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EDJ-8H-wPf">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </scrollView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="lZv-DJ-AkL" firstAttribute="top" secondItem="EDJ-8H-wPf" secondAttribute="bottom" id="5TL-ko-tkU"/>
-                            <constraint firstAttribute="trailing" secondItem="EDJ-8H-wPf" secondAttribute="trailing" id="jPl-ae-C5b"/>
-                            <constraint firstItem="EDJ-8H-wPf" firstAttribute="top" secondItem="adk-bR-y04" secondAttribute="top" id="swu-YC-BWB"/>
-                            <constraint firstItem="EDJ-8H-wPf" firstAttribute="leading" secondItem="adk-bR-y04" secondAttribute="leading" id="uRw-cV-DQs"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="scrollview" destination="EDJ-8H-wPf" id="e7w-db-bAi"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QdC-ZG-FDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

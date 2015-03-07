@@ -177,27 +177,22 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        NSLog("Push DiaryViewController controller")
-        
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryViewController") as! DiaryViewController
         self.targetCollectionView = dvc
         var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
 
         dvc.diary = diary
         
-        //        dvc.collectionView?.dataSource = collectionView.dataSource
-        
         self.sourceCollectionView = collectionView
         
         self.navigationController?.pushViewController(dvc, animated: true)
         
-        NSLog("Pushed")
-        
     }
     
     func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
         var animator = DiaryAnimator()
-        println("From vc \(fromVC)")
+
         if (fromVC == self && operation == UINavigationControllerOperation.Push) {
             animator.fromView = self.sourceCollectionView
             return animator
