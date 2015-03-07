@@ -18,6 +18,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
     var keyboardSize:CGSize = CGSizeMake(0, 0)
     var finishButton:UIButton!
     var diary:Diary?
+    var locationHelper: DiaryLocationHelper = DiaryLocationHelper.new()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +61,14 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateAddress:", name: "DiaryLocationUpdated:", object: nil)
+
         // Do any additional setup after loading the view.
+    }
+    
+    func DiaryLocationUpdated(notification:NSNotification) {
+        var address = notification.object as! String
+        println("Author at \(address)")
     }
     
     func finishCompose(button: UIButton) {
@@ -74,11 +82,20 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
                 let newdiary = Diary(entity: entity!,
                     insertIntoManagedObjectContext:managedContext)
                 newdiary.content = composeView.text
-                newdiary.location = "广州 珠江畔"
+                if (locationHelper.address != nil){
+                    newdiary.location = "于 \(locationHelper.address!)"
+                }else{
+                    newdiary.location = ""
+                }
+                
                 newdiary.updateTimeWithDate(NSDate.new())
             }else{
                 diary!.content = composeView.text
-                diary!.location = "广州 珠江畔"
+                if (locationHelper.address != nil){
+                    diary!.location = "于 \(locationHelper.address!)"
+                }else{
+                    diary!.location = ""
+                }
                 diary!.updateTimeWithDate(NSDate.new())
             }
 

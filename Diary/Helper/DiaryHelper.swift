@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CoreLocation
 
 let screenRect = UIScreen.mainScreen().bounds
 let DiaryFont = UIFont(name: "Wyue-GutiFangsong-NC", size: 18) as UIFont!
