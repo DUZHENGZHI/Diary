@@ -15,7 +15,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
     
     var composeView:UITextView!
     var storage:NSTextStorage!
-    var keyboardSize:CGSize!
+    var keyboardSize:CGSize = CGSizeMake(0, 0)
     var finishButton:UIButton!
     var diary:Diary?
     
@@ -74,9 +74,6 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         if (composeView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 1){
             
             if(diary == nil) {
-
-                
-                //2
                 let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
                 
                 let newdiary = Diary(entity: entity!,
@@ -90,10 +87,6 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
                 diary!.updateTimeWithDate(NSDate.new())
             }
 
-            
-            //3
-
-            //4
             var error: NSError?
             if !managedContext.save(&error) {
                 println("Could not save \(error), \(error?.userInfo)")
@@ -106,10 +99,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
     
     
     func textViewDidChange(textView: UITextView) {
-        if (keyboardSize != nil){
-            updateTextViewSizeForKeyboardHeight(keyboardSize.height)
-        }
-        
+        updateTextViewSizeForKeyboardHeight(keyboardSize.height)
     }
     
 
@@ -119,10 +109,10 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
     }
     
     func updateTextViewSizeForKeyboardHeight(keyboardHeight: CGFloat) {
+        
         composeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - keyboardHeight)
         
-        finishButton.center = CGPointMake(screenRect.width - finishButton.frame.size.height/2.0 - 20, screenRect.height - keyboardSize.height - finishButton.frame.size.height/2.0 - 50)
-        
+        finishButton.center = CGPointMake(screenRect.width - finishButton.frame.size.height/2.0 - 20, screenRect.height - keyboardHeight - finishButton.frame.size.height/2.0 - 50)
 
     }
     
