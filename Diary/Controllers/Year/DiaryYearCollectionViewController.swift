@@ -53,11 +53,6 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
         
         self.navigationController?.delegate = self
-        //1
-        let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        let managedContext = appDelegate.managedObjectContext!
         
         //2
         let fetchRequest = NSFetchRequest(entityName:"Diary")
@@ -112,7 +107,15 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
     }
     
     func newCompose() {
+
+        var diary = findLastDayDiary()
+        
         var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
+        
+        if (diary != nil){
+            println("Find \(diary?.created_at)")
+            composeViewController.diary = diary
+        }
         
         self.presentViewController(composeViewController, animated: true, completion: nil)
         

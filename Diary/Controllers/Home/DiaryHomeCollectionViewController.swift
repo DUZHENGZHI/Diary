@@ -25,16 +25,8 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         self.view.backgroundColor = UIColor.whiteColor()
         
         self.navigationController?.delegate = self
-        //1
-        let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        let managedContext = appDelegate.managedObjectContext!
-        
-        //2
-        let fetchRequest = NSFetchRequest(entityName:"Diary")
 
-        
+        let fetchRequest = NSFetchRequest(entityName:"Diary")
         
         //3
         var error: NSError?

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 let screenRect = UIScreen.mainScreen().bounds
 let DiaryFont = UIFont(name: "Wyue-GutiFangsong-NC", size: 18) as UIFont!
@@ -15,6 +16,13 @@ let itemHeight:CGFloat = 150.0
 let itemSpacing:CGFloat = 30
 let itemWidth:CGFloat = 20
 let collectionViewWidth = itemWidth * 3 + itemSpacing * 2
+
+//1
+let appDelegate =
+UIApplication.sharedApplication().delegate as! AppDelegate
+
+let managedContext = appDelegate.managedObjectContext!
+
 
 func diaryButtonWith(#text: String, #fontSize: CGFloat, #width: CGFloat, #normalImageName: String, #highlightedImageName: String) -> UIButton {
     
@@ -46,6 +54,7 @@ func numberToChinese(number:Int) -> String {
 
 }
 
+
 func singleNumberToChinese(number:Character) -> String {
     switch number {
     case "0":
@@ -73,10 +82,50 @@ func singleNumberToChinese(number:Character) -> String {
     }
 }
 
+func findLastDayDiary() -> Diary? {
+    //2
+    let fetchRequest = NSFetchRequest(entityName:"Diary")
+    
+    println("\(NSDate.new().beginningOfDay()) \(NSDate.new().endOfDay())")
+    
+    fetchRequest.predicate = NSPredicate(format: "(created_at >= %@ ) AND (created_at < %@)", NSDate.new().beginningOfDay(), NSDate.new().endOfDay())
+    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
+    //3
+    var error: NSError?
+    
+    let fetchedResults =
+    managedContext.executeFetchRequest(fetchRequest,
+        error: &error) as! [Diary]?
+    
+    var diary = fetchedResults?.first
+    
+    return diary
+}
+
 extension Diary {
     func updateTimeWithDate(date: NSDate){
         self.created_at = date
         self.year = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: date)
         self.month = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: date)
+    }
+}
+
+extension NSDate {
+    func beginningOfDay() -> NSDate{
+        var calender = NSCalendar.currentCalendar()
+        var components = calender.components(NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay, fromDate: self)
+        components.hour = 00
+        components.minute = 00
+        components.second = 00
+        return calender.dateFromComponents(components)!
+    }
+    
+    func endOfDay() -> NSDate {
+        var calender = NSCalendar.currentCalendar()
+        var components = NSDateComponents.new()
+        components.day = 1
+        var date = calender.dateByAddingComponents(components, toDate: self.beginningOfDay(), options: nil)
+        date?.dateByAddingTimeInterval(-1)
+        return date!
     }
 }

@@ -17,6 +17,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
     var storage:NSTextStorage!
     var keyboardSize:CGSize!
     var finishButton:UIButton!
+    var diary:Diary?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +40,10 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         composeView.userInteractionEnabled = true
         composeView.delegate = self
         composeView.textContainerInset = UIEdgeInsetsMake(20, 20, 50, 20)
+        
+        if(diary != nil){
+            composeView.text = diary?.content
+        }
 //        composeView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (CGFloat)((90.0) / 180.0 * M_PI))
         composeView.becomeFirstResponder()
         self.view.addSubview(composeView)
@@ -66,28 +71,36 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
     func finishCompose(button: UIButton) {
         print("Finish compose \n")
         
-        //1
-        let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        let managedContext = appDelegate.managedObjectContext!
-        
-        //2
-        let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
-        
-        let diary = Diary(entity: entity!,
-            insertIntoManagedObjectContext:managedContext)
-        
-        //3
-        diary.content = composeView.text
-        diary.location = "广州 珠江畔"
-        diary.updateTimeWithDate(NSDate.new())        
-        //4
-        var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save \(error), \(error?.userInfo)")
+        if (composeView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 1){
+            
+            if(diary == nil) {
+
+                
+                //2
+                let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
+                
+                let newdiary = Diary(entity: entity!,
+                    insertIntoManagedObjectContext:managedContext)
+                newdiary.content = composeView.text
+                newdiary.location = "广州 珠江畔"
+                newdiary.updateTimeWithDate(NSDate.new())
+            }else{
+                diary!.content = composeView.text
+                diary!.location = "广州 珠江畔"
+                diary!.updateTimeWithDate(NSDate.new())
+            }
+
+            
+            //3
+
+            //4
+            var error: NSError?
+            if !managedContext.save(&error) {
+                println("Could not save \(error), \(error?.userInfo)")
+            }
+            
         }
-        
+
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
