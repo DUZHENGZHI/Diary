@@ -14,6 +14,7 @@ import CoreData
 class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayoutManagerDelegate{
     
     var composeView:UITextView!
+    var locationTextView:UITextView!
     var storage:NSTextStorage!
     var keyboardSize:CGSize = CGSizeMake(0, 0)
     var finishButton:UIButton!
@@ -28,7 +29,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         let container = NSTextContainer(size: containerSize)
 
         container.widthTracksTextView = true
-        let layoutManager = DiaryVerticalTextLayout()
+        let layoutManager = NSLayoutManager()
         layoutManager.delegate = self
 
 
@@ -49,6 +50,17 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         composeView.becomeFirstResponder()
         self.view.addSubview(composeView)
         
+        //Add LocationTextView
+        locationTextView = UITextView(frame: CGRectMake(0, composeView.frame.size.height - 30.0, screenRect.width, 30.0))
+        locationTextView.font = DiaryLocationFont
+        locationTextView.editable = true
+        locationTextView.userInteractionEnabled = true
+        locationTextView.alpha = 0.0
+        locationTextView.bounces = false
+//        composeView.textContainerInset = UIEdgeInsetsMake(20, 20, 50, 20)
+        self.view.addSubview(locationTextView)
+        
+        
         //Add finish button
         
         finishButton = diaryButtonWith(text: "终",  fontSize: 18.0,  width: 36.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
@@ -61,14 +73,25 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateAddress:", name: "DiaryLocationUpdated:", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateAddress:", name: "DiaryLocationUpdated", object: nil)
 
         // Do any additional setup after loading the view.
     }
     
-    func DiaryLocationUpdated(notification:NSNotification) {
+    func updateAddress(notification:NSNotification) {
         var address = notification.object as! String
         println("Author at \(address)")
+        if (diary?.location == "" || diary?.location == nil){
+            locationTextView.text = "于 \(address)"
+        }else{
+            locationTextView.text = diary?.location
+        }
+        
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+            {
+                self.locationTextView.alpha = 1.0
+             
+            }, completion: nil)
     }
     
     func finishCompose(button: UIButton) {
@@ -83,7 +106,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
                     insertIntoManagedObjectContext:managedContext)
                 newdiary.content = composeView.text
                 if (locationHelper.address != nil){
-                    newdiary.location = "于 \(locationHelper.address!)"
+                    newdiary.location = locationTextView.text
                 }else{
                     newdiary.location = ""
                 }
@@ -92,7 +115,9 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
             }else{
                 diary!.content = composeView.text
                 if (locationHelper.address != nil){
-                    diary!.location = "于 \(locationHelper.address!)"
+                    if (locationHelper.address != nil){
+                        diary!.location = locationTextView.text
+                    }
                 }else{
                     diary!.location = ""
                 }
@@ -124,9 +149,17 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         
         UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
             {
-                self.composeView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height - keyboardHeight)
+                if (self.locationTextView.text == nil) {
+                    self.composeView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height - keyboardHeight)
+                }else{
+                    self.composeView.frame = CGRectMake(0, 0, self.composeView.frame.size.width,  self.view.frame.height - keyboardHeight - 50.0)
+                }
+
+//                self.locationTextView.frame = CGRectMake(20, self.composeView.frame.size.height - 30.0, self.composeView.frame.size.width - 20, 30.0)
                 
                 self.finishButton.center = CGPointMake(screenRect.width - self.finishButton.frame.size.height/2.0 - 20, screenRect.height - keyboardHeight - self.finishButton.frame.size.height/2.0 - 50)
+                
+                self.locationTextView.center = CGPointMake(self.locationTextView.frame.size.width/2.0 + 20.0, self.finishButton.center.y)
                 
             }, completion: nil)
     }
