@@ -10,13 +10,15 @@ import UIKit
 
 class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
-    var fromCollectionView: UICollectionView!
+    var fromCollectionView: UIView!
     var transitionLayout: UICollectionViewTransitionLayout!
     var startTime: NSTimeInterval = 0.0
     var endTime: NSTimeInterval = 0.0
     var timer:NSTimer!
     var transitionContext: UIViewControllerContextTransitioning!
     var toCollectionView: UICollectionView!
+    
+    var pop:Bool = false
 
     override init() {
         
@@ -34,7 +36,7 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         var toVC   = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
         var toView = toVC!.view
         
-        toView.alpha = 0.0
+
         
         var initialRect = CGRectMake(fromVC!.view.frame.size.width/2.0, fromVC!.view.frame.size.height/2.0, 0, 0)
         
@@ -63,15 +65,28 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 //        self.toCollectionView.contentInset = contentInset;
 //        self.toCollectionView.setCollectionViewLayout(currentLayout, animated: false)
 //        toView.frame = initialRect
-        toView.transform = CGAffineTransformMakeScale(0.3,0.3);
+
+        toView.alpha = 0.0
+        
+        if (pop) {
+            toView.transform = CGAffineTransformMakeScale(1.0,1.0)
+        }else{
+            toView.transform = CGAffineTransformMakeScale(0.3,0.3);
+        }
 
         inview.insertSubview(toView, aboveSubview: fromView)
 
-        UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, options: UIViewAnimationOptions.BeginFromCurrentState, animations:
+        UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, options: UIViewAnimationOptions.TransitionCrossDissolve, animations:
             {
 //                toView.frame = finalRect
-                toView.transform = CGAffineTransformMakeScale(1,1);
+                if (self.pop) {
+                    fromView.transform = CGAffineTransformMakeScale(3.3,3.3)
+                }else{
+                    toView.transform = CGAffineTransformMakeScale(1,1);
+                }
+                
                 toView.alpha = 1.0
+
 //                self.toCollectionView.performBatchUpdates({
 //                    self.toCollectionView.setCollectionViewLayout(toLayout, animated: false)
 //                }, completion: { finished in

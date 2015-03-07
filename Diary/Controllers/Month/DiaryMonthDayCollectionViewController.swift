@@ -31,6 +31,8 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     var diarysGroupInMonth = [Int: Int]()
     
     var sourceCollectionView: UICollectionView!
+    
+    var targetCollectionView: UIViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -178,7 +180,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         NSLog("Push DiaryViewController controller")
         
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryViewController") as! DiaryViewController
-
+        self.targetCollectionView = dvc
         var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
 
         dvc.diary = diary
@@ -194,12 +196,15 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     }
     
     func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
+        var animator = DiaryAnimator()
+        println("From vc \(fromVC)")
         if (fromVC == self && operation == UINavigationControllerOperation.Push) {
-            
-            NSLog("Do animtion")
-            var animator = DiaryAnimator()
             animator.fromCollectionView = self.sourceCollectionView
+            return animator
+        }
+        else if (fromVC == self.targetCollectionView  && operation == UINavigationControllerOperation.Pop) {
+            animator.fromCollectionView = self.targetCollectionView.view
+            animator.pop = true
             return animator
         }
         else {

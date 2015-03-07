@@ -17,6 +17,7 @@ class DiaryViewController: UIViewController {
     @IBOutlet weak var scrollview: UIScrollView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.whiteColor()
         self.textview = DiaryVerticalTextView(frame: CGRectMake(0,0, self.view.frame.size.width * 2, self.view.frame.size.height - 10))
         self.textview.fontName = "Wyue-GutiFangsong-NC"
         self.textview.lineSpace = 15.0
