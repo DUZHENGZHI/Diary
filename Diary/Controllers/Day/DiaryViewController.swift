@@ -28,7 +28,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
     
         
         webview = UIWebView(frame: CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height))
-        webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:20px 0 20px 20px;} * { margin:0; font-family: 'Wyue-GutiFangsong-NC'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(self.view.frame.size.width - 120)px; margin-right: 10px;} .content p{ font-size: 14pt; line-height: 28pt;} .extra{ font-size:12pt; line-height: 15pt; margin-right:50px;}</style></head><body><div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString)</div></body></html>", baseURL: nil)
+        webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:20px 0 20px 20px;} * {-webkit-text-size-adjust: 100%; margin:0; font-family: 'Wyue-GutiFangsong-NC'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(self.view.frame.size.width - 120)px; margin-right: 10px;} .content p{ font-size: 14pt; line-height: 28pt;} .extra{ font-size:12pt; line-height: 15pt; margin-right:50px;}</style></head><body><div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString)</div></body></html>", baseURL: nil)
         webview.scrollView.bounces = false
         webview.delegate = self
 
