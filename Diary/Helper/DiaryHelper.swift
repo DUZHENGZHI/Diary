@@ -89,14 +89,21 @@ func findLastDayDiary() -> Diary? {
     println("\(NSDate.new().beginningOfDay()) \(NSDate.new().endOfDay())")
     
     fetchRequest.predicate = NSPredicate(format: "(created_at >= %@ ) AND (created_at < %@)", NSDate.new().beginningOfDay(), NSDate.new().endOfDay())
-    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
+    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
     //3
     var error: NSError?
     
-    let fetchedResults =
+    var fetchedResults =
     managedContext.executeFetchRequest(fetchRequest,
         error: &error) as! [Diary]?
     
+    while(fetchedResults?.count > 1){
+        var lastDiary = fetchedResults?.last!
+        managedContext.deleteObject(lastDiary!)
+        fetchedResults = managedContext.executeFetchRequest(fetchRequest,
+                error: &error) as! [Diary]?
+    }
+    managedContext.save(nil)
     var diary = fetchedResults?.first
     
     return diary

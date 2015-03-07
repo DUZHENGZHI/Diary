@@ -64,14 +64,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Diary.sqlite")
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
-        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
+        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: self.storeOptions, error: &error) == nil {
             coordinator = nil
             // Report any error we got.
             var dict = [String: AnyObject]()
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
             dict[NSUnderlyingErrorKey] = error
-            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
+            error = NSError(domain: "Catch.Diary.Error", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(error), \(error!.userInfo)")
@@ -91,6 +91,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
     }()
+    
+    lazy var storeOptions: [NSObject : AnyObject] = {
+        return [NSMigratePersistentStoresAutomaticallyOption:true,NSInferMappingModelAutomaticallyOption: true, NSPersistentStoreUbiquitousContentNameKey : "CatchDiary", NSPersistentStoreUbiquitousPeerTokenOption: "c405d8e8a24s11e3bbec425861s862bs"]
+    }()
 
     // MARK: - Core Data Saving support
 
@@ -104,6 +108,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 abort()
             }
         }
+    }
+    
+    func registerForiCloudNotifications() {
+        var notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: "storesWillChange:", name: NSPersistentStoreCoordinatorStoresWillChangeNotification, object: persistentStoreCoordinator)
+        notificationCenter.addObserver(self, selector: "storesDidChange:", name: NSPersistentStoreCoordinatorStoresDidChangeNotification, object: persistentStoreCoordinator)
+        notificationCenter.addObserver(self, selector: "persistentStoreDidImportUbiquitousContentChanges:", name: NSPersistentStoreDidImportUbiquitousContentChangesNotification, object: persistentStoreCoordinator)
+    }
+    
+    func persistentStoreDidImportUbiquitousContentChanges(notification:NSNotification){
+        var context = self.managedObjectContext
+        context?.performBlock({
+            context?.mergeChangesFromContextDidSaveNotification(notification)
+        })
+    }
+    
+    func storesWillChange(notification:NSNotification) {
+        var context:NSManagedObjectContext! = self.managedObjectContext
+        context?.performBlockAndWait({
+            var error:NSError?
+            if (context.hasChanges) {
+                var success = context.save(&error)
+                
+                if (!success && (error != nil)) {
+                    // 执行错误处理
+                    NSLog("%@",error!.localizedDescription)
+                    self.migrateiCloudStoreToLocalStore()
+                }
+            }
+            context.reset()
+        })
+    }
+    
+    func storesDidChange(notification:NSNotification){
+        
+    }
+    
+    func migrateiCloudStoreToLocalStore() {
+        println("Migrate")
+        var oldStore = persistentStoreCoordinator?.persistentStores.first as! NSPersistentStore
+        var localStoreOptions = self.storeOptions
+        localStoreOptions[NSPersistentStoreRemoveUbiquitousMetadataOption] = true
+        var newStore = persistentStoreCoordinator?.migratePersistentStore(oldStore, toURL:  self.applicationDocumentsDirectory.URLByAppendingPathComponent("Diary.sqlite"), options: localStoreOptions, withType: NSSQLiteStoreType, error: nil)
+        
+        reloadStore(newStore)
+    }
+    
+    func reloadStore(store: NSPersistentStore?) {
+        if (store != nil) {
+            persistentStoreCoordinator?.removePersistentStore(store!, error: nil)
+        }
+        
+        persistentStoreCoordinator?.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: self.applicationDocumentsDirectory.URLByAppendingPathComponent("Diary.sqlite"), options: self.storeOptions, error: nil)
     }
 
 }
