@@ -110,13 +110,17 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
     
     func updateTextViewSizeForKeyboardHeight(keyboardHeight: CGFloat) {
         
-        composeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - keyboardHeight)
-        
-        finishButton.center = CGPointMake(screenRect.width - finishButton.frame.size.height/2.0 - 20, screenRect.height - keyboardHeight - finishButton.frame.size.height/2.0 - 50)
-
+        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+            {
+                self.composeView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height - keyboardHeight)
+                
+                self.finishButton.center = CGPointMake(screenRect.width - self.finishButton.frame.size.height/2.0 - 20, screenRect.height - keyboardHeight - self.finishButton.frame.size.height/2.0 - 50)
+                
+            }, completion: nil)
     }
     
     func keyboardDidShow(notification: NSNotification) {
+        
         if let rectValue = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue {
             keyboardSize = rectValue.CGRectValue().size
             updateTextViewSizeForKeyboardHeight(keyboardSize.height)
