@@ -52,7 +52,7 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                 }else{
                     toView.transform = CGAffineTransformMakeScale(1,1);
                 }
-                
+
                 toView.alpha = 1.0
 
             }, completion: { finished in
