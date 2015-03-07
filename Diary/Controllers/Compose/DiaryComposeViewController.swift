@@ -58,11 +58,6 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         
         self.view.addSubview(finishButton)
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "preferredContentSizeChanged:",
-            name: UIContentSizeCategoryDidChangeNotification,
-            object: nil)
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil)
         // Do any additional setup after loading the view.
