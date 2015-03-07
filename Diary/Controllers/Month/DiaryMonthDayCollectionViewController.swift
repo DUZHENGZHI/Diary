@@ -199,11 +199,11 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         var animator = DiaryAnimator()
         println("From vc \(fromVC)")
         if (fromVC == self && operation == UINavigationControllerOperation.Push) {
-            animator.fromCollectionView = self.sourceCollectionView
+            animator.fromView = self.sourceCollectionView
             return animator
         }
         else if (fromVC == self.targetCollectionView  && operation == UINavigationControllerOperation.Pop) {
-            animator.fromCollectionView = self.targetCollectionView.view
+            animator.fromView = self.targetCollectionView.view
             animator.pop = true
             return animator
         }

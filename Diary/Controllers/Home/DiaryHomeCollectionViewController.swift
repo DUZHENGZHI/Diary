@@ -166,7 +166,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
 
             NSLog("Do animtion")
             var animator = DiaryAnimator()
-            animator.fromCollectionView = self.sourceCollectionView
+            animator.fromView = self.sourceCollectionView
             return animator
         }
         else {

@@ -10,13 +10,8 @@ import UIKit
 
 class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
-    var fromCollectionView: UIView!
-    var transitionLayout: UICollectionViewTransitionLayout!
-    var startTime: NSTimeInterval = 0.0
-    var endTime: NSTimeInterval = 0.0
-    var timer:NSTimer!
+    var fromView: UIView!
     var transitionContext: UIViewControllerContextTransitioning!
-    var toCollectionView: UICollectionView!
     
     var pop:Bool = false
 
@@ -35,9 +30,6 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         var fromView = fromVC!.view
         var toVC   = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
         var toView = toVC!.view
-        
-
-        
         var initialRect = CGRectMake(fromVC!.view.frame.size.width/2.0, fromVC!.view.frame.size.height/2.0, 0, 0)
         
         var finalRect  = transitionContext.finalFrameForViewController(toVC!)
