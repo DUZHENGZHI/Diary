@@ -45,6 +45,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         
         if(diary != nil){
             composeView.text = diary?.content
+            self.composeView.contentOffset = CGPointMake(0, self.composeView.contentSize.height)
         }
 //        composeView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (CGFloat)((90.0) / 180.0 * M_PI))
         composeView.becomeFirstResponder()
@@ -72,6 +73,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         self.view.addSubview(finishButton)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateAddress:", name: "DiaryLocationUpdated", object: nil)
 
@@ -92,11 +94,13 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
                 self.locationTextView.alpha = 1.0
              
             }, completion: nil)
+        locationHelper.locationManager.stopUpdatingLocation()
     }
     
     func finishCompose(button: UIButton) {
         print("Finish compose \n")
-        
+        self.composeView.endEditing(true)
+        self.locationTextView.endEditing(true)
         if (composeView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 1){
             
             if(diary == nil) {
@@ -152,7 +156,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
                 if (self.locationTextView.text == nil) {
                     self.composeView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height - keyboardHeight)
                 }else{
-                    self.composeView.frame = CGRectMake(0, 0, self.composeView.frame.size.width,  self.view.frame.height - keyboardHeight - 50.0)
+                    self.composeView.frame = CGRectMake(0, 0, self.composeView.frame.size.width,  self.view.frame.height - keyboardHeight - 50.0 - self.finishButton.frame.size.height/2.0)
                 }
 
 //                self.locationTextView.frame = CGRectMake(20, self.composeView.frame.size.height - 30.0, self.composeView.frame.size.width - 20, 30.0)
