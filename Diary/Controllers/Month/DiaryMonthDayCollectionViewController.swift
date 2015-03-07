@@ -67,6 +67,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         self.view.addSubview(monthLabel)
         self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
         //
+        self.collectionView?.showsHorizontalScrollIndicator = false
         
         
         self.navigationController?.delegate = self

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DiaryViewController: UIViewController,UIGestureRecognizerDelegate {
+class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebViewDelegate{
     
     var diary:Diary!
     
@@ -30,6 +30,8 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate {
         webview = UIWebView(frame: CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height))
         webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:20px 0 20px 20px;} * { margin:0; font-family: 'Wyue-GutiFangsong-NC'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(self.view.frame.size.width - 115)px; margin-right: 5px;} .content p{ font-size: 14pt; line-height: 28pt;} .extra{ font-size:12pt; line-height: 15pt; margin-right:50px;}</style></head><body><div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString)</div></body></html>", baseURL: nil)
         webview.scrollView.bounces = false
+        webview.delegate = self
+
         
         self.view.addSubview(self.webview)
         
@@ -38,6 +40,10 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate {
         mSwipeUpRecognizer.numberOfTapsRequired = 2
         self.webview.addGestureRecognizer(mSwipeUpRecognizer)
         // Do any additional setup after loading the view.
+    }
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        webview.scrollView.contentOffset = CGPointMake(webview.scrollView.contentSize.width - webview.frame.size.width, 0)
     }
     
     func hideDiary() {
