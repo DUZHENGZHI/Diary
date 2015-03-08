@@ -41,7 +41,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         composeView.editable = true
         composeView.userInteractionEnabled = true
         composeView.delegate = self
-        composeView.textContainerInset = UIEdgeInsetsMake(20, 20, 50, 20)
+        composeView.textContainerInset = UIEdgeInsetsMake(20, 20, 20, 20)
         
         if(diary != nil){
             composeView.text = diary?.content
@@ -88,11 +88,11 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         }else{
             locationTextView.text = diary?.location
         }
-        
+
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
             {
                 self.locationTextView.alpha = 1.0
-             
+
             }, completion: nil)
         locationHelper.locationManager.stopUpdatingLocation()
     }
@@ -156,7 +156,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
                 if (self.locationTextView.text == nil) {
                     self.composeView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height - keyboardHeight)
                 }else{
-                    self.composeView.frame = CGRectMake(0, 0, self.composeView.frame.size.width,  self.view.frame.height - keyboardHeight - 50.0 - self.finishButton.frame.size.height/2.0)
+                    self.composeView.frame = CGRectMake(0, 0, self.composeView.frame.size.width,  self.view.frame.height - keyboardHeight - 80.0 - self.finishButton.frame.size.height/2.0)
                 }
 
 //                self.locationTextView.frame = CGRectMake(20, self.composeView.frame.size.height - 30.0, self.composeView.frame.size.width - 20, 30.0)

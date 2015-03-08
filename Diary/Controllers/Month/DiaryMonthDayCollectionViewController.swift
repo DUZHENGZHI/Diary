@@ -12,7 +12,7 @@ import CoreData
 let reuseMonthDayCellIdentifier = "MonthDayCollectionViewCell"
 
 
-class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate , NSFetchedResultsControllerDelegate{
+class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout , NSFetchedResultsControllerDelegate{
     
     var diarys = [NSManagedObject]()
     
@@ -29,10 +29,6 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     var fetchedResultsController : NSFetchedResultsController!
     
     var diarysGroupInMonth = [Int: Int]()
-    
-    var sourceCollectionView: UICollectionView!
-    
-    var targetCollectionView: UIViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +42,13 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         
         yearLabel.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 20 + yearLabel.frame.size.height/2.0 )
         
+        yearLabel.userInteractionEnabled = true
+        
         self.view.addSubview(yearLabel)
+        
+        var mTapUpRecognizer = UITapGestureRecognizer(target: self, action: "backToYear")
+        mTapUpRecognizer.numberOfTapsRequired = 1
+        yearLabel.addGestureRecognizer(mTapUpRecognizer)
         
         //Add compose button
         
@@ -68,9 +70,6 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
         //
         self.collectionView?.showsHorizontalScrollIndicator = false
-        
-        
-        self.navigationController?.delegate = self
         
         //2
         let fetchRequest = NSFetchRequest(entityName:"Diary")
@@ -111,6 +110,10 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
 //        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseMonthDayCellIdentifier)
 
         // Do any additional setup after loading the view.
+    }
+    
+    func backToYear(){
+        self.navigationController!.popViewControllerAnimated(true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -182,35 +185,14 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryViewController") as! DiaryViewController
-        self.targetCollectionView = dvc
+        
         var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
 
         dvc.diary = diary
         
-        self.sourceCollectionView = collectionView
-        
-        self.navigationController?.pushViewController(dvc, animated: true)
+        self.navigationController!.pushViewController(dvc, animated: true)
         
     }
-    
-    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
-        var animator = DiaryAnimator()
-
-        if (fromVC == self && operation == UINavigationControllerOperation.Push) {
-            animator.fromView = self.sourceCollectionView
-            return animator
-        }
-        else if (fromVC == self.targetCollectionView  && operation == UINavigationControllerOperation.Pop) {
-            animator.fromView = self.targetCollectionView.view
-            animator.pop = true
-            return animator
-        }
-        else {
-            return nil;
-        }
-    }
-    
 
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
 

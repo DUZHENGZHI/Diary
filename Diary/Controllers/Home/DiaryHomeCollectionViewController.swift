@@ -16,15 +16,13 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
     var diarys = [NSManagedObject]()
     
     var diarysGroupInYear = [Int: Int]()
-    
-    var sourceCollectionView: UICollectionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        self.navigationController?.delegate = self
+        self.navigationController!.delegate = self
 
         let fetchRequest = NSFetchRequest(entityName:"Diary")
         
@@ -138,27 +136,24 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        NSLog("Push view controller")
-        
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as! DiaryYearCollectionViewController
         dvc.year = diarysGroupInYear.keys.array[indexPath.row]
 //        dvc.collectionView?.dataSource = collectionView.dataSource
         
-        self.sourceCollectionView = collectionView
-        
-        self.navigationController?.pushViewController(dvc, animated: true)
-        
-        NSLog("Pushed")
+        self.navigationController!.pushViewController(dvc, animated: true)
         
     }
     
     func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
-        if (fromVC == self && operation == UINavigationControllerOperation.Push) {
-
-            NSLog("Do animtion")
-            var animator = DiaryAnimator()
-            animator.fromView = self.sourceCollectionView
+        var animator = DiaryAnimator()
+        if (operation == UINavigationControllerOperation.Push) {
+            animator.fromView = fromVC.view
+            return animator
+        }
+        else if (operation == UINavigationControllerOperation.Pop) {
+            animator.fromView = fromVC.view
+            animator.pop = true
             return animator
         }
         else {

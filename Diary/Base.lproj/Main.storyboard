@@ -41,7 +41,7 @@
         <!--Diary Home Collection View Controller-->
         <scene sceneID="XeV-xg-K7f">
             <objects>
-                <collectionViewController id="Psh-G5-U2h" customClass="DiaryHomeCollectionViewController" customModule="Diary" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="DiaryHomeCollectionViewController" id="Psh-G5-U2h" customClass="DiaryHomeCollectionViewController" customModule="Diary" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="TL1-2l-IVD">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

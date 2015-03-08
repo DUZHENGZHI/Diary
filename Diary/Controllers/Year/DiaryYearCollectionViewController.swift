@@ -11,7 +11,7 @@ import CoreData
 
 let reuseYearIdentifier = "YearMonthCollectionViewCell"
 
-class DiaryYearCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
+class DiaryYearCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var diarys = [NSManagedObject]()
     
@@ -25,8 +25,6 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
     
     var diarysGroupInMonth = [Int: Int]()
     
-    var sourceCollectionView: UICollectionView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
@@ -37,6 +35,12 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         yearLabel.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 20 + yearLabel.frame.size.height/2.0 )
         
         self.view.addSubview(yearLabel)
+        
+        yearLabel.userInteractionEnabled = true
+        
+        var mTapUpRecognizer = UITapGestureRecognizer(target: self, action: "backToHome")
+        mTapUpRecognizer.numberOfTapsRequired = 1
+        yearLabel.addGestureRecognizer(mTapUpRecognizer)
         
         //Add compose button
         
@@ -51,8 +55,6 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         //
         
         self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
-        
-        self.navigationController?.delegate = self
         
         //2
         let fetchRequest = NSFetchRequest(entityName:"Diary")
@@ -104,6 +106,10 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         self.collectionView?.setCollectionViewLayout(yearLayout, animated: false)
 
         // Do any additional setup after loading the view.
+    }
+    
+    func backToHome(){
+        self.navigationController!.popViewControllerAnimated(true)
     }
     
     func newCompose() {
@@ -195,8 +201,6 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        NSLog("Push view controller")
-        
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
         
         if diarysGroupInMonth.keys.array.count == 0 {
@@ -209,26 +213,8 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
 
         //        dvc.collectionView?.dataSource = collectionView.dataSource
         
-        self.sourceCollectionView = collectionView
+        self.navigationController!.pushViewController(dvc, animated: true)
         
-        self.navigationController?.pushViewController(dvc, animated: true)
-        
-        NSLog("Pushed")
-        
-    }
-    
-    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
-        if (fromVC == self && operation == UINavigationControllerOperation.Push) {
-            
-            NSLog("Do animtion")
-            var animator = DiaryAnimator()
-            animator.fromView = self.sourceCollectionView
-            return animator
-        }
-        else {
-            return nil;
-        }
     }
     
 
