@@ -32,7 +32,8 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         
         webview = UIWebView(frame: CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height))
 
-        webview.scrollView.bounces = false
+        webview.scrollView.bounces = true
+
         webview.delegate = self
         webview.backgroundColor = UIColor.whiteColor()
 
