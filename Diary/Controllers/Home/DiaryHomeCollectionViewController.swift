@@ -76,14 +76,17 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
     
     
     func moveToThisMonth() {
-        var diary = diarys.last as! Diary
-        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
-        dvc.month = diary.month.integerValue
-        dvc.year = diary.year.integerValue
-        
-        //        dvc.collectionView?.dataSource = collectionView.dataSource
-        
-        self.navigationController!.pushViewController(dvc, animated: true)
+        if (diarys.count > 0){
+            var diary = diarys.last as! Diary
+            var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
+            dvc.month = diary.month.integerValue
+            dvc.year = diary.year.integerValue
+            
+            //        dvc.collectionView?.dataSource = collectionView.dataSource
+            
+            self.navigationController!.pushViewController(dvc, animated: true)
+        }
+
     }
 
     override func didReceiveMemoryWarning() {
