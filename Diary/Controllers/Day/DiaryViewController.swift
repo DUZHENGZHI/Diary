@@ -56,7 +56,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         buttonsView.backgroundColor = UIColor.whiteColor()
         buttonsView.alpha = 0.0
         
-        saveButton = diaryButtonWith(text: "存",  fontSize: 18.0,  width: 36.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        saveButton = diaryButtonWith(text: "存",  fontSize: 18.0,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
         saveButton.center = CGPointMake(buttonsView.frame.width/2.0, buttonsView.frame.height/2.0)
         
@@ -65,7 +65,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         buttonsView.addSubview(saveButton)
         
         
-        editButton = diaryButtonWith(text: "改",  fontSize: 18.0,  width: 36.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        editButton = diaryButtonWith(text: "改",  fontSize: 18.0,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
         editButton.center = CGPointMake(saveButton.center.x - 56.0, saveButton.center.y)
         
@@ -73,7 +73,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         
         buttonsView.addSubview(editButton)
         
-        deleteButton = diaryButtonWith(text: "删",  fontSize: 18.0,  width: 36.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        deleteButton = diaryButtonWith(text: "删",  fontSize: 18.0,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
         deleteButton.center = CGPointMake(saveButton.center.x + 56.0, saveButton.center.y)
         

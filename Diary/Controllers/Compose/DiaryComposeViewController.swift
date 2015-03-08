@@ -64,7 +64,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         
         //Add finish button
         
-        finishButton = diaryButtonWith(text: "终",  fontSize: 18.0,  width: 36.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        finishButton = diaryButtonWith(text: "终",  fontSize: 18.0,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
         finishButton.center = CGPointMake(screenRect.width - 30, screenRect.height - 30)
         

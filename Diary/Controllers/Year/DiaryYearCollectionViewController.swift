@@ -30,7 +30,7 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         self.view.backgroundColor = UIColor.whiteColor()
         //Add year label
         
-        yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: "二零一五年", fontSize: 19.0,lineHeight: 5.0)
+        yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: "二零一五年", fontSize: 20.0,lineHeight: 5.0)
         
         yearLabel.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 20 + yearLabel.frame.size.height/2.0 )
         
@@ -44,7 +44,7 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         
         //Add compose button
         
-        composeButton = diaryButtonWith(text: "撰",  fontSize: 14.0,  width: 28.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        composeButton = diaryButtonWith(text: "撰",  fontSize: 14.0,  width: 40.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
         composeButton.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 38 + yearLabel.frame.size.height + 26.0/2.0)
         
