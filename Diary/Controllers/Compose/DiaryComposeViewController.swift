@@ -73,7 +73,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         self.view.addSubview(finishButton)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name:UIKeyboardWillChangeFrameNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateAddress:", name: "DiaryLocationUpdated", object: nil)
 
@@ -152,11 +152,6 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
     func updateTextViewSizeForKeyboardHeight(keyboardHeight: CGFloat) {
         
         var newKeyboardHeight = keyboardHeight
-        println("Keyboard height is \(newKeyboardHeight)")
-        
-        if (newKeyboardHeight == 216.0){
-            newKeyboardHeight = 252.0
-        }
         
         UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
             {
@@ -177,7 +172,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
     
     func keyboardDidShow(notification: NSNotification) {
         
-        if let rectValue = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue {
+        if let rectValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
             keyboardSize = rectValue.CGRectValue().size
             updateTextViewSizeForKeyboardHeight(keyboardSize.height)
         }
