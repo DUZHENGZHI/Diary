@@ -45,12 +45,14 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         inview.insertSubview(toView, aboveSubview: fromView)
 
-        UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, options: UIViewAnimationOptions.TransitionCrossDissolve, animations:
+        UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, options: UIViewAnimationOptions.TransitionCrossDissolve | UIViewAnimationOptions.CurveEaseInOut, animations:
             {
                 if (self.pop) {
                     fromView.transform = CGAffineTransformMakeScale(3.3,3.3)
+
                 }else{
-                    toView.transform = CGAffineTransformMakeScale(1,1);
+                    toView.transform = CGAffineTransformMakeScale(1.0,1.0);
+//                    fromView.transform = CGAffineTransformMakeScale(3.3,3.3);
                 }
 
                 toView.alpha = 1.0
