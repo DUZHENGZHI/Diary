@@ -151,17 +151,24 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
     
     func updateTextViewSizeForKeyboardHeight(keyboardHeight: CGFloat) {
         
+        var newKeyboardHeight = keyboardHeight
+        println("Keyboard height is \(newKeyboardHeight)")
+        
+        if (newKeyboardHeight == 216.0){
+            newKeyboardHeight = 252.0
+        }
+        
         UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
             {
                 if (self.locationTextView.text == nil) {
-                    self.composeView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height - keyboardHeight)
+                    self.composeView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height - newKeyboardHeight)
                 }else{
-                    self.composeView.frame = CGRectMake(0, 0, self.composeView.frame.size.width,  self.view.frame.height - keyboardHeight - 80.0 - self.finishButton.frame.size.height/2.0)
+                    self.composeView.frame = CGRectMake(0, 0, self.composeView.frame.size.width,  self.view.frame.height - newKeyboardHeight - 40.0 - self.finishButton.frame.size.height/2.0)
                 }
 
 //                self.locationTextView.frame = CGRectMake(20, self.composeView.frame.size.height - 30.0, self.composeView.frame.size.width - 20, 30.0)
                 
-                self.finishButton.center = CGPointMake(screenRect.width - self.finishButton.frame.size.height/2.0 - 20, screenRect.height - keyboardHeight - self.finishButton.frame.size.height/2.0 - 50)
+                self.finishButton.center = CGPointMake(self.view.frame.width - self.finishButton.frame.size.height/2.0 - 20, self.view.frame.height - newKeyboardHeight - self.finishButton.frame.size.height/2.0 - 10)
                 
                 self.locationTextView.center = CGPointMake(self.locationTextView.frame.size.width/2.0 + 20.0, self.finishButton.center.y)
                 
