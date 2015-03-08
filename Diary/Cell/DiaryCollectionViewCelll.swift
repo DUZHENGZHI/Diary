@@ -14,6 +14,7 @@ class DiaryCollectionViewCell: UICollectionViewCell {
     var labelText: String = "" {
         didSet {
             self.textLabel.updateText(labelText)
+            self.textLabel.center = CGPointMake(itemWidth/2.0, self.textLabel.center.y + 28)
         }
     }
     
@@ -23,14 +24,9 @@ class DiaryCollectionViewCell: UICollectionViewCell {
         
         self.textLabel = DiaryLabel(fontname: "Wyue-GutiFangsong-NC", labelText: labelText, fontSize: 16.0, lineHeight: 5.0)
 
-        
         self.addSubview(textLabel)
     }
     
-    override func layoutSubviews() {
-        
-        self.textLabel.center = CGPointMake(itemWidth/2.0, self.textLabel.frame.size.height/2.0 + self.textLabel.font.pointSize)
-    }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         var anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)

@@ -64,7 +64,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         monthLabel = DiaryLabel(fontname: "Wyue-GutiFangsong-NC", labelText: "三月", fontSize: 16.0,lineHeight: 5.0)
         monthLabel.frame = CGRectMake(screenRect.width - 15.0 - monthLabel.frame.size.width, (screenRect.height - 150)/2.0, monthLabel.frame.size.width, monthLabel.frame.size.height)
         
-        monthLabel.center = CGPointMake(composeButton.center.x, monthLabel.center.y + monthLabel.font.pointSize)
+        monthLabel.center = CGPointMake(composeButton.center.x, monthLabel.center.y + 28)
         
         monthLabel.updateLabelColor(DiaryRed)
         
