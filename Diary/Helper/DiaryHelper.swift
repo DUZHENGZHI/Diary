@@ -115,22 +115,17 @@ func findLastDayDiary() -> Diary? {
 extension UIWebView {
     func captureView(){
         // tempframe to reset view size after image was created
-        var tmpFrame         = self.frame
-        
+        var tmpFrame = self.frame
         // set new Frame
-        var aFrame               = self.frame
-        aFrame.size.width  = self.sizeThatFits(UIScreen.mainScreen().bounds.size).width
-        self.frame              = aFrame
-        
+        var aFrame = self.frame
+        aFrame.size.width = self.sizeThatFits(UIScreen.mainScreen().bounds.size).width
+        self.frame = aFrame
         // do image magic
-        UIGraphicsBeginImageContext(self.sizeThatFits(UIScreen.mainScreen().bounds.size))
-        
+        UIGraphicsBeginImageContextWithOptions(self.sizeThatFits(UIScreen.mainScreen().bounds.size), false, UIScreen.mainScreen().scale)
         var resizedContext = UIGraphicsGetCurrentContext()
         self.layer.renderInContext(resizedContext)
         var image = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext();
-        
+        UIGraphicsEndImageContext()
         // reset Frame of view to origin
         self.frame = tmpFrame
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
