@@ -19,7 +19,7 @@ let itemSpacing:CGFloat = 30
 let itemWidth:CGFloat = 30
 let collectionViewWidth = itemWidth * 3 + itemSpacing * 2
 
-//1
+//Coredata
 let appDelegate =
 UIApplication.sharedApplication().delegate as! AppDelegate
 

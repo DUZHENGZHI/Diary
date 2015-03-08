@@ -18,7 +18,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
     
     var deleteButton:UIButton!
     
-    var copyButton:UIButton!
+    var editButton:UIButton!
     
     var buttonsView:UIView!
     
@@ -70,13 +70,13 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         buttonsView.addSubview(saveButton)
         
         
-        copyButton = diaryButtonWith(text: "抄",  fontSize: 18.0,  width: 36.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        editButton = diaryButtonWith(text: "改",  fontSize: 18.0,  width: 36.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
-        copyButton.center = CGPointMake(saveButton.center.x - 56.0, saveButton.center.y)
+        editButton.center = CGPointMake(saveButton.center.x - 56.0, saveButton.center.y)
         
-        copyButton.addTarget(self, action: "copyToClipboard", forControlEvents: UIControlEvents.TouchUpInside)
+        editButton.addTarget(self, action: "editDiary", forControlEvents: UIControlEvents.TouchUpInside)
         
-        buttonsView.addSubview(copyButton)
+        buttonsView.addSubview(editButton)
         
         deleteButton = diaryButtonWith(text: "删",  fontSize: 18.0,  width: 36.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
@@ -113,6 +113,18 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
             }
 
         }
+    }
+    
+    func editDiary() {
+        var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
+        
+        if (diary != nil){
+            println("Find \(diary?.created_at)")
+            composeViewController.diary = diary
+        }
+        
+        self.presentViewController(composeViewController, animated: true, completion: nil)
+
     }
     
     func saveToRoll() {
