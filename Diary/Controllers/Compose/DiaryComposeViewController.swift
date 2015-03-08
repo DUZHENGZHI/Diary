@@ -44,7 +44,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         composeView.textContainerInset = UIEdgeInsetsMake(20, 20, 20, 20)
         
         //Add LocationTextView
-        locationTextView = UITextView(frame: CGRectMake(0, composeView.frame.size.height - 30.0, screenRect.width, 30.0))
+        locationTextView = UITextView(frame: CGRectMake(0, composeView.frame.size.height - 30.0, screenRect.width - 60.0, 30.0))
         locationTextView.font = DiaryLocationFont
         locationTextView.editable = true
         locationTextView.userInteractionEnabled = true
@@ -55,6 +55,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
             composeView.text = diary?.content
             self.composeView.contentOffset = CGPointMake(0, self.composeView.contentSize.height)
             locationTextView.text = diary?.location
+            locationTextView.alpha = 1.0
         }
 //        composeView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (CGFloat)((90.0) / 180.0 * M_PI))
         composeView.becomeFirstResponder()
