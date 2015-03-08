@@ -110,8 +110,8 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! HomeYearCollectionViewCell
         
         var yearText = diarysGroupInYear.keys.array[indexPath.row]
-        cell.yearInt = diarysGroupInYear.keys.array[indexPath.row]
-        cell.yearText = "\(numberToChinese(cell.yearInt)) 年"
+        cell.textInt = diarysGroupInYear.keys.array[indexPath.row]
+        cell.labelText = "\(numberToChinese(cell.textInt)) 年"
 
         // Configure the cell
     

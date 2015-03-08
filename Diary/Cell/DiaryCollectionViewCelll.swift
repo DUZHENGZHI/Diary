@@ -17,7 +17,7 @@ class DiaryCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var monthInt: Int = 0
+    var textInt: Int = 0
     
     override func awakeFromNib() {
         
