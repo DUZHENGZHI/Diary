@@ -43,14 +43,6 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         composeView.delegate = self
         composeView.textContainerInset = UIEdgeInsetsMake(20, 20, 20, 20)
         
-        if(diary != nil){
-            composeView.text = diary?.content
-            self.composeView.contentOffset = CGPointMake(0, self.composeView.contentSize.height)
-        }
-//        composeView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (CGFloat)((90.0) / 180.0 * M_PI))
-        composeView.becomeFirstResponder()
-        self.view.addSubview(composeView)
-        
         //Add LocationTextView
         locationTextView = UITextView(frame: CGRectMake(0, composeView.frame.size.height - 30.0, screenRect.width, 30.0))
         locationTextView.font = DiaryLocationFont
@@ -58,13 +50,24 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         locationTextView.userInteractionEnabled = true
         locationTextView.alpha = 0.0
         locationTextView.bounces = false
+        
+        if(diary != nil){
+            composeView.text = diary?.content
+            self.composeView.contentOffset = CGPointMake(0, self.composeView.contentSize.height)
+            locationTextView.text = diary?.location
+        }
+//        composeView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (CGFloat)((90.0) / 180.0 * M_PI))
+        composeView.becomeFirstResponder()
+        self.view.addSubview(composeView)
+        
+
 //        composeView.textContainerInset = UIEdgeInsetsMake(20, 20, 50, 20)
         self.view.addSubview(locationTextView)
         
         
         //Add finish button
         
-        finishButton = diaryButtonWith(text: "终",  fontSize: 18.0,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        finishButton = diaryButtonWith(text: "完",  fontSize: 18.0,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
         finishButton.center = CGPointMake(screenRect.width - 20, screenRect.height - 30)
         
