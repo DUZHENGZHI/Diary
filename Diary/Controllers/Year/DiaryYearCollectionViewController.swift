@@ -209,7 +209,6 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
             dvc.month = diarysGroupInMonth.keys.array[indexPath.row]
         }
         dvc.year = year
-        
 
         //        dvc.collectionView?.dataSource = collectionView.dataSource
         
@@ -217,7 +216,6 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         
     }
     
-
     // MARK: UICollectionViewDelegate
 
     /*

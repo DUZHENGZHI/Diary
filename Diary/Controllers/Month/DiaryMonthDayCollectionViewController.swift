@@ -54,7 +54,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         
         composeButton = diaryButtonWith(text: "撰",  fontSize: 14.0,  width: 28.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
-        composeButton.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 38 + yearLabel.frame.size.height + 26.0/2.0)
+        composeButton.center = CGPointMake(yearLabel.center.x, 38 + yearLabel.frame.size.height + 26.0/2.0)
         
         composeButton.addTarget(self, action: "newCompose", forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -63,6 +63,9 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         //
         monthLabel = DiaryLabel(fontname: "Wyue-GutiFangsong-NC", labelText: "三月", fontSize: 16.0,lineHeight: 5.0)
         monthLabel.frame = CGRectMake(screenRect.width - 15.0 - monthLabel.frame.size.width, (screenRect.height - 150)/2.0, monthLabel.frame.size.width, monthLabel.frame.size.height)
+        
+        monthLabel.center = CGPointMake(composeButton.center.x, monthLabel.center.y + monthLabel.font.pointSize)
+        
         monthLabel.updateLabelColor(DiaryRed)
         
 
@@ -200,6 +203,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         diarys = fetchedResults
         self.collectionView?.reloadData()
     }
+
 
     // MARK: UICollectionViewDelegate
 

@@ -139,7 +139,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as! DiaryYearCollectionViewController
         dvc.year = diarysGroupInYear.keys.array[indexPath.row]
 //        dvc.collectionView?.dataSource = collectionView.dataSource
-        
+
         self.navigationController!.pushViewController(dvc, animated: true)
         
     }
@@ -160,6 +160,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
             return nil;
         }
     }
+    
     
     
     // MARK: UICollectionViewDelegate
