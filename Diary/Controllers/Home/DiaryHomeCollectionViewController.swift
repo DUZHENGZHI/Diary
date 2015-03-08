@@ -32,7 +32,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         let fetchedResults =
         managedContext.executeFetchRequest(fetchRequest,
             error: &error) as! [NSManagedObject]?
-        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
         if let results = fetchedResults {
             diarys = results
         } else {
@@ -70,7 +70,20 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         yearLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         self.collectionView?.setCollectionViewLayout(yearLayout, animated: false)
 
+        moveToThisMonth()
         // Do any additional setup after loading the view.
+    }
+    
+    
+    func moveToThisMonth() {
+        var diary = diarys.last as! Diary
+        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
+        dvc.month = diary.month.integerValue
+        dvc.year = diary.year.integerValue
+        
+        //        dvc.collectionView?.dataSource = collectionView.dataSource
+        
+        self.navigationController!.pushViewController(dvc, animated: true)
     }
 
     override func didReceiveMemoryWarning() {

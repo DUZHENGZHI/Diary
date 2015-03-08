@@ -84,6 +84,7 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
             if (fetchedResults.count == 0){
                 NSLog("Present empty year")
             }else{
+                
                 diarys = fetchedResults
                 for diary in diarys{
                     var diary = diary as! Diary
@@ -204,7 +205,7 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
         
         if diarysGroupInMonth.keys.array.count == 0 {
-            dvc.month = 3
+            dvc.month = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: NSDate.new())
         }else{
             dvc.month = diarysGroupInMonth.keys.array[indexPath.row]
         }
