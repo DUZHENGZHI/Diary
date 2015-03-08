@@ -141,6 +141,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
     
     func deleteThisDiary() {
         managedContext.deleteObject(diary)
+        managedContext.save(nil)
         hideDiary()
     }
     
