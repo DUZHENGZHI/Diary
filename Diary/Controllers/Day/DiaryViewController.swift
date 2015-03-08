@@ -14,6 +14,14 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
     
     var webview: UIWebView!
     
+    var saveButton:UIButton!
+    
+    var deleteButton:UIButton!
+    
+    var copyButton:UIButton!
+    
+    var buttonsView:UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
@@ -36,11 +44,85 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         
         self.view.addSubview(self.webview)
         
-        var mSwipeUpRecognizer = UITapGestureRecognizer(target: self, action: "hideDiary")
-        mSwipeUpRecognizer.delegate = self
-        mSwipeUpRecognizer.numberOfTapsRequired = 2
-        self.webview.addGestureRecognizer(mSwipeUpRecognizer)
+        var mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: "hideDiary")
+        mDoubleUpRecognizer.delegate = self
+        mDoubleUpRecognizer.numberOfTapsRequired = 2
+        self.webview.addGestureRecognizer(mDoubleUpRecognizer)
+        
+        
+        var mTapUpRecognizer = UILongPressGestureRecognizer(target: self, action: "showButtons:")
+        mTapUpRecognizer.delegate = self
+        mTapUpRecognizer.minimumPressDuration = 0.6
+//        mTapUpRecognizer.numberOfTapsRequired = 1
+        self.webview.addGestureRecognizer(mTapUpRecognizer)
+        //Add buttons
+        
+        buttonsView = UIView(frame: CGRectMake(0, screenRect.height, screenRect.width, 80.0))
+        buttonsView.backgroundColor = UIColor.whiteColor()
+        buttonsView.alpha = 0.0
+        
+        saveButton = diaryButtonWith(text: "存",  fontSize: 18.0,  width: 36.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        
+        saveButton.center = CGPointMake(buttonsView.frame.width/2.0, buttonsView.frame.height/2.0)
+        
+        saveButton.addTarget(self, action: "saveToRoll", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        buttonsView.addSubview(saveButton)
+        
+        
+        copyButton = diaryButtonWith(text: "抄",  fontSize: 18.0,  width: 36.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        
+        copyButton.center = CGPointMake(saveButton.center.x - 56.0, saveButton.center.y)
+        
+        copyButton.addTarget(self, action: "copyToClipboard", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        buttonsView.addSubview(copyButton)
+        
+        deleteButton = diaryButtonWith(text: "删",  fontSize: 18.0,  width: 36.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        
+        deleteButton.center = CGPointMake(saveButton.center.x + 56.0, saveButton.center.y)
+        
+        deleteButton.addTarget(self, action: "deleteThisDiary", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        buttonsView.addSubview(deleteButton)
+        
+        self.view.addSubview(buttonsView)
         // Do any additional setup after loading the view.
+    }
+    
+    func showButtons(sender: UILongPressGestureRecognizer) {
+
+        if(sender.state == UIGestureRecognizerState.Began) {
+            
+            if(buttonsView.alpha == 0.0) {
+                UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+                    {
+                        self.buttonsView.center = CGPointMake(self.buttonsView.center.x, screenRect.height - self.buttonsView.frame.size.height/2.0)
+                        self.buttonsView.alpha = 1.0
+                        
+                    }, completion: nil)
+                
+            }else{
+                
+                UIView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+                    {
+                        self.buttonsView.center = CGPointMake(self.buttonsView.center.x, screenRect.height + self.buttonsView.frame.size.height/2.0)
+                        self.buttonsView.alpha = 0.0
+                    }, completion: nil)
+                
+            }
+
+        }
+    }
+    
+    func saveToRoll() {
+        webview.captureView()
+    }
+    
+    
+    func deleteThisDiary() {
+        managedContext.deleteObject(diary)
+        hideDiary()
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
@@ -48,7 +130,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
     }
     
     func hideDiary() {
-        println("Hide diary")
+
         self.navigationController?.popViewControllerAnimated(true)
     }
 
@@ -59,10 +141,16 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         if (otherGestureRecognizer.isKindOfClass(UILongPressGestureRecognizer)){
-            return false
+            if((otherGestureRecognizer as! UILongPressGestureRecognizer).minimumPressDuration == 0.6){
+                return false
+            }else{
+                return true
+            }
+            
         }
         return true
     }
+    
 
     /*
     // MARK: - Navigation
