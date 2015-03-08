@@ -16,7 +16,7 @@ let DiaryLocationFont = UIFont(name: "Wyue-GutiFangsong-NC", size: 16) as UIFont
 let DiaryRed = UIColor(red: 192.0/255.0, green: 23.0/255.0, blue: 48.0/255.0, alpha: 1.0)
 let itemHeight:CGFloat = 150.0
 let itemSpacing:CGFloat = 30
-let itemWidth:CGFloat = 20
+let itemWidth:CGFloat = 30
 let collectionViewWidth = itemWidth * 3 + itemSpacing * 2
 
 //1

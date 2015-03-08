@@ -10,7 +10,9 @@ import UIKit
 
 func sizeHeightWithText(labelText: NSString, fontSize: CGFloat, textAttributes: [NSObject : AnyObject]) -> CGRect {
     
-    return labelText.boundingRectWithSize(CGSizeMake(fontSize, 480), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: textAttributes, context: nil)
+    var rect = labelText.boundingRectWithSize(CGSizeMake(fontSize, 480), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: textAttributes, context: nil)
+    rect.size.width = fontSize
+    return rect
 }
 
 class DiaryLabel: UILabel {
@@ -27,6 +29,7 @@ class DiaryLabel: UILabel {
         paragraphStyle.lineSpacing = lineHeight
         
         textAttributes = [NSFontAttributeName: font, NSParagraphStyleAttributeName: paragraphStyle]
+        
         var labelSize = sizeHeightWithText(labelText, fontSize ,textAttributes)
         
         self.frame = CGRectMake(0, 0, labelSize.width, labelSize.height)
