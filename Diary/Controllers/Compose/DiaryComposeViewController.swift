@@ -66,7 +66,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         
         finishButton = diaryButtonWith(text: "终",  fontSize: 18.0,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
-        finishButton.center = CGPointMake(screenRect.width - 30, screenRect.height - 30)
+        finishButton.center = CGPointMake(screenRect.width - 20, screenRect.height - 30)
         
         finishButton.addTarget(self, action: "finishCompose:", forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -163,7 +163,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
 
 //                self.locationTextView.frame = CGRectMake(20, self.composeView.frame.size.height - 30.0, self.composeView.frame.size.width - 20, 30.0)
                 
-                self.finishButton.center = CGPointMake(self.view.frame.width - self.finishButton.frame.size.height/2.0 - 20, self.view.frame.height - newKeyboardHeight - self.finishButton.frame.size.height/2.0 - 10)
+                self.finishButton.center = CGPointMake(self.view.frame.width - self.finishButton.frame.size.height/2.0 - 10, self.view.frame.height - newKeyboardHeight - self.finishButton.frame.size.height/2.0 - 10)
                 
                 self.locationTextView.center = CGPointMake(self.locationTextView.frame.size.width/2.0 + 20.0, self.finishButton.center.y)
                 
