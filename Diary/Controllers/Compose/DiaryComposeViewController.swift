@@ -129,7 +129,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
                 }else{
                     diary!.location = ""
                 }
-                diary!.updateTimeWithDate(NSDate.new())
+
             }
 
             var error: NSError?
