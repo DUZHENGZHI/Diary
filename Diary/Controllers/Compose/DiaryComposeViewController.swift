@@ -120,15 +120,11 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
                 }
                 
                 newdiary.updateTimeWithDate(NSDate.new())
+                
             }else{
+                
                 diary!.content = composeView.text
-                if (locationHelper.address != nil){
-                    if (locationHelper.address != nil){
-                        diary!.location = locationTextView.text
-                    }
-                }else{
-                    diary!.location = ""
-                }
+                diary!.location = locationTextView.text
 
             }
 
