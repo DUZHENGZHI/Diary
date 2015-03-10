@@ -53,7 +53,29 @@ func numberToChinese(number:Int) -> String {
     }
     
     return finalString
+}
 
+func numberToChineseWithUnit(number:Int) -> String {
+    var stringNumber = Array(String(number))
+    var units = unitParser(stringNumber.count)
+    var finalString = ""
+    var i:Int
+    for i = 0; i < stringNumber.count; ++i {
+        var string = singleNumberToChinese(stringNumber[i])
+        if (!(string == "零" && (i+1) == stringNumber.count)){
+            finalString = "\(finalString)\(string)\(units[i])"
+        }
+
+    }
+    return finalString
+}
+
+func unitParser(unit:Int) -> [String] {
+    
+    var units = ["万","千","百","十",""].reverse()
+    var slicedUnits: Slice<String> = units[0..<(unit)].reverse()
+    var final: [String] = Array(slicedUnits)
+    return final
 }
 
 

@@ -38,7 +38,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         //Add year label
         self.view.backgroundColor = UIColor.whiteColor()
         
-        yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: "二零一五年", fontSize: 20.0,lineHeight: 5.0)
+        yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: "\(numberToChinese(year))年", fontSize: 20.0,lineHeight: 5.0)
         
         yearLabel.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 20 + yearLabel.frame.size.height/2.0 )
         
@@ -61,7 +61,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         
         self.view.addSubview(composeButton)
         //
-        monthLabel = DiaryLabel(fontname: "Wyue-GutiFangsong-NC", labelText: "三月", fontSize: 16.0,lineHeight: 5.0)
+        monthLabel = DiaryLabel(fontname: "Wyue-GutiFangsong-NC", labelText: "\(numberToChineseWithUnit(month)) 年", fontSize: 16.0,lineHeight: 5.0)
         monthLabel.frame = CGRectMake(screenRect.width - 15.0 - monthLabel.frame.size.width, (screenRect.height - 150)/2.0, monthLabel.frame.size.width, monthLabel.frame.size.height)
         
         monthLabel.center = CGPointMake(composeButton.center.x, monthLabel.center.y + 28)
@@ -169,7 +169,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
         // Configure the cell
 
-        cell.labelText = "\(numberToChinese(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: diary.created_at))) 日"
+        cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: diary.created_at))) 日"
         
         return cell
     }

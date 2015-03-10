@@ -30,7 +30,7 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         self.view.backgroundColor = UIColor.whiteColor()
         //Add year label
         
-        yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: "二零一五年", fontSize: 20.0,lineHeight: 5.0)
+        yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: "\(numberToChinese(year))年", fontSize: 20.0,lineHeight: 5.0)
         
         yearLabel.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 20 + yearLabel.frame.size.height/2.0 )
         
@@ -170,13 +170,13 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseYearIdentifier, forIndexPath: indexPath) as! DiaryCollectionViewCell
         if diarysGroupInMonth.keys.array.count == 0 {
             
-            cell.labelText = "\(numberToChinese(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: NSDate.new()))) 月"
+            cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: NSDate.new()))) 月"
 
         }else{
             
             var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
             // Configure the cell
-            cell.labelText = "\(numberToChinese(diary.month.integerValue)) 月"
+            cell.labelText = "\(numberToChineseWithUnit(diary.month.integerValue)) 月"
             
         }
         
