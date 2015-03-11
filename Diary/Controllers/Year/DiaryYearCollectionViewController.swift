@@ -228,13 +228,12 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         
-        var length = scrollView.contentSize.width
+        var length = scrollView.contentSize.width - collectionViewWidth
         var offset = scrollView.contentOffset.x
         
         var progess = offset/length
-        println("Scrool \(progess)")
         
-        diaryProgressBar.progress = fabs(progess)
+        diaryProgressBar.progress = progess
     }
     
     override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
@@ -245,20 +244,10 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
     }
     
     override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if(!decelerate){
-            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
-                {
-                    self.diaryProgressBar.alpha = 0.0
-                    
-                }, completion: nil)
-        }
-    }
-    
-    
-    override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+        UIView.animateWithDuration(0.8, delay: 0.2, options: UIViewAnimationOptions.CurveEaseInOut, animations:
             {
                 self.diaryProgressBar.alpha = 0.0
+                
             }, completion: nil)
     }
     

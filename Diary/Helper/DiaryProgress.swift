@@ -15,7 +15,10 @@ class DiaryProgress: UIView {
     var progress:CGFloat! = 0{
         didSet {
             
-            progressPoint.position = CGPointMake(self.frame.size.width*progress, self.frame.size.height/2.0)
+            if (self.frame.size.width*progress >= 0 && self.frame.size.width*progress <= self.frame.size.width) {
+                progressPoint.position = CGPointMake(self.frame.size.width*progress, self.frame.size.height/2.0)
+            }
+
         }
     }
     
