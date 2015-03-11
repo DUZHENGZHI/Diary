@@ -214,11 +214,10 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
 
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         
-        var length = scrollView.contentSize.width
+        var length = scrollView.contentSize.width - collectionViewWidth
         var offset = scrollView.contentOffset.x
         
         var progess = offset/length
-        println("Scrool \(progess)")
         
         diaryProgressBar.progress = fabs(progess)
     }
