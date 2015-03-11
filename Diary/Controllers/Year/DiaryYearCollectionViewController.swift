@@ -25,6 +25,8 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
     
     var diarysGroupInMonth = [Int: Int]()
     
+    var diaryProgressBar: DiaryProgress!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
@@ -55,6 +57,13 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         //
         
         self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
+        
+        self.collectionView?.delegate = self
+        
+        diaryProgressBar = DiaryProgress(frame: CGRectMake(0, 0, collectionViewWidth, 8.0))
+        diaryProgressBar.center = CGPointMake(self.collectionView!.center.x, self.collectionView!.center.y + self.collectionView!.frame.size.height/2.0 + 30.0)
+        diaryProgressBar.alpha = 0.0
+        self.view.addSubview(diaryProgressBar)
         
         //2
         let fetchRequest = NSFetchRequest(entityName:"Diary")
@@ -215,6 +224,42 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         
         self.navigationController!.pushViewController(dvc, animated: true)
         
+    }
+    
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        var length = scrollView.contentSize.width
+        var offset = scrollView.contentOffset.x
+        
+        var progess = offset/length
+        println("Scrool \(progess)")
+        
+        diaryProgressBar.progress = fabs(progess)
+    }
+    
+    override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+            {
+                self.diaryProgressBar.alpha = 1.0
+            }, completion: nil)
+    }
+    
+    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if(!decelerate){
+            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+                {
+                    self.diaryProgressBar.alpha = 0.0
+                    
+                }, completion: nil)
+        }
+    }
+    
+    
+    override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+            {
+                self.diaryProgressBar.alpha = 0.0
+            }, completion: nil)
     }
     
     // MARK: UICollectionViewDelegate

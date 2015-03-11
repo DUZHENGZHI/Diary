@@ -16,6 +16,7 @@
 		0A3572E31A9471750037C6A0 /* DiaryYearCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3572E21A9471750037C6A0 /* DiaryYearCollectionViewController.swift */; };
 		0A5E38111AA9E9B000935E29 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5E38101AA9E9B000935E29 /* DiaryViewController.swift */; };
 		0A5E38151AA9EB0500935E29 /* DiaryVerticalTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */; };
+		0A82422A1AB0C49D004BC327 /* DiaryProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8242291AB0C49D004BC327 /* DiaryProgress.swift */; };
 		0A916FFA1AA6097700E987A4 /* TpldKhangXiDictTrial.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A916FF91AA6097700E987A4 /* TpldKhangXiDictTrial.otf */; };
 		0A916FFC1AA6099700E987A4 /* Wyue-GutiFangsong-NC_deliverable.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A916FFB1AA6099700E987A4 /* Wyue-GutiFangsong-NC_deliverable.otf */; };
 		0A9170001AA6200D00E987A4 /* DiaryCollectionViewCelll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A916FFF1AA6200D00E987A4 /* DiaryCollectionViewCelll.swift */; };
@@ -56,6 +57,7 @@
 		0A5E38101AA9E9B000935E29 /* DiaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewController.swift; path = Controllers/Day/DiaryViewController.swift; sourceTree = "<group>"; };
 		0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryVerticalTextView.swift; path = Helper/DiaryVerticalTextView.swift; sourceTree = "<group>"; };
 		0A605C291AA893330030B493 /* Diary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Diary.entitlements; sourceTree = "<group>"; };
+		0A8242291AB0C49D004BC327 /* DiaryProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryProgress.swift; path = Helper/DiaryProgress.swift; sourceTree = "<group>"; };
 		0A916FF91AA6097700E987A4 /* TpldKhangXiDictTrial.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = TpldKhangXiDictTrial.otf; sourceTree = "<group>"; };
 		0A916FFB1AA6099700E987A4 /* Wyue-GutiFangsong-NC_deliverable.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Wyue-GutiFangsong-NC_deliverable.otf"; sourceTree = "<group>"; };
 		0A916FFF1AA6200D00E987A4 /* DiaryCollectionViewCelll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryCollectionViewCelll.swift; path = Cell/DiaryCollectionViewCelll.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 				0A9170011AA6216D00E987A4 /* DiaryLabel.swift */,
 				0A10DBB61AA8AF0D00B23F9E /* DiaryTextStorage.swift */,
 				0A28B4FC1AAB53C30037240C /* DiaryLocationHelper.swift */,
+				0A8242291AB0C49D004BC327 /* DiaryProgress.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A82422A1AB0C49D004BC327 /* DiaryProgress.swift in Sources */,
 				0A0B100F1A9180460012604C /* DiaryLayout.swift in Sources */,
 				0AE202591A8B0E420012AAED /* DiaryHelper.swift in Sources */,
 				0AE2022E1A8B0B310012AAED /* AppDelegate.swift in Sources */,
