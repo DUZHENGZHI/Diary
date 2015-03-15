@@ -67,7 +67,7 @@ class DiaryLabel: UILabel {
         self.attributedText = NSAttributedString(string: self.attributedText.string, attributes: textAttributes)
     }
 
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         var anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
         anim.springBounciness = 10
         anim.springSpeed = 15
@@ -77,7 +77,7 @@ class DiaryLabel: UILabel {
         super.touchesBegan(touches, withEvent: event)
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
         var anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
         anim.springBounciness = 10
         anim.springSpeed = 15

@@ -48,7 +48,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "kevinzhow.Diary" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as! NSURL
+        return urls[urls.count-1] as NSURL
+    }()
+    
+    lazy var cloudDirectory: NSURL = {
+        // The directory the application uses to store the Core Data store file. This code uses a directory named "kevinzhow.Diary" in the application's documents Application Support directory.
+        var teamID = "iCloud."
+        var bundleID = NSBundle.mainBundle().bundleIdentifier!
+        var cloudRoot = "\(teamID)\(bundleID).sync"
+        let url = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier("\(cloudRoot)")
+        println("\(url)\(cloudRoot)")
+        return url!
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
@@ -93,7 +103,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     lazy var storeOptions: [NSObject : AnyObject] = {
-        return [NSMigratePersistentStoresAutomaticallyOption:true,NSInferMappingModelAutomaticallyOption: true, NSPersistentStoreUbiquitousContentNameKey : "CatchDiary", NSPersistentStoreUbiquitousPeerTokenOption: "c405d8e8a24s11e3bbec425861s862bs"]
+        return [
+            NSMigratePersistentStoresAutomaticallyOption:true,
+            NSInferMappingModelAutomaticallyOption: true,
+            NSPersistentStoreUbiquitousContentNameKey : "CatchDiary",
+            NSPersistentStoreUbiquitousPeerTokenOption: "c405d8e8a24s11e3bbec425861s862bs"]
     }()
 
     // MARK: - Core Data Saving support
@@ -118,13 +132,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func persistentStoreDidImportUbiquitousContentChanges(notification:NSNotification){
-        var context = self.managedObjectContext
-        context?.performBlock({
-            context?.mergeChangesFromContextDidSaveNotification(notification)
+        var context = self.managedObjectContext!
+        context.performBlock({
+            context.mergeChangesFromContextDidSaveNotification(notification)
         })
     }
     
     func storesWillChange(notification:NSNotification) {
+        println("Store Will change")
         var context:NSManagedObjectContext! = self.managedObjectContext
         context?.performBlockAndWait({
             var error:NSError?
@@ -142,12 +157,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func storesDidChange(notification:NSNotification){
-        
+        println("Store did change")
     }
     
     func migrateiCloudStoreToLocalStore() {
         println("Migrate")
-        var oldStore = persistentStoreCoordinator?.persistentStores.first as! NSPersistentStore
+        var oldStore = persistentStoreCoordinator?.persistentStores.first as NSPersistentStore
         var localStoreOptions = self.storeOptions
         localStoreOptions[NSPersistentStoreRemoveUbiquitousMetadataOption] = true
         var newStore = persistentStoreCoordinator?.migratePersistentStore(oldStore, toURL:  self.applicationDocumentsDirectory.URLByAppendingPathComponent("Diary.sqlite"), options: localStoreOptions, withType: NSSQLiteStoreType, error: nil)

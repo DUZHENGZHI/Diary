@@ -124,7 +124,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
     }
     
     func editDiary() {
-        var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
+        var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as DiaryComposeViewController
         
         if (diary != nil){
             println("Find \(diary?.created_at)")
@@ -162,7 +162,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         if (otherGestureRecognizer.isKindOfClass(UILongPressGestureRecognizer)){
-            if((otherGestureRecognizer as! UILongPressGestureRecognizer).minimumPressDuration == 0.6){
+            if((otherGestureRecognizer as UILongPressGestureRecognizer).minimumPressDuration == 0.6){
                 return false
             }else{
                 return true

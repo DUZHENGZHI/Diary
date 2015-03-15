@@ -31,7 +31,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         
         let fetchedResults =
         managedContext.executeFetchRequest(fetchRequest,
-            error: &error) as! [NSManagedObject]?
+            error: &error) as [NSManagedObject]?
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
         if let results = fetchedResults {
             diarys = results
@@ -40,7 +40,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         }
         
         for diary in diarys{
-            var diary = diary as! Diary
+            var diary = diary as Diary
             var date = diary.created_at
             var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: date)
             
@@ -52,7 +52,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         }
         
         if  diarysGroupInYear.keys.array.count == 0 {
-            var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: NSDate.new())
+            var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: NSDate())
             diarysGroupInYear[components] = 1
         }
 
@@ -65,7 +65,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
 //        self.collectionView!.registerClass(HomeYearCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
         
-        var yearLayout = DiaryLayout.new()
+        var yearLayout = DiaryLayout()
 
         yearLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         self.collectionView?.setCollectionViewLayout(yearLayout, animated: false)
@@ -77,8 +77,8 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
     
     func moveToThisMonth() {
         if (diarys.count > 0){
-            var diary = diarys.last as! Diary
-            var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
+            var diary = diarys.last as Diary
+            var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as DiaryMonthDayCollectionViewController
             dvc.month = diary.month.integerValue
             dvc.year = diary.year.integerValue
             
@@ -123,7 +123,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> HomeYearCollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! HomeYearCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as HomeYearCollectionViewCell
         
         var yearText = diarysGroupInYear.keys.array[indexPath.row]
         cell.textInt = diarysGroupInYear.keys.array[indexPath.row]
@@ -152,7 +152,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as! DiaryYearCollectionViewController
+        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as DiaryYearCollectionViewController
         dvc.year = diarysGroupInYear.keys.array[indexPath.row]
 //        dvc.collectionView?.dataSource = collectionView.dataSource
 

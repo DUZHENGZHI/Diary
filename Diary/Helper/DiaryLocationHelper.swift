@@ -31,7 +31,7 @@ class DiaryLocationHelper: NSObject, CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
         geocoder.reverseGeocodeLocation(newLocation, completionHandler: { (placemarks, error) in
             if (error != nil) {println("reverse geodcode fail: \(error.localizedDescription)")}
-            let pm = placemarks as! [CLPlacemark]
+            let pm = placemarks as [CLPlacemark]
             if pm.count > 0 {
                 var placemark = pm.first
                 println("\(placemark?.locality) \(placemark?.locality)")

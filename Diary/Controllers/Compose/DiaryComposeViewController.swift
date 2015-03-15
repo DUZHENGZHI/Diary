@@ -19,7 +19,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
     var keyboardSize:CGSize = CGSizeMake(0, 0)
     var finishButton:UIButton!
     var diary:Diary?
-    var locationHelper: DiaryLocationHelper = DiaryLocationHelper.new()
+    var locationHelper: DiaryLocationHelper = DiaryLocationHelper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,7 +85,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
     }
     
     func updateAddress(notification:NSNotification) {
-        var address = notification.object as! String
+        var address = notification.object as String
         println("Author at \(address)")
         if (diary?.location == "" || diary?.location == nil){
             locationTextView.text = "于 \(address)"
@@ -119,7 +119,7 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
                     newdiary.location = ""
                 }
                 
-                newdiary.updateTimeWithDate(NSDate.new())
+                newdiary.updateTimeWithDate(NSDate())
                 
             }else{
                 

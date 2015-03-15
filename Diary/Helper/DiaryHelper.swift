@@ -21,14 +21,14 @@ let collectionViewWidth = itemWidth * 3 + itemSpacing * 2
 
 //Coredata
 let appDelegate =
-UIApplication.sharedApplication().delegate as! AppDelegate
+UIApplication.sharedApplication().delegate as AppDelegate
 
 let managedContext = appDelegate.managedObjectContext!
 
 
 func diaryButtonWith(#text: String, #fontSize: CGFloat, #width: CGFloat, #normalImageName: String, #highlightedImageName: String) -> UIButton {
     
-    var button = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+    var button = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
     button.frame = CGRectMake(0, 0, width, width)
     
     var font = UIFont(name: "Wyue-GutiFangsong-NC", size: fontSize) as UIFont!
@@ -110,22 +110,22 @@ func findLastDayDiary() -> Diary? {
     //2
     let fetchRequest = NSFetchRequest(entityName:"Diary")
     
-    println("\(NSDate.new().beginningOfDay()) \(NSDate.new().endOfDay())")
+    println("\(NSDate().beginningOfDay()) \(NSDate().endOfDay())")
     
-    fetchRequest.predicate = NSPredicate(format: "(created_at >= %@ ) AND (created_at < %@)", NSDate.new().beginningOfDay(), NSDate.new().endOfDay())
+    fetchRequest.predicate = NSPredicate(format: "(created_at >= %@ ) AND (created_at < %@)", NSDate().beginningOfDay(), NSDate().endOfDay())
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
     //3
     var error: NSError?
     
     var fetchedResults =
     managedContext.executeFetchRequest(fetchRequest,
-        error: &error) as! [Diary]?
+        error: &error) as [Diary]?
     
     while(fetchedResults?.count > 1){
         var lastDiary = fetchedResults?.last!
         managedContext.deleteObject(lastDiary!)
         fetchedResults = managedContext.executeFetchRequest(fetchRequest,
-                error: &error) as! [Diary]?
+                error: &error) as [Diary]?
     }
     managedContext.save(nil)
     var diary = fetchedResults?.first
@@ -174,7 +174,7 @@ extension NSDate {
     
     func endOfDay() -> NSDate {
         var calender = NSCalendar.currentCalendar()
-        var components = NSDateComponents.new()
+        var components = NSDateComponents()
         components.day = 1
         var date = calender.dateByAddingComponents(components, toDate: self.beginningOfDay(), options: nil)
         date?.dateByAddingTimeInterval(-1)
