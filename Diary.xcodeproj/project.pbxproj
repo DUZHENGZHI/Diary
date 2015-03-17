@@ -53,6 +53,8 @@
 		0A10DBB81AA8C14700B23F9E /* DiaryMonthDayCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryMonthDayCollectionViewController.swift; path = Controllers/Month/DiaryMonthDayCollectionViewController.swift; sourceTree = "<group>"; };
 		0A222A831AB88931000A1DEF /* Diary 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Diary 2.xcdatamodel"; sourceTree = "<group>"; };
 		0A222A861AB89E3F000A1DEF /* poem.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = poem.json; sourceTree = "<group>"; };
+		0A222A881AB8ACBA000A1DEF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		0A222A891AB8ACBA000A1DEF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		0A28B4FC1AAB53C30037240C /* DiaryLocationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryLocationHelper.swift; path = Helper/DiaryLocationHelper.swift; sourceTree = "<group>"; };
 		0A3572E01A9467E70037C6A0 /* DiaryAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryAnimator.swift; path = Animator/DiaryAnimator.swift; sourceTree = "<group>"; };
 		0A3572E21A9471750037C6A0 /* DiaryYearCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryYearCollectionViewController.swift; path = Controllers/Year/DiaryYearCollectionViewController.swift; sourceTree = "<group>"; };
@@ -488,6 +490,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				0AE202351A8B0B310012AAED /* Base */,
+				0A222A881AB8ACBA000A1DEF /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				0AE2023A1A8B0B310012AAED /* Base */,
+				0A222A891AB8ACBA000A1DEF /* zh-Hans */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
