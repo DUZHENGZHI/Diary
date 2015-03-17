@@ -204,6 +204,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         var fetchedResults = fetchedResultsController.fetchedObjects as [NSManagedObject]
         diarys = fetchedResults
         self.collectionView?.reloadData()
+        self.collectionView!.contentOffset = CGPointMake(self.collectionView!.contentSize.width, 0)
     }
 
     override func scrollViewDidScroll(scrollView: UIScrollView) {

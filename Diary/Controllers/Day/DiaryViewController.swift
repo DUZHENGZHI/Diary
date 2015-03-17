@@ -42,7 +42,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         self.webview.addGestureRecognizer(mDoubleUpRecognizer)
         
         
-        var mTapUpRecognizer = UITapGestureRecognizer(target: self, action: "showButtons:")
+        var mTapUpRecognizer = UITapGestureRecognizer(target: self, action: "showButtons")
         mTapUpRecognizer.delegate = self
         mTapUpRecognizer.numberOfTapsRequired = 1
         self.webview.addGestureRecognizer(mTapUpRecognizer)
@@ -79,6 +79,8 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         buttonsView.addSubview(deleteButton)
         
         self.view.addSubview(buttonsView)
+        
+        showButtons()
         // Do any additional setup after loading the view.
     }
     
@@ -94,7 +96,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:25px 10px 25px 25px;} * {-webkit-text-size-adjust: 100%; margin:0; font-family: 'Wyue-GutiFangsong-NC'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(self.view.frame.size.width - 120)px; margin-right: 10px;} .content p{ font-size: 14pt; line-height: 28pt;} .extra{ font-size:12pt; line-height: 20pt; margin-right:30px;}</style></head><body><div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString)</div></body></html>", baseURL: nil)
     }
     
-    func showButtons(sender: UITapGestureRecognizer) {
+    func showButtons() {
 
         if(buttonsView.alpha == 0.0) {
             UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:

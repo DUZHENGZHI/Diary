@@ -85,6 +85,39 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
             //        dvc.collectionView?.dataSource = collectionView.dataSource
             
             self.navigationController!.pushViewController(dvc, animated: true)
+        }else{
+            var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as DiaryMonthDayCollectionViewController
+            var filePath = NSBundle.mainBundle().pathForResource("poem", ofType: "json")
+            var JSONData = NSData(contentsOfFile: filePath!, options: NSDataReadingOptions.MappedRead, error: nil)
+            var jsonObject = NSJSONSerialization.JSONObjectWithData(JSONData!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+            var poems = jsonObject.valueForKey("poems") as NSArray
+            
+            for poem in poems{
+                
+                var poem =  poem as NSDictionary
+                let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
+                
+                let newdiary = Diary(entity: entity!,
+                    insertIntoManagedObjectContext:managedContext)
+                
+                newdiary.content = poem.valueForKey("content") as String
+                newdiary.title = poem.valueForKey("title") as? String
+                newdiary.location = poem.valueForKey("location") as String
+                
+                newdiary.updateTimeWithDate(NSDate())
+                dvc.month = newdiary.month.integerValue
+                dvc.year = newdiary.year.integerValue
+            }
+
+            
+            //        dvc.collectionView?.dataSource = collectionView.dataSource
+            
+            self.navigationController!.pushViewController(dvc, animated: true)
+            
+            var error: NSError?
+            if !managedContext.save(&error) {
+                println("Could not save \(error), \(error?.userInfo)")
+            }
         }
 
     }
