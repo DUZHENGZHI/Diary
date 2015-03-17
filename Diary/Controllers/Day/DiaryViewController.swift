@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebViewDelegate{
+class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebViewDelegate, UIScrollViewDelegate{
     
     var diary:Diary!
     
@@ -22,6 +22,8 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
     
     var buttonsView:UIView!
     
+    var closeLabel:UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
@@ -32,9 +34,16 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
 
         webview.delegate = self
         webview.backgroundColor = UIColor.whiteColor()
-
+        webview.scrollView.delegate = self
         
         self.view.addSubview(self.webview)
+        
+        closeLabel = DiaryLabel(fontname: "Wyue-GutiFangsong-NC", labelText: "完", fontSize: 16.0,lineHeight: 5.0)
+        
+        closeLabel.center = CGPointMake(self.view.center.x, -20.0)
+        closeLabel.alpha = 0
+
+        self.view.addSubview(closeLabel)
         
         var mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: "hideDiary")
         mDoubleUpRecognizer.delegate = self
@@ -166,7 +175,16 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         return true
     }
     
-
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if (scrollView.contentOffset.y < -80){
+            hideDiary()
+        }
+    }
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        closeLabel.alpha = (-scrollView.contentOffset.y/100.0)
+        closeLabel.center = CGPointMake(self.view.center.x, -scrollView.contentOffset.y - 20)
+    }
+    
     /*
     // MARK: - Navigation
 
