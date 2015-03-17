@@ -26,10 +26,6 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
         
-        
-
-    
-        
         webview = UIWebView(frame: CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height))
 
         webview.scrollView.bounces = true
@@ -46,15 +42,15 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         self.webview.addGestureRecognizer(mDoubleUpRecognizer)
         
         
-        var mTapUpRecognizer = UILongPressGestureRecognizer(target: self, action: "showButtons:")
+        var mTapUpRecognizer = UITapGestureRecognizer(target: self, action: "showButtons:")
         mTapUpRecognizer.delegate = self
-        mTapUpRecognizer.minimumPressDuration = 0.6
-//        mTapUpRecognizer.numberOfTapsRequired = 1
+        mTapUpRecognizer.numberOfTapsRequired = 1
         self.webview.addGestureRecognizer(mTapUpRecognizer)
+        mTapUpRecognizer.requireGestureRecognizerToFail(mDoubleUpRecognizer)
         //Add buttons
         
         buttonsView = UIView(frame: CGRectMake(0, screenRect.height, screenRect.width, 80.0))
-        buttonsView.backgroundColor = UIColor.whiteColor()
+        buttonsView.backgroundColor = UIColor.clearColor()
         buttonsView.alpha = 0.0
         
         saveButton = diaryButtonWith(text: "存",  fontSize: 18.0,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
@@ -98,28 +94,24 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:25px 10px 25px 25px;} * {-webkit-text-size-adjust: 100%; margin:0; font-family: 'Wyue-GutiFangsong-NC'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(self.view.frame.size.width - 120)px; margin-right: 10px;} .content p{ font-size: 14pt; line-height: 28pt;} .extra{ font-size:12pt; line-height: 20pt; margin-right:30px;}</style></head><body><div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString)</div></body></html>", baseURL: nil)
     }
     
-    func showButtons(sender: UILongPressGestureRecognizer) {
+    func showButtons(sender: UITapGestureRecognizer) {
 
-        if(sender.state == UIGestureRecognizerState.Began) {
+        if(buttonsView.alpha == 0.0) {
+            UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+                {
+                    self.buttonsView.center = CGPointMake(self.buttonsView.center.x, screenRect.height - self.buttonsView.frame.size.height/2.0)
+                    self.buttonsView.alpha = 1.0
+                    
+                }, completion: nil)
             
-            if(buttonsView.alpha == 0.0) {
-                UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
-                    {
-                        self.buttonsView.center = CGPointMake(self.buttonsView.center.x, screenRect.height - self.buttonsView.frame.size.height/2.0)
-                        self.buttonsView.alpha = 1.0
-                        
-                    }, completion: nil)
-                
-            }else{
-                
-                UIView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
-                    {
-                        self.buttonsView.center = CGPointMake(self.buttonsView.center.x, screenRect.height + self.buttonsView.frame.size.height/2.0)
-                        self.buttonsView.alpha = 0.0
-                    }, completion: nil)
-                
-            }
-
+        }else{
+            
+            UIView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+                {
+                    self.buttonsView.center = CGPointMake(self.buttonsView.center.x, screenRect.height + self.buttonsView.frame.size.height/2.0)
+                    self.buttonsView.alpha = 0.0
+                }, completion: nil)
+            
         }
     }
     
@@ -168,14 +160,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
     }
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        if (otherGestureRecognizer.isKindOfClass(UILongPressGestureRecognizer)){
-            if((otherGestureRecognizer as UILongPressGestureRecognizer).minimumPressDuration == 0.6){
-                return false
-            }else{
-                return true
-            }
-            
-        }
+        
         return true
     }
     

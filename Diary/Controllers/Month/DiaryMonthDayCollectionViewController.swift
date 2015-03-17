@@ -69,6 +69,11 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         monthLabel.center = CGPointMake(composeButton.center.x, monthLabel.center.y + 28)
         
         monthLabel.updateLabelColor(DiaryRed)
+        monthLabel.userInteractionEnabled = true
+        
+        var mmTapUpRecognizer = UITapGestureRecognizer(target: self, action: "backToYear")
+        mmTapUpRecognizer.numberOfTapsRequired = 1
+        monthLabel.addGestureRecognizer(mmTapUpRecognizer)
         
 
         self.view.addSubview(monthLabel)
