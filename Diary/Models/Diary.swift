@@ -11,7 +11,8 @@ import CoreData
 
 @objc(Diary)
 class Diary: NSManagedObject {
-
+    
+    @NSManaged var title: String?
     @NSManaged var content: String
     @NSManaged var created_at: NSDate
     @NSManaged var location: String

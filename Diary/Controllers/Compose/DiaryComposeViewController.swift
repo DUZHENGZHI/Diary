@@ -9,12 +9,14 @@
 import UIKit
 import CoreData
 
-
+let titleTextViewHeight:CGFloat = 30.0
+let contentMargin:CGFloat = 20.0
 
 class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayoutManagerDelegate{
     
     var composeView:UITextView!
     var locationTextView:UITextView!
+    var titleTextView:UITextView!
     var storage:NSTextStorage!
     var keyboardSize:CGSize = CGSizeMake(0, 0)
     var finishButton:UIButton!
@@ -32,16 +34,15 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         let layoutManager = NSLayoutManager()
         layoutManager.delegate = self
 
-
         storage.addLayoutManager(layoutManager)
         layoutManager.addTextContainer(container)
 
-        composeView = UITextView(frame: CGRectMake(0, 0, screenRect.width, screenRect.height), textContainer: container)
+        composeView = UITextView(frame: CGRectMake(0, contentMargin + titleTextViewHeight, screenRect.width, screenRect.height), textContainer: container)
         composeView.font = DiaryFont
         composeView.editable = true
         composeView.userInteractionEnabled = true
         composeView.delegate = self
-        composeView.textContainerInset = UIEdgeInsetsMake(20, 20, 20, 20)
+        composeView.textContainerInset = UIEdgeInsetsMake(contentMargin, contentMargin, contentMargin, contentMargin)
         
         //Add LocationTextView
         locationTextView = UITextView(frame: CGRectMake(0, composeView.frame.size.height - 30.0, screenRect.width - 60.0, 30.0))
@@ -51,20 +52,36 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         locationTextView.alpha = 0.0
         locationTextView.bounces = false
         
-        if(diary != nil){
-            composeView.text = diary?.content
+        //Add titleView
+        
+        titleTextView = UITextView(frame: CGRectMake(contentMargin, contentMargin/2, screenRect.width - 60.0, titleTextViewHeight))
+        titleTextView.font = DiaryTitleFont
+        titleTextView.editable = true
+        titleTextView.userInteractionEnabled = true
+        titleTextView.bounces = false
+        
+        if let diary = diary {
+            composeView.text = diary.content
             self.composeView.contentOffset = CGPointMake(0, self.composeView.contentSize.height)
-            locationTextView.text = diary?.location
+            locationTextView.text = diary.location
             locationTextView.alpha = 1.0
+            if let title = diary.title {
+                titleTextView.text = title
+            }else{
+                titleTextView.text = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: diary.created_at))) 日"
+            }
+        }else{
+            var date = NSDate()
+            titleTextView.text = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: date))) 日"
         }
-//        composeView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, (CGFloat)((90.0) / 180.0 * M_PI))
+        
         composeView.becomeFirstResponder()
+        
         self.view.addSubview(composeView)
         
-
-//        composeView.textContainerInset = UIEdgeInsetsMake(20, 20, 50, 20)
         self.view.addSubview(locationTextView)
-        
+
+        self.view.addSubview(titleTextView)
         
         //Add finish button
         
@@ -111,25 +128,33 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         self.locationTextView.endEditing(true)
         if (composeView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 1){
             
-            if(diary == nil) {
+            if let diary = diary {
+                
+                diary.content = composeView.text
+                diary.location = locationTextView.text
+                diary.title = titleTextView.text
+                
+            }else{
+                
                 let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
                 
                 let newdiary = Diary(entity: entity!,
                     insertIntoManagedObjectContext:managedContext)
                 newdiary.content = composeView.text
+                
                 if (locationHelper.address != nil){
                     newdiary.location = locationTextView.text
                 }else{
                     newdiary.location = ""
                 }
                 
+                if (titleTextView.text != nil){
+                    newdiary.title = titleTextView.text
+                }else{
+                    newdiary.title = ""
+                }
+                
                 newdiary.updateTimeWithDate(NSDate())
-                
-            }else{
-                
-                diary!.content = composeView.text
-                diary!.location = locationTextView.text
-
             }
 
             var error: NSError?
@@ -162,10 +187,8 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
                 if (self.locationTextView.text == nil) {
                     self.composeView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height - newKeyboardHeight)
                 }else{
-                    self.composeView.frame = CGRectMake(0, 0, self.composeView.frame.size.width,  self.view.frame.height - newKeyboardHeight - 40.0 - self.finishButton.frame.size.height/2.0)
+                    self.composeView.frame = CGRectMake(0, contentMargin + titleTextViewHeight, self.composeView.frame.size.width,  self.view.frame.height - newKeyboardHeight - 40.0 - self.finishButton.frame.size.height/2.0 - (contentMargin + titleTextViewHeight))
                 }
-
-//                self.locationTextView.frame = CGRectMake(20, self.composeView.frame.size.height - 30.0, self.composeView.frame.size.width - 20, 30.0)
                 
                 self.finishButton.center = CGPointMake(self.view.frame.width - self.finishButton.frame.size.height/2.0 - 10, self.view.frame.height - newKeyboardHeight - self.finishButton.frame.size.height/2.0 - 10)
                 

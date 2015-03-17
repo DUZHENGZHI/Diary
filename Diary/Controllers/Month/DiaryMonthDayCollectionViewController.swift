@@ -90,14 +90,6 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         //2
         let fetchRequest = NSFetchRequest(entityName:"Diary")
         
-        //        var beginDay = "01/01/\(year)"
-        //        var endDay = "12/31/\(year)"
-        //        var formatter = NSDateFormatter.new()
-        //        formatter.dateFormat = "MM/dd/yyyy"
-        //
-        //        var beginDate = formatter.dateFromString(beginDay)
-        //        var endDate = formatter.dateFromString(endDay)
-        
         fetchRequest.predicate = NSPredicate(format: "year = \(year) AND month = \(month)")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
         
@@ -139,14 +131,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     
     func newCompose() {
         
-        var diary = findLastDayDiary()
-        
         var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as DiaryComposeViewController
-        
-        if (diary != nil){
-            println("Find \(diary?.created_at)")
-            composeViewController.diary = diary
-        }
         
         self.presentViewController(composeViewController, animated: true, completion: nil)
         
@@ -182,7 +167,11 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         var diary = fetchedResultsController.objectAtIndexPath(indexPath) as Diary
         // Configure the cell
 
-        cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: diary.created_at))) 日"
+        if let title = diary.title {
+            cell.labelText = title
+        }else{
+            cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: diary.created_at))) 日"
+        }
         
         return cell
     }
