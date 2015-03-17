@@ -31,6 +31,8 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     var diarysGroupInMonth = [Int: Int]()
     
     var diaryProgressBar: DiaryProgress!
+    
+    var scrolledToBottom: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,6 +122,14 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidLayoutSubviews() {
+        if (!scrolledToBottom){
+            self.collectionView!.contentOffset = CGPointMake(self.collectionView!.collectionViewLayout.collectionViewContentSize().width-collectionViewWidth, 0)
+            scrolledToBottom = true
+        }
+    }
+    
+    
     func backToYear(){
         self.navigationController!.popViewControllerAnimated(true)
     }
@@ -204,7 +214,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         var fetchedResults = fetchedResultsController.fetchedObjects as [NSManagedObject]
         diarys = fetchedResults
         self.collectionView?.reloadData()
-        self.collectionView!.contentOffset = CGPointMake(self.collectionView!.contentSize.width, 0)
+        self.collectionView!.contentOffset = CGPointMake(self.collectionView!.collectionViewLayout.collectionViewContentSize().width-collectionViewWidth, 0)
     }
 
     override func scrollViewDidScroll(scrollView: UIScrollView) {

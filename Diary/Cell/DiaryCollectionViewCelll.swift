@@ -48,5 +48,15 @@ class DiaryCollectionViewCell: UICollectionViewCell {
         self.layer.pop_addAnimation(anim, forKey: "PopScaleback")
         super.touchesEnded(touches, withEvent: event)
     }
+    
+    override func touchesCancelled(touches: NSSet!, withEvent event: UIEvent!) {
+        var anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
+        anim.springBounciness = 10
+        anim.springSpeed = 15
+        anim.fromValue = NSValue(CGPoint: CGPointMake(0.9, 0.9))
+        anim.toValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
+        self.layer.pop_addAnimation(anim, forKey: "PopScaleback")
+        super.touchesCancelled(touches, withEvent: event)
+    }
 
 }
