@@ -28,10 +28,17 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
         
+        setupUI()
+        
+        showButtons()
+        // Do any additional setup after loading the view.
+    }
+    
+    func setupUI() {
         webview = UIWebView(frame: CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height))
-
+        
         webview.scrollView.bounces = true
-
+        
         webview.delegate = self
         webview.backgroundColor = UIColor.whiteColor()
         webview.scrollView.delegate = self
@@ -42,7 +49,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         
         closeLabel.center = CGPointMake(self.view.center.x, -20.0)
         closeLabel.alpha = 0
-
+        
         self.view.addSubview(closeLabel)
         
         var mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: "hideDiary")
@@ -88,16 +95,12 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         buttonsView.addSubview(deleteButton)
         
         self.view.addSubview(buttonsView)
-        
-        showButtons()
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         var timeString = "\(numberToChinese(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: diary.created_at)))年 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: diary.created_at)))月 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: diary.created_at)))日"
-        
         
         //WebView method
         

@@ -25,14 +25,14 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         
-        var inview = transitionContext.containerView()
-        var fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
-        var fromView = fromVC!.view
-        var toVC   = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
-        var toView = toVC!.view
-        var initialRect = CGRectMake(fromVC!.view.frame.size.width/2.0, fromVC!.view.frame.size.height/2.0, 0, 0)
+        let inview = transitionContext.containerView()
+        let fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
+        let fromView = fromVC!.view
+        let toVC   = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
+        let toView = toVC!.view
+        let initialRect = CGRectMake(fromVC!.view.frame.size.width/2.0, fromVC!.view.frame.size.height/2.0, 0, 0)
         
-        var finalRect  = transitionContext.finalFrameForViewController(toVC!)
+        let finalRect  = transitionContext.finalFrameForViewController(toVC!)
         
 
         toView.alpha = 0.0

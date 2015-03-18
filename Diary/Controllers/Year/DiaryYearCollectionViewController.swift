@@ -31,54 +31,11 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
         //Add year label
-        
-        yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: "\(numberToChinese(year))年", fontSize: 20.0,lineHeight: 5.0)
-        
-        yearLabel.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 20 + yearLabel.frame.size.height/2.0 )
-        
-        self.view.addSubview(yearLabel)
-        
-        yearLabel.userInteractionEnabled = true
-        
-        var mTapUpRecognizer = UITapGestureRecognizer(target: self, action: "backToHome")
-        mTapUpRecognizer.numberOfTapsRequired = 1
-        yearLabel.addGestureRecognizer(mTapUpRecognizer)
-        
-        //Add compose button
-        
-        composeButton = diaryButtonWith(text: "撰",  fontSize: 14.0,  width: 40.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
-        
-        composeButton.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 38 + yearLabel.frame.size.height + 26.0/2.0)
-        
-        composeButton.addTarget(self, action: "newCompose", forControlEvents: UIControlEvents.TouchUpInside)
-
-        
-        self.view.addSubview(composeButton)
-        //
-        
-        self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
-        
-        self.collectionView?.delegate = self
-        
-        diaryProgressBar = DiaryProgress(frame: CGRectMake(0, 0, collectionViewWidth, 8.0))
-        diaryProgressBar.center = CGPointMake(self.collectionView!.center.x, self.collectionView!.center.y + self.collectionView!.frame.size.height/2.0 + 30.0)
-        diaryProgressBar.alpha = 0.0
-        self.view.addSubview(diaryProgressBar)
-        
+        setupUI()
         //2
         let fetchRequest = NSFetchRequest(entityName:"Diary")
-        
-//        var beginDay = "01/01/\(year)"
-//        var endDay = "12/31/\(year)"
-//        var formatter = NSDateFormatter.new()
-//        formatter.dateFormat = "MM/dd/yyyy"
-//
-//        var beginDate = formatter.dateFromString(beginDay)
-//        var endDate = formatter.dateFromString(endDay)
-        
         fetchRequest.predicate = NSPredicate(format: "year = \(year)")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
-        
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
             managedObjectContext: managedContext, sectionNameKeyPath: "year",
@@ -116,6 +73,43 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         self.collectionView?.setCollectionViewLayout(yearLayout, animated: false)
 
         // Do any additional setup after loading the view.
+    }
+    
+    func setupUI() {
+        
+        yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: "\(numberToChinese(year))年", fontSize: 20.0,lineHeight: 5.0)
+        
+        yearLabel.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 20 + yearLabel.frame.size.height/2.0 )
+        
+        self.view.addSubview(yearLabel)
+        
+        yearLabel.userInteractionEnabled = true
+        
+        var mTapUpRecognizer = UITapGestureRecognizer(target: self, action: "backToHome")
+        mTapUpRecognizer.numberOfTapsRequired = 1
+        yearLabel.addGestureRecognizer(mTapUpRecognizer)
+        
+        //Add compose button
+        
+        composeButton = diaryButtonWith(text: "撰",  fontSize: 14.0,  width: 40.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        
+        composeButton.center = CGPointMake(screenRect.width - yearLabel.frame.size.width/2.0 - 15, 38 + yearLabel.frame.size.height + 26.0/2.0)
+        
+        composeButton.addTarget(self, action: "newCompose", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        
+        self.view.addSubview(composeButton)
+        //
+        
+        self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
+        
+        self.collectionView?.delegate = self
+        
+        diaryProgressBar = DiaryProgress(frame: CGRectMake(0, 0, collectionViewWidth, 8.0))
+        diaryProgressBar.center = CGPointMake(self.collectionView!.center.x, self.collectionView!.center.y + self.collectionView!.frame.size.height/2.0 + 30.0)
+        diaryProgressBar.alpha = 0.0
+        self.view.addSubview(diaryProgressBar)
+   
     }
     
     func backToHome(){

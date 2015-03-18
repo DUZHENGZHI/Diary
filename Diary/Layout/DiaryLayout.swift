@@ -11,7 +11,7 @@ import UIKit
 class DiaryLayout: UICollectionViewFlowLayout {
     override func prepareLayout() {
         super.prepareLayout()
-        var itemSize = CGSizeMake(itemWidth, CGFloat( itemHeight))
+        let itemSize = CGSizeMake(itemWidth, CGFloat( itemHeight))
         self.itemSize = itemSize
         self.minimumInteritemSpacing = 0.0
         self.minimumLineSpacing = itemSpacing

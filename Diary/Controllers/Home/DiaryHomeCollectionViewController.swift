@@ -76,17 +76,15 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
     
     
     func moveToThisMonth() {
+        
+        let dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as DiaryMonthDayCollectionViewController
         if (diarys.count > 0){
             var diary = diarys.last as Diary
-            var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as DiaryMonthDayCollectionViewController
+
             dvc.month = diary.month.integerValue
             dvc.year = diary.year.integerValue
-            
-            //        dvc.collectionView?.dataSource = collectionView.dataSource
-            
-            self.navigationController!.pushViewController(dvc, animated: true)
         }else{
-            var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as DiaryMonthDayCollectionViewController
+            
             var filePath = NSBundle.mainBundle().pathForResource("poem", ofType: "json")
             var JSONData = NSData(contentsOfFile: filePath!, options: NSDataReadingOptions.MappedRead, error: nil)
             var jsonObject = NSJSONSerialization.JSONObjectWithData(JSONData!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
@@ -108,17 +106,14 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
                 dvc.month = newdiary.month.integerValue
                 dvc.year = newdiary.year.integerValue
             }
-
-            
-            //        dvc.collectionView?.dataSource = collectionView.dataSource
-            
-            self.navigationController!.pushViewController(dvc, animated: true)
             
             var error: NSError?
             if !managedContext.save(&error) {
                 println("Could not save \(error), \(error?.userInfo)")
             }
         }
+        
+        self.navigationController!.pushViewController(dvc, animated: true)
 
     }
 

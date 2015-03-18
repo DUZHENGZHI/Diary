@@ -44,11 +44,11 @@ class DiaryVerticalTextView: UIView {
         var attrString = NSMutableAttributedString()
         
         if (self.titleText.length > 0) {
-            var fontSize = 27.0 as CGFloat
-            var titleFont = CTFontCreateWithName(fontName, fontSize, nil)
-            var titleAttrDict = getAttributedStringSourceWithString(self.titleText as String, font: titleFont)
+            let fontSize = 27.0 as CGFloat
+            let titleFont = CTFontCreateWithName(fontName, fontSize, nil)
+            let titleAttrDict = getAttributedStringSourceWithString(self.titleText as String, font: titleFont)
             
-            var titleAttrString = NSMutableAttributedString(string: (self.titleText as String), attributes: titleAttrDict)
+            let titleAttrString = NSMutableAttributedString(string: (self.titleText as String), attributes: titleAttrDict)
             
             attrString.appendAttributedString(titleAttrString)
             titleForTextSpace = 0

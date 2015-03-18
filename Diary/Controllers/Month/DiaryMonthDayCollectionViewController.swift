@@ -41,6 +41,42 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         // self.clearsSelectionOnViewWillAppear = false
         //Add year label
         self.view.backgroundColor = UIColor.whiteColor()
+        setUpUI()
+        
+        //2
+        let fetchRequest = NSFetchRequest(entityName:"Diary")
+        
+        fetchRequest.predicate = NSPredicate(format: "year = \(year) AND month = \(month)")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
+        
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: managedContext, sectionNameKeyPath: "year",
+            cacheName: nil)
+        
+        fetchedResultsController.delegate = self
+        //3
+        var error: NSError? = nil
+        if (!fetchedResultsController.performFetch(&error)){
+            println("Error: \(error?.localizedDescription)")
+        }
+        
+        var fetchedResults = fetchedResultsController.fetchedObjects as [NSManagedObject]
+        diarys = fetchedResults
+        print("This month have \(diarys.count) \n")
+        var monthLayout = DiaryLayout()
+        
+        monthLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
+
+        self.collectionView?.setCollectionViewLayout(monthLayout, animated: false)
+
+        // Register cell classes
+//        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseMonthDayCellIdentifier)
+
+        // Do any additional setup after loading the view.
+    }
+    
+    func setUpUI(){
         
         yearLabel = DiaryLabel(fontname: "TpldKhangXiDictTrial", labelText: "\(numberToChinese(year))年", fontSize: 20.0,lineHeight: 5.0)
         
@@ -77,7 +113,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         mmTapUpRecognizer.numberOfTapsRequired = 1
         monthLabel.addGestureRecognizer(mmTapUpRecognizer)
         
-
+        
         self.view.addSubview(monthLabel)
         self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
         //
@@ -88,38 +124,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         diaryProgressBar.center = CGPointMake(self.collectionView!.center.x, self.collectionView!.center.y + self.collectionView!.frame.size.height/2.0 + 30.0)
         diaryProgressBar.alpha = 0.0
         self.view.addSubview(diaryProgressBar)
-        
-        //2
-        let fetchRequest = NSFetchRequest(entityName:"Diary")
-        
-        fetchRequest.predicate = NSPredicate(format: "year = \(year) AND month = \(month)")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
-        
-        
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-            managedObjectContext: managedContext, sectionNameKeyPath: "year",
-            cacheName: nil)
-        
-        fetchedResultsController.delegate = self
-        //3
-        var error: NSError? = nil
-        if (!fetchedResultsController.performFetch(&error)){
-            println("Error: \(error?.localizedDescription)")
-        }
-        
-        var fetchedResults = fetchedResultsController.fetchedObjects as [NSManagedObject]
-        diarys = fetchedResults
-        print("This month have \(diarys.count) \n")
-        var monthLayout = DiaryLayout()
-        
-        monthLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-
-        self.collectionView?.setCollectionViewLayout(monthLayout, animated: false)
-
-        // Register cell classes
-//        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseMonthDayCellIdentifier)
-
-        // Do any additional setup after loading the view.
+    
     }
     
     override func viewDidLayoutSubviews() {
