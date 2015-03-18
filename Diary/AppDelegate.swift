@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
 
     var window: UIWindow?
 
@@ -98,6 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return nil
         }
         var managedObjectContext = NSManagedObjectContext()
+        managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
     }()
@@ -149,19 +150,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if (!success && (error != nil)) {
                     // 执行错误处理
                     NSLog("%@",error!.localizedDescription)
-                    self.migrateiCloudStoreToLocalStore()
+                    self.showAlert()
                 }
             }
             context.reset()
         })
     }
     
+    func showAlert() {
+        var message = UIAlertView(title: "iCloud 同步错误", message: "是否使用 iCloud 版本备份覆盖本地记录", delegate: self, cancelButtonTitle: "不要", otherButtonTitles: "好的")
+        message.show()
+    }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        switch buttonIndex {
+        case 0:
+            self.migrateLocalStoreToiCloudStore()
+        case 1:
+            self.migrateiCloudStoreToLocalStore()
+        default:
+            println("Do nothing")
+        }
+    }
+    
     func storesDidChange(notification:NSNotification){
         println("Store did change")
     }
     
+    func migrateLocalStoreToiCloudStore() {
+        println("Migrate local to icloud")
+        var oldStore = persistentStoreCoordinator?.persistentStores.first as NSPersistentStore
+        var localStoreOptions = self.storeOptions
+        localStoreOptions[NSPersistentStoreRemoveUbiquitousMetadataOption] = true
+        var newStore = persistentStoreCoordinator?.migratePersistentStore(oldStore, toURL: cloudDirectory, options: localStoreOptions, withType: NSSQLiteStoreType, error: nil)
+        
+        reloadStore(newStore)
+    }
+    
     func migrateiCloudStoreToLocalStore() {
-        println("Migrate")
+        println("Migrate icloud to local")
         var oldStore = persistentStoreCoordinator?.persistentStores.first as NSPersistentStore
         var localStoreOptions = self.storeOptions
         localStoreOptions[NSPersistentStoreRemoveUbiquitousMetadataOption] = true
