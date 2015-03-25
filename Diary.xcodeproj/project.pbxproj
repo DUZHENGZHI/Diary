@@ -23,7 +23,6 @@
 		0A9170021AA6216D00E987A4 /* DiaryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9170011AA6216D00E987A4 /* DiaryLabel.swift */; };
 		0A9170071AA6297600E987A4 /* DiaryComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9170061AA6297600E987A4 /* DiaryComposeViewController.swift */; };
 		0A9CD0431A9643910082D677 /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9CD0421A9643910082D677 /* Diary.swift */; };
-		0ABE123A1AB1911100CAD673 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ABE12391AB1911100CAD673 /* CloudKit.framework */; };
 		0AE2022E1A8B0B310012AAED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE2022D1A8B0B310012AAED /* AppDelegate.swift */; };
 		0AE202311A8B0B310012AAED /* Diary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0AE2022F1A8B0B310012AAED /* Diary.xcdatamodeld */; };
 		0AE202361A8B0B310012AAED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AE202341A8B0B310012AAED /* Main.storyboard */; };
@@ -34,6 +33,7 @@
 		0AE202561A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202551A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift */; };
 		0AE202591A8B0E420012AAED /* DiaryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202581A8B0E420012AAED /* DiaryHelper.swift */; };
 		0AEDA8521AC2CE9A00F2DC56 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEDA8511AC2CE9A00F2DC56 /* Crashlytics.framework */; };
+		0AEDA8541AC2D50E00F2DC56 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEDA8531AC2D50E00F2DC56 /* CloudKit.framework */; };
 		46DF9ED85C87A4D5F54429FA /* libPods-Diary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E74A5C514B8C4A1D0367BD /* libPods-Diary.a */; };
 /* End PBXBuildFile section */
 
@@ -69,7 +69,6 @@
 		0A9170011AA6216D00E987A4 /* DiaryLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryLabel.swift; path = Helper/DiaryLabel.swift; sourceTree = "<group>"; };
 		0A9170061AA6297600E987A4 /* DiaryComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryComposeViewController.swift; path = Controllers/Compose/DiaryComposeViewController.swift; sourceTree = "<group>"; };
 		0A9CD0421A9643910082D677 /* Diary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Diary.swift; path = Models/Diary.swift; sourceTree = "<group>"; };
-		0ABE12391AB1911100CAD673 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		0AE202281A8B0B310012AAED /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE2022C1A8B0B310012AAED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AE2022D1A8B0B310012AAED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +83,7 @@
 		0AE202551A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeYearCollectionViewCell.swift; path = Cell/YearCell/HomeYearCollectionViewCell.swift; sourceTree = "<group>"; };
 		0AE202581A8B0E420012AAED /* DiaryHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryHelper.swift; path = Helper/DiaryHelper.swift; sourceTree = "<group>"; };
 		0AEDA8511AC2CE9A00F2DC56 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		0AEDA8531AC2D50E00F2DC56 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		0AF0E4271A903D6C0027592E /* VerticalTextPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = VerticalTextPlayground.playground; path = Playgrounds/VerticalTextPlayground.playground; sourceTree = "<group>"; };
 		18506CDA6A8669C3DB90CABE /* Pods-Diary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diary.release.xcconfig"; path = "Pods/Target Support Files/Pods-Diary/Pods-Diary.release.xcconfig"; sourceTree = "<group>"; };
 		A7E74A5C514B8C4A1D0367BD /* libPods-Diary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Diary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,9 +95,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AEDA8541AC2D50E00F2DC56 /* CloudKit.framework in Frameworks */,
 				46DF9ED85C87A4D5F54429FA /* libPods-Diary.a in Frameworks */,
 				0AEDA8521AC2CE9A00F2DC56 /* Crashlytics.framework in Frameworks */,
-				0ABE123A1AB1911100CAD673 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,7 +300,7 @@
 		B96A4F2287CAE48E5B933C09 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0ABE12391AB1911100CAD673 /* CloudKit.framework */,
+				0AEDA8531AC2D50E00F2DC56 /* CloudKit.framework */,
 				A7E74A5C514B8C4A1D0367BD /* libPods-Diary.a */,
 			);
 			name = Frameworks;
