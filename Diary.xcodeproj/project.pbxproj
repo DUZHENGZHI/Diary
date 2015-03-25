@@ -33,6 +33,7 @@
 		0AE202511A8B0D280012AAED /* DiaryHomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202501A8B0D280012AAED /* DiaryHomeCollectionViewController.swift */; };
 		0AE202561A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202551A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift */; };
 		0AE202591A8B0E420012AAED /* DiaryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202581A8B0E420012AAED /* DiaryHelper.swift */; };
+		0AEDA8521AC2CE9A00F2DC56 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEDA8511AC2CE9A00F2DC56 /* Crashlytics.framework */; };
 		46DF9ED85C87A4D5F54429FA /* libPods-Diary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E74A5C514B8C4A1D0367BD /* libPods-Diary.a */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +83,7 @@
 		0AE202501A8B0D280012AAED /* DiaryHomeCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryHomeCollectionViewController.swift; path = Controllers/Home/DiaryHomeCollectionViewController.swift; sourceTree = "<group>"; };
 		0AE202551A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeYearCollectionViewCell.swift; path = Cell/YearCell/HomeYearCollectionViewCell.swift; sourceTree = "<group>"; };
 		0AE202581A8B0E420012AAED /* DiaryHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryHelper.swift; path = Helper/DiaryHelper.swift; sourceTree = "<group>"; };
+		0AEDA8511AC2CE9A00F2DC56 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		0AF0E4271A903D6C0027592E /* VerticalTextPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = VerticalTextPlayground.playground; path = Playgrounds/VerticalTextPlayground.playground; sourceTree = "<group>"; };
 		18506CDA6A8669C3DB90CABE /* Pods-Diary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diary.release.xcconfig"; path = "Pods/Target Support Files/Pods-Diary/Pods-Diary.release.xcconfig"; sourceTree = "<group>"; };
 		A7E74A5C514B8C4A1D0367BD /* libPods-Diary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Diary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +96,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46DF9ED85C87A4D5F54429FA /* libPods-Diary.a in Frameworks */,
+				0AEDA8521AC2CE9A00F2DC56 /* Crashlytics.framework in Frameworks */,
 				0ABE123A1AB1911100CAD673 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -167,6 +170,7 @@
 		0AE2021F1A8B0B310012AAED = {
 			isa = PBXGroup;
 			children = (
+				0AEDA8511AC2CE9A00F2DC56 /* Crashlytics.framework */,
 				0AE2022A1A8B0B310012AAED /* Diary */,
 				0AE202431A8B0B310012AAED /* DiaryTests */,
 				0AE202291A8B0B310012AAED /* Products */,
@@ -314,6 +318,7 @@
 				0AE202251A8B0B310012AAED /* Frameworks */,
 				0AE202261A8B0B310012AAED /* Resources */,
 				428127113080257B78162935 /* Copy Pods Resources */,
+				0AEDA8501AC2CDEE00F2DC56 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -409,6 +414,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0AEDA8501AC2CDEE00F2DC56 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run de004490005a062fa95a4d5676a7edbfbe42c582 e6c5af0aba758898c348300b43fb0df9f786dd1222c7b68a38eb37743eb450e2";
+		};
 		428127113080257B78162935 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -527,7 +545,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -598,8 +616,12 @@
 				CODE_SIGN_ENTITLEMENTS = Diary/Diary.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Diary/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -619,8 +641,12 @@
 				CODE_SIGN_ENTITLEMENTS = Diary/Diary.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Diary/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

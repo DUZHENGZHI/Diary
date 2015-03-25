@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
@@ -16,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        Crashlytics.startWithAPIKey("de004490005a062fa95a4d5676a7edbfbe42c582")
         return true
     }
 
@@ -203,6 +205,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
         }
         
         persistentStoreCoordinator?.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: self.applicationDocumentsDirectory.URLByAppendingPathComponent("Diary.sqlite"), options: self.storeOptions, error: nil)
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("CoreDataDidUpdated", object: nil)
     }
 
 }

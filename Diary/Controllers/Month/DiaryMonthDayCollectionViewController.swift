@@ -41,8 +41,26 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         // self.clearsSelectionOnViewWillAppear = false
         //Add year label
         self.view.backgroundColor = UIColor.whiteColor()
+
         setUpUI()
         
+        updateFetch()
+        
+        var monthLayout = DiaryLayout()
+        
+        monthLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
+
+        self.collectionView?.setCollectionViewLayout(monthLayout, animated: false)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFetch", name: "CoreDataDidUpdated", object: nil)
+
+        // Register cell classes
+//        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseMonthDayCellIdentifier)
+
+        // Do any additional setup after loading the view.
+    }
+    
+    func updateFetch() {
         //2
         let fetchRequest = NSFetchRequest(entityName:"Diary")
         
@@ -64,16 +82,6 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         var fetchedResults = fetchedResultsController.fetchedObjects as [NSManagedObject]
         diarys = fetchedResults
         print("This month have \(diarys.count) \n")
-        var monthLayout = DiaryLayout()
-        
-        monthLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-
-        self.collectionView?.setCollectionViewLayout(monthLayout, animated: false)
-
-        // Register cell classes
-//        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseMonthDayCellIdentifier)
-
-        // Do any additional setup after loading the view.
     }
     
     func setUpUI(){

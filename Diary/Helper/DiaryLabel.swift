@@ -15,6 +15,19 @@ func sizeHeightWithText(labelText: NSString, fontSize: CGFloat, textAttributes: 
     return rect
 }
 
+class NumberPaser {
+    
+    func convertNumber(number:Int) -> String? {
+        
+        if (number == 0){
+            return "零"
+        }else{
+            return nil
+        }
+    }
+    
+}
+
 class DiaryLabel: UILabel {
     
     var textAttributes: [NSObject : AnyObject]!

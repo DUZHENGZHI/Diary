@@ -2,7 +2,8 @@
 # platform :ios, '6.0'
 
 target 'Diary' do
-	pod 'pop'
+pod 'pop'
+#pod 'CrashlyticsLumberjack'
 end
 
 target 'DiaryTests' do
