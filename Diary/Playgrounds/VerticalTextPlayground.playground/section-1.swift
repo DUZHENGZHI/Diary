@@ -25,6 +25,11 @@ extension UILabel {
     
 }
 
+var newLabel = UILabel()
+newLabel.text = "HeyLabel"
+newLabel.sizeToFit()
+newLabel
+
 var label = UILabel(fontname: "Avenir", labelText:"一闪一闪亮晶晶", fontSize: 16.0)
 
 label.backgroundColor = UIColor.grayColor()
