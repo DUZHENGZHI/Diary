@@ -36,8 +36,9 @@ class DiaryLocationHelper: NSObject, CLLocationManagerDelegate {
             
             if let pm = placemarks as? [CLPlacemark] {
                 if pm.count > 0 {
+                    
                     var placemark = pm.first
-                    println("\(placemark?.locality) \(placemark?.locality)")
+                    
                     self.address = placemark?.locality
                     
                     NSNotificationCenter.defaultCenter().postNotificationName("DiaryLocationUpdated", object: self.address)
