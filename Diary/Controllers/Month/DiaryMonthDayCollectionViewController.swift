@@ -229,10 +229,13 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
         println("Diarys changed")
-        
+
         refetch()
         
         self.collectionView?.reloadData()
+        
+        self.collectionView?.collectionViewLayout.invalidateLayout()
+        
         self.collectionView!.contentOffset = CGPointMake(self.collectionView!.collectionViewLayout.collectionViewContentSize().width-collectionViewWidth, 0)
     }
 
