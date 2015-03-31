@@ -34,7 +34,7 @@ class DiaryProgress: UIView {
     
     func setupProgress() {
         self.layer.cornerRadius = self.frame.size.height/2.0
-        self.backgroundColor = UIColor(white: 0.97, alpha: 1.0)
+        self.backgroundColor = UIColor(white: 0.97, alpha: 0.4)
         progressPoint = CAShapeLayer()
         progressPoint.frame = CGRectMake(0, 0, self.frame.size.height, self.frame.size.height)
         progressPoint.cornerRadius = progressPoint.frame.size.height/2.0
