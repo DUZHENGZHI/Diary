@@ -79,6 +79,10 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
             println("Error: \(error?.localizedDescription)")
         }
         
+        refetch()
+    }
+    
+    func refetch() {
         var fetchedResults = fetchedResultsController.fetchedObjects as [NSManagedObject]
         diarys = fetchedResults
         print("This month have \(diarys.count) \n")
@@ -223,9 +227,11 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     }
 
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-
-        var fetchedResults = fetchedResultsController.fetchedObjects as [NSManagedObject]
-        diarys = fetchedResults
+        
+        println("Diarys changed")
+        
+        refetch()
+        
         self.collectionView?.reloadData()
         self.collectionView!.contentOffset = CGPointMake(self.collectionView!.collectionViewLayout.collectionViewContentSize().width-collectionViewWidth, 0)
     }

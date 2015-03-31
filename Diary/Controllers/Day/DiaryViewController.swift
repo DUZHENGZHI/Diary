@@ -132,8 +132,10 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
     func editDiary() {
         var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as DiaryComposeViewController
         
-        if (diary != nil){
-            println("Find \(diary?.created_at)")
+        if let diary = diary {
+            
+            println("Find \(diary.created_at)")
+            
             composeViewController.diary = diary
         }
         
@@ -142,7 +144,12 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
     }
     
     func saveToRoll() {
+        
+        let offset = self.webview.scrollView.contentOffset.x
+        
         var image =  webview.captureView()
+        
+        self.webview.scrollView.contentOffset.x = offset
 
         var sharingItems = [AnyObject]()
         sharingItems.append(image)

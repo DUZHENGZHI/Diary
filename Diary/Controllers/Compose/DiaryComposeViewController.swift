@@ -105,27 +105,37 @@ class DiaryComposeViewController: UIViewController ,UITextViewDelegate, NSLayout
         // Do any additional setup after loading the view.
     }
     
-    func updateAddress(notification:NSNotification) {
-        var address = notification.object as String
-        println("Author at \(address)")
-        if (diary?.location == "" || diary?.location == nil){
-            locationTextView.text = "于 \(address)"
-        }else{
-            locationTextView.text = diary?.location
+    func updateAddress(notification: NSNotification) {
+        
+        if let address = notification.object as? String {
+            
+            println("Author at \(address)")
+            
+            if let lastLocation = diary?.location {
+                locationTextView.text = diary?.location
+            }else {
+                locationTextView.text = "于 \(address)"
+            }
+            
+            
+            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+                {
+                    self.locationTextView.alpha = 1.0
+                    
+                }, completion: nil)
+            
+            locationHelper.locationManager.stopUpdatingLocation()
         }
+        
 
-        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
-            {
-                self.locationTextView.alpha = 1.0
-
-            }, completion: nil)
-        locationHelper.locationManager.stopUpdatingLocation()
     }
     
     func finishCompose(button: UIButton) {
         print("Finish compose \n")
+        
         self.composeView.endEditing(true)
         self.locationTextView.endEditing(true)
+        
         if (composeView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 1){
             
             if let diary = diary {
