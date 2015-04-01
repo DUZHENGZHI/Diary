@@ -118,7 +118,6 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
                 newdiary.updateTimeWithDate(NSDate())
                 dvc.month = newdiary.month.integerValue
                 dvc.year = newdiary.year.integerValue
-                
 
             }
             
