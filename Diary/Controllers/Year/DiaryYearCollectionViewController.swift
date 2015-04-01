@@ -56,13 +56,16 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
                     var diary = diary as Diary
 
                     var date = diary.created_at
-                    var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: date)
+                    var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: diary.created_at)
+                    
+                    
                     
                     if diarysGroupInMonth[components] == nil {
                         diarysGroupInMonth[components] = 1
                     }else{
                         diarysGroupInMonth[components] = diarysGroupInMonth[components]! + 1
                     }
+                    println("This day is \(diarysGroupInMonth)")
                 }
             }
         }
@@ -173,13 +176,16 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseYearIdentifier, forIndexPath: indexPath) as DiaryCollectionViewCell
         if diarysGroupInMonth.keys.array.count == 0 {
             
+            println("No Month")
+            
             cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: NSDate()))) 月"
 
         }else{
             
-            var diary = fetchedResultsController.objectAtIndexPath(indexPath) as Diary
+            var month = diarysGroupInMonth.keys.array[indexPath.row]
             // Configure the cell
-            cell.labelText = "\(numberToChineseWithUnit(diary.month.integerValue)) 月"
+            cell.labelText = "\(numberToChineseWithUnit(month)) 月"
+            
             
         }
         

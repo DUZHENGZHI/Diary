@@ -64,6 +64,8 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         //2
         let fetchRequest = NSFetchRequest(entityName:"Diary")
         
+        println("year = \(year) AND month = \(month)")
+        
         fetchRequest.predicate = NSPredicate(format: "year = \(year) AND month = \(month)")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
         
