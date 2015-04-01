@@ -11,7 +11,7 @@ import CoreData
 
 let reuseYearIdentifier = "YearMonthCollectionViewCell"
 
-class DiaryYearCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class DiaryYearCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
     
     var diarys = [NSManagedObject]()
     
@@ -41,9 +41,21 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
             managedObjectContext: managedContext, sectionNameKeyPath: "year",
             cacheName: nil)
         //3
+        fetchedResultsController.delegate = self
+
+        refetch()
+        var yearLayout = DiaryLayout()
+        
+        yearLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
+        self.collectionView?.setCollectionViewLayout(yearLayout, animated: false)
+
+        // Do any additional setup after loading the view.
+    }
+    
+    func refetch() {
         var error: NSError? = nil
         if (!fetchedResultsController.performFetch(&error)){
-                println("Error: \(error?.localizedDescription)")
+            println("Error: \(error?.localizedDescription)")
         }else{
             
             var fetchedResults = fetchedResultsController.fetchedObjects as [NSManagedObject]
@@ -54,11 +66,9 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
                 diarys = fetchedResults
                 for diary in diarys{
                     var diary = diary as Diary
-
+                    
                     var date = diary.created_at
                     var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: diary.created_at)
-                    
-                    
                     
                     if diarysGroupInMonth[components] == nil {
                         diarysGroupInMonth[components] = 1
@@ -69,13 +79,6 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
                 }
             }
         }
-        
-        var yearLayout = DiaryLayout()
-        
-        yearLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        self.collectionView?.setCollectionViewLayout(yearLayout, animated: false)
-
-        // Do any additional setup after loading the view.
     }
     
     func setupUI() {
@@ -249,6 +252,15 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
                 self.diaryProgressBar.alpha = 0.0
                 
             }, completion: nil)
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        refetch()
+        self.collectionView?.reloadData()
+        
+        self.collectionView?.collectionViewLayout.invalidateLayout()
+        
+        self.collectionView!.contentOffset = CGPointMake(self.collectionView!.collectionViewLayout.collectionViewContentSize().width-collectionViewWidth, 0)
     }
     
     // MARK: UICollectionViewDelegate
