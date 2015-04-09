@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "kevinzhow.Diary" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as NSURL
+        return urls[urls.count-1] as! NSURL
     }()
     
     lazy var cloudDirectory: NSURL = {
@@ -181,7 +181,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
     
     func migrateLocalStoreToiCloudStore() {
         println("Migrate local to icloud")
-        var oldStore = persistentStoreCoordinator?.persistentStores.first as NSPersistentStore
+        var oldStore = persistentStoreCoordinator?.persistentStores.first as! NSPersistentStore
         var localStoreOptions = self.storeOptions
         localStoreOptions[NSPersistentStoreRemoveUbiquitousMetadataOption] = true
         var newStore = persistentStoreCoordinator?.migratePersistentStore(oldStore, toURL: cloudDirectory, options: localStoreOptions, withType: NSSQLiteStoreType, error: nil)
@@ -191,7 +191,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
     
     func migrateiCloudStoreToLocalStore() {
         println("Migrate icloud to local")
-        var oldStore = persistentStoreCoordinator?.persistentStores.first as NSPersistentStore
+        var oldStore = persistentStoreCoordinator?.persistentStores.first as! NSPersistentStore
         var localStoreOptions = self.storeOptions
         localStoreOptions[NSPersistentStoreRemoveUbiquitousMetadataOption] = true
         var newStore = persistentStoreCoordinator?.migratePersistentStore(oldStore, toURL:  self.applicationDocumentsDirectory.URLByAppendingPathComponent("Diary.sqlite"), options: localStoreOptions, withType: NSSQLiteStoreType, error: nil)

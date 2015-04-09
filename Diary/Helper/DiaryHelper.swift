@@ -22,14 +22,14 @@ let collectionViewWidth = itemWidth * 3 + itemSpacing * 2
 
 //Coredata
 let appDelegate =
-UIApplication.sharedApplication().delegate as AppDelegate
+UIApplication.sharedApplication().delegate as! AppDelegate
 
 let managedContext = appDelegate.managedObjectContext!
 
 
 func diaryButtonWith(#text: String, #fontSize: CGFloat, #width: CGFloat, #normalImageName: String, #highlightedImageName: String) -> UIButton {
     
-    var button = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+    var button = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
     button.frame = CGRectMake(0, 0, width, width)
     
     var font = UIFont(name: "Wyue-GutiFangsong-NC", size: fontSize) as UIFont!
@@ -74,7 +74,7 @@ func numberToChineseWithUnit(number:Int) -> String {
 func unitParser(unit:Int) -> [String] {
     
     var units = ["万","千","百","十",""].reverse()
-    var slicedUnits: Slice<String> = units[0..<(unit)].reverse()
+    var slicedUnits: ArraySlice<String> = units[0..<(unit)].reverse()
     var final: [String] = Array(slicedUnits)
     return final
 }
@@ -120,13 +120,13 @@ func findLastDayDiary() -> Diary? {
     
     var fetchedResults =
     managedContext.executeFetchRequest(fetchRequest,
-        error: &error) as [Diary]?
+        error: &error) as! [Diary]?
     
     while(fetchedResults?.count > 1){
         var lastDiary = fetchedResults?.last!
         managedContext.deleteObject(lastDiary!)
         fetchedResults = managedContext.executeFetchRequest(fetchRequest,
-                error: &error) as [Diary]?
+                error: &error) as! [Diary]?
     }
     managedContext.save(nil)
     var diary = fetchedResults?.first

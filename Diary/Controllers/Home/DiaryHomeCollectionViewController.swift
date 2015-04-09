@@ -31,7 +31,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         
         let fetchedResults =
         managedContext.executeFetchRequest(fetchRequest,
-            error: &error) as [NSManagedObject]?
+            error: &error) as! [NSManagedObject]?
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
         if let results = fetchedResults {
             diarys = results
@@ -40,7 +40,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         }
         
         for diary in diarys{
-            var diary = diary as Diary
+            var diary = diary as! Diary
             var date = diary.created_at
             var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: date)
             
@@ -80,16 +80,16 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
         var currentMonth = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: NSDate())
         
         if (diarys.count > 0){
-            var diary = diarys.last as Diary
+            var diary = diarys.last as! Diary
             
             if (currentMonth >  diary.month.integerValue) {
-                var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as DiaryYearCollectionViewController
+                var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as! DiaryYearCollectionViewController
                 
                 dvc.year = diary.year.integerValue
                 
                 self.navigationController!.pushViewController(dvc, animated: true)
             }else{
-                var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as DiaryMonthDayCollectionViewController
+                var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
                 
                 dvc.year = diary.year.integerValue
                 dvc.month = diary.month.integerValue
@@ -97,23 +97,23 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
                 self.navigationController!.pushViewController(dvc, animated: true)
             }
         }else{
-            var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as DiaryMonthDayCollectionViewController
+            var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
             var filePath = NSBundle.mainBundle().pathForResource("poem", ofType: "json")
             var JSONData = NSData(contentsOfFile: filePath!, options: NSDataReadingOptions.MappedRead, error: nil)
-            var jsonObject = NSJSONSerialization.JSONObjectWithData(JSONData!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
-            var poems = jsonObject.valueForKey("poems") as NSArray
+            var jsonObject = NSJSONSerialization.JSONObjectWithData(JSONData!, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
+            var poems = jsonObject.valueForKey("poems") as! NSArray
             
             for poem in poems{
                 
-                var poem =  poem as NSDictionary
+                var poem =  poem as! NSDictionary
                 let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
                 
                 let newdiary = Diary(entity: entity!,
                     insertIntoManagedObjectContext:managedContext)
                 
-                newdiary.content = poem.valueForKey("content") as String
+                newdiary.content = poem.valueForKey("content") as! String
                 newdiary.title = poem.valueForKey("title") as? String
-                newdiary.location = poem.valueForKey("location") as String
+                newdiary.location = poem.valueForKey("location") as! String
                 
                 newdiary.updateTimeWithDate(NSDate())
                 dvc.month = newdiary.month.integerValue
@@ -167,7 +167,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> HomeYearCollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as HomeYearCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! HomeYearCollectionViewCell
         
         var yearText = diarysGroupInYear.keys.array[indexPath.row]
         cell.textInt = diarysGroupInYear.keys.array[indexPath.row]
@@ -196,7 +196,7 @@ class DiaryHomeCollectionViewController: UICollectionViewController, UICollectio
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as DiaryYearCollectionViewController
+        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as! DiaryYearCollectionViewController
         dvc.year = diarysGroupInYear.keys.array[indexPath.row]
 //        dvc.collectionView?.dataSource = collectionView.dataSource
 

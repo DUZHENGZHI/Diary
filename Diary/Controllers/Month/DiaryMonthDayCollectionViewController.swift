@@ -85,7 +85,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     }
     
     func refetch() {
-        var fetchedResults = fetchedResultsController.fetchedObjects as [NSManagedObject]
+        var fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
         diarys = fetchedResults
         print("This month have \(diarys.count) \n")
     }
@@ -160,7 +160,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     
     func newCompose() {
         
-        var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as DiaryComposeViewController
+        var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
         
         self.presentViewController(composeViewController, animated: true, completion: nil)
         
@@ -192,8 +192,8 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
 
         // Configure the cell
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseMonthDayCellIdentifier, forIndexPath: indexPath) as DiaryCollectionViewCell
-        var diary = fetchedResultsController.objectAtIndexPath(indexPath) as Diary
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseMonthDayCellIdentifier, forIndexPath: indexPath) as! DiaryCollectionViewCell
+        var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
         // Configure the cell
 
         if let title = diary.title {
@@ -218,9 +218,9 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryViewController") as DiaryViewController
+        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryViewController") as! DiaryViewController
         
-        var diary = fetchedResultsController.objectAtIndexPath(indexPath) as Diary
+        var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
 
         dvc.diary = diary
         

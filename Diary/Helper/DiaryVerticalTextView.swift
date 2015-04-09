@@ -112,20 +112,21 @@ class DiaryVerticalTextView: UIView {
         var lineBreakMode = CTLineBreakMode.ByWordWrapping
         var lineSpace = self.lineSpace
         var paragraphSpace = titleForTextSpace
+    
         
-        let alignmentSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.Alignment, valueSize: UInt(sizeof(CTTextAlignment)), value: &alignment)
+        let alignmentSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.Alignment, valueSize: Int(sizeof(CTTextAlignment)), value: &alignment)
         
-        let LineBreakModeSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.LineBreakMode, valueSize: UInt(sizeof(CTLineBreakMode)), value: &lineBreakMode)
+        let LineBreakModeSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.LineBreakMode, valueSize: Int(sizeof(CTLineBreakMode)), value: &lineBreakMode)
         
-        let ParagraphSpacingSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.ParagraphSpacing, valueSize: UInt(sizeof(CGFloat)), value: &paragraphSpace)
+        let ParagraphSpacingSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.ParagraphSpacing, valueSize: Int(sizeof(CGFloat)), value: &paragraphSpace)
         
-        let MinimumLineSpacingSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.MinimumLineSpacing, valueSize: UInt(sizeof(CGFloat)), value: &lineSpace)
+        let MinimumLineSpacingSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.MinimumLineSpacing, valueSize: Int(sizeof(CGFloat)), value: &lineSpace)
         
-        let MaximumLineSpacingSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.MaximumLineSpacing, valueSize: UInt(sizeof(CGFloat)), value: &lineSpace)
+        let MaximumLineSpacingSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.MaximumLineSpacing, valueSize: Int(sizeof(CGFloat)), value: &lineSpace)
         
         var paragraphStypeSettings = [alignmentSet, LineBreakModeSet, ParagraphSpacingSet, MinimumLineSpacingSet, MaximumLineSpacingSet]
         
-        var paragraphStyle = CTParagraphStyleCreate(paragraphStypeSettings, UInt(paragraphStypeSettings.count));
+        var paragraphStyle = CTParagraphStyleCreate(paragraphStypeSettings, Int(paragraphStypeSettings.count));
     
 
         var attrDict: [NSString: AnyObject] = [

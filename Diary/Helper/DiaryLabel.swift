@@ -80,24 +80,24 @@ class DiaryLabel: UILabel {
         self.attributedText = NSAttributedString(string: self.attributedText.string, attributes: textAttributes)
     }
 
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         var anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
         anim.springBounciness = 10
         anim.springSpeed = 15
         anim.fromValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
         anim.toValue = NSValue(CGPoint: CGPointMake(0.9, 0.9))
         self.layer.pop_addAnimation(anim, forKey: "PopScale")
-        super.touchesBegan(touches, withEvent: event)
+        super.touchesBegan(touches as Set<NSObject>, withEvent: event)
     }
     
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         var anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
         anim.springBounciness = 10
         anim.springSpeed = 15
         anim.fromValue = NSValue(CGPoint: CGPointMake(0.9, 0.9))
         anim.toValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
         self.layer.pop_addAnimation(anim, forKey: "PopScaleback")
-        super.touchesEnded(touches, withEvent: event)
+        super.touchesEnded(touches as Set<NSObject>, withEvent: event)
     }
 
 

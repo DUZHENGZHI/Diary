@@ -58,14 +58,14 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
             println("Error: \(error?.localizedDescription)")
         }else{
             
-            var fetchedResults = fetchedResultsController.fetchedObjects as [NSManagedObject]
+            var fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
             if (fetchedResults.count == 0){
                 NSLog("Present empty year")
             }else{
                 
                 diarys = fetchedResults
                 for diary in diarys{
-                    var diary = diary as Diary
+                    var diary = diary as! Diary
                     
                     var date = diary.created_at
                     var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: diary.created_at)
@@ -126,7 +126,7 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
 
         var diary = findLastDayDiary()
         
-        var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as DiaryComposeViewController
+        var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
         
         if (diary != nil){
             println("Find \(diary?.created_at)")
@@ -176,7 +176,7 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseYearIdentifier, forIndexPath: indexPath) as DiaryCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseYearIdentifier, forIndexPath: indexPath) as! DiaryCollectionViewCell
         if diarysGroupInMonth.keys.array.count == 0 {
             
             println("No Month")
@@ -214,7 +214,7 @@ class DiaryYearCollectionViewController: UICollectionViewController, UICollectio
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as DiaryMonthDayCollectionViewController
+        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
         
         if diarysGroupInMonth.keys.array.count == 0 {
             dvc.month = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: NSDate())

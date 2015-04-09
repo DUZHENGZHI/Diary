@@ -130,7 +130,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
     }
     
     func editDiary() {
-        var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as DiaryComposeViewController
+        var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
         
         if let diary = diary {
             
@@ -147,7 +147,13 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         
         let offset = self.webview.scrollView.contentOffset.x
         
+//        webview.layer.borderColor = UIColor(white: 0.0, alpha: 0.3).CGColor
+//        webview.layer.borderWidth = 1.0
+        
         var image =  webview.captureView()
+        
+//        webview.layer.borderColor = UIColor.clearColor().CGColor
+//        webview.layer.borderWidth = 0.0
         
         self.webview.scrollView.contentOffset.x = offset
 
