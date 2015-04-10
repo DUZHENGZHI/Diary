@@ -159,8 +159,10 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
 
         var sharingItems = [AnyObject]()
         sharingItems.append(image)
-            
+        println("Do Share")
+        
         let activityViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.saveButton
         self.presentViewController(activityViewController, animated: true, completion: nil)
 
     }
