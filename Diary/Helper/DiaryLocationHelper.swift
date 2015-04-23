@@ -9,6 +9,7 @@
 import CoreLocation
 
 class DiaryLocationHelper: NSObject, CLLocationManagerDelegate {
+    
     var locationManager:CLLocationManager = CLLocationManager()
     var currentLocation:CLLocation?
     var address:String?

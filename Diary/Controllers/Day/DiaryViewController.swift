@@ -105,7 +105,23 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         //WebView method
         
         var newDiaryString = diary.content.stringByReplacingOccurrencesOfString("\n", withString: "<br>", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:25px 10px 25px 25px;} * {-webkit-text-size-adjust: 100%; margin:0; font-family: 'Wyue-GutiFangsong-NC'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(self.view.frame.size.width - 120)px; margin-right: 10px;} .content p{ font-size: 14pt; line-height: 28pt;} .extra{ font-size:12pt; line-height: 20pt; margin-right:30px;}</style></head><body><div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString)</div></body></html>", baseURL: nil)
+        
+        var title = ""
+        var contentWidthOffset = 120
+        if let titleStr = diary?.title {
+            var parsedTime = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: diary.created_at))) 日"
+            if titleStr != parsedTime {
+                title = titleStr
+                contentWidthOffset = 175
+                title = "<div class='title'>\(title)</div>"
+            }
+        }
+        
+        var stampPath = NSBundle.mainBundle().bundleURL
+        var minWidth = self.view.frame.size.width - CGFloat(contentWidthOffset)
+        // <img class='stamp' src='xiaoji2.png'></div>
+        
+        webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:25px 10px 25px 25px;} * {-webkit-text-size-adjust: 100%; margin:0; font-family: 'Wyue-GutiFangsong-NC'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(minWidth)px; margin-right: 10px;} .content p{ font-size: 14pt; line-height: 28pt;} .title {font-size: 18pt; line-height: 28pt; font-weight:bold; margin-right: 15px;} .extra{ font-size:12pt; line-height: 20pt; margin-right:30px;}  .stamp {width:24px; height:auto; position:fixed; bottom:20px;}</style></head><body>\(title)<div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString) </body></html>", baseURL: stampPath)
     }
     
     func showButtons() {
