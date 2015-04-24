@@ -12,8 +12,6 @@
 		0A10DBB91AA8C14700B23F9E /* DiaryMonthDayCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A10DBB81AA8C14700B23F9E /* DiaryMonthDayCollectionViewController.swift */; };
 		0A222A871AB89E3F000A1DEF /* poem.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A222A861AB89E3F000A1DEF /* poem.json */; };
 		0A28B4FD1AAB53C30037240C /* DiaryLocationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A28B4FC1AAB53C30037240C /* DiaryLocationHelper.swift */; };
-		0A3504B71ADE5E7400728264 /* xiaoji2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A3504B51ADE5E7400728264 /* xiaoji2.png */; };
-		0A3504B91ADE5EB300728264 /* xiaoji.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A3504B81ADE5EB300728264 /* xiaoji.png */; };
 		0A3572E11A9467E70037C6A0 /* DiaryAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3572E01A9467E70037C6A0 /* DiaryAnimator.swift */; };
 		0A3572E31A9471750037C6A0 /* DiaryYearCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3572E21A9471750037C6A0 /* DiaryYearCollectionViewController.swift */; };
 		0A5E38111AA9E9B000935E29 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5E38101AA9E9B000935E29 /* DiaryViewController.swift */; };
@@ -59,8 +57,6 @@
 		0A222A891AB8ACBA000A1DEF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		0A28B4FC1AAB53C30037240C /* DiaryLocationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryLocationHelper.swift; path = Helper/DiaryLocationHelper.swift; sourceTree = "<group>"; };
 		0A3504B31ADE5CBA00728264 /* Wyue-GutiFangsong-NC_deliverable.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Wyue-GutiFangsong-NC_deliverable.otf"; sourceTree = "<group>"; };
-		0A3504B51ADE5E7400728264 /* xiaoji2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiaoji2.png; sourceTree = "<group>"; };
-		0A3504B81ADE5EB300728264 /* xiaoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiaoji.png; sourceTree = "<group>"; };
 		0A3572E01A9467E70037C6A0 /* DiaryAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryAnimator.swift; path = Animator/DiaryAnimator.swift; sourceTree = "<group>"; };
 		0A3572E21A9471750037C6A0 /* DiaryYearCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryYearCollectionViewController.swift; path = Controllers/Year/DiaryYearCollectionViewController.swift; sourceTree = "<group>"; };
 		0A5E38101AA9E9B000935E29 /* DiaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewController.swift; path = Controllers/Day/DiaryViewController.swift; sourceTree = "<group>"; };
@@ -133,8 +129,6 @@
 		0A3504B21ADE5C6100728264 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				0A3504B81ADE5EB300728264 /* xiaoji.png */,
-				0A3504B51ADE5E7400728264 /* xiaoji2.png */,
 				0A3504B31ADE5CBA00728264 /* Wyue-GutiFangsong-NC_deliverable.otf */,
 				0A916FF91AA6097700E987A4 /* TpldKhangXiDictTrial.otf */,
 			);
@@ -410,9 +404,7 @@
 			files = (
 				0AE202361A8B0B310012AAED /* Main.storyboard in Resources */,
 				0A222A871AB89E3F000A1DEF /* poem.json in Resources */,
-				0A3504B71ADE5E7400728264 /* xiaoji2.png in Resources */,
 				0AE2023B1A8B0B310012AAED /* LaunchScreen.xib in Resources */,
-				0A3504B91ADE5EB300728264 /* xiaoji.png in Resources */,
 				0A916FFA1AA6097700E987A4 /* TpldKhangXiDictTrial.otf in Resources */,
 				0AE202381A8B0B310012AAED /* Images.xcassets in Resources */,
 			);
