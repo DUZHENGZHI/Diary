@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import pop
 
 class DiaryCollectionViewCell: UICollectionViewCell {
     var textLabel: DiaryLabel!

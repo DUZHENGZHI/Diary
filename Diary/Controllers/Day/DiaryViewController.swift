@@ -117,6 +117,8 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         
         var stampPath = NSBundle.mainBundle().bundleURL
         var minWidth = self.view.frame.size.width - CGFloat(contentWidthOffset)
+        
+        var fontStr = "STSongti-SC-Bold"
         // <img class='stamp' src='xiaoji2.png'></div>
         
         webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:25px 10px 25px 25px;} * {-webkit-text-size-adjust: 100%; margin:0; font-family: 'Wyue-GutiFangsong-NC'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(minWidth)px; margin-right: 10px;} .content p{ font-size: 14pt; line-height: 28pt;} .title {font-size: 18pt; line-height: 28pt; font-weight:bold; margin-right: 15px;} .extra{ font-size:12pt; line-height: 20pt; margin-right:30px;}  .stamp {width:24px; height:auto; position:fixed; bottom:20px;}</style></head><body>\(title)<div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString) </body></html>", baseURL: stampPath)

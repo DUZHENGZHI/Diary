@@ -1,10 +1,13 @@
 PODS:
+  - NCChineseConverter (1.0.3)
   - pop (1.0.7)
 
 DEPENDENCIES:
+  - NCChineseConverter (~> 1.0)
   - pop
 
 SPEC CHECKSUMS:
-  pop: 2f14a1ea61339767af9e66741b418c831b3844df
+  NCChineseConverter: a8928afce6012994d25f2e183233f1111476a4a3
+  pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
 
-COCOAPODS: 0.36.0
+COCOAPODS: 0.36.3

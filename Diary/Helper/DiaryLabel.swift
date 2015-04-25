@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import pop
 
 func sizeHeightWithText(labelText: NSString, fontSize: CGFloat, textAttributes: [NSObject : AnyObject]) -> CGRect {
     
