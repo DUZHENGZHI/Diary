@@ -22,7 +22,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
     
     var buttonsView:UIView!
     
-    var closeLabel:UILabel!
+    var pullView: DiaryPullView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,12 +45,10 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         
         self.view.addSubview(self.webview)
         
-        closeLabel = DiaryLabel(fontname: "Wyue-GutiFangsong-NC", labelText: "完", fontSize: 16.0,lineHeight: 5.0)
+        pullView = DiaryPullView(frame: CGRectMake(0, 0, 30.0, 30.0))
+        pullView.center = CGPoint(x: screenRect.width/2.0, y: pullView.frame.size.height/2.0)
         
-        closeLabel.center = CGPointMake(self.view.center.x, -20.0)
-        closeLabel.alpha = 0
-        
-        self.view.addSubview(closeLabel)
+        self.view.addSubview(pullView)
         
         var mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: "hideDiary")
         mDoubleUpRecognizer.delegate = self
@@ -215,8 +213,8 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         }
     }
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        closeLabel.alpha = (-scrollView.contentOffset.y/100.0)
-        closeLabel.center = CGPointMake(self.view.center.x, -scrollView.contentOffset.y - 20)
+        pullView.alpha = (-scrollView.contentOffset.y/100.0)
+        pullView.center = CGPointMake(self.view.center.x, -scrollView.contentOffset.y - 20)
     }
     
     /*
