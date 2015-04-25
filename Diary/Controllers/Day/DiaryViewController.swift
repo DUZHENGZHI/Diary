@@ -112,9 +112,11 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         var title = ""
         var contentWidthOffset = 120
+        var contentMargin:CGFloat = 10
         
         if defaultFont == secondFont {
             contentWidthOffset = 110
+            contentMargin = 20
         }
         
         if let titleStr = diary?.title {
@@ -122,11 +124,16 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
             if titleStr != parsedTime {
                 title = titleStr
                 contentWidthOffset = 175
+                contentMargin = 10
                 title = "<div class='title'>\(title)</div>"
+            }else{
+                
+                if defaultFont == secondFont {
+                    contentWidthOffset+=15
+                }
+                
             }
         }
-        
-
         
         var stampPath = NSBundle.mainBundle().bundleURL
         var minWidth = self.view.frame.size.width - CGFloat(contentWidthOffset)
@@ -135,13 +142,13 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         // <img class='stamp' src='xiaoji2.png'></div>
         
         var titleMarginRight:CGFloat = 15
-        
+
         if defaultFont == secondFont {
             minWidth = minWidth - 10.0
             titleMarginRight = 25
         }
         
-        webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:25px 10px 25px 25px;} * {-webkit-text-size-adjust: 100%; margin:0; font-family: '\(fontStr)'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(minWidth)px; margin-right: 10px;} .content p{ font-size: 14pt; line-height: 28pt;} .title {font-size: 18pt; line-height: 28pt; font-weight:bold; margin-right: \(titleMarginRight)px;} .extra{ font-size:12pt; line-height: 20pt; margin-right:30px;}  .stamp {width:24px; height:auto; position:fixed; bottom:20px;}</style></head><body>\(title)<div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString) </body></html>", baseURL: stampPath)
+        webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:25px 10px 25px 25px;} * {-webkit-text-size-adjust: 100%; margin:0; font-family: '\(fontStr)'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(minWidth)px; margin-right: \(contentMargin)px;} .content p{ font-size: 14pt; line-height: 28pt;} .title {font-size: 18pt; line-height: 28pt; font-weight:bold; margin-right: \(titleMarginRight)px;} .extra{ font-size:12pt; line-height: 20pt; margin-right:30px;}  .stamp {width:24px; height:auto; position:fixed; bottom:20px;}</style></head><body>\(title)<div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString) </body></html>", baseURL: stampPath)
     }
     
     func showButtons() {
