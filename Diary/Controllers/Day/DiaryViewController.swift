@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebViewDelegate, UIScrollViewDelegate{
+class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, UIWebViewDelegate, UIScrollViewDelegate{
     
     var diary:Diary!
     
@@ -67,7 +67,13 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         buttonsView.backgroundColor = UIColor.clearColor()
         buttonsView.alpha = 0.0
         
-        saveButton = diaryButtonWith(text: "存",  fontSize: 18.0,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        var buttonFontSize:CGFloat = 18.0
+        
+        if defaultFont == secondFont {
+            buttonFontSize = 16.0
+        }
+        
+        saveButton = diaryButtonWith(text: "存",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
         saveButton.center = CGPointMake(buttonsView.frame.width/2.0, buttonsView.frame.height/2.0)
         
@@ -76,7 +82,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         buttonsView.addSubview(saveButton)
         
         
-        editButton = diaryButtonWith(text: "改",  fontSize: 18.0,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        editButton = diaryButtonWith(text: "改",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
         editButton.center = CGPointMake(saveButton.center.x - 56.0, saveButton.center.y)
         
@@ -84,7 +90,7 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         
         buttonsView.addSubview(editButton)
         
-        deleteButton = diaryButtonWith(text: "删",  fontSize: 18.0,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        deleteButton = diaryButtonWith(text: "删",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
         deleteButton.center = CGPointMake(saveButton.center.x + 56.0, saveButton.center.y)
         
@@ -106,6 +112,11 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
         
         var title = ""
         var contentWidthOffset = 120
+        
+        if defaultFont == secondFont {
+            contentWidthOffset = 110
+        }
+        
         if let titleStr = diary?.title {
             var parsedTime = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: diary.created_at))) 日"
             if titleStr != parsedTime {
@@ -115,13 +126,22 @@ class DiaryViewController: UIViewController,UIGestureRecognizerDelegate, UIWebVi
             }
         }
         
+
+        
         var stampPath = NSBundle.mainBundle().bundleURL
         var minWidth = self.view.frame.size.width - CGFloat(contentWidthOffset)
         
-        var fontStr = "STSongti-SC-Bold"
+        var fontStr = defaultFont
         // <img class='stamp' src='xiaoji2.png'></div>
         
-        webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:25px 10px 25px 25px;} * {-webkit-text-size-adjust: 100%; margin:0; font-family: 'Wyue-GutiFangsong-NC'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(minWidth)px; margin-right: 10px;} .content p{ font-size: 14pt; line-height: 28pt;} .title {font-size: 18pt; line-height: 28pt; font-weight:bold; margin-right: 15px;} .extra{ font-size:12pt; line-height: 20pt; margin-right:30px;}  .stamp {width:24px; height:auto; position:fixed; bottom:20px;}</style></head><body>\(title)<div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString) </body></html>", baseURL: stampPath)
+        var titleMarginRight:CGFloat = 15
+        
+        if defaultFont == secondFont {
+            minWidth = minWidth - 10.0
+            titleMarginRight = 25
+        }
+        
+        webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:25px 10px 25px 25px;} * {-webkit-text-size-adjust: 100%; margin:0; font-family: '\(fontStr)'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(minWidth)px; margin-right: 10px;} .content p{ font-size: 14pt; line-height: 28pt;} .title {font-size: 18pt; line-height: 28pt; font-weight:bold; margin-right: \(titleMarginRight)px;} .extra{ font-size:12pt; line-height: 20pt; margin-right:30px;}  .stamp {width:24px; height:auto; position:fixed; bottom:20px;}</style></head><body>\(title)<div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString) </body></html>", baseURL: stampPath)
     }
     
     func showButtons() {

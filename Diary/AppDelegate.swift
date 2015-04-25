@@ -17,8 +17,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        application.applicationSupportsShakeToEdit = true
+        defaultConfig()
         Crashlytics.startWithAPIKey("de004490005a062fa95a4d5676a7edbfbe42c582")
         return true
+    }
+    
+    func defaultConfig() {
+        
+        if let config: AnyObject = defaults.objectForKey("defaultConfig") {
+            println("Configed")
+        }else{
+            defaults.setObject(firstFont, forKey: "defaultFont")
+            defaults.setObject(firstFont, forKey: "firstFont")
+            defaults.setObject(secondFont, forKey: "secondFont")
+            defaults.setObject(true, forKey: "defaultConfig")
+        }
+        
     }
 
     func applicationWillResignActive(application: UIApplication) {

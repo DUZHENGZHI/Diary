@@ -10,10 +10,19 @@ import UIKit
 import CoreData
 import CoreLocation
 
+let firstFont = "Wyue-GutiFangsong-NC"
+let secondFont = "STSongti-SC-Bold"
+
+let gussesFont: AnyObject? = (defaults.objectForKey("defaultFont") != nil) ? defaults.objectForKey("defaultFont") : firstFont
+let defaultFont = gussesFont as! String
+
 let screenRect = UIScreen.mainScreen().bounds
-let DiaryFont = UIFont(name: "Wyue-GutiFangsong-NC", size: 18) as UIFont!
-let DiaryLocationFont = UIFont(name: "Wyue-GutiFangsong-NC", size: 16) as UIFont!
-let DiaryTitleFont = UIFont(name: "Wyue-GutiFangsong-NC", size: 18) as UIFont!
+
+let DiaryFont = UIFont(name: defaultFont, size: 18) as UIFont!
+let DiaryLocationFont = UIFont(name: defaultFont, size: 16) as UIFont!
+let DiaryTitleFont = UIFont(name: defaultFont, size: 18) as UIFont!
+let defaults = NSUserDefaults.standardUserDefaults()
+
 let DiaryRed = UIColor(red: 192.0/255.0, green: 23.0/255.0, blue: 48.0/255.0, alpha: 1.0)
 let itemHeight:CGFloat = 150.0
 let itemSpacing:CGFloat = 30
@@ -26,13 +35,27 @@ UIApplication.sharedApplication().delegate as! AppDelegate
 
 let managedContext = appDelegate.managedObjectContext!
 
+func toggleFont() {
+
+    if let fontName = defaults.objectForKey("defaultFont") as? String {
+        switch fontName {
+        case firstFont:
+            defaults.setObject(secondFont, forKey: "defaultFont")
+        case secondFont:
+            defaults.setObject(firstFont, forKey: "defaultFont")
+        default:
+            break
+        }
+    }
+}
+
 
 func diaryButtonWith(#text: String, #fontSize: CGFloat, #width: CGFloat, #normalImageName: String, #highlightedImageName: String) -> UIButton {
     
     var button = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
     button.frame = CGRectMake(0, 0, width, width)
     
-    var font = UIFont(name: "Wyue-GutiFangsong-NC", size: fontSize) as UIFont!
+    var font = UIFont(name: defaultFont, size: fontSize) as UIFont!
     let textAttributes: [NSObject : AnyObject] = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
     var attributedText = NSAttributedString(string: text, attributes: textAttributes)
     button.setAttributedTitle(attributedText, forState: UIControlState.Normal)

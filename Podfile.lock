@@ -1,12 +1,15 @@
 PODS:
+  - GVUserDefaults (1.0.1)
   - NCChineseConverter (1.0.3)
   - pop (1.0.7)
 
 DEPENDENCIES:
+  - GVUserDefaults
   - NCChineseConverter (~> 1.0)
   - pop
 
 SPEC CHECKSUMS:
+  GVUserDefaults: acb40729f70984008d0650e49d7e422f1bbfa597
   NCChineseConverter: a8928afce6012994d25f2e183233f1111476a4a3
   pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
 

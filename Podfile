@@ -5,6 +5,7 @@ use_frameworks!
 target 'Diary' do
 pod 'pop'
 pod 'NCChineseConverter', '~> 1.0'
+pod 'GVUserDefaults'
 #pod 'CrashlyticsLumberjack'
 end
 

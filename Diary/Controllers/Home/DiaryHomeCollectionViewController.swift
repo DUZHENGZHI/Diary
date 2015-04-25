@@ -11,7 +11,7 @@ import CoreData
 
 let reuseIdentifier = "HomeYearCollectionViewCell"
 
-class DiaryHomeCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
+class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
     
     var diarys = [NSManagedObject]()
     

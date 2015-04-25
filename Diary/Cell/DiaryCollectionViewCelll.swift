@@ -23,7 +23,13 @@ class DiaryCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         
-        self.textLabel = DiaryLabel(fontname: "Wyue-GutiFangsong-NC", labelText: labelText, fontSize: 16.0, lineHeight: 5.0)
+        var lineHeight:CGFloat = 5.0
+        
+        if defaultFont == secondFont {
+            lineHeight = 2.0
+        }
+        
+        self.textLabel = DiaryLabel(fontname: defaultFont, labelText: labelText, fontSize: 16.0, lineHeight: lineHeight)
 
         self.addSubview(textLabel)
     }

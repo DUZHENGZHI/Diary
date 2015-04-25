@@ -32,7 +32,7 @@ class DiaryVerticalTextView: UIView {
         }
     }
     
-    var fontName: NSString = "Wyue-GutiFangsong-NC" {
+    var fontName: NSString = defaultFont {
         didSet {
             self.setNeedsDisplay()
         }

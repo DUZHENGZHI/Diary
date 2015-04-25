@@ -13,7 +13,7 @@ import NCChineseConverter
 let titleTextViewHeight:CGFloat = 30.0
 let contentMargin:CGFloat = 20.0
 
-class DiaryComposeViewController: UIViewController{
+class DiaryComposeViewController: DiaryBaseViewController{
 
     var composeView:UITextView!
     var locationTextView:UITextView!

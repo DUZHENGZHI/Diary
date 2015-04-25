@@ -12,7 +12,7 @@ import CoreData
 let reuseMonthDayCellIdentifier = "MonthDayCollectionViewCell"
 
 
-class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout , NSFetchedResultsControllerDelegate{
+class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController,UICollectionViewDelegateFlowLayout , NSFetchedResultsControllerDelegate{
     
     var diarys = [NSManagedObject]()
     
@@ -115,7 +115,7 @@ class DiaryMonthDayCollectionViewController: UICollectionViewController,UICollec
         
         self.view.addSubview(composeButton)
         //
-        monthLabel = DiaryLabel(fontname: "Wyue-GutiFangsong-NC", labelText: "\(numberToChineseWithUnit(month)) 月", fontSize: 16.0,lineHeight: 5.0)
+        monthLabel = DiaryLabel(fontname: defaultFont, labelText: "\(numberToChineseWithUnit(month)) 月", fontSize: 16.0,lineHeight: 5.0)
         monthLabel.frame = CGRectMake(screenRect.width - 15.0 - monthLabel.frame.size.width, (screenRect.height - 150)/2.0, monthLabel.frame.size.width, monthLabel.frame.size.height)
         
         monthLabel.center = CGPointMake(composeButton.center.x, monthLabel.center.y + 28)
