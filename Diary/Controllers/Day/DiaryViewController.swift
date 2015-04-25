@@ -99,11 +99,17 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         buttonsView.addSubview(deleteButton)
         
         self.view.addSubview(buttonsView)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadWebView", name: "DiaryChangeFont", object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        reloadWebView()
+ 
+    }
+    
+    func reloadWebView() {
         var timeString = "\(numberToChinese(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: diary.created_at)))年 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: diary.created_at)))月 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: diary.created_at)))日"
         
         //WebView method
@@ -142,7 +148,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         // <img class='stamp' src='xiaoji2.png'></div>
         
         var titleMarginRight:CGFloat = 15
-
+        
         if defaultFont == secondFont {
             minWidth = minWidth - 10.0
             titleMarginRight = 25

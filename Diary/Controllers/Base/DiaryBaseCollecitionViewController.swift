@@ -9,6 +9,18 @@
 import UIKit
 
 class DiaryBaseCollecitionViewController: UICollectionViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCollectionView", name: "DiaryChangeFont", object: nil)
+        // Do any additional setup after loading the view.
+    }
+    
+    func reloadCollectionView() {
+        println("reloadData")
+        self.collectionView?.reloadData()
+    }
+    
     override func canBecomeFirstResponder() -> Bool {
         return true
     }

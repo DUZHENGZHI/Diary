@@ -14,7 +14,7 @@ let firstFont = "Wyue-GutiFangsong-NC"
 let secondFont = "STSongti-SC-Bold"
 
 let gussesFont: AnyObject? = (defaults.objectForKey("defaultFont") != nil) ? defaults.objectForKey("defaultFont") : firstFont
-let defaultFont = gussesFont as! String
+var defaultFont = gussesFont as! String
 
 let screenRect = UIScreen.mainScreen().bounds
 
@@ -41,12 +41,16 @@ func toggleFont() {
         switch fontName {
         case firstFont:
             defaults.setObject(secondFont, forKey: "defaultFont")
+            defaultFont = secondFont
         case secondFont:
             defaults.setObject(firstFont, forKey: "defaultFont")
+            defaultFont = firstFont
         default:
             break
         }
     }
+    
+    NSNotificationCenter.defaultCenter().postNotificationName("DiaryChangeFont", object: nil)
 }
 
 
