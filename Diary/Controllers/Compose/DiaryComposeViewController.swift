@@ -236,14 +236,19 @@ extension DiaryComposeViewController: UITextViewDelegate {
 
 
     func textViewDidChange(textView: UITextView) {
-        var text = textView.text.substringFromIndex(textView.text.endIndex.predecessor())
-        var s = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_")
-        if let r = text.rangeOfCharacterFromSet(s) {
-            println("Skip Convert")
-        }else{
-            println("Do Convert")
-            textView.text = (textView.text as NSString).chineseStringHK()
+        
+        if textView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
+            
+            var text = textView.text.substringFromIndex(textView.text.endIndex.predecessor())
+            var s = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_")
+            if let r = text.rangeOfCharacterFromSet(s) {
+                println("Skip Convert")
+            }else{
+                println("Do Convert")
+                textView.text = (textView.text as NSString).chineseStringHK()
+            }
         }
+
         updateTextViewSizeForKeyboardHeight(keyboardSize.height)
     }
 

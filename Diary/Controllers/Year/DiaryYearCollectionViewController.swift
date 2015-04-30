@@ -25,6 +25,8 @@ class DiaryYearCollectionViewController: DiaryBaseCollecitionViewController, UIC
     
     var diarysGroupInMonth = [Int: Int]()
     
+    var monthKeys = [Int]()
+    
     var diaryProgressBar: DiaryProgress!
     
     override func viewDidLoad() {
@@ -72,6 +74,7 @@ class DiaryYearCollectionViewController: DiaryBaseCollecitionViewController, UIC
                     
                     if diarysGroupInMonth[components] == nil {
                         diarysGroupInMonth[components] = 1
+                        monthKeys.append(components)
                     }else{
                         diarysGroupInMonth[components] = diarysGroupInMonth[components]! + 1
                     }
@@ -167,17 +170,17 @@ class DiaryYearCollectionViewController: DiaryBaseCollecitionViewController, UIC
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
         
-        if diarysGroupInMonth.keys.array.count == 0 {
+        if monthKeys.count == 0 {
             return 1
         }else{
-            return diarysGroupInMonth.keys.array.count
+            return monthKeys.count
         }
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseYearIdentifier, forIndexPath: indexPath) as! DiaryCollectionViewCell
-        if diarysGroupInMonth.keys.array.count == 0 {
+        if monthKeys.count == 0 {
             
             println("No Month")
             
@@ -185,7 +188,7 @@ class DiaryYearCollectionViewController: DiaryBaseCollecitionViewController, UIC
 
         }else{
             
-            var month = diarysGroupInMonth.keys.array[indexPath.row]
+            var month = monthKeys[indexPath.row]
             // Configure the cell
             cell.labelText = "\(numberToChineseWithUnit(month)) 月"
             
@@ -216,10 +219,10 @@ class DiaryYearCollectionViewController: DiaryBaseCollecitionViewController, UIC
         
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
         
-        if diarysGroupInMonth.keys.array.count == 0 {
+        if monthKeys.count == 0 {
             dvc.month = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: NSDate())
         }else{
-            dvc.month = diarysGroupInMonth.keys.array[indexPath.row]
+            dvc.month = monthKeys[indexPath.row]
         }
         dvc.year = year
 
