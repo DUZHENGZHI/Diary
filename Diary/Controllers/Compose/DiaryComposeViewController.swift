@@ -113,7 +113,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
         
         self.view.addSubview(imageButton)
         
-        imageView = UIImageView(frame: imageButton.frame)
+        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 34.0, height: 34.0))
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         imageView.layer.cornerRadius = imageView.frame.size.height/2.0
         imageView.layer.masksToBounds = true
