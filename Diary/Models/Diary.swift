@@ -1,22 +1,26 @@
 //
 //  Diary.swift
-//  Diary
+//  
 //
-//  Created by kevinzhow on 15/2/20.
-//  Copyright (c) 2015年 kevinzhow. All rights reserved.
+//  Created by kevinzhow on 15/5/2.
+//
 //
 
 import Foundation
 import CoreData
+import UIKit
+import CloudKit
 
 @objc(Diary)
 class Diary: NSManagedObject {
-    
-    @NSManaged var title: String?
+
     @NSManaged var content: String
     @NSManaged var created_at: NSDate
     @NSManaged var location: String
-    @NSManaged var year: NSNumber
     @NSManaged var month: NSNumber
+    @NSManaged var title: String?
+    @NSManaged var year: NSNumber
+    @NSManaged var coverCloudKey: String
+    @NSManaged var coverLocalURL: String?
 
 }

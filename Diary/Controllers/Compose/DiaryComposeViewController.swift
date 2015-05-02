@@ -21,6 +21,13 @@ class DiaryComposeViewController: DiaryBaseViewController{
     var storage:NSTextStorage!
     var keyboardSize:CGSize = CGSizeMake(0, 0)
     var finishButton:UIButton!
+    var imageView:UIImageView!
+    var imageButton:UIButton!
+    
+    var imagePicker = UIImagePickerController()
+    
+    var diaryKeyString: String?
+    
     var diary:Diary?
     var locationHelper: DiaryLocationHelper = DiaryLocationHelper()
     var changeText = false
@@ -29,7 +36,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         storage = DiaryTextStorage()
-
+        imagePicker.delegate = self
         let containerSize = CGSize(width: screenRect.width, height: CGFloat.max)
         let container = NSTextContainer(size: containerSize)
 
@@ -95,10 +102,29 @@ class DiaryComposeViewController: DiaryBaseViewController{
         finishButton.center = CGPointMake(screenRect.width - 20, screenRect.height - 30)
 
         finishButton.addTarget(self, action: "finishCompose:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        //Add image button
+        
+        imageButton = diaryButtonWith(text: "图",  fontSize: 18.0,  width: 50.0,  normalImageName: "OvalBlack", highlightedImageName: "OvalBlack", color: UIColor.blackColor())
+        
+        imageButton.addTarget(self, action: "pickImage", forControlEvents: UIControlEvents.TouchUpInside)
 
         self.view.addSubview(finishButton)
+        
+        self.view.addSubview(imageButton)
+        
+        imageView = UIImageView(frame: imageButton.frame)
+        imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        imageView.layer.cornerRadius = imageView.frame.size.height/2.0
+        imageView.layer.masksToBounds = true
+        imageView.hidden = true
+        self.view.addSubview(imageView)
 
         self.finishButton.center = CGPointMake(self.view.frame.width - self.finishButton.frame.size.height/2.0 - 10, self.view.frame.height  - self.finishButton.frame.size.height/2.0 - 10)
+        
+        imageButton.center = CGPointMake(finishButton.center.x, finishButton.center.y - finishButton.frame.size.height)
+        
+        imageView.center = imageButton.center
 
         self.locationTextView.center = CGPointMake(self.locationTextView.frame.size.width/2.0 + 20.0, self.finishButton.center.y)
 
@@ -149,6 +175,11 @@ class DiaryComposeViewController: DiaryBaseViewController{
                 diary.content = composeView.text
                 diary.location = locationTextView.text
                 diary.title = titleTextView.text
+                
+                if let coverKey = diaryKeyString {
+                    diary.coverCloudKey = coverKey
+                    diary.coverLocalURL = coverPathWithKey(coverKey)
+                }
 
             }else{
 
@@ -169,6 +200,11 @@ class DiaryComposeViewController: DiaryBaseViewController{
                 }else{
                     newdiary.title = ""
                 }
+                
+                if let coverKey = diaryKeyString {
+                    newdiary.coverCloudKey = coverKey
+                    newdiary.coverLocalURL = coverPathWithKey(coverKey)
+                }
 
                 newdiary.updateTimeWithDate(NSDate())
             }
@@ -183,6 +219,9 @@ class DiaryComposeViewController: DiaryBaseViewController{
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
+    func pickImage() {
+        self.pickImageFromAlbum()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -202,6 +241,10 @@ class DiaryComposeViewController: DiaryBaseViewController{
                 }
 
                 self.finishButton.center = CGPointMake(self.view.frame.width - self.finishButton.frame.size.height/2.0 - 10, self.view.frame.height - newKeyboardHeight - self.finishButton.frame.size.height/2.0 - 10)
+                
+                self.imageButton.center = CGPointMake(self.finishButton.center.x, self.finishButton.center.y - self.finishButton.frame.size.height)
+                
+                self.imageView.center = self.imageButton.center
 
                 self.locationTextView.center = CGPointMake(self.locationTextView.frame.size.width/2.0 + 20.0, self.finishButton.center.y)
 
@@ -232,9 +275,54 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
 }
 
-extension DiaryComposeViewController: UITextViewDelegate {
+extension DiaryComposeViewController: UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate  {
 
 
+    func pickImageFromAlbum(){
+        
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum){
+            
+            imagePicker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum;
+            
+            self.presentViewController(imagePicker, animated: true, completion: nil)
+        }
+        
+    }
+    
+    
+    func pickImageFromCamera(){
+        
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+
+            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
+            
+            self.presentViewController(imagePicker, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        
+        println("Image loaded")
+        
+        self.imageView.image = image
+        
+        self.imageView.hidden = false
+        
+        var ramdomString = randomStringWithLength(32)
+        
+        diaryKeyString = ramdomString as String
+        
+        var data = UIImagePNGRepresentation(image)
+        
+        var imagePath = coverPathWithKey(diaryKeyString!)
+        
+        data.writeToFile(imagePath, atomically: true)
+        
+        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+
+    }
+    
     func textViewDidChange(textView: UITextView) {
         
         if textView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {

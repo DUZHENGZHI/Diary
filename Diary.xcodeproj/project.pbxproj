@@ -22,6 +22,7 @@
 		0A5819701AEC2DB3005AA5C8 /* zh2HK.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0A58196F1AEC2DB3005AA5C8 /* zh2HK.txt */; };
 		0A5E38111AA9E9B000935E29 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5E38101AA9E9B000935E29 /* DiaryViewController.swift */; };
 		0A5E38151AA9EB0500935E29 /* DiaryVerticalTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */; };
+		0A76457A1AF4AF620078749E /* DiaryCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7645791AF4AF620078749E /* DiaryCloud.swift */; };
 		0A82422A1AB0C49D004BC327 /* DiaryProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8242291AB0C49D004BC327 /* DiaryProgress.swift */; };
 		0A916FFA1AA6097700E987A4 /* TpldKhangXiDictTrial.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A916FF91AA6097700E987A4 /* TpldKhangXiDictTrial.otf */; };
 		0A9170001AA6200D00E987A4 /* DiaryCollectionViewCelll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A916FFF1AA6200D00E987A4 /* DiaryCollectionViewCelll.swift */; };
@@ -75,6 +76,8 @@
 		0A5E38101AA9E9B000935E29 /* DiaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewController.swift; path = Controllers/Day/DiaryViewController.swift; sourceTree = "<group>"; };
 		0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryVerticalTextView.swift; path = Helper/DiaryVerticalTextView.swift; sourceTree = "<group>"; };
 		0A605C291AA893330030B493 /* Diary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Diary.entitlements; sourceTree = "<group>"; };
+		0A7645791AF4AF620078749E /* DiaryCloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryCloud.swift; path = Helper/DiaryCloud.swift; sourceTree = "<group>"; };
+		0A76457B1AF4AFC00078749E /* Diary 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Diary 3.xcdatamodel"; sourceTree = "<group>"; };
 		0A8242291AB0C49D004BC327 /* DiaryProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryProgress.swift; path = Helper/DiaryProgress.swift; sourceTree = "<group>"; };
 		0A916FF91AA6097700E987A4 /* TpldKhangXiDictTrial.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = TpldKhangXiDictTrial.otf; sourceTree = "<group>"; };
 		0A916FFF1AA6200D00E987A4 /* DiaryCollectionViewCelll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryCollectionViewCelll.swift; path = Cell/DiaryCollectionViewCelll.swift; sourceTree = "<group>"; };
@@ -317,6 +320,7 @@
 				0A10DBB61AA8AF0D00B23F9E /* DiaryTextStorage.swift */,
 				0A28B4FC1AAB53C30037240C /* DiaryLocationHelper.swift */,
 				0A8242291AB0C49D004BC327 /* DiaryProgress.swift */,
+				0A7645791AF4AF620078749E /* DiaryCloud.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -533,6 +537,7 @@
 				0A9170021AA6216D00E987A4 /* DiaryLabel.swift in Sources */,
 				0AE202511A8B0D280012AAED /* DiaryHomeCollectionViewController.swift in Sources */,
 				0A9CD0431A9643910082D677 /* Diary.swift in Sources */,
+				0A76457A1AF4AF620078749E /* DiaryCloud.swift in Sources */,
 				0A10DBB71AA8AF0D00B23F9E /* DiaryTextStorage.swift in Sources */,
 				0A3572E11A9467E70037C6A0 /* DiaryAnimator.swift in Sources */,
 				0A9170071AA6297600E987A4 /* DiaryComposeViewController.swift in Sources */,
@@ -688,6 +693,10 @@
 				INFOPLIST_FILE = Diary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Diary/WeChatSDK_1.5",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Diary/Diary-Bridging-Header.h";
@@ -713,6 +722,10 @@
 				INFOPLIST_FILE = Diary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Diary/WeChatSDK_1.5",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Diary/Diary-Bridging-Header.h";
@@ -790,10 +803,11 @@
 		0AE2022F1A8B0B310012AAED /* Diary.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				0A76457B1AF4AFC00078749E /* Diary 3.xcdatamodel */,
 				0A222A831AB88931000A1DEF /* Diary 2.xcdatamodel */,
 				0AE202301A8B0B310012AAED /* Diary.xcdatamodel */,
 			);
-			currentVersion = 0A222A831AB88931000A1DEF /* Diary 2.xcdatamodel */;
+			currentVersion = 0A76457B1AF4AFC00078749E /* Diary 3.xcdatamodel */;
 			path = Diary.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

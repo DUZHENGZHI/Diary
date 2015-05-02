@@ -53,14 +53,38 @@ func toggleFont() {
     NSNotificationCenter.defaultCenter().postNotificationName("DiaryChangeFont", object: nil)
 }
 
+func randomStringWithLength (len : Int) -> NSString {
+    
+    let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    
+    var randomString : NSMutableString = NSMutableString(capacity: len)
+    
+    for (var i=0; i < len; i++){
+        var length = UInt32 (letters.length)
+        var rand = arc4random_uniform(length)
+        randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
+    }
+    
+    return randomString
+}
+
+func coverPathWithKey(key: String) -> String {
+    return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0].stringByAppendingPathComponent("/\(key).png")
+}
 
 func diaryButtonWith(#text: String, #fontSize: CGFloat, #width: CGFloat, #normalImageName: String, #highlightedImageName: String) -> UIButton {
+    
+    return diaryButtonWith(text: text, fontSize: fontSize, width: width, normalImageName: normalImageName, highlightedImageName: highlightedImageName, color: UIColor.whiteColor())
+
+}
+
+func diaryButtonWith(#text: String, #fontSize: CGFloat, #width: CGFloat, #normalImageName: String, #highlightedImageName: String, #color: UIColor) -> UIButton {
     
     var button = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
     button.frame = CGRectMake(0, 0, width, width)
     
     var font = UIFont(name: defaultFont, size: fontSize) as UIFont!
-    let textAttributes: [NSObject : AnyObject] = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
+    let textAttributes: [NSObject : AnyObject] = [NSFontAttributeName: font, NSForegroundColorAttributeName: color]
     var attributedText = NSAttributedString(string: text, attributes: textAttributes)
     button.setAttributedTitle(attributedText, forState: UIControlState.Normal)
     
@@ -68,8 +92,8 @@ func diaryButtonWith(#text: String, #fontSize: CGFloat, #width: CGFloat, #normal
     button.setBackgroundImage(UIImage(named: highlightedImageName), forState: UIControlState.Highlighted)
     
     return button
-
 }
+
 
 func numberToChinese(number:Int) -> String {
     var stringNumber = Array(String(number))
