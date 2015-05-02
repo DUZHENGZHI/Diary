@@ -147,7 +147,13 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         var fontStr = defaultFont
         var coverImage = ""
         
+        var bodyPadding = 0
+        
+        var containerCSS = " padding:25px 10px 25px 25px; "
+        
         if let coverURL = diary.coverCloudKey {
+            bodyPadding = 35
+            containerCSS = " padding: 0px 0px 0px 0px; "
             coverImage = "<div class='cover'><img src='\(coverURL).jpg'></div>"
         }
         
@@ -158,7 +164,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
             titleMarginRight = 25
         }
         
-        webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:0px;} * {-webkit-text-size-adjust: 100%; margin:0; font-family: '\(fontStr)'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(minWidth)px; margin-right: \(contentMargin)px;} .content p{ font-size: 14pt; line-height: 28pt;} .title {font-size: 18pt; line-height: 28pt; font-weight:bold; margin-right: \(titleMarginRight)px;} .extra{ font-size:12pt; line-height: 20pt; margin-right:30px; } .container {padding:25px 10px 25px 25px;} .stamp {width:24px; height:auto; position:fixed; bottom:20px;} .cover {position: relative; width: 280px; overflow:hidden;} .cover img {height:100%; width:auto; position: absolute; top: -9999px; bottom: -9999px; left: -9999px; right: -9999px; margin: auto;} </style></head><body>\(coverImage)<div class='container'>\(title)<div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString) </div></body></html>", baseURL: stampPath)
+        webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:\(bodyPadding)px;} * {-webkit-text-size-adjust: 100%; margin:0; font-family: '\(fontStr)'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(minWidth)px; margin-right: \(contentMargin)px;} .content p{ font-size: 12pt; line-height: 28pt;} .title {font-size: 12pt; font-weight:bold; line-height: 28pt; margin-right: \(titleMarginRight)px; padding-left: 20px;} .extra{ font-size:12pt; line-height: 20pt; margin-right:30px; } .container { \(containerCSS) } .stamp {width:24px; height:auto; position:fixed; bottom:20px;} .cover {position: relative; width: 224px; overflow:hidden;} .cover img {height:100%; width:auto; position: absolute; top: -9999px; bottom: -9999px; left: -9999px; right: -9999px; margin: auto;} </style></head><body>\(coverImage)<div class='container'>\(title)<div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString) </div></body></html>", baseURL: stampPath)
     }
     
     func showButtons() {
