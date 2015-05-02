@@ -313,7 +313,7 @@ extension DiaryComposeViewController: UITextViewDelegate, UINavigationController
         
         diaryKeyString = ramdomString as String
         
-        var data = UIImagePNGRepresentation(image)
+        var data = UIImageJPEGRepresentation(image, 0.9)
         
         var imagePath = coverPathWithKey(diaryKeyString!)
         

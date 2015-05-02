@@ -69,7 +69,11 @@ func randomStringWithLength (len : Int) -> NSString {
 }
 
 func coverPathWithKey(key: String) -> String {
-    return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0].stringByAppendingPathComponent("/\(key).png")
+    return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0].stringByAppendingPathComponent("/\(key).jpg")
+}
+
+func baseCoverURL() -> String {
+    return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
 }
 
 func diaryButtonWith(#text: String, #fontSize: CGFloat, #width: CGFloat, #normalImageName: String, #highlightedImageName: String) -> UIButton {

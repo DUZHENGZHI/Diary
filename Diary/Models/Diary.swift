@@ -20,7 +20,7 @@ class Diary: NSManagedObject {
     @NSManaged var month: NSNumber
     @NSManaged var title: String?
     @NSManaged var year: NSNumber
-    @NSManaged var coverCloudKey: String
+    @NSManaged var coverCloudKey: String?
     @NSManaged var coverLocalURL: String?
 
 }
