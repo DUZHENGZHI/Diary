@@ -12,8 +12,14 @@ import CoreLocation
 
 let firstFont = "Wyue-GutiFangsong-NC"
 let secondFont = "STSongti-SC-Bold"
+let janpan = "HiraMinProN-W3"
 
-let gussesFont: AnyObject? = (defaults.objectForKey("defaultFont") != nil) ? defaults.objectForKey("defaultFont") : firstFont
+let defaults = NSUserDefaults.standardUserDefaults()
+
+let currentLanguage = NSLocale.preferredLanguages()[0] as! String
+
+let gussesFont: AnyObject? = currentLanguage == "ja" ? janpan : ((defaults.objectForKey("defaultFont") != nil) ? defaults.objectForKey("defaultFont") : firstFont)
+
 var defaultFont = gussesFont as! String
 
 let screenRect = UIScreen.mainScreen().bounds
@@ -21,7 +27,8 @@ let screenRect = UIScreen.mainScreen().bounds
 let DiaryFont = UIFont(name: defaultFont, size: 18) as UIFont!
 let DiaryLocationFont = UIFont(name: defaultFont, size: 16) as UIFont!
 let DiaryTitleFont = UIFont(name: defaultFont, size: 18) as UIFont!
-let defaults = NSUserDefaults.standardUserDefaults()
+
+
 
 let DiaryRed = UIColor(red: 192.0/255.0, green: 23.0/255.0, blue: 48.0/255.0, alpha: 1.0)
 let itemHeight:CGFloat = 150.0
@@ -45,6 +52,9 @@ func toggleFont() {
         case secondFont:
             defaults.setObject(firstFont, forKey: "defaultFont")
             defaultFont = firstFont
+        case janpan:
+            defaults.setObject(janpan, forKey: "defaultFont")
+            defaultFont = janpan
         default:
             break
         }

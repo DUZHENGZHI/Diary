@@ -28,9 +28,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
         if let config: AnyObject = defaults.objectForKey("defaultConfig") {
             println("Configed")
         }else{
-            defaults.setObject(firstFont, forKey: "defaultFont")
+            defaults.setObject(currentLanguage == "ja" ? janpan : firstFont, forKey: "defaultFont")
+            
             defaults.setObject(firstFont, forKey: "firstFont")
             defaults.setObject(secondFont, forKey: "secondFont")
+            defaults.setObject(janpan, forKey: "japan")
             defaults.setObject(true, forKey: "defaultConfig")
         }
         
