@@ -101,7 +101,9 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController, UIC
             var filePath = NSBundle.mainBundle().pathForResource("poem", ofType: "json")
             var JSONData = NSData(contentsOfFile: filePath!, options: NSDataReadingOptions.MappedRead, error: nil)
             var jsonObject = NSJSONSerialization.JSONObjectWithData(JSONData!, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
-            var poems = jsonObject.valueForKey("poems") as! NSArray
+            var poemsCollection = jsonObject.valueForKey("poems") as! [String: AnyObject]
+            
+            var poems = currentLanguage == "ja" ?  (poemsCollection["ja"] as! NSArray) : ( poemsCollection["cn"] as! NSArray)
             
             for poem in poems{
                 
