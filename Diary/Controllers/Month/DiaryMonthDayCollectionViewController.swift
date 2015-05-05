@@ -12,7 +12,7 @@ import CoreData
 let reuseMonthDayCellIdentifier = "MonthDayCollectionViewCell"
 
 
-class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController,UICollectionViewDelegateFlowLayout , NSFetchedResultsControllerDelegate{
+class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController {
     
     var diarys = [NSManagedObject]()
     
@@ -27,8 +27,6 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController,
     var composeButton:UIButton!
     
     var fetchedResultsController : NSFetchedResultsController!
-    
-    var diarysGroupInMonth = [Int: Int]()
     
     var diaryProgressBar: DiaryProgress!
     
@@ -54,10 +52,6 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController,
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFetch", name: "CoreDataDidUpdated", object: nil)
 
-        // Register cell classes
-//        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseMonthDayCellIdentifier)
-
-        // Do any additional setup after loading the view.
     }
     
     func updateFetch() {
@@ -164,37 +158,28 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController,
         self.presentViewController(composeViewController, animated: true, completion: nil)
         
     }
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
-
+extension DiaryMonthDayCollectionViewController: UICollectionViewDelegateFlowLayout , NSFetchedResultsControllerDelegate {
+    
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
-
-
+    
+    
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
         return diarys.count
     }
-
+    
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-
+        
         // Configure the cell
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseMonthDayCellIdentifier, forIndexPath: indexPath) as! DiaryCollectionViewCell
         var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
         // Configure the cell
-
+        
         if let title = diary.title {
             cell.labelText = title
         }else{
@@ -220,17 +205,17 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController,
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryViewController") as! DiaryViewController
         
         var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
-
+        
         dvc.diary = diary
         
         self.navigationController!.pushViewController(dvc, animated: true)
         
     }
-
+    
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
         println("Diarys changed")
-
+        
         refetch()
         
         self.collectionView?.reloadData()
@@ -239,7 +224,7 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController,
         
         self.collectionView!.contentOffset = CGPointMake(self.collectionView!.collectionViewLayout.collectionViewContentSize().width-collectionViewWidth, 0)
     }
-
+    
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         
         var length = scrollView.contentSize.width - collectionViewWidth
@@ -264,36 +249,4 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController,
                 
             }, completion: nil)
     }
-    
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
-
 }
