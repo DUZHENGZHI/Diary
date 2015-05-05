@@ -60,6 +60,7 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
         }else{
             
             var fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
+            
             if (fetchedResults.count == 0){
                 println("Present empty year")
             }else{
@@ -165,7 +166,6 @@ extension DiaryHomeCollectionViewController: UICollectionViewDelegateFlowLayout,
     
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //#warning Incomplete method implementation -- Return the number of items in the section
         return yearsCount
     }
     

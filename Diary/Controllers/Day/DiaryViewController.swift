@@ -100,6 +100,8 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         self.view.addSubview(buttonsView)
         
+        webview.alpha = 0.0
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadWebView", name: "DiaryChangeFont", object: nil)
     }
     
@@ -206,13 +208,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         let offset = self.webview.scrollView.contentOffset.x
         
-//        webview.layer.borderColor = UIColor(white: 0.0, alpha: 0.3).CGColor
-//        webview.layer.borderWidth = 1.0
-        
         var image =  webview.captureView()
-        
-//        webview.layer.borderColor = UIColor.clearColor().CGColor
-//        webview.layer.borderWidth = 0.0
         
         self.webview.scrollView.contentOffset.x = offset
 
@@ -234,6 +230,11 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
+        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+        {
+            self.webview.alpha = 1.0
+        }, completion: nil)
+
         webview.scrollView.contentOffset = CGPointMake(webview.scrollView.contentSize.width - webview.frame.size.width, 0)
     }
     
