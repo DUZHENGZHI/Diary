@@ -166,7 +166,20 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
             titleMarginRight = 25
         }
         
-        webview.loadHTMLString("<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>body{padding:\(bodyPadding)px;} * {-webkit-text-size-adjust: 100%; margin:0; font-family: '\(fontStr)'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;} .content { min-width: \(minWidth)px; margin-right: \(contentMargin)px;} .content p{ font-size: 12pt; line-height: 24pt;} .title {font-size: 12pt; font-weight:bold; line-height: 24pt; margin-right: \(titleMarginRight)px; padding-left: 20px;} .extra{ font-size:12pt; line-height: 24pt; margin-right:30px; } .container { \(containerCSS) } .stamp {width:24px; height:auto; position:fixed; bottom:20px;} .cover {position: relative; width: 224px; overflow:hidden;} .cover img {height:100%; width:auto; position: absolute; top: -9999px; bottom: -9999px; left: -9999px; right: -9999px; margin: auto;} </style></head><body>\(coverImage)<div class='container'>\(title)<div class='content'><p>\(newDiaryString)</p></div><div class='extra'>\(diary.location)<br>\(timeString) </div></body></html>", baseURL: stampPath)
+        let headertags = "<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>"
+        let bodyCSS = "body{padding:\(bodyPadding)px;} "
+        let allCSS = "* {-webkit-text-size-adjust: 100%; margin:0; font-family: '\(fontStr)'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;}"
+        let contentCSS = ".content { min-width: \(minWidth)px; margin-right: \(contentMargin)px;} .content p{ font-size: 12pt; line-height: 24pt;}"
+        let titleCSS = ".title {font-size: 12pt; font-weight:bold; line-height: 24pt; margin-right: \(titleMarginRight)px; padding-left: 20px;} "
+        let extraCSS = ".extra{ font-size:12pt; line-height: 24pt; margin-right:30px; }"
+        let stampCSS = ".stamp {width:24px; height:auto; position:fixed; bottom:20px;}"
+        let coverCSS = ".cover {position: relative; width: 224px; overflow:hidden;} .cover img {height:100%; width:auto; position: absolute; top: -9999px; bottom: -9999px; left: -9999px; right: -9999px; margin: auto;} "
+        
+        
+        let extraHTML = "<div class='extra'>\(diary.location)<br>\(timeString) </div>"
+        let contentHTML = "<div class='container'>\(title)<div class='content'><p>\(newDiaryString)</p></div>"
+        
+        webview.loadHTMLString("\(headertags)\(bodyCSS) \(allCSS) \(contentCSS) \(titleCSS) \(extraCSS) .container { \(containerCSS) } \(stampCSS) \(coverCSS) </style></head> <body>\(coverImage) \(contentHTML) \(extraHTML)</body></html>", baseURL: stampPath)
     }
     
     func showButtons() {
