@@ -16,6 +16,10 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
     var diarys = [NSManagedObject]()
     
     var fetchedResultsController : NSFetchedResultsController!
+    
+    var yearsCount: Int = 1
+    
+    var sectionsCount: Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,13 +64,18 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
                 println("Present empty year")
             }else{
                 
-                if let yearsCount = fetchedResultsController.sections?.count {
+                if let sectionsCount = fetchedResultsController.sections?.count {
                     
+                    yearsCount = sectionsCount
                     diarys = fetchedResults
                     
-                    moveToThisMonth()
+                }else {
+                    sectionsCount = 0
+                    yearsCount = 1
                 }
             }
+            
+            moveToThisMonth()
         }
     }
     
@@ -157,24 +166,24 @@ extension DiaryHomeCollectionViewController: UICollectionViewDelegateFlowLayout,
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        if fetchedResultsController.sections!.count == 0 {
-            return 1
-        }else{
-            return fetchedResultsController.sections!.count
-        }
+        return yearsCount
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> HomeYearCollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! HomeYearCollectionViewCell
         
-        let sectionInfo = fetchedResultsController.sections![indexPath.row] as! NSFetchedResultsSectionInfo
-        println("Section info \(sectionInfo.name)")
-        
-        if let yearText = sectionInfo.name?.toInt() {
-            cell.textInt = yearText
-            cell.labelText = "\(numberToChinese(cell.textInt)) 年"
+        var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: NSDate())
+        var year = components
+        if sectionsCount > 0 {
+            if let sectionInfo = fetchedResultsController.sections![indexPath.row] as? NSFetchedResultsSectionInfo {
+                println("Section info \(sectionInfo.name)")
+                year = sectionInfo.name!.toInt()!
+            }
         }
+        
+        cell.textInt = year
+        cell.labelText = "\(numberToChinese(cell.textInt)) 年"
         
         // Configure the cell
         
@@ -201,13 +210,16 @@ extension DiaryHomeCollectionViewController: UICollectionViewDelegateFlowLayout,
         
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as! DiaryYearCollectionViewController
         
-        let sectionInfo = fetchedResultsController.sections![indexPath.row] as! NSFetchedResultsSectionInfo
-        println("Section info \(sectionInfo.name)")
         
-        if let yearText = sectionInfo.name?.toInt() {
-            dvc.year = yearText
+        var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: NSDate())
+        var year = components
+        if sectionsCount > 0 {
+            if let sectionInfo = fetchedResultsController.sections![indexPath.row] as? NSFetchedResultsSectionInfo {
+                println("Section info \(sectionInfo.name)")
+                year = sectionInfo.name!.toInt()!
+            }
         }
-
+        dvc.year = year
         
         self.navigationController!.pushViewController(dvc, animated: true)
         
