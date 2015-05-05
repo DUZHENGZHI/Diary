@@ -69,7 +69,6 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController,
         fetchRequest.predicate = NSPredicate(format: "year = \(year) AND month = \(month)")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
         
-        
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
             managedObjectContext: managedContext, sectionNameKeyPath: "year",
             cacheName: nil)

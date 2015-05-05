@@ -11,11 +11,11 @@ import CoreData
 
 let reuseIdentifier = "HomeYearCollectionViewCell"
 
-class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
+class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
     
     var diarys = [NSManagedObject]()
     
-    var diarysGroupInYear = [Int: Int]()
+    var fetchedResultsController : NSFetchedResultsController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,54 +26,49 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController, UIC
 
         let fetchRequest = NSFetchRequest(entityName:"Diary")
         
-        //3
+        let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
+        
         var error: NSError?
         
-        let fetchedResults =
-        managedContext.executeFetchRequest(fetchRequest,
-            error: &error) as! [NSManagedObject]?
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
-        if let results = fetchedResults {
-            diarys = results
-        } else {
-            NSLog("Could not fetch \(error), \(error!.userInfo)")
-        }
         
-        for diary in diarys{
-            var diary = diary as! Diary
-            var date = diary.created_at
-            var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: date)
-            
-            if diarysGroupInYear[components] == nil {
-                diarysGroupInYear[components] = 1
-            }else{
-                diarysGroupInYear[components] = diarysGroupInYear[components]! + 1
-            }
-        }
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: managedContext, sectionNameKeyPath: "year",
+            cacheName: nil)
         
-        if  diarysGroupInYear.keys.array.count == 0 {
-            var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: NSDate())
-            diarysGroupInYear[components] = 1
-        }
-
+        refetch()
+        
         self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        //Dont use this if you are using storyboard
-//        self.collectionView!.registerClass(HomeYearCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
         
         var yearLayout = DiaryLayout()
-
         yearLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         self.collectionView?.setCollectionViewLayout(yearLayout, animated: false)
 
-        moveToThisMonth()
         // Do any additional setup after loading the view.
     }
     
+    
+    func refetch() {
+        
+        var error: NSError? = nil
+        if (!fetchedResultsController.performFetch(&error)){
+            println("Error: \(error?.localizedDescription)")
+        }else{
+            
+            var fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
+            if (fetchedResults.count == 0){
+                println("Present empty year")
+            }else{
+                
+                if let yearsCount = fetchedResultsController.sections?.count {
+                    
+                    diarys = fetchedResults
+                    
+                    moveToThisMonth()
+                }
+            }
+        }
+    }
     
     func moveToThisMonth() {
         
@@ -131,8 +126,6 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController, UIC
             }
         }
         
-
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -140,51 +133,59 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController, UIC
         // Dispose of any resources that can be recreated.
     }
 
+}
+
+extension DiaryHomeCollectionViewController: UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
+    
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
     }
     */
-
+    
     // MARK: UICollectionViewDataSource
-
+    
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
-
-
+    
+    
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        if diarysGroupInYear.keys.array.count == 0 {
+        if fetchedResultsController.sections!.count == 0 {
             return 1
         }else{
-            return diarysGroupInYear.keys.array.count
+            return fetchedResultsController.sections!.count
         }
     }
-
+    
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> HomeYearCollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! HomeYearCollectionViewCell
         
-        var yearText = diarysGroupInYear.keys.array[indexPath.row]
-        cell.textInt = diarysGroupInYear.keys.array[indexPath.row]
-        cell.labelText = "\(numberToChinese(cell.textInt)) 年"
-
+        let sectionInfo = fetchedResultsController.sections![indexPath.row] as! NSFetchedResultsSectionInfo
+        println("Section info \(sectionInfo.name)")
+        
+        if let yearText = sectionInfo.name?.toInt() {
+            cell.textInt = yearText
+            cell.labelText = "\(numberToChinese(cell.textInt)) 年"
+        }
+        
         // Configure the cell
-    
+        
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         var numberOfCells:Int = 1
         
-        if diarysGroupInYear.keys.array.count != 0 {
-            numberOfCells = diarysGroupInYear.keys.array.count
+        if fetchedResultsController.sections!.count != 0 {
+            numberOfCells = fetchedResultsController.sections!.count
         }
         
         if (numberOfCells < 3) {
@@ -199,9 +200,15 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController, UIC
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as! DiaryYearCollectionViewController
-        dvc.year = diarysGroupInYear.keys.array[indexPath.row]
-//        dvc.collectionView?.dataSource = collectionView.dataSource
+        
+        let sectionInfo = fetchedResultsController.sections![indexPath.row] as! NSFetchedResultsSectionInfo
+        println("Section info \(sectionInfo.name)")
+        
+        if let yearText = sectionInfo.name?.toInt() {
+            dvc.year = yearText
+        }
 
+        
         self.navigationController!.pushViewController(dvc, animated: true)
         
     }
@@ -222,38 +229,4 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController, UIC
             return nil;
         }
     }
-    
-    
-    
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
-
 }
