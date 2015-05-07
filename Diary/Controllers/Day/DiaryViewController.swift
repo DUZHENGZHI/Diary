@@ -231,7 +231,6 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         let activityViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.saveButton
-
         self.presentViewController(activityViewController, animated: true, completion: nil)
 
     }

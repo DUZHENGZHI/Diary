@@ -42,13 +42,11 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
         
         refetch()
         
-        collectionView.registerClass(HomeYearCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-//        self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
-        collectionView.dataSource = self
+        self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
         
         var yearLayout = DiaryLayout()
         yearLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        self.collectionView.setCollectionViewLayout(yearLayout, animated: false)
+        self.collectionView?.setCollectionViewLayout(yearLayout, animated: false)
 
         // Do any additional setup after loading the view.
     }
@@ -147,18 +145,31 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
 
 }
 
-extension DiaryHomeCollectionViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate, UICollectionViewDataSource {
-
+extension DiaryHomeCollectionViewController: UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    /*
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    }
+    */
+    
+    // MARK: UICollectionViewDataSource
+    
+    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return yearsCount
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> HomeYearCollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! HomeYearCollectionViewCell
         
@@ -195,7 +206,7 @@ extension DiaryHomeCollectionViewController: UICollectionViewDelegate, UICollect
     }
     
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as! DiaryYearCollectionViewController
         
