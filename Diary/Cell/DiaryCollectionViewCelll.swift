@@ -23,6 +23,20 @@ class DiaryCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         
+
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    func setup() {
         var lineHeight:CGFloat = 5.0
         
         if defaultFont == secondFont {
@@ -30,7 +44,7 @@ class DiaryCollectionViewCell: UICollectionViewCell {
         }
         
         self.textLabel = DiaryLabel(fontname: defaultFont, labelText: labelText, fontSize: 16.0, lineHeight: lineHeight)
-
+        
         self.addSubview(textLabel)
     }
     

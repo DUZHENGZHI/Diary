@@ -8,17 +8,27 @@
 
 import UIKit
 
-class DiaryBaseCollecitionViewController: UICollectionViewController {
+class DiaryBaseCollecitionViewController: UIViewController {
+    
+    var collectionView: UICollectionView = UICollectionView(frame: screenRect, collectionViewLayout: DiaryLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCollectionView", name: "DiaryChangeFont", object: nil)
+        
+        let pan = UIPanGestureRecognizer(target: self, action: "handlePan:")
+        pan.delegate = self
+//        self.view.addGestureRecognizer(pan)
+        self.view.addSubview(collectionView)
+        collectionView.delegate = self
+        collectionView.backgroundColor = UIColor.whiteColor()
+        self.collectionView.frame = screenRect
         // Do any additional setup after loading the view.
     }
     
     func reloadCollectionView() {
         println("reloadData")
-        self.collectionView?.reloadData()
+        self.collectionView.reloadData()
     }
     
     override func canBecomeFirstResponder() -> Bool {
@@ -49,5 +59,20 @@ class DiaryBaseCollecitionViewController: UICollectionViewController {
                 println("destructive")
             }
         }))
+    }
+}
+
+
+
+extension DiaryBaseCollecitionViewController: UIGestureRecognizerDelegate, UICollectionViewDelegate {
+    
+    func handlePan(recognizer:UIPanGestureRecognizer) {
+        let translation = recognizer.translationInView(self.view)
+        if let view = recognizer.view{
+            
+            collectionView.setContentOffset(CGPoint(x: collectionView.contentOffset.x + translation.x, y: collectionView.contentOffset.y), animated: false)
+
+        }
+        recognizer.setTranslation(CGPointZero, inView: self.view)
     }
 }

@@ -45,10 +45,11 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController 
         updateFetch()
         
         var monthLayout = DiaryLayout()
-        
-        monthLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
+        collectionView.dataSource = self
 
-        self.collectionView?.setCollectionViewLayout(monthLayout, animated: false)
+        collectionView.registerClass(DiaryCollectionViewCell.self, forCellWithReuseIdentifier: reuseMonthDayCellIdentifier)
+
+        self.collectionView.setCollectionViewLayout(monthLayout, animated: false)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFetch", name: "CoreDataDidUpdated", object: nil)
 
@@ -122,13 +123,11 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController 
         
         
         self.view.addSubview(monthLabel)
-        self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
-        //
-        self.collectionView?.showsHorizontalScrollIndicator = false
-        self.collectionView!.delegate = self
+//        self.collectionView?.showsHorizontalScrollIndicator = false
+        self.collectionView.delegate = self
         
-        diaryProgressBar = DiaryProgress(frame: CGRectMake(0, 0, collectionViewWidth, 8.0))
-        diaryProgressBar.center = CGPointMake(self.collectionView!.center.x, self.collectionView!.center.y + self.collectionView!.frame.size.height/2.0 + 30.0)
+        diaryProgressBar = DiaryProgress(frame: CGRectMake(0, 0, collectionViewWidth, 2.0))
+        diaryProgressBar.center = CGPointMake(self.collectionView.center.x, self.collectionView.center.y + self.collectionView.frame.size.height/2.0 + 30.0)
         diaryProgressBar.alpha = 0.0
         self.view.addSubview(diaryProgressBar)
     
@@ -136,7 +135,7 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController 
     
     override func viewDidLayoutSubviews() {
         if (!scrolledToBottom){
-            self.collectionView!.contentOffset = CGPointMake(self.collectionView!.collectionViewLayout.collectionViewContentSize().width-collectionViewWidth, 0)
+            self.collectionView.contentOffset = CGPointMake(contentOffsetBuild(), 0)
             scrolledToBottom = true
         }
     }
@@ -160,26 +159,26 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController 
     }
 }
 
-extension DiaryMonthDayCollectionViewController: UICollectionViewDelegateFlowLayout , NSFetchedResultsControllerDelegate {
+extension DiaryMonthDayCollectionViewController: UICollectionViewDelegateFlowLayout , NSFetchedResultsControllerDelegate, UICollectionViewDataSource {
     
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
     
     
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //#warning Incomplete method implementation -- Return the number of items in the section
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+
         return diarys.count
     }
     
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        println("get Cell")
         // Configure the cell
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseMonthDayCellIdentifier, forIndexPath: indexPath) as! DiaryCollectionViewCell
+        
         var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
         // Configure the cell
-        
         if let title = diary.title {
             cell.labelText = title
         }else{
@@ -189,18 +188,8 @@ extension DiaryMonthDayCollectionViewController: UICollectionViewDelegateFlowLay
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        var numberOfCells:Int = self.diarys.count
-        if (numberOfCells < 3) {
-            var edgeInsets = (collectionViewWidth - ((CGFloat(numberOfCells)*itemWidth)+(CGFloat(numberOfCells)-1) * itemSpacing))/2.0
-            return UIEdgeInsetsMake(0, edgeInsets, 0, edgeInsets);
-        }else{
-            return UIEdgeInsetsMake(0, 0, 0, 0);
-        }
-    }
-    
-    
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryViewController") as! DiaryViewController
         
@@ -218,31 +207,43 @@ extension DiaryMonthDayCollectionViewController: UICollectionViewDelegateFlowLay
         
         refetch()
         
-        self.collectionView?.reloadData()
+        self.collectionView.reloadData()
         
-        self.collectionView?.collectionViewLayout.invalidateLayout()
+        self.collectionView.collectionViewLayout.invalidateLayout()
         
-        self.collectionView!.contentOffset = CGPointMake(self.collectionView!.collectionViewLayout.collectionViewContentSize().width-collectionViewWidth, 0)
+        self.collectionView.contentOffset = CGPointMake(contentOffsetBuild(), 0)
     }
     
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    func contentOffsetBuild() -> CGFloat {
+        if diarys.count >= 3 {
+            return CGFloat(diarys.count - 3)*itemWidth
+        }else {
+            return 0
+        }
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
         
         var length = scrollView.contentSize.width - collectionViewWidth
         var offset = scrollView.contentOffset.x
         
         var progess = offset/length
         
-        diaryProgressBar.progress = progess
+        collectionView.frame = screenRect
+        
+        println("Did Scroll \(offset) \(collectionView.frame.size.width)")
+        
+//        diaryProgressBar.progress = progess
     }
     
-    override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
             {
                 self.diaryProgressBar.alpha = 1.0
             }, completion: nil)
     }
     
-    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         UIView.animateWithDuration(0.8, delay: 0.2, options: UIViewAnimationOptions.CurveEaseInOut, animations:
             {
                 self.diaryProgressBar.alpha = 0.0
