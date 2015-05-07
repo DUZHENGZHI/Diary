@@ -31,8 +31,42 @@ class DiaryLayout: UICollectionViewFlowLayout {
             
             let cellPositinOnScreen = (center.x - itemWidth/2.0) - contentOffset.x
             
-            if cellPositinOnScreen >= edgeInsets && cellPositinOnScreen < (edgeInsets + collectionViewWidth) {
-                attributes.alpha = 1
+            if cellPositinOnScreen >= (edgeInsets - itemWidth/2.0) && cellPositinOnScreen < (edgeInsets + collectionViewWidth ) {
+                
+                let centerPoint = (collectionViewWidth)/2.0
+                
+                let positonInVisibleArea = cellPositinOnScreen - edgeInsets
+                
+                let distanceToCenterPoint = positonInVisibleArea - centerPoint
+                
+                let visiableArea = centerPoint - itemWidth/3.0
+                
+                if fabs(distanceToCenterPoint) > visiableArea {
+                    
+                    let finalDistance = fabs(distanceToCenterPoint) - visiableArea
+                    
+                    var alpha:CGFloat = 0
+                    
+                    if distanceToCenterPoint < 0 {
+                        var progress = CGFloat(finalDistance/((centerPoint - visiableArea)*2))
+                        if progress <= 0.5 {
+                            alpha = 1.0
+                        } else {
+                            alpha = (1.0 - progress)/0.5
+                        }
+
+                    }else {
+                        alpha = 1.0 - CGFloat(finalDistance/(centerPoint - visiableArea))
+                    }
+                    
+                    attributes.alpha = alpha
+                    
+                    
+                }else {
+                    attributes.alpha = 1
+                }
+
+                
             } else {
                 attributes.alpha = 0
             }

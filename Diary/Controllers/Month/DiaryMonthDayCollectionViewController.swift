@@ -126,7 +126,7 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController 
         self.collectionView?.showsHorizontalScrollIndicator = false
         self.collectionView!.delegate = self
         
-        diaryProgressBar = DiaryProgress(frame: CGRectMake(0, 0, collectionViewWidth, 8.0))
+        diaryProgressBar = DiaryProgress(frame: CGRectMake(0, 0, collectionViewWidth, 2.0))
         diaryProgressBar.center = CGPointMake(self.collectionView!.center.x, self.collectionView!.center.y + itemHeight/2.0 + 30.0)
         diaryProgressBar.alpha = 0.0
         self.view.addSubview(diaryProgressBar)

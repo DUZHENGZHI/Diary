@@ -111,7 +111,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
         self.view.addSubview(finishButton)
         
-        self.view.addSubview(imageButton)
+//        self.view.addSubview(imageButton)
         
         imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 34.0, height: 34.0))
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
