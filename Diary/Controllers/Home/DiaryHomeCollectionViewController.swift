@@ -194,7 +194,7 @@ extension DiaryHomeCollectionViewController: UICollectionViewDelegateFlowLayout,
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         
-        var numberOfCells:Int = fetchedResultsController.sections!.count
+        var numberOfCells:Int = fetchedResultsController.sections!.count > 0 ? fetchedResultsController.sections!.count : 1
         
         var edgeInsets = collectionViewLeftInsets + (collectionViewWidth - (CGFloat(numberOfCells)*itemWidth))/2.0
         
