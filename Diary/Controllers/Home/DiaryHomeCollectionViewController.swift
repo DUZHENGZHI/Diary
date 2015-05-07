@@ -42,8 +42,6 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
         
         refetch()
         
-        self.collectionView?.frame = CGRectMake((screenRect.width - collectionViewWidth)/2.0, (screenRect.height - itemHeight)/2.0, collectionViewWidth, itemHeight)
-        
         var yearLayout = DiaryLayout()
         yearLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         self.collectionView?.setCollectionViewLayout(yearLayout, animated: false)
@@ -137,6 +135,10 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
         }
         
     }
+    
+    func scrollToCollectionViewRight() {
+        self.collectionView!.contentOffset = CGPointMake(self.collectionView!.collectionViewLayout.collectionViewContentSize().width-collectionViewWidth-collectionViewLeftInsets*2, 0)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -191,19 +193,20 @@ extension DiaryHomeCollectionViewController: UICollectionViewDelegateFlowLayout,
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        var numberOfCells:Int = 1
         
-        if fetchedResultsController.sections!.count != 0 {
-            numberOfCells = fetchedResultsController.sections!.count
+        var numberOfCells:Int = fetchedResultsController.sections!.count
+        
+        var edgeInsets = collectionViewLeftInsets + (collectionViewWidth - (CGFloat(numberOfCells)*itemWidth))/2.0
+        
+        if (numberOfCells > collectionViewDisplayedCells) {
+            
+            edgeInsets = collectionViewLeftInsets
+            
         }
         
-        if (numberOfCells < 3) {
-            var edgeInsets = (collectionViewWidth - ((CGFloat(numberOfCells)*itemWidth)+(CGFloat(numberOfCells)-1) * itemSpacing))/2.0
-            return UIEdgeInsetsMake(0, edgeInsets, 0, edgeInsets);
-        }else{
-            return UIEdgeInsetsMake(0, 0, 0, 0);
-        }
+        return UIEdgeInsetsMake(collectionViewTopInset, edgeInsets, collectionViewTopInset, edgeInsets);
     }
+    
     
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {

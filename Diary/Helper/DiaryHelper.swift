@@ -28,13 +28,16 @@ let DiaryFont = UIFont(name: defaultFont, size: 18) as UIFont!
 let DiaryLocationFont = UIFont(name: defaultFont, size: 16) as UIFont!
 let DiaryTitleFont = UIFont(name: defaultFont, size: 18) as UIFont!
 
-
+let collectionViewTopInset = (screenRect.height - itemHeight)/2.0
 
 let DiaryRed = UIColor(red: 192.0/255.0, green: 23.0/255.0, blue: 48.0/255.0, alpha: 1.0)
 let itemHeight:CGFloat = 150.0
-let itemSpacing:CGFloat = 30
-let itemWidth:CGFloat = 30
+let itemSpacing:CGFloat = 0
+let itemWidth:CGFloat = 60
 let collectionViewWidth = itemWidth * 3 + itemSpacing * 2
+
+let collectionViewDisplayedCells: Int = 3
+let collectionViewLeftInsets = (screenRect.width - collectionViewWidth)/2.0
 
 //Coredata
 let appDelegate =
