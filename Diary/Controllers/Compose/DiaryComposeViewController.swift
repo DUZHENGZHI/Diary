@@ -105,7 +105,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
         
         //Add image button
         
-        imageButton = diaryButtonWith(text: "图",  fontSize: 18.0,  width: 50.0,  normalImageName: "OvalBlack", highlightedImageName: "OvalBlack", color: UIColor.blackColor())
+        imageButton = diaryButtonWith(text: "圖",  fontSize: 18.0,  width: 50.0,  normalImageName: "OvalBlack", highlightedImageName: "OvalBlack", color: UIColor.blackColor())
         
         imageButton.addTarget(self, action: "pickImage", forControlEvents: UIControlEvents.TouchUpInside)
 

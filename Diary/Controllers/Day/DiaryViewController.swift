@@ -90,7 +90,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         buttonsView.addSubview(editButton)
         
-        deleteButton = diaryButtonWith(text: "删",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        deleteButton = diaryButtonWith(text: "刪",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
         deleteButton.center = CGPointMake(saveButton.center.x + 56.0, saveButton.center.y)
         
