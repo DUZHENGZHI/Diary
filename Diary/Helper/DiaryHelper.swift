@@ -18,7 +18,7 @@ let defaults = NSUserDefaults.standardUserDefaults()
 
 let currentLanguage = NSLocale.preferredLanguages()[0] as! String
 
-let gussesFont: AnyObject? = currentLanguage == "ja" ? janpan : ((defaults.objectForKey("defaultFont") != nil) ? defaults.objectForKey("defaultFont") : firstFont)
+let gussesFont: AnyObject? = currentLanguage == "ja" ? janpan : firstFont
 
 var defaultFont = gussesFont as! String
 

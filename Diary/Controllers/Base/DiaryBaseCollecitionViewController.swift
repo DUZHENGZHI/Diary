@@ -29,6 +29,7 @@ class DiaryBaseCollecitionViewController: UICollectionViewController {
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
         if motion == UIEventSubtype.MotionShake {
             println("Device Shaked")
+            return
             showAlert()
         }
     }

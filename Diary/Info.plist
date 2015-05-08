@@ -26,7 +26,6 @@
 	<string>在撰写日记的时候自动添加位置</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>STSongti-SC-Bold.ttf</string>
 		<string>Wyue-GutiFangsong-NC_deliverable.otf</string>
 		<string>TpldKhangXiDictTrial.otf</string>
 	</array>
