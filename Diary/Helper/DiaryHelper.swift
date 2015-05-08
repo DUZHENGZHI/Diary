@@ -39,6 +39,54 @@ let collectionViewWidth = itemWidth * 3 + itemSpacing * 2
 let collectionViewDisplayedCells: Int = 3
 let collectionViewLeftInsets = (screenRect.width - collectionViewWidth)/2.0
 
+var tutShowed: Bool {
+
+get {
+    
+    if let tutShowed: Bool = defaults.objectForKey("tutshowed") as? Bool {
+        if tutShowed {
+            return true
+        } else {
+            return false
+        }
+    }else{
+        return false
+    }
+    
+}
+
+set (newvalue){
+    defaults.setBool(newvalue, forKey: "tutshowed")
+}
+
+}
+
+
+func getTutView() -> UIView {
+    
+    var view = UIView(frame: screenRect)
+    
+    view.backgroundColor = UIColor.whiteColor()
+    
+    var label = DiaryLabel(fontname: defaultFont, labelText: "双击返回", fontSize: 24.0, lineHeight: 15.0)
+    
+    var labelContainer = UIView(frame: CGRectInset(label.frame, -10.0, -10.0))
+    
+    labelContainer.layer.borderColor = UIColor.blackColor().CGColor
+    
+    labelContainer.layer.borderWidth = 1.0
+    
+    label.center = CGPoint(x: labelContainer.frame.size.width/2.0, y: labelContainer.frame.size.height/2.0)
+    
+    labelContainer.addSubview(label)
+    
+    labelContainer.center = view.center
+    
+    view.addSubview(labelContainer)
+    
+    return view
+}
+
 //Coredata
 let appDelegate =
 UIApplication.sharedApplication().delegate as! AppDelegate
@@ -65,6 +113,8 @@ func toggleFont() {
     
     NSNotificationCenter.defaultCenter().postNotificationName("DiaryChangeFont", object: nil)
 }
+
+
 
 func randomStringWithLength (len : Int) -> NSString {
     
@@ -252,3 +302,5 @@ extension NSDate {
         return date!
     }
 }
+
+

@@ -103,6 +103,30 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         webview.alpha = 0.0
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadWebView", name: "DiaryChangeFont", object: nil)
+        
+        showTut()
+        
+
+    }
+    
+    func showTut() {
+        
+        if tutShowed {
+            
+        }else {
+            tutShowed = true
+            var newView = getTutView()
+            self.view.addSubview(newView)
+            
+            UIView.animateWithDuration(1.0, delay: 1.0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+                {
+                    newView.alpha = 0
+
+                }, completion: { finish in
+                    newView.removeFromSuperview()
+            })
+        }
+        
     }
     
     override func viewWillAppear(animated: Bool) {
