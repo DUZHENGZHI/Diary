@@ -13,7 +13,15 @@ class DiaryBaseCollecitionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCollectionView", name: "DiaryChangeFont", object: nil)
+        
+        var mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: "popBack")
+        mDoubleUpRecognizer.numberOfTapsRequired = 2
+        self.collectionView?.addGestureRecognizer(mDoubleUpRecognizer)
         // Do any additional setup after loading the view.
+    }
+    
+    func popBack() {
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func reloadCollectionView() {

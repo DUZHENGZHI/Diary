@@ -155,13 +155,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
         var context = self.managedObjectContext!
         context.performBlock({
             context.mergeChangesFromContextDidSaveNotification(notification)
+
         })
     }
     
     func storesWillChange(notification:NSNotification) {
         println("Store Will change")
         var context:NSManagedObjectContext! = self.managedObjectContext
-        context?.performBlockAndWait({
+        context?.performBlock({
             var error:NSError?
             if (context.hasChanges) {
                 var success = context.save(&error)
@@ -174,6 +175,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
             }
             context.reset()
         })
+
     }
     
     func showAlert() {
@@ -194,6 +196,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
     
     func storesDidChange(notification:NSNotification){
         println("Store did change")
+        NSNotificationCenter.defaultCenter().postNotificationName("CoreDataDidUpdated", object: nil)
     }
     
     func migrateLocalStoreToiCloudStore() {
