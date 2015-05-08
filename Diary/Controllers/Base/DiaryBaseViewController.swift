@@ -31,7 +31,7 @@ class DiaryBaseViewController: UIViewController {
         if motion == UIEventSubtype.MotionShake {
             println("Device Shaked")
             return
-            showAlert()
+//            showAlert()
         }
     }
     

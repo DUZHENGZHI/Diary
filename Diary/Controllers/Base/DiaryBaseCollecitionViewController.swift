@@ -10,13 +10,24 @@ import UIKit
 
 class DiaryBaseCollecitionViewController: UICollectionViewController {
     
+    var fingerPrintButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCollectionView", name: "DiaryChangeFont", object: nil)
         
         var mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: "popBack")
+        
         mDoubleUpRecognizer.numberOfTapsRequired = 2
+        
         self.collectionView?.addGestureRecognizer(mDoubleUpRecognizer)
+        
+        fingerPrintButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        fingerPrintButton.frame = CGRect(x: 15, y: 15, width: 20, height: 20)
+        fingerPrintButton.setImage(UIImage(named: "Fingerprint"), forState: UIControlState.Normal)
+        
+//        self.view?.addSubview(fingerPrintButton)
         // Do any additional setup after loading the view.
     }
     
@@ -38,7 +49,7 @@ class DiaryBaseCollecitionViewController: UICollectionViewController {
         if motion == UIEventSubtype.MotionShake {
             println("Device Shaked")
             return
-            showAlert()
+//            showAlert()
         }
     }
     

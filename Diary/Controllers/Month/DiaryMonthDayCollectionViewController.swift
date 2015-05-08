@@ -11,7 +11,6 @@ import CoreData
 
 let reuseMonthDayCellIdentifier = "MonthDayCollectionViewCell"
 
-
 class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController {
     
     var diarys = [NSManagedObject]()

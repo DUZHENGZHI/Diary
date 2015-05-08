@@ -29,8 +29,11 @@ class DiaryComposeViewController: DiaryBaseViewController{
     var diaryKeyString: String?
     
     var diary:Diary?
+    
     var locationHelper: DiaryLocationHelper = DiaryLocationHelper()
+    
     var changeText = false
+    
     var changeTextCount = 0
 
     override func viewDidLoad() {
