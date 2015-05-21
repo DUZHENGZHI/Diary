@@ -19,6 +19,7 @@
 		0A2ECFDD1AEC39BC00398EBE /* DiaryBaseCollecitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2ECFDC1AEC39BC00398EBE /* DiaryBaseCollecitionViewController.swift */; };
 		0A3572E11A9467E70037C6A0 /* DiaryAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3572E01A9467E70037C6A0 /* DiaryAnimator.swift */; };
 		0A3572E31A9471750037C6A0 /* DiaryYearCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3572E21A9471750037C6A0 /* DiaryYearCollectionViewController.swift */; };
+		0A3AF6051B0E66A300CC1C0D /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3AF6041B0E66A300CC1C0D /* Fabric.framework */; };
 		0A5819701AEC2DB3005AA5C8 /* zh2HK.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0A58196F1AEC2DB3005AA5C8 /* zh2HK.txt */; };
 		0A5E38111AA9E9B000935E29 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5E38101AA9E9B000935E29 /* DiaryViewController.swift */; };
 		0A5E38151AA9EB0500935E29 /* DiaryVerticalTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */; };
@@ -71,6 +72,7 @@
 		0A3504B31ADE5CBA00728264 /* Wyue-GutiFangsong-NC_deliverable.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Wyue-GutiFangsong-NC_deliverable.otf"; sourceTree = "<group>"; };
 		0A3572E01A9467E70037C6A0 /* DiaryAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryAnimator.swift; path = Animator/DiaryAnimator.swift; sourceTree = "<group>"; };
 		0A3572E21A9471750037C6A0 /* DiaryYearCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryYearCollectionViewController.swift; path = Controllers/Year/DiaryYearCollectionViewController.swift; sourceTree = "<group>"; };
+		0A3AF6041B0E66A300CC1C0D /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		0A58196F1AEC2DB3005AA5C8 /* zh2HK.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zh2HK.txt; sourceTree = "<group>"; };
 		0A5E38101AA9E9B000935E29 /* DiaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewController.swift; path = Controllers/Day/DiaryViewController.swift; sourceTree = "<group>"; };
 		0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryVerticalTextView.swift; path = Helper/DiaryVerticalTextView.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				0AEDA8541AC2D50E00F2DC56 /* CloudKit.framework in Frameworks */,
 				0AEDA8521AC2CE9A00F2DC56 /* Crashlytics.framework in Frameworks */,
 				972426D91D564C76D413AB6C /* Pods_Diary.framework in Frameworks */,
+				0A3AF6051B0E66A300CC1C0D /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,6 +213,7 @@
 		0AE2021F1A8B0B310012AAED = {
 			isa = PBXGroup;
 			children = (
+				0A3AF6041B0E66A300CC1C0D /* Fabric.framework */,
 				0AEDA8511AC2CE9A00F2DC56 /* Crashlytics.framework */,
 				0AE2022A1A8B0B310012AAED /* Diary */,
 				0AE202431A8B0B310012AAED /* DiaryTests */,
@@ -689,10 +693,7 @@
 				INFOPLIST_FILE = Diary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Diary/WeChatSDK_1.5",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Diary/Diary-Bridging-Header.h";
@@ -718,10 +719,7 @@
 				INFOPLIST_FILE = Diary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Diary/WeChatSDK_1.5",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Diary/Diary-Bridging-Header.h";
