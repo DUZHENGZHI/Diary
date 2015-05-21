@@ -231,17 +231,7 @@ extension DiaryHomeCollectionViewController: UICollectionViewDelegateFlowLayout,
     func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         var animator = DiaryAnimator()
-        if (operation == UINavigationControllerOperation.Push) {
-            animator.fromView = fromVC.view
-            return animator
-        }
-        else if (operation == UINavigationControllerOperation.Pop) {
-            animator.fromView = fromVC.view
-            animator.pop = true
-            return animator
-        }
-        else {
-            return nil;
-        }
+        animator.operation = operation
+        return animator
     }
 }

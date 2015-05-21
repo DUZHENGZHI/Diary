@@ -192,16 +192,12 @@ class DiaryComposeViewController: DiaryBaseViewController{
                     insertIntoManagedObjectContext:managedContext)
                 newdiary.content = composeView.text
 
-                if (locationHelper.address != nil){
-                    newdiary.location = locationTextView.text
-                }else{
-                    newdiary.location = ""
+                if let address  = locationHelper.address {
+                    newdiary.location = address
                 }
 
-                if (titleTextView.text != nil){
-                    newdiary.title = titleTextView.text
-                }else{
-                    newdiary.title = ""
+                if let title = titleTextView.text {
+                    newdiary.title = title
                 }
                 
                 if let coverKey = diaryKeyString {

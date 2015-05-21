@@ -163,29 +163,27 @@ func diaryButtonWith(#text: String, #fontSize: CGFloat, #width: CGFloat, #normal
 
 
 func numberToChinese(number:Int) -> String {
-    var stringNumber = Array(String(number))
+    var numbers = Array(String(number))
     var finalString = ""
-    var i:Int
-    for i = 0; i < stringNumber.count; ++i {
-        var string = singleNumberToChinese(stringNumber[i])
+    for singleNumber in numbers {
+        var string = singleNumberToChinese(singleNumber)
         finalString = "\(finalString)\(string)"
     }
-    
     return finalString
 }
 
 func numberToChineseWithUnit(number:Int) -> String {
-    var stringNumber = Array(String(number))
-    var units = unitParser(stringNumber.count)
+    var numbers = Array(String(number))
+    var units = unitParser(numbers.count)
     var finalString = ""
-    var i:Int
-    for i = 0; i < stringNumber.count; ++i {
-        var string = singleNumberToChinese(stringNumber[i])
-        if (!(string == "零" && (i+1) == stringNumber.count)){
-            finalString = "\(finalString)\(string)\(units[i])"
+    
+    for (index, singleNumber) in enumerate(numbers) {
+        var string = singleNumberToChinese(singleNumber)
+        if (!(string == "零" && (index+1) == numbers.count)){
+            finalString = "\(finalString)\(string)\(units[index])"
         }
-
     }
+
     return finalString
 }
 
@@ -254,6 +252,7 @@ func findLastDayDiary() -> Diary? {
 
 
 extension UIWebView {
+    
     func captureView() -> UIImage{
         // tempframe to reset view size after image was created
         var tmpFrame = self.frame
@@ -269,7 +268,6 @@ extension UIWebView {
         UIGraphicsEndImageContext()
         // reset Frame of view to origin
         self.frame = tmpFrame
-//        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         
         return image
     }

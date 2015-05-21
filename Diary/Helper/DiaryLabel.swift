@@ -99,6 +99,7 @@ class DiaryLabel: UILabel {
         anim.toValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
         self.layer.pop_addAnimation(anim, forKey: "PopScaleback")
         super.touchesEnded(touches as Set<NSObject>, withEvent: event)
+
     }
 
 

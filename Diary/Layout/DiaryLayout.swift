@@ -17,6 +17,7 @@ class DiaryLayout: UICollectionViewFlowLayout {
         self.itemSize = itemSize
         self.minimumInteritemSpacing = 0.0
         self.minimumLineSpacing = itemSpacing
+        self.scrollDirection = .Horizontal
     }
     
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {

@@ -239,6 +239,7 @@ extension DiaryMonthDayCollectionViewController: UICollectionViewDelegateFlowLay
         var progess = offset/length
         
         diaryProgressBar.progress = progess
+
     }
     
     override func scrollViewWillBeginDragging(scrollView: UIScrollView) {

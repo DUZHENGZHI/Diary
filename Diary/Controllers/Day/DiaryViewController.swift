@@ -238,7 +238,6 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         }
         
         self.presentViewController(composeViewController, animated: true, completion: nil)
-
     }
     
     func saveToRoll() {

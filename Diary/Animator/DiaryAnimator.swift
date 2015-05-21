@@ -10,49 +10,37 @@ import UIKit
 
 class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
-    var fromView: UIView!
-    var transitionContext: UIViewControllerContextTransitioning!
-    
-    var pop:Bool = false
-
-    override init() {
-        
-    }
+    var operation:UINavigationControllerOperation!
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
         return 0.4
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        
-        let inview = transitionContext.containerView()
+
+        let containerView = transitionContext.containerView()
         let fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
         let fromView = fromVC!.view
         let toVC   = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
         let toView = toVC!.view
-        let initialRect = CGRectMake(fromVC!.view.frame.size.width/2.0, fromVC!.view.frame.size.height/2.0, 0, 0)
-        
-        let finalRect  = transitionContext.finalFrameForViewController(toVC!)
-        
 
         toView.alpha = 0.0
         
-        if (pop) {
+        if (operation ==  UINavigationControllerOperation.Pop) {
             toView.transform = CGAffineTransformMakeScale(1.0,1.0)
         }else{
             toView.transform = CGAffineTransformMakeScale(0.3,0.3);
         }
 
-        inview.insertSubview(toView, aboveSubview: fromView)
+        containerView.insertSubview(toView, aboveSubview: fromView)
 
-        UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, options: UIViewAnimationOptions.TransitionCrossDissolve | UIViewAnimationOptions.CurveEaseInOut, animations:
+        UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
             {
-                if (self.pop) {
+                if (self.operation ==  UINavigationControllerOperation.Pop) {
                     fromView.transform = CGAffineTransformMakeScale(3.3,3.3)
 
                 }else{
                     toView.transform = CGAffineTransformMakeScale(1.0,1.0);
-//                    fromView.transform = CGAffineTransformMakeScale(3.3,3.3);
                 }
 
                 toView.alpha = 1.0
