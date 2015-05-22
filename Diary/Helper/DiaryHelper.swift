@@ -41,24 +41,54 @@ let collectionViewLeftInsets = (screenRect.width - collectionViewWidth)/2.0
 
 var tutShowed: Bool {
 
-get {
-    
-    if let tutShowed: Bool = defaults.objectForKey("tutshowed") as? Bool {
-        if tutShowed {
-            return true
-        } else {
+    get {
+        
+        if let tutShowed: Bool = defaults.objectForKey("tutshowed") as? Bool {
+            if tutShowed {
+                return true
+            } else {
+                return false
+            }
+        }else{
             return false
         }
-    }else{
-        return false
+        
     }
+
+    set (newvalue){
+        defaults.setBool(newvalue, forKey: "tutshowed")
+    }
+
+}
+
+extension UIView {
     
+    func pb_takeSnapshot() -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.mainScreen().scale)
+        
+        drawViewHierarchyInRect(self.bounds, afterScreenUpdates: true)
+        
+        // old style: layer.renderInContext(UIGraphicsGetCurrentContext())
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
 }
 
-set (newvalue){
-    defaults.setBool(newvalue, forKey: "tutshowed")
-}
-
+extension UIImage {
+    
+    func drawImage(inputImage: UIImage, frame: CGRect) -> UIImage {
+        
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        
+        self.drawInRect(CGRectMake(0.0, 0.0, self.size.width, self.size.height))
+        inputImage.drawInRect(frame)
+        var newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+        
+    }
 }
 
 
