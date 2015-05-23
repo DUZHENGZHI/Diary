@@ -29,6 +29,7 @@
 		0A9170001AA6200D00E987A4 /* DiaryCollectionViewCelll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A916FFF1AA6200D00E987A4 /* DiaryCollectionViewCelll.swift */; };
 		0A9170021AA6216D00E987A4 /* DiaryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9170011AA6216D00E987A4 /* DiaryLabel.swift */; };
 		0A9170071AA6297600E987A4 /* DiaryComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9170061AA6297600E987A4 /* DiaryComposeViewController.swift */; };
+		0AA296AD1B1078EF001CDE8C /* STSongti-SC-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0AA296AC1B1078EF001CDE8C /* STSongti-SC-Bold.ttf */; };
 		0AE2022E1A8B0B310012AAED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE2022D1A8B0B310012AAED /* AppDelegate.swift */; };
 		0AE202311A8B0B310012AAED /* Diary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0AE2022F1A8B0B310012AAED /* Diary.xcdatamodeld */; };
 		0AE202361A8B0B310012AAED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AE202341A8B0B310012AAED /* Main.storyboard */; };
@@ -84,6 +85,7 @@
 		0A916FFF1AA6200D00E987A4 /* DiaryCollectionViewCelll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryCollectionViewCelll.swift; path = Cell/DiaryCollectionViewCelll.swift; sourceTree = "<group>"; };
 		0A9170011AA6216D00E987A4 /* DiaryLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryLabel.swift; path = Helper/DiaryLabel.swift; sourceTree = "<group>"; };
 		0A9170061AA6297600E987A4 /* DiaryComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryComposeViewController.swift; path = Controllers/Compose/DiaryComposeViewController.swift; sourceTree = "<group>"; };
+		0AA296AC1B1078EF001CDE8C /* STSongti-SC-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "STSongti-SC-Bold.ttf"; sourceTree = "<group>"; };
 		0AE202281A8B0B310012AAED /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE2022C1A8B0B310012AAED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AE2022D1A8B0B310012AAED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				0A58196F1AEC2DB3005AA5C8 /* zh2HK.txt */,
+				0AA296AC1B1078EF001CDE8C /* STSongti-SC-Bold.ttf */,
 				0A3504B31ADE5CBA00728264 /* Wyue-GutiFangsong-NC_deliverable.otf */,
 				0A916FF91AA6097700E987A4 /* TpldKhangXiDictTrial.otf */,
 			);
@@ -446,6 +449,7 @@
 				0AE202361A8B0B310012AAED /* Main.storyboard in Resources */,
 				0A222A871AB89E3F000A1DEF /* poem.json in Resources */,
 				0AE2023B1A8B0B310012AAED /* LaunchScreen.xib in Resources */,
+				0AA296AD1B1078EF001CDE8C /* STSongti-SC-Bold.ttf in Resources */,
 				0A916FFA1AA6097700E987A4 /* TpldKhangXiDictTrial.otf in Resources */,
 				0A5819701AEC2DB3005AA5C8 /* zh2HK.txt in Resources */,
 				0AE202381A8B0B310012AAED /* Images.xcassets in Resources */,

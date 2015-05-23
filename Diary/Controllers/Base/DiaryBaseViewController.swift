@@ -30,8 +30,7 @@ class DiaryBaseViewController: UIViewController {
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
         if motion == UIEventSubtype.MotionShake {
             println("Device Shaked")
-            return
-//            showAlert()
+            showAlert()
         }
     }
     
