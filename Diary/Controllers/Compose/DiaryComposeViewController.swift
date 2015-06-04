@@ -57,6 +57,8 @@ class DiaryComposeViewController: DiaryBaseViewController{
         composeView.userInteractionEnabled = true
         composeView.delegate = self
         composeView.textContainerInset = UIEdgeInsetsMake(contentMargin, contentMargin, contentMargin, contentMargin)
+        
+        println("\(DiaryFont.fontName)")
 
         //Add LocationTextView
         locationTextView = UITextView(frame: CGRectMake(0, composeView.frame.size.height - 30.0, screenRect.width - 60.0, 30.0))
@@ -326,22 +328,22 @@ extension DiaryComposeViewController: UITextViewDelegate, UINavigationController
 
     }
     
-    func textViewDidChange(textView: UITextView) {
-        
-        if textView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
-            
-            var text = textView.text.substringFromIndex(textView.text.endIndex.predecessor())
-            var s = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_")
-            if let r = text.rangeOfCharacterFromSet(s) {
-                println("Skip Convert")
-            }else{
-                println("Do Convert")
-                textView.text = (textView.text as NSString).chineseStringHK()
-            }
-        }
-
-        updateTextViewSizeForKeyboardHeight(keyboardSize.height)
-    }
+//    func textViewDidChange(textView: UITextView) {
+//        
+//        if textView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
+//            
+//            var text = textView.text.substringFromIndex(textView.text.endIndex.predecessor())
+//            var s = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_")
+//            if let r = text.rangeOfCharacterFromSet(s) {
+//                println("Skip Convert")
+//            }else{
+//                println("Do Convert")
+//                textView.text = (textView.text as NSString).chineseStringHK()
+//            }
+//        }
+//
+//        updateTextViewSizeForKeyboardHeight(keyboardSize.height)
+//    }
 
 
 }

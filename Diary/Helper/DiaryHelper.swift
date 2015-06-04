@@ -18,15 +18,38 @@ let defaults = NSUserDefaults.standardUserDefaults()
 
 let currentLanguage = NSLocale.preferredLanguages()[0] as! String
 
-let gussesFont: AnyObject? = currentLanguage == "ja" ? janpan : firstFont
+var defaultFont: String {
+    get {
+        return defaults.objectForKey("defaultFont") as! String
+    }
 
-var defaultFont = gussesFont as! String
+    set (newValue) {
+        defaults.setObject(newValue, forKey: "defaultFont")
+    }
+}
 
 let screenRect = UIScreen.mainScreen().bounds
 
-let DiaryFont = UIFont(name: defaultFont, size: 18) as UIFont!
-let DiaryLocationFont = UIFont(name: defaultFont, size: 16) as UIFont!
-let DiaryTitleFont = UIFont(name: defaultFont, size: 18) as UIFont!
+var DiaryFont: UIFont {
+
+    get {
+        return UIFont(name: defaultFont, size: 18) as UIFont!
+    }
+
+}
+
+var DiaryLocationFont: UIFont {
+    get {
+       return UIFont(name: defaultFont, size: 16) as UIFont!
+    }
+}
+
+
+var DiaryTitleFont: UIFont {
+    get {
+        return UIFont(name: defaultFont, size: 18) as UIFont!
+    }
+}
 
 let collectionViewTopInset = (screenRect.height - itemHeight)/2.0
 

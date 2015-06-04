@@ -153,6 +153,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
     
     func persistentStoreDidImportUbiquitousContentChanges(notification:NSNotification){
         var context = self.managedObjectContext!
+        
         context.performBlock({
             context.mergeChangesFromContextDidSaveNotification(notification)
 

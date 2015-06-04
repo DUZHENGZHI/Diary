@@ -131,11 +131,12 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         reloadWebView()
- 
     }
     
     func reloadWebView() {
+        
         var timeString = "\(numberToChinese(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: diary.created_at)))年 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: diary.created_at)))月 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: diary.created_at)))日"
         
         //WebView method
@@ -199,8 +200,12 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         let stampCSS = ".stamp {width:24px; height:auto; position:fixed; bottom:20px;}"
         let coverCSS = ".cover {position: relative; width: 224px; overflow:hidden;} .cover img {height:100%; width:auto; position: absolute; top: -9999px; bottom: -9999px; left: -9999px; right: -9999px; margin: auto;} "
         
+        var extraHTML = "<div class='extra'><br>\(timeString) </div>"
         
-        let extraHTML = "<div class='extra'>\(diary.location)<br>\(timeString) </div>"
+        if let location = diary.location {
+            extraHTML = "<div class='extra'>\(location)<br>\(timeString) </div>"
+        }
+        
         let contentHTML = "<div class='container'>\(title)<div class='content'><p>\(newDiaryString)</p></div>"
         
         webview.loadHTMLString("\(headertags)\(bodyCSS) \(allCSS) \(contentCSS) \(titleCSS) \(extraCSS) .container { \(containerCSS) } \(stampCSS) \(coverCSS) </style></head> <body>\(coverImage) \(contentHTML) \(extraHTML)</body></html>", baseURL: stampPath)

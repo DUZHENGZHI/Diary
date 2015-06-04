@@ -51,6 +51,7 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController 
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFetch", name: "CoreDataDidUpdated", object: nil)
 
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFetch", name: "DiaryChangeFont", object: nil)
     }
     
     func updateFetch() {
@@ -74,6 +75,8 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController 
         }
         
         refetch()
+        
+        reloadCollectionView()
     }
     
     func refetch() {
