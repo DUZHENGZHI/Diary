@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
         application.applicationSupportsShakeToEdit = true
         defaultConfig()
         Crashlytics.startWithAPIKey("de004490005a062fa95a4d5676a7edbfbe42c582")
+        
+        registerForiCloudNotifications()
         return true
     }
     
@@ -89,6 +91,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
+        
+        if let token = NSFileManager.defaultManager().ubiquityIdentityToken {
+            // iCloud is available
+        }
+
         var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Diary.sqlite")
         var error: NSError? = nil
@@ -116,7 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
         if coordinator == nil {
             return nil
         }
-        var managedObjectContext = NSManagedObjectContext()
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
         managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
@@ -153,8 +160,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
     
     func persistentStoreDidImportUbiquitousContentChanges(notification:NSNotification){
         var context = self.managedObjectContext!
-        
-        context.performBlock({
+        println("Perform icloud data 1")
+        context.performBlockAndWait({
             context.mergeChangesFromContextDidSaveNotification(notification)
 
         })
@@ -163,7 +170,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
     func storesWillChange(notification:NSNotification) {
         println("Store Will change")
         var context:NSManagedObjectContext! = self.managedObjectContext
-        context?.performBlock({
+        context?.performBlockAndWait({
             var error:NSError?
             if (context.hasChanges) {
                 var success = context.save(&error)

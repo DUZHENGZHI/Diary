@@ -251,7 +251,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         var image =  webview.captureView()
         
-        image = image.drawImage(UIImage(named: "Fingerprint")!, frame: CGRect(x: image.size.width/2.0 - 25.0, y: image.size.height - 75.0, width: 50.0, height: 50.0))
+//        image = image.drawImage(UIImage(named: "Fingerprint")!, frame: CGRect(x: image.size.width/2.0 - 25.0, y: image.size.height - 75.0, width: 50.0, height: 50.0))
         
         self.webview.scrollView.contentOffset.x = offset
 
