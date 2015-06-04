@@ -40,6 +40,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
         super.viewDidLoad()
         storage = DiaryTextStorage()
         imagePicker.delegate = self
+        
         let containerSize = CGSize(width: screenRect.width, height: CGFloat.max)
         let container = NSTextContainer(size: containerSize)
 
@@ -173,9 +174,11 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
         if (composeView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 1){
 
+            var translationtext = (composeView.text as NSString).chineseStringHK()
+            
             if let diary = diary {
 
-                diary.content = composeView.text
+                diary.content = translationtext
                 diary.location = locationTextView.text
                 diary.title = titleTextView.text
                 
@@ -190,7 +193,8 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
                 let newdiary = Diary(entity: entity!,
                     insertIntoManagedObjectContext:managedContext)
-                newdiary.content = composeView.text
+                
+                newdiary.content = translationtext
 
                 if let address  = locationHelper.address {
                     newdiary.location = address
