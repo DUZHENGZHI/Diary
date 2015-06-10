@@ -18,6 +18,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         application.applicationSupportsShakeToEdit = true
+        
+        if let token = NSFileManager.defaultManager().ubiquityIdentityToken {
+            // iCloud is available
+            if let iCloudEnabled = defaults.objectForKey("defaultCloudConfig") as? Bool{
+                if iCloudEnabled {
+                    println("Already Enabled")
+                    migrateLocalStoreToiCloudStore()
+                } else {
+                    println("Migrate Local To iCloud")
+                    migrateLocalStoreToiCloudStore()
+                }
+            }
+            
+            defaults.setObject(true, forKey: "defaultCloudConfig")
+            
+        } else {
+            println("No iCloud")
+            
+            var message = UIAlertView(title: "iCloud 未开启", message: "为了备份您的数据，请在系统设置里登录 iCloud 以免发生记录丢失", delegate: nil, cancelButtonTitle: nil, otherButtonTitles: "好的")
+            message.show()
+            
+            defaults.setObject(false, forKey: "defaultCloudConfig")
+        }
+        
         defaultConfig()
         Crashlytics.startWithAPIKey("de004490005a062fa95a4d5676a7edbfbe42c582")
         
@@ -36,6 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
             defaults.setObject(secondFont, forKey: "secondFont")
             defaults.setObject(janpan, forKey: "japan")
             defaults.setObject(true, forKey: "defaultConfig")
+            
         }
         
     }
@@ -91,10 +116,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
-        
-        if let token = NSFileManager.defaultManager().ubiquityIdentityToken {
-            // iCloud is available
-        }
+
 
         var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Diary.sqlite")
@@ -209,6 +231,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
     
     func migrateLocalStoreToiCloudStore() {
         println("Migrate local to icloud")
+        
         var oldStore = persistentStoreCoordinator?.persistentStores.first as! NSPersistentStore
         var localStoreOptions = self.storeOptions
         localStoreOptions[NSPersistentStoreRemoveUbiquitousMetadataOption] = true
