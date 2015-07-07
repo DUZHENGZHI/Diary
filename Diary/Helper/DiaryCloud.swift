@@ -48,6 +48,8 @@ class DiaryCloud: NSObject {
             
             
             println("All Diary is \(fetchedResults.count)")
+            
+            startSync()
 
         }
     }
@@ -61,10 +63,19 @@ class DiaryCloud: NSObject {
         for record in allRecords {
             if let recordID = record.id {
                 
-                println(record)
+                fetchCloudRecordWithID(recordID, { (OldRecord) -> Void in
+                    
+                    if let OldRecord = OldRecord {
+//                        updateRecord(record, OldRecord)
+                        println("Already Have")
+                    } else {
+                        if  let title = record.title {
+                            saveNewRecord(record)
+                        }
+                    }
+                    
+                })
                 
-                println("No need add ID")
-
             } else {
                 
                 record.id = randomStringWithLength(32) as String
@@ -83,7 +94,7 @@ class DiaryCloud: NSObject {
                 for fetchRecord in records {
                     if let diaryID = fetchRecord.objectForKey("id") as? String {
                         if let diary = fetchDiaryByID(diaryID) {
-                            println("No need to do thing")
+//                            println("No need to do thing")
                         } else {
                             println("Create Diary With CKRecords")
                             saveDiaryWithCKRecord(fetchRecord)
@@ -143,6 +154,6 @@ func fetchDiaryByID(id: String) -> Diary? {
 
 extension DiaryCloud: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        startSync()
+
     }
 }

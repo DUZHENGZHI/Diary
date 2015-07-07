@@ -16,7 +16,7 @@ let privateDB = container.privateCloudDatabase
 func saveNewRecord(diary: Diary) {
     
     var newDiary = CKRecord(recordType: "Diary")
-    
+    println("Add New Diary")
     updateRecord(diary, newDiary)
 }
 
@@ -38,7 +38,7 @@ func updateRecord(diary: Diary, record: CKRecord) {
     
     privateDB.saveRecord(record, completionHandler: { (newDiary, error) -> Void in
         
-        println(newDiary)
+        println("Diary Updated")
         
         if let error = error {
             println("error \(error.description)")
@@ -61,7 +61,6 @@ func fetchCloudRecordWithID(recordID: String , complete: (CKRecord?) -> Void) {
             println(error.description)
             complete(nil)
         } else {
-            println("Have \(results.count) in Cloud")
             if let record = results.first as? CKRecord {
                 complete(record)
             } else {
@@ -86,16 +85,10 @@ func fetchCloudRecords(complete: ([CKRecord]?) -> Void) {
                 println(error.description)
                 complete(nil)
             } else {
-                println("Have \(results.count) in Cloud")
+                println("Total Have \(results.count) in Cloud")
+                
                 if let records = results as? [CKRecord] {
                     complete(records)
-                    
-//                    for record in records {
-//                        privateDB.deleteRecordWithID(record.recordID, completionHandler: { (recordID, error) -> Void in
-//                            
-//                        })
-//                    }
-
                 } else {
                     complete(nil)
                 }
