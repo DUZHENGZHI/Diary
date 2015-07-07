@@ -21,7 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
         
         if let token = NSFileManager.defaultManager().ubiquityIdentityToken {
             // iCloud is available
-            DiaryCloud.sharedInstance.startSync()
+            DiaryCloud.sharedInstance.startFetch()
+            
             if let iCloudEnabled = defaults.objectForKey("defaultCloudConfig") as? Bool{
                 if iCloudEnabled {
                     println("Already Enabled")
@@ -104,7 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
         // The directory the application uses to store the Core Data store file. This code uses a directory named "kevinzhow.Diary" in the application's documents Application Support directory.
         var cloudRoot = icloudIdentifier()
         let url = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier("\(cloudRoot)")
-        println("\(url)\(cloudRoot)")
+        println("\(url)")
         return url!
     }()
 
@@ -259,6 +260,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
         persistentStoreCoordinator?.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: self.applicationDocumentsDirectory.URLByAppendingPathComponent("Diary.sqlite"), options: self.storeOptions, error: nil)
         
         NSNotificationCenter.defaultCenter().postNotificationName("CoreDataDidUpdated", object: nil)
+        
+        DiaryCloud.sharedInstance.startFetch()
     }
 
 }

@@ -33,8 +33,6 @@ class DiaryCloud: NSObject {
         
         fetchedResultsController.delegate = self
         
-        startFetch()
-        
     }
     
     func startFetch() {
