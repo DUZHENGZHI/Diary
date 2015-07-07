@@ -172,6 +172,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
         print("Finish compose \n")
 
         self.composeView.endEditing(true)
+        
         self.locationTextView.endEditing(true)
 
         if (composeView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 1){
@@ -184,17 +185,23 @@ class DiaryComposeViewController: DiaryBaseViewController{
                 diary.location = locationTextView.text
                 diary.title = titleTextView.text
                 
-                if let coverKey = diaryKeyString {
-                    diary.coverCloudKey = coverKey
-                    diary.coverLocalURL = coverPathWithKey(coverKey)
+                if let DiaryID = diary.id {
+                    
+                    fetchCloudRecordWithID(DiaryID, { (record) -> Void in
+                        if let record = record {
+                            updateRecord(diary, record)
+                        }
+                    })
                 }
-
+                
             }else{
 
                 let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
 
                 let newdiary = Diary(entity: entity!,
                     insertIntoManagedObjectContext:managedContext)
+                
+                newdiary.id = randomStringWithLength(32) as String
                 
                 newdiary.content = translationtext
 
@@ -206,12 +213,9 @@ class DiaryComposeViewController: DiaryBaseViewController{
                     newdiary.title = title
                 }
                 
-                if let coverKey = diaryKeyString {
-                    newdiary.coverCloudKey = coverKey
-                    newdiary.coverLocalURL = coverPathWithKey(coverKey)
-                }
-
                 newdiary.updateTimeWithDate(NSDate())
+                
+                saveNewRecord(newdiary)
             }
 
             var error: NSError?

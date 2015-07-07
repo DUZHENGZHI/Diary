@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
         
         if let token = NSFileManager.defaultManager().ubiquityIdentityToken {
             // iCloud is available
+            DiaryCloud.sharedInstance.startSync()
             if let iCloudEnabled = defaults.objectForKey("defaultCloudConfig") as? Bool{
                 if iCloudEnabled {
                     println("Already Enabled")
@@ -46,6 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
         Crashlytics.startWithAPIKey("de004490005a062fa95a4d5676a7edbfbe42c582")
         
         registerForiCloudNotifications()
+    
+        
         return true
     }
     
@@ -99,9 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
     
     lazy var cloudDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "kevinzhow.Diary" in the application's documents Application Support directory.
-        var teamID = "iCloud."
-        var bundleID = NSBundle.mainBundle().bundleIdentifier!
-        var cloudRoot = "\(teamID)\(bundleID).sync"
+        var cloudRoot = icloudIdentifier()
         let url = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier("\(cloudRoot)")
         println("\(url)\(cloudRoot)")
         return url!

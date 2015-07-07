@@ -116,6 +116,8 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
                 let newdiary = Diary(entity: entity!,
                     insertIntoManagedObjectContext:managedContext)
                 
+                newdiary.id = randomStringWithLength(32) as String
+                
                 newdiary.content = poem.valueForKey("content") as! String
                 newdiary.title = poem.valueForKey("title") as? String
                 newdiary.location = poem.valueForKey("location") as! String

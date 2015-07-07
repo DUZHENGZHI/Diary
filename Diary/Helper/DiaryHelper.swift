@@ -248,6 +248,13 @@ func unitParser(unit:Int) -> [String] {
     return final
 }
 
+func icloudIdentifier() -> String {
+    var teamID = "iCloud."
+    var bundleID = NSBundle.mainBundle().bundleIdentifier!
+    var cloudRoot = "\(teamID)\(bundleID).sync"
+    
+    return cloudRoot
+}
 
 func singleNumberToChinese(number:Character) -> String {
     switch number {

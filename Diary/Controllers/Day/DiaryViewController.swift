@@ -178,11 +178,11 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         var containerCSS = " padding:25px 10px 25px 25px; "
         
-        if let coverURL = diary.coverCloudKey {
-            bodyPadding = 35
-            containerCSS = " padding: 0px 0px 0px 0px; "
-            coverImage = "<div class='cover'><img src='\(coverURL).jpg'></div>"
-        }
+//        if let coverURL = diary.coverCloudKey {
+//            bodyPadding = 35
+//            containerCSS = " padding: 0px 0px 0px 0px; "
+//            coverImage = "<div class='cover'><img src='\(coverURL).jpg'></div>"
+//        }
         
         var titleMarginRight:CGFloat = 15
         
@@ -268,6 +268,20 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
     
     func deleteThisDiary() {
         managedContext.deleteObject(diary)
+        if let DiaryID = diary.id {
+            
+            fetchCloudRecordWithID(DiaryID, { (record) -> Void in
+                if let record = record {
+                    privateDB.deleteRecordWithID(record.recordID, completionHandler: { (recordID, error) -> Void in
+                        if let error = error {
+                            println("\(error.description)")
+                        } else {
+                            println("delete \(recordID)")
+                        }
+                    })
+                }
+            })
+        }
         managedContext.save(nil)
         hideDiary()
     }

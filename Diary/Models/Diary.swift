@@ -2,16 +2,15 @@
 //  Diary.swift
 //  
 //
-//  Created by kevinzhow on 15/5/2.
+//  Created by kevinzhow on 15/7/7.
 //
 //
 
 import Foundation
 import CoreData
-import UIKit
-import CloudKit
 
 @objc(Diary)
+
 class Diary: NSManagedObject {
 
     @NSManaged var content: String
@@ -20,7 +19,6 @@ class Diary: NSManagedObject {
     @NSManaged var month: NSNumber
     @NSManaged var title: String?
     @NSManaged var year: NSNumber
-    @NSManaged var coverCloudKey: String?
-    @NSManaged var coverLocalURL: String?
+    @NSManaged var id: String?
 
 }
