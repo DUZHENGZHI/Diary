@@ -40,6 +40,7 @@
 		0AE202561A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202551A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift */; };
 		0AE202591A8B0E420012AAED /* DiaryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202581A8B0E420012AAED /* DiaryHelper.swift */; };
 		0AEDA8541AC2D50E00F2DC56 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEDA8531AC2D50E00F2DC56 /* CloudKit.framework */; };
+		6AB5C54F1BBCD82B00D46B05 /* WeChatActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB5C54E1BBCD82B00D46B05 /* WeChatActivity.swift */; settings = {ASSET_TAGS = (); }; };
 		972426D91D564C76D413AB6C /* Pods_Diary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37DBC7CC24E2BB3323B79181 /* Pods_Diary.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -103,6 +104,7 @@
 		0AF0E4271A903D6C0027592E /* VerticalTextPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = VerticalTextPlayground.playground; path = Playgrounds/VerticalTextPlayground.playground; sourceTree = "<group>"; };
 		18506CDA6A8669C3DB90CABE /* Pods-Diary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diary.release.xcconfig"; path = "Pods/Target Support Files/Pods-Diary/Pods-Diary.release.xcconfig"; sourceTree = "<group>"; };
 		37DBC7CC24E2BB3323B79181 /* Pods_Diary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Diary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6AB5C54E1BBCD82B00D46B05 /* WeChatActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeChatActivity.swift; sourceTree = "<group>"; };
 		B5AFFA76123235DC33EBDCFE /* Pods-Diary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Diary/Pods-Diary.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -260,6 +262,7 @@
 				0AE2022F1A8B0B310012AAED /* Diary.xcdatamodeld */,
 				0AE2022B1A8B0B310012AAED /* Supporting Files */,
 				0A0B10091A915F1F0012604C /* Diary-Bridging-Header.h */,
+				6AB5C54E1BBCD82B00D46B05 /* WeChatActivity.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -538,6 +541,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AB5C54F1BBCD82B00D46B05 /* WeChatActivity.swift in Sources */,
 				0A82422A1AB0C49D004BC327 /* DiaryProgress.swift in Sources */,
 				0A0B100F1A9180460012604C /* DiaryLayout.swift in Sources */,
 				0AE202591A8B0E420012AAED /* DiaryHelper.swift in Sources */,

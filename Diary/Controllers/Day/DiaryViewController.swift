@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MonkeyKing
 
 class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, UIWebViewDelegate, UIScrollViewDelegate{
     
@@ -256,9 +257,34 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
 
         var sharingItems = [AnyObject]()
         sharingItems.append(image)
-        print("Do Share")
+        let info = MonkeyKing.Info(
+            title: nil,
+            description: nil,
+            thumbnail: nil,
+            media: .Image(image)
+        )
         
-        let activityViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
+        let sessionMessage = MonkeyKing.Message.WeChat(.Session(info: info))
+        
+        let weChatSessionActivity = WeChatActivity(
+            type: .Session,
+            message: sessionMessage,
+            finish: { success in
+                print("share Image to WeChat Session success: \(success)")
+            }
+        )
+        
+        let timelineMessage = MonkeyKing.Message.WeChat(.Timeline(info: info))
+        
+        let weChatTimelineActivity = WeChatActivity(
+            type: .Timeline,
+            message: timelineMessage,
+            finish: { success in
+                print("share Image to WeChat Timeline success: \(success)")
+            }
+        )
+        
+        let activityViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: [weChatSessionActivity, weChatTimelineActivity])
         activityViewController.popoverPresentationController?.sourceView = self.saveButton
         self.presentViewController(activityViewController, animated: true, completion: nil)
 

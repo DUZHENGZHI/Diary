@@ -3,6 +3,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'Diary' do
+pod 'MonkeyKing'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'pop'

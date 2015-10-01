@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import Fabric
 import Crashlytics
-
+import MonkeyKing
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
@@ -19,10 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        application.applicationSupportsShakeToEdit = true
-        Fabric.with([Crashlytics.self()])
-
         
+        application.applicationSupportsShakeToEdit = true
+        
+        Fabric.with([Crashlytics.self()])
+        
+        MonkeyKing.registerAccount(.WeChat(appID: "wx1f683ed6cec8c820"))
+
         if let _ = NSFileManager.defaultManager().ubiquityIdentityToken {
             // iCloud is available
             DiaryCloud.sharedInstance.startFetch()
