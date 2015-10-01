@@ -149,7 +149,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
             print("Author at \(address)")
 
-            if let lastLocation = diary?.location {
+            if let _ = diary?.location {
                 locationTextView.text = diary?.location
             }else {
                 locationTextView.text = "于 \(address)"
@@ -177,7 +177,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
         if (composeView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 1){
 
-            var translationtext = (composeView.text as NSString).chineseStringHK()
+            let translationtext = (composeView.text as NSString).chineseStringHK()
             
             if let diary = diary {
 
@@ -218,12 +218,10 @@ class DiaryComposeViewController: DiaryBaseViewController{
                 saveNewRecord(newdiary)
             }
 
-            var error: NSError?
             do {
                 try managedContext.save()
-            } catch var error1 as NSError {
-                error = error1
-                print("Could not save \(error), \(error?.userInfo)")
+            } catch let error as NSError {
+                print("Could not save \(error), \(error.userInfo)")
             }
 
         }

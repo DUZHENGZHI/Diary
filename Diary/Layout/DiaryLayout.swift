@@ -26,7 +26,7 @@ class DiaryLayout: UICollectionViewFlowLayout {
         let contentOffset = collectionView!.contentOffset
 
         
-        for (index, attributes) in layoutAttributes!.enumerate() {
+        for (_, attributes) in layoutAttributes!.enumerate() {
             
             let center = attributes.center
             

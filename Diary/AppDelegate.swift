@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
         Fabric.with([Crashlytics.self()])
 
         
-        if let token = NSFileManager.defaultManager().ubiquityIdentityToken {
+        if let _ = NSFileManager.defaultManager().ubiquityIdentityToken {
             // iCloud is available
             DiaryCloud.sharedInstance.startFetch()
             
@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
     
     func defaultConfig() {
         
-        if let config: AnyObject = defaults.objectForKey("defaultConfig") {
+        if let _ = defaults.objectForKey("defaultConfig") {
             print("Configed")
         }else{
             defaults.setObject(currentLanguage == "ja" ? janpan : firstFont, forKey: "defaultFont")

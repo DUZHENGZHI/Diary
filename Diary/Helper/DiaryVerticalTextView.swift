@@ -41,7 +41,7 @@ class DiaryVerticalTextView: UIView {
     
     override func drawRect(rect: CGRect) {
         
-        var attrString = NSMutableAttributedString()
+        let attrString = NSMutableAttributedString()
         
         if (self.titleText.length > 0) {
             let fontSize = 27.0 as CGFloat
@@ -56,21 +56,21 @@ class DiaryVerticalTextView: UIView {
         
         
         if (self.text.length > 0) {
-            var font = CTFontCreateWithName(self.fontName, self.fontSize, nil)
-            var textAttrDict = getAttributedStringSourceWithString(self.text as String, font:font)
-            var textAttrString  = NSMutableAttributedString(string: (self.text as String), attributes: textAttrDict)
+            let font = CTFontCreateWithName(self.fontName, self.fontSize, nil)
+            let textAttrDict = getAttributedStringSourceWithString(self.text as String, font:font)
+            let textAttrString  = NSMutableAttributedString(string: (self.text as String), attributes: textAttrDict)
             attrString.appendAttributedString(textAttrString)
         }
         
         
-        var framesetter = CTFramesetterCreateWithAttributedString(attrString)
+        let framesetter = CTFramesetterCreateWithAttributedString(attrString)
         
-        var path = CGPathCreateMutable()
-        var pathSize = rect.size
+        let path = CGPathCreateMutable()
+        let pathSize = rect.size
         
         print("draw text size \(rect.size)")
         
-        var reversingDiff = 0.0 as CGFloat
+        let reversingDiff = 0.0 as CGFloat
         
         CGPathAddRect(path, nil, CGRectMake(-reversingDiff, reversingDiff, pathSize.width, pathSize.height))
         

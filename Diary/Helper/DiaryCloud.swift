@@ -54,11 +54,11 @@ class DiaryCloud: NSObject {
                 
                 fetchCloudRecordWithID(recordID, complete: { (OldRecord) -> Void in
                     
-                    if let OldRecord = OldRecord {
+                    if let _ = OldRecord {
 //                        updateRecord(record, OldRecord)
                         print("Already Have")
                     } else {
-                        if let title = record.title {
+                        if let _ = record.title {
                             saveNewRecord(record)
                         }
                     }
@@ -69,7 +69,7 @@ class DiaryCloud: NSObject {
                 
                 record.id = randomStringWithLength(32) as String
                 
-                if  let title = record.title {
+                if  let _ = record.title {
                     saveNewRecord(record)
                 }
 
@@ -85,7 +85,7 @@ class DiaryCloud: NSObject {
             if let records = records {
                 for fetchRecord in records {
                     if let diaryID = fetchRecord.objectForKey("id") as? String {
-                        if let diary = fetchDiaryByID(diaryID) {
+                        if let _ = fetchDiaryByID(diaryID) {
 //                            println("No need to do thing")
                         } else {
                             print("Create Diary With CKRecords")
