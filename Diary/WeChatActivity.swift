@@ -8,11 +8,11 @@ struct ChinaSocialNetwork {
         static let appID = "wx1f683ed6cec8c820"
         
         static let sessionType = "com.Catch-Inc.Diary.WeChat.Session"
-        static let sessionTitle = NSLocalizedString("WeChat Session", comment: "")
+        static let sessionTitle = "微信"
         static let sessionImage = UIImage(named: "wechat_session")!
         
         static let timelineType = "com.Catch-Inc.Diary.WeChat.Timeline"
-        static let timelineTitle = NSLocalizedString("WeChat Timeline", comment: "")
+        static let timelineTitle = "朋友圈"
         static let timelineImage = UIImage(named: "wechat_timeline")!
     }
 }
