@@ -50,13 +50,13 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         self.view.addSubview(pullView)
         
-        var mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: "hideDiary")
+        let mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: "hideDiary")
         mDoubleUpRecognizer.delegate = self
         mDoubleUpRecognizer.numberOfTapsRequired = 2
         self.webview.addGestureRecognizer(mDoubleUpRecognizer)
         
         
-        var mTapUpRecognizer = UITapGestureRecognizer(target: self, action: "showButtons")
+        let mTapUpRecognizer = UITapGestureRecognizer(target: self, action: "showButtons")
         mTapUpRecognizer.delegate = self
         mTapUpRecognizer.numberOfTapsRequired = 1
         self.webview.addGestureRecognizer(mTapUpRecognizer)
@@ -115,7 +115,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
             
         }else {
             tutShowed = true
-            var newView = getTutView()
+            let newView = getTutView()
             self.view.addSubview(newView)
             
             UIView.animateWithDuration(1.0, delay: 1.0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
@@ -137,11 +137,11 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
     
     func reloadWebView() {
         
-        var timeString = "\(numberToChinese(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: diary.created_at)))年 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: diary.created_at)))月 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: diary.created_at)))日"
+        let timeString = "\(numberToChinese(NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: diary.created_at)))年 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: diary.created_at)))月 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Day, fromDate: diary.created_at)))日"
         
         //WebView method
         
-        var newDiaryString = diary.content.stringByReplacingOccurrencesOfString("\n", withString: "<br>", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let newDiaryString = diary.content.stringByReplacingOccurrencesOfString("\n", withString: "<br>", options: NSStringCompareOptions.LiteralSearch, range: nil)
         
         var title = ""
         var contentWidthOffset = 140
@@ -153,7 +153,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         }
         
         if let titleStr = diary?.title {
-            var parsedTime = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: diary.created_at))) 日"
+            let parsedTime = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Day, fromDate: diary.created_at))) 日"
             if titleStr != parsedTime {
                 title = titleStr
                 contentWidthOffset = 205
@@ -168,15 +168,14 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
             }
         }
         
-        var stampPath = NSURL(fileURLWithPath: baseCoverURL())
         var minWidth = self.view.frame.size.width - CGFloat(contentWidthOffset)
         
-        var fontStr = defaultFont
-        var coverImage = ""
+        let fontStr = defaultFont
+        let coverImage = ""
         
-        var bodyPadding = 0
+        let bodyPadding = 0
         
-        var containerCSS = " padding:25px 10px 25px 25px; "
+        let containerCSS = " padding:25px 10px 25px 25px; "
         
 //        if let coverURL = diary.coverCloudKey {
 //            bodyPadding = 35
@@ -208,7 +207,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         let contentHTML = "<div class='container'>\(title)<div class='content'><p>\(newDiaryString)</p></div>"
         
-        webview.loadHTMLString("\(headertags)\(bodyCSS) \(allCSS) \(contentCSS) \(titleCSS) \(extraCSS) .container { \(containerCSS) } \(stampCSS) \(coverCSS) </style></head> <body>\(coverImage) \(contentHTML) \(extraHTML)</body></html>", baseURL: stampPath)
+        webview.loadHTMLString("\(headertags)\(bodyCSS) \(allCSS) \(contentCSS) \(titleCSS) \(extraCSS) .container { \(containerCSS) } \(stampCSS) \(coverCSS) </style></head> <body>\(coverImage) \(contentHTML) \(extraHTML)</body></html>", baseURL: nil)
     }
     
     func showButtons() {
@@ -233,11 +232,11 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
     }
     
     func editDiary() {
-        var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
+        let composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
         
         if let diary = diary {
             
-            println("Find \(diary.created_at)")
+            print("Find \(diary.created_at)")
             
             composeViewController.diary = diary
         }
@@ -249,7 +248,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         let offset = self.webview.scrollView.contentOffset.x
         
-        var image =  webview.captureView()
+        let image =  webview.captureView()
         
 //        image = image.drawImage(UIImage(named: "Fingerprint")!, frame: CGRect(x: image.size.width/2.0 - 25.0, y: image.size.height - 75.0, width: 50.0, height: 50.0))
         
@@ -257,7 +256,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
 
         var sharingItems = [AnyObject]()
         sharingItems.append(image)
-        println("Do Share")
+        print("Do Share")
         
         let activityViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.saveButton
@@ -270,19 +269,22 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         managedContext.deleteObject(diary)
         if let DiaryID = diary.id {
             
-            fetchCloudRecordWithID(DiaryID, { (record) -> Void in
+            fetchCloudRecordWithID(DiaryID, complete: { (record) -> Void in
                 if let record = record {
                     privateDB.deleteRecordWithID(record.recordID, completionHandler: { (recordID, error) -> Void in
                         if let error = error {
-                            println("\(error.description)")
+                            print("\(error.description)")
                         } else {
-                            println("delete \(recordID)")
+                            print("delete \(recordID)")
                         }
                     })
                 }
             })
         }
-        managedContext.save(nil)
+        do {
+            try managedContext.save()
+        } catch _ {
+        }
         hideDiary()
     }
     

@@ -19,7 +19,6 @@
 		0A2ECFDD1AEC39BC00398EBE /* DiaryBaseCollecitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2ECFDC1AEC39BC00398EBE /* DiaryBaseCollecitionViewController.swift */; };
 		0A3572E11A9467E70037C6A0 /* DiaryAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3572E01A9467E70037C6A0 /* DiaryAnimator.swift */; };
 		0A3572E31A9471750037C6A0 /* DiaryYearCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3572E21A9471750037C6A0 /* DiaryYearCollectionViewController.swift */; };
-		0A3AF6051B0E66A300CC1C0D /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3AF6041B0E66A300CC1C0D /* Fabric.framework */; };
 		0A5819701AEC2DB3005AA5C8 /* zh2HK.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0A58196F1AEC2DB3005AA5C8 /* zh2HK.txt */; };
 		0A5E38111AA9E9B000935E29 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5E38101AA9E9B000935E29 /* DiaryViewController.swift */; };
 		0A5E38151AA9EB0500935E29 /* DiaryVerticalTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */; };
@@ -40,7 +39,6 @@
 		0AE202511A8B0D280012AAED /* DiaryHomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202501A8B0D280012AAED /* DiaryHomeCollectionViewController.swift */; };
 		0AE202561A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202551A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift */; };
 		0AE202591A8B0E420012AAED /* DiaryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202581A8B0E420012AAED /* DiaryHelper.swift */; };
-		0AEDA8521AC2CE9A00F2DC56 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEDA8511AC2CE9A00F2DC56 /* Crashlytics.framework */; };
 		0AEDA8541AC2D50E00F2DC56 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEDA8531AC2D50E00F2DC56 /* CloudKit.framework */; };
 		972426D91D564C76D413AB6C /* Pods_Diary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37DBC7CC24E2BB3323B79181 /* Pods_Diary.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
@@ -74,7 +72,6 @@
 		0A3504B31ADE5CBA00728264 /* Wyue-GutiFangsong-NC_deliverable.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Wyue-GutiFangsong-NC_deliverable.otf"; sourceTree = "<group>"; };
 		0A3572E01A9467E70037C6A0 /* DiaryAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryAnimator.swift; path = Animator/DiaryAnimator.swift; sourceTree = "<group>"; };
 		0A3572E21A9471750037C6A0 /* DiaryYearCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryYearCollectionViewController.swift; path = Controllers/Year/DiaryYearCollectionViewController.swift; sourceTree = "<group>"; };
-		0A3AF6041B0E66A300CC1C0D /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		0A58196F1AEC2DB3005AA5C8 /* zh2HK.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zh2HK.txt; sourceTree = "<group>"; };
 		0A5E38101AA9E9B000935E29 /* DiaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewController.swift; path = Controllers/Day/DiaryViewController.swift; sourceTree = "<group>"; };
 		0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryVerticalTextView.swift; path = Helper/DiaryVerticalTextView.swift; sourceTree = "<group>"; };
@@ -102,7 +99,6 @@
 		0AE202501A8B0D280012AAED /* DiaryHomeCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryHomeCollectionViewController.swift; path = Controllers/Home/DiaryHomeCollectionViewController.swift; sourceTree = "<group>"; };
 		0AE202551A8B0DCA0012AAED /* HomeYearCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeYearCollectionViewCell.swift; path = Cell/YearCell/HomeYearCollectionViewCell.swift; sourceTree = "<group>"; };
 		0AE202581A8B0E420012AAED /* DiaryHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryHelper.swift; path = Helper/DiaryHelper.swift; sourceTree = "<group>"; };
-		0AEDA8511AC2CE9A00F2DC56 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		0AEDA8531AC2D50E00F2DC56 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		0AF0E4271A903D6C0027592E /* VerticalTextPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = VerticalTextPlayground.playground; path = Playgrounds/VerticalTextPlayground.playground; sourceTree = "<group>"; };
 		18506CDA6A8669C3DB90CABE /* Pods-Diary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diary.release.xcconfig"; path = "Pods/Target Support Files/Pods-Diary/Pods-Diary.release.xcconfig"; sourceTree = "<group>"; };
@@ -116,9 +112,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AEDA8541AC2D50E00F2DC56 /* CloudKit.framework in Frameworks */,
-				0AEDA8521AC2CE9A00F2DC56 /* Crashlytics.framework in Frameworks */,
 				972426D91D564C76D413AB6C /* Pods_Diary.framework in Frameworks */,
-				0A3AF6051B0E66A300CC1C0D /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,8 +221,6 @@
 		0AE2021F1A8B0B310012AAED = {
 			isa = PBXGroup;
 			children = (
-				0A3AF6041B0E66A300CC1C0D /* Fabric.framework */,
-				0AEDA8511AC2CE9A00F2DC56 /* Crashlytics.framework */,
 				0AE2022A1A8B0B310012AAED /* Diary */,
 				0AE202431A8B0B310012AAED /* DiaryTests */,
 				0AE202291A8B0B310012AAED /* Products */,
@@ -415,7 +407,9 @@
 		0AE202201A8B0B310012AAED /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = kevinzhow;
 				TargetAttributes = {
 					0AE202271A8B0B310012AAED = {
@@ -490,7 +484,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run de004490005a062fa95a4d5676a7edbfbe42c582 e6c5af0aba758898c348300b43fb0df9f786dd1222c7b68a38eb37743eb450e2";
+			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" de004490005a062fa95a4d5676a7edbfbe42c582 e6c5af0aba758898c348300b43fb0df9f786dd1222c7b68a38eb37743eb450e2";
 		};
 		428127113080257B78162935 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -634,6 +628,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -711,6 +706,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "kevinzhow.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Diary/Diary-Bridging-Header.h";
@@ -737,6 +733,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "kevinzhow.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Diary/Diary-Bridging-Header.h";
@@ -758,6 +755,7 @@
 				);
 				INFOPLIST_FILE = DiaryTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "kevinzhow.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Diary.app/Diary";
 			};
@@ -773,6 +771,7 @@
 				);
 				INFOPLIST_FILE = DiaryTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "kevinzhow.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Diary.app/Diary";
 			};

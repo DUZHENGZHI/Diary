@@ -15,9 +15,9 @@ let privateDB = container.privateCloudDatabase
 
 func saveNewRecord(diary: Diary) {
     
-    var newDiary = CKRecord(recordType: "Diary")
-    println("Add New Diary")
-    updateRecord(diary, newDiary)
+    let newDiary = CKRecord(recordType: "Diary")
+    print("Add New Diary")
+    updateRecord(diary, record: newDiary)
 }
 
 func updateRecord(diary: Diary, record: CKRecord) {
@@ -38,10 +38,10 @@ func updateRecord(diary: Diary, record: CKRecord) {
     
     privateDB.saveRecord(record, completionHandler: { (newDiary, error) -> Void in
         
-        println("Diary Updated")
+        print("Diary Updated")
         
         if let error = error {
-            println("error \(error.description)")
+            print("error \(error.description)")
         }
         
     })
@@ -49,31 +49,24 @@ func updateRecord(diary: Diary, record: CKRecord) {
 
 func fetchCloudRecordWithID(recordID: String , complete: (CKRecord?) -> Void) {
     
-    var predicate = NSPredicate(format: "id == %@", recordID)
+    let predicate = NSPredicate(format: "id == %@", recordID)
     
     let query = CKQuery(recordType: "Diary",
         predicate: predicate )
     
     privateDB.performQuery(query, inZoneWithID: nil) {
         results, error in
-        
-        if error != nil {
-            println(error.description)
-            complete(nil)
+        if let results = results, record = results.first{
+            complete(record)
         } else {
-            if let record = results.first as? CKRecord {
-                complete(record)
-            } else {
-                complete(nil)
-            }
-
+            complete(nil)
         }
     }
 }
 
 func fetchCloudRecords(complete: ([CKRecord]?) -> Void) {
     
-        var predicate = NSPredicate(format: "TRUEPREDICATE", argumentArray: nil)
+        let predicate = NSPredicate(format: "TRUEPREDICATE", argumentArray: nil)
     
         let query = CKQuery(recordType: "Diary",
             predicate: predicate )
@@ -81,18 +74,10 @@ func fetchCloudRecords(complete: ([CKRecord]?) -> Void) {
         privateDB.performQuery(query, inZoneWithID: nil) {
             results, error in
             
-            if error != nil {
-                println(error.description)
-                complete(nil)
+            if let results = results{
+                complete(results)
             } else {
-                println("Total Have \(results.count) in Cloud")
-                
-                if let records = results as? [CKRecord] {
-                    complete(records)
-                } else {
-                    complete(nil)
-                }
-
+                complete(nil)
             }
         }
 }

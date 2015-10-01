@@ -68,7 +68,7 @@ class DiaryVerticalTextView: UIView {
         var path = CGPathCreateMutable()
         var pathSize = rect.size
         
-        println("draw text size \(rect.size)")
+        print("draw text size \(rect.size)")
         
         var reversingDiff = 0.0 as CGFloat
         
@@ -83,9 +83,9 @@ class DiaryVerticalTextView: UIView {
             String(kCTFrameProgressionAttributeName): NSNumber(unsignedInt: CTFrameProgression.RightToLeft.rawValue)
         ]
         
-        var frame = CTFramesetterCreateFrame(framesetter, fitRange, path, frameDict)
+        let frame = CTFramesetterCreateFrame(framesetter, fitRange, path, frameDict)
         
-        var context = UIGraphicsGetCurrentContext()
+        let context = UIGraphicsGetCurrentContext()
         
         CGContextSaveGState(context)
         
@@ -93,22 +93,22 @@ class DiaryVerticalTextView: UIView {
         CGContextTranslateCTM(context, 0, pathSize.height)
         CGContextScaleCTM(context, 1.0, -1.0)
         
-        CTFrameDraw(frame, context)
+        CTFrameDraw(frame, context!)
         
-        var factRange = CTFrameGetVisibleStringRange(frame)
+//        let factRange = CTFrameGetVisibleStringRange(frame)
         
         CGContextRestoreGState(context)
         
     }
     
     
-    func getAttributedStringSourceWithString(stringRef:CFString, font:CTFont) -> [NSObject: AnyObject]
+    func getAttributedStringSourceWithString(stringRef:CFString, font:CTFont) -> [String: AnyObject]
     {
 
 
-        var glyphInfo = CTGlyphInfoCreateWithCharacterIdentifier(CGFontIndex.min,CTCharacterCollection.CharacterCollectionAdobeCNS1, stringRef as CFString)
+        let glyphInfo = CTGlyphInfoCreateWithCharacterIdentifier(CGFontIndex.min, CTCharacterCollection.AdobeCNS1, stringRef as CFString)
 
-        var alignment = CTTextAlignment.TextAlignmentJustified
+        var alignment = CTTextAlignment.Justified
         var lineBreakMode = CTLineBreakMode.ByWordWrapping
         var lineSpace = self.lineSpace
         var paragraphSpace = titleForTextSpace
@@ -124,12 +124,12 @@ class DiaryVerticalTextView: UIView {
         
         let MaximumLineSpacingSet = CTParagraphStyleSetting(spec: CTParagraphStyleSpecifier.MaximumLineSpacing, valueSize: Int(sizeof(CGFloat)), value: &lineSpace)
         
-        var paragraphStypeSettings = [alignmentSet, LineBreakModeSet, ParagraphSpacingSet, MinimumLineSpacingSet, MaximumLineSpacingSet]
+        let paragraphStypeSettings = [alignmentSet, LineBreakModeSet, ParagraphSpacingSet, MinimumLineSpacingSet, MaximumLineSpacingSet]
         
-        var paragraphStyle = CTParagraphStyleCreate(paragraphStypeSettings, Int(paragraphStypeSettings.count));
+        let paragraphStyle = CTParagraphStyleCreate(paragraphStypeSettings, Int(paragraphStypeSettings.count));
     
 
-        var attrDict: [NSString: AnyObject] = [
+        let attrDict: [String: AnyObject] = [
             String(kCTFontAttributeName)           : font,
             String(kCTGlyphInfoAttributeName)      : glyphInfo,
             String(kCTParagraphStyleAttributeName) : paragraphStyle,
@@ -143,18 +143,18 @@ class DiaryVerticalTextView: UIView {
     }
     
     func linesSizeWithString(aString:String, font:UIFont!) -> CGSize{
-        var font = CTFontCreateWithName(font.fontName, font.pointSize, nil)
-        var textAttrDict = getAttributedStringSourceWithString(aString, font:font)
-        var textAttrString  = NSMutableAttributedString(string: aString, attributes: textAttrDict)
+        let font = CTFontCreateWithName(font.fontName, font.pointSize, nil)
+        let textAttrDict = getAttributedStringSourceWithString(aString, font:font)
+        let textAttrString  = NSMutableAttributedString(string: aString, attributes: textAttrDict)
         
-        var framesetter = CTFramesetterCreateWithAttributedString(textAttrString)
-        var constraints = CGSizeMake(self.bounds.size.height, CGFloat.max)
-        var size = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, 0), nil, constraints, nil)
+        let framesetter = CTFramesetterCreateWithAttributedString(textAttrString)
+        let constraints = CGSizeMake(self.bounds.size.height, CGFloat.max)
+        let size = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, 0), nil, constraints, nil)
         return size
     }
     
     func linesSizeWithTextString(aString: String) -> CGSize {
-        var aFont = UIFont(name: fontName as String, size: fontSize)
+        let aFont = UIFont(name: fontName as String, size: fontSize)
         return linesSizeWithString(aString, font: aFont)
     }
     

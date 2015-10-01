@@ -58,7 +58,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
         composeView.delegate = self
         composeView.textContainerInset = UIEdgeInsetsMake(contentMargin, contentMargin, contentMargin, contentMargin)
         
-        println("\(DiaryFont.fontName)")
+        print("\(DiaryFont.fontName)")
 
         //Add LocationTextView
         locationTextView = UITextView(frame: CGRectMake(0, composeView.frame.size.height - 30.0, screenRect.width - 60.0, 30.0))
@@ -86,11 +86,11 @@ class DiaryComposeViewController: DiaryBaseViewController{
             if let title = diary.title {
                 titleTextView.text = title
             }else{
-                titleTextView.text = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: diary.created_at))) 日"
+                titleTextView.text = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Day, fromDate: diary.created_at))) 日"
             }
         }else{
-            var date = NSDate()
-            titleTextView.text = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: date))) 日"
+            let date = NSDate()
+            titleTextView.text = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Day, fromDate: date))) 日"
         }
 
         composeView.becomeFirstResponder()
@@ -147,7 +147,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
         if let address = notification.object as? String {
 
-            println("Author at \(address)")
+            print("Author at \(address)")
 
             if let lastLocation = diary?.location {
                 locationTextView.text = diary?.location
@@ -169,7 +169,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
     }
 
     func finishCompose(button: UIButton) {
-        print("Finish compose \n")
+        print("Finish compose \n", terminator: "")
 
         self.composeView.endEditing(true)
         
@@ -187,9 +187,9 @@ class DiaryComposeViewController: DiaryBaseViewController{
                 
                 if let DiaryID = diary.id {
                     
-                    fetchCloudRecordWithID(DiaryID, { (record) -> Void in
+                    fetchCloudRecordWithID(DiaryID, complete: { (record) -> Void in
                         if let record = record {
-                            updateRecord(diary, record)
+                            updateRecord(diary, record: record)
                         }
                     })
                 }
@@ -219,8 +219,11 @@ class DiaryComposeViewController: DiaryBaseViewController{
             }
 
             var error: NSError?
-            if !managedContext.save(&error) {
-                println("Could not save \(error), \(error?.userInfo)")
+            do {
+                try managedContext.save()
+            } catch var error1 as NSError {
+                error = error1
+                print("Could not save \(error), \(error?.userInfo)")
             }
 
         }
@@ -239,7 +242,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
     func updateTextViewSizeForKeyboardHeight(keyboardHeight: CGFloat) {
 
-        var newKeyboardHeight = keyboardHeight
+        let newKeyboardHeight = keyboardHeight
 
         UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
             {
@@ -310,27 +313,6 @@ extension DiaryComposeViewController: UITextViewDelegate, UINavigationController
         
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
-        
-        println("Image loaded")
-        
-        self.imageView.image = image
-        
-        self.imageView.hidden = false
-        
-        var ramdomString = randomStringWithLength(32)
-        
-        diaryKeyString = ramdomString as String
-        
-        var data = UIImageJPEGRepresentation(image, 0.9)
-        
-        var imagePath = coverPathWithKey(diaryKeyString!)
-        
-        data.writeToFile(imagePath, atomically: true)
-        
-        imagePicker.dismissViewControllerAnimated(true, completion: nil)
-
-    }
     
 //    func textViewDidChange(textView: UITextView) {
 //        

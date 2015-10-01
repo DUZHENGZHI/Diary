@@ -12,7 +12,7 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     var operation:UINavigationControllerOperation!
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
+    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 0.4
     }
     
@@ -32,7 +32,7 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             toView.transform = CGAffineTransformMakeScale(0.3,0.3);
         }
 
-        containerView.insertSubview(toView, aboveSubview: fromView)
+        containerView!.insertSubview(toView, aboveSubview: fromView)
 
         UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
             {

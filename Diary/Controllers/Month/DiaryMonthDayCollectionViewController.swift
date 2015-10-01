@@ -43,7 +43,7 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController 
         
         updateFetch()
         
-        var monthLayout = DiaryLayout()
+        let monthLayout = DiaryLayout()
         
         monthLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
 
@@ -58,7 +58,7 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController 
         //2
         let fetchRequest = NSFetchRequest(entityName:"Diary")
         
-        println("year = \(year) AND month = \(month)")
+        print("year = \(year) AND month = \(month)")
         
         fetchRequest.predicate = NSPredicate(format: "year = \(year) AND month = \(month)")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
@@ -69,20 +69,21 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController 
         
         fetchedResultsController.delegate = self
         //3
-        var error: NSError? = nil
-        if (!fetchedResultsController.performFetch(&error)){
-            println("Error: \(error?.localizedDescription)")
+        
+        do {
+            try fetchedResultsController.performFetch()
+            refetch()
+            
+            reloadCollectionView()
+        } catch _ {
+            
         }
-        
-        refetch()
-        
-        reloadCollectionView()
     }
     
     func refetch() {
-        var fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
+        let fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
         diarys = fetchedResults
-        print("This month have \(diarys.count) \n")
+        print("This month have \(diarys.count) \n", terminator: "")
     }
     
     func setUpUI(){
@@ -95,7 +96,7 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController 
         
         self.view.addSubview(yearLabel)
         
-        var mTapUpRecognizer = UITapGestureRecognizer(target: self, action: "backToYear")
+        let mTapUpRecognizer = UITapGestureRecognizer(target: self, action: "backToYear")
         mTapUpRecognizer.numberOfTapsRequired = 1
         yearLabel.addGestureRecognizer(mTapUpRecognizer)
         
@@ -118,7 +119,7 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController 
         monthLabel.updateLabelColor(DiaryRed)
         monthLabel.userInteractionEnabled = true
         
-        var mmTapUpRecognizer = UITapGestureRecognizer(target: self, action: "backToYear")
+        let mmTapUpRecognizer = UITapGestureRecognizer(target: self, action: "backToYear")
         mmTapUpRecognizer.numberOfTapsRequired = 1
         monthLabel.addGestureRecognizer(mmTapUpRecognizer)
         
@@ -158,7 +159,7 @@ class DiaryMonthDayCollectionViewController: DiaryBaseCollecitionViewController 
     
     func newCompose() {
         
-        var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
+        let composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
         
         self.presentViewController(composeViewController, animated: true, completion: nil)
         
@@ -182,13 +183,13 @@ extension DiaryMonthDayCollectionViewController: UICollectionViewDelegateFlowLay
         
         // Configure the cell
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseMonthDayCellIdentifier, forIndexPath: indexPath) as! DiaryCollectionViewCell
-        var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
+        let diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
         // Configure the cell
         
         if let title = diary.title {
             cell.labelText = title
         }else{
-            cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitDay, fromDate: diary.created_at))) 日"
+            cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Day, fromDate: diary.created_at))) 日"
         }
         
         return cell
@@ -196,7 +197,7 @@ extension DiaryMonthDayCollectionViewController: UICollectionViewDelegateFlowLay
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         
-        var numberOfCells:Int = self.diarys.count
+        let numberOfCells:Int = self.diarys.count
         
         var edgeInsets = collectionViewLeftInsets + (collectionViewWidth - (CGFloat(numberOfCells)*itemWidth))/2.0
         
@@ -212,9 +213,9 @@ extension DiaryMonthDayCollectionViewController: UICollectionViewDelegateFlowLay
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryViewController") as! DiaryViewController
+        let dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryViewController") as! DiaryViewController
         
-        var diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
+        let diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
         
         dvc.diary = diary
         
@@ -224,7 +225,7 @@ extension DiaryMonthDayCollectionViewController: UICollectionViewDelegateFlowLay
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
-        println("Diarys changed")
+        print("Diarys changed")
         
         refetch()
         
@@ -234,12 +235,13 @@ extension DiaryMonthDayCollectionViewController: UICollectionViewDelegateFlowLay
         scrollToCollectionViewRight()
     }
     
+    
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         
-        var length = scrollView.contentSize.width - collectionViewWidth - collectionViewLeftInsets*2
-        var offset = scrollView.contentOffset.x
+        let length = scrollView.contentSize.width - collectionViewWidth - collectionViewLeftInsets*2
+        let offset = scrollView.contentOffset.x
         
-        var progess = offset/length
+        let progess = offset/length
         
         diaryProgressBar.progress = progess
 

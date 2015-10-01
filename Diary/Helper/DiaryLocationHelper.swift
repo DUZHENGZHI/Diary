@@ -23,29 +23,31 @@ class DiaryLocationHelper: NSObject, CLLocationManagerDelegate {
         locationManager.pausesLocationUpdatesAutomatically = true
         locationManager.headingFilter = kCLHeadingFilterNone
         locationManager.requestWhenInUseAuthorization()
-        println("Location Right")
+        print("Location Right")
         if (CLLocationManager.locationServicesEnabled()){
             locationManager.startUpdatingLocation()
         }
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         
         geocoder.reverseGeocodeLocation(newLocation, completionHandler: { (placemarks, error) in
             
-            if (error != nil) {println("reverse geodcode fail: \(error.localizedDescription)")}
+            if let error = error {
+                print("reverse geodcode fail: \(error.localizedDescription)")
+            }
             
-            if let pm = placemarks as? [CLPlacemark] {
+            if let pm = placemarks {
                 if pm.count > 0 {
                     
-                    var placemark = pm.first
+                    let placemark = pm.first
                     
                     self.address = placemark?.locality
                     
                     NSNotificationCenter.defaultCenter().postNotificationName("DiaryLocationUpdated", object: self.address)
                 }
             }
-
+            
         })
     }
 }

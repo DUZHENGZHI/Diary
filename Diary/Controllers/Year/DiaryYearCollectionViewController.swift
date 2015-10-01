@@ -43,7 +43,7 @@ class DiaryYearCollectionViewController: DiaryBaseCollecitionViewController{
         fetchedResultsController.delegate = self
 
         refetch()
-        var yearLayout = DiaryLayout()
+        let yearLayout = DiaryLayout()
         
         yearLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         self.collectionView?.setCollectionViewLayout(yearLayout, animated: false)
@@ -52,19 +52,22 @@ class DiaryYearCollectionViewController: DiaryBaseCollecitionViewController{
     }
     
     func refetch() {
-        var error: NSError? = nil
-        if (!fetchedResultsController.performFetch(&error)){
-            println("Error: \(error?.localizedDescription)")
-        }else{
+        
+        do {
+            try fetchedResultsController.performFetch()
             
-            var fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
+            let fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
             if (fetchedResults.count == 0){
                 NSLog("Present empty year")
             }else{
                 
                 diarys = fetchedResults
             }
+            
+        } catch _ {
+            
         }
+
     }
     
     func setupUI() {
@@ -77,7 +80,7 @@ class DiaryYearCollectionViewController: DiaryBaseCollecitionViewController{
         
         yearLabel.userInteractionEnabled = true
         
-        var mTapUpRecognizer = UITapGestureRecognizer(target: self, action: "backToHome")
+        let mTapUpRecognizer = UITapGestureRecognizer(target: self, action: "backToHome")
         mTapUpRecognizer.numberOfTapsRequired = 1
         yearLabel.addGestureRecognizer(mTapUpRecognizer)
         
@@ -108,12 +111,12 @@ class DiaryYearCollectionViewController: DiaryBaseCollecitionViewController{
     
     func newCompose() {
 
-        var diary = findLastDayDiary()
+        let diary = findLastDayDiary()
         
-        var composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
+        let composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
         
         if (diary != nil){
-            println("Find \(diary?.created_at)")
+            print("Find \(diary?.created_at)")
             composeViewController.diary = diary
         }
         
@@ -159,12 +162,12 @@ extension DiaryYearCollectionViewController: UICollectionViewDelegateFlowLayout,
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseYearIdentifier, forIndexPath: indexPath) as! DiaryCollectionViewCell
         if fetchedResultsController.sections?.count == 0 {
             
-            cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: NSDate()))) 月"
+            cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: NSDate()))) 月"
             
         }else{
             
-            let sectionInfo = fetchedResultsController.sections![indexPath.row] as! NSFetchedResultsSectionInfo
-            var month = sectionInfo.name?.toInt()
+            let sectionInfo = fetchedResultsController.sections![indexPath.row] 
+            let month = Int(sectionInfo.name)
             cell.labelText = "\(numberToChineseWithUnit(month!)) 月"
         }
         
@@ -174,7 +177,7 @@ extension DiaryYearCollectionViewController: UICollectionViewDelegateFlowLayout,
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         
-        var numberOfCells:Int = fetchedResultsController.sections!.count > 0 ? fetchedResultsController.sections!.count : 1
+        let numberOfCells:Int = fetchedResultsController.sections!.count > 0 ? fetchedResultsController.sections!.count : 1
         
         var edgeInsets = collectionViewLeftInsets + (collectionViewWidth - (CGFloat(numberOfCells)*itemWidth))/2.0
         
@@ -184,7 +187,7 @@ extension DiaryYearCollectionViewController: UICollectionViewDelegateFlowLayout,
             
         }
         
-        println("Left inset is \(edgeInsets)")
+        print("Left inset is \(edgeInsets)")
         
         return UIEdgeInsetsMake(collectionViewTopInset, edgeInsets, collectionViewTopInset, edgeInsets);
     }
@@ -192,13 +195,13 @@ extension DiaryYearCollectionViewController: UICollectionViewDelegateFlowLayout,
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
+        let dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
         
         if fetchedResultsController.sections?.count == 0 {
-            dvc.month = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: NSDate())
+            dvc.month = NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: NSDate())
         }else{
-            let sectionInfo = fetchedResultsController.sections![indexPath.row] as! NSFetchedResultsSectionInfo
-            var month = sectionInfo.name?.toInt()
+            let sectionInfo = fetchedResultsController.sections![indexPath.row] 
+            let month = Int(sectionInfo.name)
             dvc.month = month!
         }
         dvc.year = year
@@ -211,10 +214,10 @@ extension DiaryYearCollectionViewController: UICollectionViewDelegateFlowLayout,
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         
-        var length = scrollView.contentSize.width - collectionViewWidth
-        var offset = scrollView.contentOffset.x
+        let length = scrollView.contentSize.width - collectionViewWidth
+        let offset = scrollView.contentOffset.x
         
-        var progess = offset/length
+        let progess = offset/length
         
         diaryProgressBar.progress = progess
     }

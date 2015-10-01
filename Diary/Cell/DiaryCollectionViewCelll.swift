@@ -34,28 +34,28 @@ class DiaryCollectionViewCell: UICollectionViewCell {
         self.addSubview(textLabel)
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        var anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
         anim.springBounciness = 10
         anim.springSpeed = 15
         anim.fromValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
         anim.toValue = NSValue(CGPoint: CGPointMake(0.9, 0.9))
         self.layer.pop_addAnimation(anim, forKey: "PopScale")
-        super.touchesBegan(touches as Set<NSObject>, withEvent: event)
+        super.touchesBegan(touches as Set<UITouch>, withEvent: event)
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        var anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
         anim.springBounciness = 10
         anim.springSpeed = 15
         anim.fromValue = NSValue(CGPoint: CGPointMake(0.9, 0.9))
         anim.toValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
         self.layer.pop_addAnimation(anim, forKey: "PopScaleback")
-        super.touchesEnded(touches as Set<NSObject>, withEvent: event)
+        super.touchesEnded(touches as Set<UITouch>, withEvent: event)
     }
     
-    override func touchesCancelled(touches: Set<NSObject>, withEvent event: UIEvent) {
-        var anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        let anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
         anim.springBounciness = 10
         anim.springSpeed = 15
         anim.fromValue = NSValue(CGPoint: CGPointMake(0.9, 0.9))

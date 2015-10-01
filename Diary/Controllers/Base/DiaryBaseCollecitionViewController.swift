@@ -17,13 +17,13 @@ class DiaryBaseCollecitionViewController: UICollectionViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCollectionView", name: "DiaryChangeFont", object: nil)
         
-        var mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: "popBack")
+        let mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: "popBack")
         
         mDoubleUpRecognizer.numberOfTapsRequired = 2
         
         self.collectionView?.addGestureRecognizer(mDoubleUpRecognizer)
         
-        fingerPrintButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        fingerPrintButton = UIButton(type: UIButtonType.Custom)
         fingerPrintButton.frame = CGRect(x: 15, y: 15, width: 20, height: 20)
         fingerPrintButton.setImage(UIImage(named: "Fingerprint"), forState: UIControlState.Normal)
         
@@ -36,7 +36,7 @@ class DiaryBaseCollecitionViewController: UICollectionViewController {
     }
     
     func reloadCollectionView() {
-        println("reloadData")
+        print("reloadData")
         self.collectionView?.reloadData()
     }
     
@@ -45,27 +45,27 @@ class DiaryBaseCollecitionViewController: UICollectionViewController {
     }
     
     
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
         if motion == UIEventSubtype.MotionShake {
-            println("Device Shaked")
+            print("Device Shaked")
             showAlert()
         }
     }
     
     func showAlert() {
-        var alert = UIAlertController(title: "设置", message: "希望切换字体吗", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "设置", message: "希望切换字体吗", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "算啦", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
         alert.addAction(UIAlertAction(title: "好的", style: .Default, handler: { action in
             switch action.style{
             case .Default:
-                println("default")
+                print("default")
                 toggleFont()
             case .Cancel:
-                println("cancel")
+                print("cancel")
                 
             case .Destructive:
-                println("destructive")
+                print("destructive")
             }
         }))
     }

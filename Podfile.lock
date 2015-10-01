@@ -1,16 +1,24 @@
 PODS:
+  - Crashlytics (3.3.1)
+  - Fabric (1.5.1):
+    - Fabric/Base (= 1.5.1)
+  - Fabric/Base (1.5.1)
   - GVUserDefaults (1.0.1)
   - NCChineseConverter (1.0.3)
   - pop (1.0.7)
 
 DEPENDENCIES:
+  - Crashlytics
+  - Fabric
   - GVUserDefaults
   - NCChineseConverter (~> 1.0)
   - pop
 
 SPEC CHECKSUMS:
+  Crashlytics: 0e61bdda9def51f1e99720f804eebe94865442b2
+  Fabric: 03c3b3fe77e11a2bc31421b989a9c7adaa4779a5
   GVUserDefaults: acb40729f70984008d0650e49d7e422f1bbfa597
   NCChineseConverter: a8928afce6012994d25f2e183233f1111476a4a3
   pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
 
-COCOAPODS: 0.36.4
+COCOAPODS: 0.38.2

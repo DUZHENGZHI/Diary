@@ -30,10 +30,6 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
 
         let fetchRequest = NSFetchRequest(entityName:"Diary")
         
-        let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
-        
-        var error: NSError?
-        
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
@@ -42,7 +38,7 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
         
         refetch()
         
-        var yearLayout = DiaryLayout()
+        let yearLayout = DiaryLayout()
         yearLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         self.collectionView?.setCollectionViewLayout(yearLayout, animated: false)
 
@@ -52,15 +48,12 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
     
     func refetch() {
         
-        var error: NSError? = nil
-        if (!fetchedResultsController.performFetch(&error)){
-            println("Error: \(error?.localizedDescription)")
-        }else{
-            
-            var fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
+        do {
+            try fetchedResultsController.performFetch()
+            let fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
             
             if (fetchedResults.count == 0){
-                println("Present empty year")
+                print("Present empty year")
             }else{
                 
                 if let sectionsCount = fetchedResultsController.sections?.count {
@@ -75,24 +68,26 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
             }
             
             moveToThisMonth()
+        } catch _ {
+            
         }
     }
     
     func moveToThisMonth() {
         
-        var currentMonth = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: NSDate())
+        let currentMonth = NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: NSDate())
         
         if (diarys.count > 0){
-            var diary = diarys.last as! Diary
+            let diary = diarys.last as! Diary
             
             if (currentMonth >  diary.month.integerValue) {
-                var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as! DiaryYearCollectionViewController
+                let dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as! DiaryYearCollectionViewController
                 
                 dvc.year = diary.year.integerValue
                 
                 self.navigationController!.pushViewController(dvc, animated: true)
             }else{
-                var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
+                let dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
                 
                 dvc.year = diary.year.integerValue
                 dvc.month = diary.month.integerValue
@@ -100,17 +95,17 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
                 self.navigationController!.pushViewController(dvc, animated: true)
             }
         }else{
-            var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
-            var filePath = NSBundle.mainBundle().pathForResource("poem", ofType: "json")
-            var JSONData = NSData(contentsOfFile: filePath!, options: NSDataReadingOptions.MappedRead, error: nil)
-            var jsonObject = NSJSONSerialization.JSONObjectWithData(JSONData!, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
+            let dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryMonthDayCollectionViewController") as! DiaryMonthDayCollectionViewController
+            let filePath = NSBundle.mainBundle().pathForResource("poem", ofType: "json")
+            let JSONData = try? NSData(contentsOfFile: filePath!, options: NSDataReadingOptions.MappedRead)
+            let jsonObject = (try! NSJSONSerialization.JSONObjectWithData(JSONData!, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
             var poemsCollection = jsonObject.valueForKey("poems") as! [String: AnyObject]
             
-            var poems = currentLanguage == "ja" ?  (poemsCollection["ja"] as! NSArray) : ( poemsCollection["cn"] as! NSArray)
+            let poems = currentLanguage == "ja" ?  (poemsCollection["ja"] as! NSArray) : ( poemsCollection["cn"] as! NSArray)
             
             for poem in poems{
                 
-                var poem =  poem as! NSDictionary
+                let poem =  poem as! NSDictionary
                 let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
                 
                 let newdiary = Diary(entity: entity!,
@@ -120,7 +115,7 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
                 
                 newdiary.content = poem.valueForKey("content") as! String
                 newdiary.title = poem.valueForKey("title") as? String
-                newdiary.location = poem.valueForKey("location") as! String
+                newdiary.location = poem.valueForKey("location") as? String
                 
                 newdiary.updateTimeWithDate(NSDate())
                 dvc.month = newdiary.month.integerValue
@@ -131,8 +126,11 @@ class DiaryHomeCollectionViewController: DiaryBaseCollecitionViewController {
             self.navigationController!.pushViewController(dvc, animated: true)
             
             var error: NSError?
-            if !managedContext.save(&error) {
-                println("Could not save \(error), \(error?.userInfo)")
+            do {
+                try managedContext.save()
+            } catch let error1 as NSError {
+                error = error1
+                print("Could not save \(error), \(error?.userInfo)")
             }
         }
         
@@ -177,13 +175,12 @@ extension DiaryHomeCollectionViewController: UICollectionViewDelegateFlowLayout,
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! HomeYearCollectionViewCell
         
-        var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: NSDate())
+        let components = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: NSDate())
         var year = components
         if sectionsCount > 0 {
-            if let sectionInfo = fetchedResultsController.sections![indexPath.row] as? NSFetchedResultsSectionInfo {
-                println("Section info \(sectionInfo.name)")
-                year = sectionInfo.name!.toInt()!
-            }
+            let sectionInfo = fetchedResultsController.sections![indexPath.row]
+            print("Section info \(sectionInfo.name)")
+            year = Int(sectionInfo.name)!
         }
         
         cell.textInt = year
@@ -196,7 +193,7 @@ extension DiaryHomeCollectionViewController: UICollectionViewDelegateFlowLayout,
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         
-        var numberOfCells:Int = fetchedResultsController.sections!.count > 0 ? fetchedResultsController.sections!.count : 1
+        let numberOfCells:Int = fetchedResultsController.sections!.count > 0 ? fetchedResultsController.sections!.count : 1
         
         var edgeInsets = collectionViewLeftInsets + (collectionViewWidth - (CGFloat(numberOfCells)*itemWidth))/2.0
         
@@ -213,16 +210,15 @@ extension DiaryHomeCollectionViewController: UICollectionViewDelegateFlowLayout,
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        var dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as! DiaryYearCollectionViewController
+        let dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryYearCollectionViewController") as! DiaryYearCollectionViewController
         
         
-        var components = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: NSDate())
+        let components = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: NSDate())
         var year = components
         if sectionsCount > 0 {
-            if let sectionInfo = fetchedResultsController.sections![indexPath.row] as? NSFetchedResultsSectionInfo {
-                println("Section info \(sectionInfo.name)")
-                year = sectionInfo.name!.toInt()!
-            }
+            let sectionInfo = fetchedResultsController.sections![indexPath.row]
+            print("Section info \(sectionInfo.name)")
+            year = Int(sectionInfo.name)!
         }
         dvc.year = year
         
@@ -232,7 +228,7 @@ extension DiaryHomeCollectionViewController: UICollectionViewDelegateFlowLayout,
     
     func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
-        var animator = DiaryAnimator()
+        let animator = DiaryAnimator()
         animator.operation = operation
         return animator
     }

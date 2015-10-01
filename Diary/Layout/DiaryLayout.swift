@@ -20,13 +20,13 @@ class DiaryLayout: UICollectionViewFlowLayout {
         self.scrollDirection = .Horizontal
     }
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
+    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
-        let layoutAttributes = super.layoutAttributesForElementsInRect(rect) as! [UICollectionViewLayoutAttributes]
+        let layoutAttributes = super.layoutAttributesForElementsInRect(rect)
         let contentOffset = collectionView!.contentOffset
 
         
-        for (index, attributes) in enumerate(layoutAttributes) {
+        for (index, attributes) in layoutAttributes!.enumerate() {
             
             let center = attributes.center
             
@@ -49,7 +49,7 @@ class DiaryLayout: UICollectionViewFlowLayout {
                     var alpha:CGFloat = 0
                     
                     if distanceToCenterPoint < 0 {
-                        var progress = CGFloat(finalDistance/((centerPoint - visiableArea)*2))
+                        let progress = CGFloat(finalDistance/((centerPoint - visiableArea)*2))
                         if progress <= 0.5 {
                             alpha = 1.0
                         } else {

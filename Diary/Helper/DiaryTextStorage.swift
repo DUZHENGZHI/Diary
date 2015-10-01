@@ -15,7 +15,7 @@ class DiaryTextStorage: NSTextStorage {
         return backingStore.string
     }
     
-    override func attributesAtIndex(index: Int, effectiveRange range: NSRangePointer) -> [NSObject : AnyObject] {
+    override func attributesAtIndex(index: Int, effectiveRange range: NSRangePointer) -> [String : AnyObject] {
         return backingStore.attributesAtIndex(index, effectiveRange: range)
     }
     
@@ -24,11 +24,11 @@ class DiaryTextStorage: NSTextStorage {
         
         beginEditing()
         backingStore.replaceCharactersInRange(range, withString:str)
-        edited(.EditedCharacters | .EditedAttributes, range: range, changeInLength: (str as NSString).length - range.length)
+        edited([.EditedCharacters, .EditedAttributes], range: range, changeInLength: (str as NSString).length - range.length)
         endEditing()
     }
     
-    override func setAttributes(attrs: [NSObject : AnyObject]!, range: NSRange) {
+    override func setAttributes(attrs: [String : AnyObject]!, range: NSRange) {
 //        println("setAttributes:\(attrs) range:\(range)")
         
         beginEditing()
@@ -38,10 +38,10 @@ class DiaryTextStorage: NSTextStorage {
     }
     
     override func processEditing() {
-        var paragraphStyle = NSMutableParagraphStyle()
+        let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 8
 
-        var textAttributes: [NSObject : AnyObject]! = [NSFontAttributeName: DiaryFont, NSVerticalGlyphFormAttributeName: 1, NSParagraphStyleAttributeName: paragraphStyle, NSKernAttributeName: 3.0]
+        let textAttributes: [String : AnyObject]! = [NSFontAttributeName: DiaryFont, NSVerticalGlyphFormAttributeName: 1, NSParagraphStyleAttributeName: paragraphStyle, NSKernAttributeName: 3.0]
         
         
         self.addAttributes(textAttributes, range: self.editedRange)

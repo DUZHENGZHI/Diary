@@ -21,10 +21,6 @@ class DiaryCloud: NSObject {
         
         let fetchRequest = NSFetchRequest(entityName:"Diary")
         
-        let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
-        
-        var error: NSError?
-        
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
@@ -37,37 +33,32 @@ class DiaryCloud: NSObject {
     
     func startFetch() {
         
-        var error: NSError? = nil
-        if (!fetchedResultsController.performFetch(&error)){
-            println("Error: \(error?.localizedDescription)")
-        }else{
-            
-            var fetchedResults = fetchedResultsController.fetchedObjects as! [Diary]
-            
-            
-            println("All Diary is \(fetchedResults.count)")
-            
+        do {
+            try fetchedResultsController.performFetch()
+            let fetchedResults = fetchedResultsController.fetchedObjects as! [Diary]
+            print("All Diary is \(fetchedResults.count)")
             startSync()
-
+        } catch _ {
+            
         }
     }
     
     func startSync() {
         
-        println("New sycn")
+        print("New sycn")
         
-        var allRecords  = fetchedResultsController.fetchedObjects as! [Diary]
+        let allRecords  = fetchedResultsController.fetchedObjects as! [Diary]
         
         for record in allRecords {
             if let recordID = record.id {
                 
-                fetchCloudRecordWithID(recordID, { (OldRecord) -> Void in
+                fetchCloudRecordWithID(recordID, complete: { (OldRecord) -> Void in
                     
                     if let OldRecord = OldRecord {
 //                        updateRecord(record, OldRecord)
-                        println("Already Have")
+                        print("Already Have")
                     } else {
-                        if  let title = record.title {
+                        if let title = record.title {
                             saveNewRecord(record)
                         }
                     }
@@ -85,7 +76,10 @@ class DiaryCloud: NSObject {
             }
         }
         
-        managedContext.save(nil)
+        do {
+            try managedContext.save()
+        } catch _ {
+        }
         
         fetchCloudRecords { (records) -> Void in
             if let records = records {
@@ -94,7 +88,7 @@ class DiaryCloud: NSObject {
                         if let diary = fetchDiaryByID(diaryID) {
 //                            println("No need to do thing")
                         } else {
-                            println("Create Diary With CKRecords")
+                            print("Create Diary With CKRecords")
                             saveDiaryWithCKRecord(fetchRecord)
                         }
                     }
@@ -127,7 +121,10 @@ func saveDiaryWithCKRecord(record: CKRecord) {
             newdiary.updateTimeWithDate(Date)
     }
     
-    managedContext.save(nil)
+    do {
+        try managedContext.save()
+    } catch _ {
+    }
 }
 
 func fetchDiaryByID(id: String) -> Diary? {
@@ -135,16 +132,16 @@ func fetchDiaryByID(id: String) -> Diary? {
     let fetchRequest = NSFetchRequest(entityName:"Diary")
     fetchRequest.predicate = NSPredicate(format: "id = %@", id)
     
-    var error: NSError?
-    
-    let fetchedResults =
-    managedContext.executeFetchRequest(fetchRequest,
-        error: &error) as? [Diary]
-    
-    if let results = fetchedResults {
-        return results.first
-    } else {
-        println("Could not fetch \(error), \(error!.userInfo)")
+    do {
+        let fetchedResults =
+        try managedContext.executeFetchRequest(fetchRequest) as? [Diary]
+        
+        if let results = fetchedResults {
+            return results.first
+        } else {
+            return nil
+        }
+    } catch _ {
         return nil
     }
 

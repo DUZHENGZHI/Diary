@@ -27,27 +27,27 @@ class DiaryBaseViewController: UIViewController {
     }
     
     
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
         if motion == UIEventSubtype.MotionShake {
-            println("Device Shaked")
+            print("Device Shaked")
             showAlert()
         }
     }
     
     func showAlert() {
-        var alert = UIAlertController(title: "设置", message: "希望切换字体吗", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "设置", message: "希望切换字体吗", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "算啦", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
         alert.addAction(UIAlertAction(title: "好的", style: .Default, handler: { action in
             switch action.style{
             case .Default:
-                println("default")
+                print("default")
                 toggleFont()
             case .Cancel:
-                println("cancel")
+                print("cancel")
                 
             case .Destructive:
-                println("destructive")
+                print("destructive")
             }
         }))
     }

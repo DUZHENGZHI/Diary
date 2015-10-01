@@ -16,7 +16,7 @@ let janpan = "HiraMinProN-W3"
 
 let defaults = NSUserDefaults.standardUserDefaults()
 
-let currentLanguage = NSLocale.preferredLanguages()[0] as! String
+let currentLanguage = NSLocale.preferredLanguages()[0] 
 
 var defaultFont: String {
     get {
@@ -107,7 +107,7 @@ extension UIImage {
         
         self.drawInRect(CGRectMake(0.0, 0.0, self.size.width, self.size.height))
         inputImage.drawInRect(frame)
-        var newImage = UIGraphicsGetImageFromCurrentImageContext()
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage
         
@@ -117,13 +117,13 @@ extension UIImage {
 
 func getTutView() -> UIView {
     
-    var view = UIView(frame: screenRect)
+    let view = UIView(frame: screenRect)
     
     view.backgroundColor = UIColor.whiteColor()
     
-    var label = DiaryLabel(fontname: defaultFont, labelText: "雙擊返回", fontSize: 24.0, lineHeight: 15.0)
+    let label = DiaryLabel(fontname: defaultFont, labelText: "雙擊返回", fontSize: 24.0, lineHeight: 15.0)
     
-    var labelContainer = UIView(frame: CGRectInset(label.frame, -10.0, -10.0))
+    let labelContainer = UIView(frame: CGRectInset(label.frame, -10.0, -10.0))
     
     labelContainer.layer.borderColor = UIColor.blackColor().CGColor
     
@@ -173,39 +173,42 @@ func randomStringWithLength (len : Int) -> NSString {
     
     let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     
-    var randomString : NSMutableString = NSMutableString(capacity: len)
+    let randomString : NSMutableString = NSMutableString(capacity: len)
     
     for (var i=0; i < len; i++){
-        var length = UInt32 (letters.length)
-        var rand = arc4random_uniform(length)
+        let length = UInt32 (letters.length)
+        let rand = arc4random_uniform(length)
         randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
     }
     
     return randomString
 }
 
-func coverPathWithKey(key: String) -> String {
-    return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0].stringByAppendingPathComponent("/\(key).jpg")
-}
-
-func baseCoverURL() -> String {
-    return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-}
-
-func diaryButtonWith(#text: String, #fontSize: CGFloat, #width: CGFloat, #normalImageName: String, #highlightedImageName: String) -> UIButton {
+func diaryButtonWith(text text: String, fontSize: CGFloat, width: CGFloat, normalImageName: String, highlightedImageName: String) -> UIButton {
     
-    return diaryButtonWith(text: text, fontSize: fontSize, width: width, normalImageName: normalImageName, highlightedImageName: highlightedImageName, color: UIColor.whiteColor())
-
+    let button = UIButton(type: UIButtonType.Custom) //创建自定义 Button
+    button.frame = CGRectMake(0, 0, width, width) //设定 Button 的大小
+    
+    let font = UIFont(name: "Wyue-GutiFangsong-NC", size: fontSize) as UIFont!
+    let textAttributes: [String : AnyObject] = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
+    let attributedText = NSAttributedString(string: text, attributes: textAttributes)
+    button.setAttributedTitle(attributedText, forState: UIControlState.Normal) //设置 Button 字体
+    
+    button.setBackgroundImage(UIImage(named: normalImageName), forState: UIControlState.Normal) //设置默认 Button 样式
+    button.setBackgroundImage(UIImage(named: highlightedImageName), forState: UIControlState.Highlighted) // 设置 Button 被按下时候的样式
+    
+    return button
+    
 }
 
-func diaryButtonWith(#text: String, #fontSize: CGFloat, #width: CGFloat, #normalImageName: String, #highlightedImageName: String, #color: UIColor) -> UIButton {
+func diaryButtonWith(text text: String, fontSize: CGFloat, width: CGFloat, normalImageName: String, highlightedImageName: String, color: UIColor) -> UIButton {
     
-    var button = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+    let button = UIButton(type: UIButtonType.Custom)
     button.frame = CGRectMake(0, 0, width, width)
     
-    var font = UIFont(name: defaultFont, size: fontSize) as UIFont!
-    let textAttributes: [NSObject : AnyObject] = [NSFontAttributeName: font, NSForegroundColorAttributeName: color]
-    var attributedText = NSAttributedString(string: text, attributes: textAttributes)
+    let font = UIFont(name: defaultFont, size: fontSize) as UIFont!
+    let textAttributes: [String : AnyObject] = [NSFontAttributeName: font, NSForegroundColorAttributeName: color]
+    let attributedText = NSAttributedString(string: text, attributes: textAttributes)
     button.setAttributedTitle(attributedText, forState: UIControlState.Normal)
     
     button.setBackgroundImage(UIImage(named: normalImageName), forState: UIControlState.Normal)
@@ -216,22 +219,22 @@ func diaryButtonWith(#text: String, #fontSize: CGFloat, #width: CGFloat, #normal
 
 
 func numberToChinese(number:Int) -> String {
-    var numbers = Array(String(number))
+    let numbers = Array(String(number).characters)
     var finalString = ""
     for singleNumber in numbers {
-        var string = singleNumberToChinese(singleNumber)
+        let string = singleNumberToChinese(singleNumber)
         finalString = "\(finalString)\(string)"
     }
     return finalString
 }
 
 func numberToChineseWithUnit(number:Int) -> String {
-    var numbers = Array(String(number))
+    let numbers = Array(String(number).characters)
     var units = unitParser(numbers.count)
     var finalString = ""
     
-    for (index, singleNumber) in enumerate(numbers) {
-        var string = singleNumberToChinese(singleNumber)
+    for (index, singleNumber) in numbers.enumerate() {
+        let string = singleNumberToChinese(singleNumber)
         if (!(string == "零" && (index+1) == numbers.count)){
             finalString = "\(finalString)\(string)\(units[index])"
         }
@@ -242,16 +245,17 @@ func numberToChineseWithUnit(number:Int) -> String {
 
 func unitParser(unit:Int) -> [String] {
     
-    var units = ["万","千","百","十",""].reverse()
-    var slicedUnits: ArraySlice<String> = units[0..<(unit)].reverse()
-    var final: [String] = Array(slicedUnits)
+    var units = Array(["万","千","百","十",""].reverse())
+    let parsedUnits = units[0..<(unit)].reverse()
+    let slicedUnits: ArraySlice<String> = ArraySlice(parsedUnits)
+    let final: [String] = Array(slicedUnits)
     return final
 }
 
 func icloudIdentifier() -> String {
-    var teamID = "iCloud."
-    var bundleID = NSBundle.mainBundle().bundleIdentifier!
-    var cloudRoot = "\(teamID)\(bundleID).sync"
+    let teamID = "iCloud."
+    let bundleID = NSBundle.mainBundle().bundleIdentifier!
+    let cloudRoot = "\(teamID)\(bundleID).sync"
     
     return cloudRoot
 }
@@ -287,27 +291,31 @@ func findLastDayDiary() -> Diary? {
     //2
     let fetchRequest = NSFetchRequest(entityName:"Diary")
     
-    println("\(NSDate().beginningOfDay()) \(NSDate().endOfDay())")
+    print("\(NSDate().beginningOfDay()) \(NSDate().endOfDay())")
     
     fetchRequest.predicate = NSPredicate(format: "(created_at >= %@ ) AND (created_at < %@)", NSDate().beginningOfDay(), NSDate().endOfDay())
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
-    //3
-    var error: NSError?
-    
-    var fetchedResults =
-    managedContext.executeFetchRequest(fetchRequest,
-        error: &error) as! [Diary]?
-    
-    while(fetchedResults?.count > 1){
-        var lastDiary = fetchedResults?.last!
-        managedContext.deleteObject(lastDiary!)
-        fetchedResults = managedContext.executeFetchRequest(fetchRequest,
-                error: &error) as! [Diary]?
+
+    do {
+        var fetchedResults = try managedContext.executeFetchRequest(fetchRequest) as! [Diary]
+        while(fetchedResults.count > 1){
+            let lastDiary = fetchedResults.last!
+            managedContext.deleteObject(lastDiary)
+            fetchedResults = try managedContext.executeFetchRequest(fetchRequest) as! [Diary]
+        }
+        do {
+            try managedContext.save()
+        } catch _ {
+        }
+        let diary = fetchedResults.first
+        
+        return diary
+    } catch _ {
+        return nil
     }
-    managedContext.save(nil)
-    var diary = fetchedResults?.first
+
     
-    return diary
+
 }
 
 
@@ -315,16 +323,16 @@ extension UIWebView {
     
     func captureView() -> UIImage{
         // tempframe to reset view size after image was created
-        var tmpFrame = self.frame
+        let tmpFrame = self.frame
         // set new Frame
         var aFrame = self.frame
         aFrame.size.width = self.sizeThatFits(UIScreen.mainScreen().bounds.size).width
         self.frame = aFrame
         // do image magic
         UIGraphicsBeginImageContextWithOptions(self.sizeThatFits(UIScreen.mainScreen().bounds.size), false, UIScreen.mainScreen().scale)
-        var resizedContext = UIGraphicsGetCurrentContext()
-        self.layer.renderInContext(resizedContext)
-        var image = UIGraphicsGetImageFromCurrentImageContext()
+        let resizedContext = UIGraphicsGetCurrentContext()
+        self.layer.renderInContext(resizedContext!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         // reset Frame of view to origin
         self.frame = tmpFrame
@@ -336,15 +344,15 @@ extension UIWebView {
 extension Diary {
     func updateTimeWithDate(date: NSDate){
         self.created_at = date
-        self.year = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitYear, fromDate: date)
-        self.month = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: date)
+        self.year = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: date)
+        self.month = NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: date)
     }
 }
 
 extension NSDate {
     func beginningOfDay() -> NSDate{
-        var calender = NSCalendar.currentCalendar()
-        var components = calender.components(NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay, fromDate: self)
+        let calender = NSCalendar.currentCalendar()
+        let components = calender.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day], fromDate: self)
         components.hour = 00
         components.minute = 00
         components.second = 00
@@ -352,10 +360,10 @@ extension NSDate {
     }
     
     func endOfDay() -> NSDate {
-        var calender = NSCalendar.currentCalendar()
-        var components = NSDateComponents()
+        let calender = NSCalendar.currentCalendar()
+        let components = NSDateComponents()
         components.day = 1
-        var date = calender.dateByAddingComponents(components, toDate: self.beginningOfDay(), options: nil)
+        let date = calender.dateByAddingComponents(components, toDate: self.beginningOfDay(), options: [])
         date?.dateByAddingTimeInterval(-1)
         return date!
     }
