@@ -36,12 +36,24 @@ class DiaryLabel: UILabel {
     
     var textAttributes: [String : AnyObject]!
     
+    var labelSize: CGRect?
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
     convenience init(fontname:String,
         labelText:String,
         fontSize : CGFloat,
         lineHeight: CGFloat){
             
             self.init(frame: CGRectZero)
+            
+            self.userInteractionEnabled = true
             
             let font = UIFont(name: fontname,
                 size: fontSize) as UIFont!
@@ -52,17 +64,51 @@ class DiaryLabel: UILabel {
             textAttributes = [NSFontAttributeName: font,
                 NSParagraphStyleAttributeName: paragraphStyle]
             
-            let labelSize = sizeHeightWithText(labelText, fontSize: fontSize ,textAttributes: textAttributes)
+            labelSize = sizeHeightWithText(labelText, fontSize: fontSize ,textAttributes: textAttributes)
             
-            self.frame = CGRectMake(0, 0, labelSize.width,
-                labelSize.height)
+            self.frame = CGRectMake(0, 0, labelSize!.width,
+                labelSize!.height)
             
             self.attributedText = NSAttributedString(
                 string: labelText,
                 attributes: textAttributes)
+            
             self.lineBreakMode = NSLineBreakMode.ByCharWrapping
+            
             self.numberOfLines = 0
     }
+    
+    func config(fontname:String,
+        labelText:String,
+        fontSize : CGFloat,
+        lineHeight: CGFloat){
+            
+            self.userInteractionEnabled = true
+            
+            let font = UIFont(name: fontname,
+                size: fontSize) as UIFont!
+            
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = lineHeight
+            
+            paragraphStyle.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            
+            paragraphStyle.paragraphSpacing = 0
+            
+            paragraphStyle.paragraphSpacingBefore = 0
+        
+            textAttributes = [NSFontAttributeName: font,
+                NSParagraphStyleAttributeName: paragraphStyle]
+            
+            labelSize = sizeHeightWithText(labelText, fontSize: fontSize ,textAttributes: textAttributes)
+            
+            self.attributedText = NSAttributedString(
+                string: labelText,
+                attributes: textAttributes)
+            
+            self.numberOfLines = 0
+    }
+    
     
     func resizeLabelWithFontName(fontname:String,
         labelText:String,
@@ -115,6 +161,7 @@ class DiaryLabel: UILabel {
             attributes: textAttributes)
     }
 
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
         anim.springBounciness = 10
@@ -133,9 +180,17 @@ class DiaryLabel: UILabel {
         anim.toValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
         self.layer.pop_addAnimation(anim, forKey: "PopScaleback")
         super.touchesEnded(touches as Set<UITouch>, withEvent: event)
-
     }
-
+    
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        let anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
+        anim.springBounciness = 10
+        anim.springSpeed = 15
+        anim.fromValue = NSValue(CGPoint: CGPointMake(0.9, 0.9))
+        anim.toValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
+        self.layer.pop_addAnimation(anim, forKey: "PopScaleback")
+        super.touchesCancelled(touches, withEvent: event)
+    }
 
     /*
     // Only override drawRect: if you perform custom drawing.

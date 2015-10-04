@@ -11,9 +11,8 @@ import MonkeyKing
 
 class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, UIWebViewDelegate, UIScrollViewDelegate{
     
+    @IBOutlet weak var webview: UIWebView!
     var diary:Diary!
-    
-    var webview: UIWebView!
     
     var saveButton:UIButton!
     
@@ -36,7 +35,6 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
     }
     
     func setupUI() {
-        webview = UIWebView(frame: CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height))
         
         webview.scrollView.bounces = true
         

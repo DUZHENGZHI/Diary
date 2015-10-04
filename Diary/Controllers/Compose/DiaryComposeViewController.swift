@@ -111,9 +111,9 @@ class DiaryComposeViewController: DiaryBaseViewController{
         
         //Add image button
         
-        imageButton = diaryButtonWith(text: "圖",  fontSize: 18.0,  width: 50.0,  normalImageName: "OvalBlack", highlightedImageName: "OvalBlack", color: UIColor.blackColor())
+//        imageButton = diaryButtonWith(text: "圖",  fontSize: 18.0,  width: 50.0,  normalImageName: "OvalBlack", highlightedImageName: "OvalBlack", color: UIColor.blackColor())
         
-        imageButton.addTarget(self, action: "pickImage", forControlEvents: UIControlEvents.TouchUpInside)
+//        imageButton.addTarget(self, action: "pickImage", forControlEvents: UIControlEvents.TouchUpInside)
 
         self.view.addSubview(finishButton)
         
@@ -127,10 +127,10 @@ class DiaryComposeViewController: DiaryBaseViewController{
         self.view.addSubview(imageView)
 
         self.finishButton.center = CGPointMake(self.view.frame.width - self.finishButton.frame.size.height/2.0 - 10, self.view.frame.height  - self.finishButton.frame.size.height/2.0 - 10)
-        
-        imageButton.center = CGPointMake(finishButton.center.x, finishButton.center.y - finishButton.frame.size.height)
-        
-        imageView.center = imageButton.center
+//        
+//        imageButton.center = CGPointMake(finishButton.center.x, finishButton.center.y - finishButton.frame.size.height)
+//        
+//        imageView.center = imageButton.center
 
         self.locationTextView.center = CGPointMake(self.locationTextView.frame.size.width/2.0 + 20.0, self.finishButton.center.y)
 
@@ -252,9 +252,9 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
                 self.finishButton.center = CGPointMake(self.view.frame.width - self.finishButton.frame.size.height/2.0 - 10, self.view.frame.height - newKeyboardHeight - self.finishButton.frame.size.height/2.0 - 10)
                 
-                self.imageButton.center = CGPointMake(self.finishButton.center.x, self.finishButton.center.y - self.finishButton.frame.size.height)
+//                self.imageButton.center = CGPointMake(self.finishButton.center.x, self.finishButton.center.y - self.finishButton.frame.size.height)
                 
-                self.imageView.center = self.imageButton.center
+//                self.imageView.center = self.imageButton.center
 
                 self.locationTextView.center = CGPointMake(self.locationTextView.frame.size.width/2.0 + 20.0, self.finishButton.center.y)
 

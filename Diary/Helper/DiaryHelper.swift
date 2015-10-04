@@ -53,14 +53,29 @@ var DiaryTitleFont: UIFont {
 
 let collectionViewTopInset = (screenRect.height - itemHeight)/2.0
 
+
 let DiaryRed = UIColor(red: 192.0/255.0, green: 23.0/255.0, blue: 48.0/255.0, alpha: 1.0)
-let itemHeight:CGFloat = 150.0
+let itemHeight:CGFloat = screenRect.height
 let itemSpacing:CGFloat = 0
 let itemWidth:CGFloat = 60
 let collectionViewWidth = itemWidth * 3 + itemSpacing * 2
 
 let collectionViewDisplayedCells: Int = 3
-let collectionViewLeftInsets = (screenRect.width - collectionViewWidth)/2.0
+var collectionViewLeftInsets: CGFloat {
+    get {
+        let interfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
+        
+        if interfaceOrientation == .Portrait ||  interfaceOrientation == .PortraitUpsideDown{
+            let portrait = (screenRect.width - collectionViewWidth)/2.0
+            print("portrait inset \(portrait)")
+            return portrait
+        }else {
+            let landInset = (screenRect.height - collectionViewWidth)/2.0
+            print("Land inset \(landInset)")
+            return landInset
+        }
+    }
+}
 
 var tutShowed: Bool {
 
@@ -201,21 +216,21 @@ func diaryButtonWith(text text: String, fontSize: CGFloat, width: CGFloat, norma
     
 }
 
-func diaryButtonWith(text text: String, fontSize: CGFloat, width: CGFloat, normalImageName: String, highlightedImageName: String, color: UIColor) -> UIButton {
-    
-    let button = UIButton(type: UIButtonType.Custom)
-    button.frame = CGRectMake(0, 0, width, width)
-    
-    let font = UIFont(name: defaultFont, size: fontSize) as UIFont!
-    let textAttributes: [String : AnyObject] = [NSFontAttributeName: font, NSForegroundColorAttributeName: color]
-    let attributedText = NSAttributedString(string: text, attributes: textAttributes)
-    button.setAttributedTitle(attributedText, forState: UIControlState.Normal)
-    
-    button.setBackgroundImage(UIImage(named: normalImageName), forState: UIControlState.Normal)
-    button.setBackgroundImage(UIImage(named: highlightedImageName), forState: UIControlState.Highlighted)
-    
-    return button
+
+extension UIButton {
+    func customButtonWith(text text: String, fontSize: CGFloat, width: CGFloat, normalImageName: String, highlightedImageName: String){
+        
+        let font = UIFont(name: defaultFont, size: fontSize) as UIFont!
+        let textAttributes: [String : AnyObject] = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
+        let attributedText = NSAttributedString(string: text, attributes: textAttributes)
+        self.setAttributedTitle(attributedText, forState: UIControlState.Normal)
+        
+        self.setBackgroundImage(UIImage(named: normalImageName), forState: UIControlState.Normal)
+        self.setBackgroundImage(UIImage(named: highlightedImageName), forState: UIControlState.Highlighted)
+    }
 }
+
+
 
 
 func numberToChinese(number:Int) -> String {
