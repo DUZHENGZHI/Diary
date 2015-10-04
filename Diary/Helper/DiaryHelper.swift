@@ -58,7 +58,7 @@ let DiaryRed = UIColor(red: 192.0/255.0, green: 23.0/255.0, blue: 48.0/255.0, al
 let itemHeight:CGFloat = screenRect.height
 let itemSpacing:CGFloat = 0
 let itemWidth:CGFloat = 60
-let collectionViewWidth = itemWidth * 3 + itemSpacing * 2
+let collectionViewWidth = itemWidth * 3
 
 let collectionViewDisplayedCells: Int = 3
 var collectionViewLeftInsets: CGFloat {

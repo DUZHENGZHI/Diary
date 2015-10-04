@@ -161,9 +161,19 @@ class MainViewController: DiaryBaseViewController {
         }
         
     }
+
     
     func scrollToCollectionViewRight() {
-        self.collectionView!.contentOffset = CGPointMake(self.collectionView!.collectionViewLayout.collectionViewContentSize().width-collectionViewWidth-collectionViewLeftInsets*2, 0)
+        
+        print("Content Offset is \(collectionView.contentOffset)")
+        
+        let contentSizeWidth = collectionView.collectionViewLayout.collectionViewContentSize().width
+
+        if contentSizeWidth > collectionViewWidth {
+            collectionView.contentOffset = CGPointMake(collectionView.contentOffset.x + contentSizeWidth-collectionViewWidth, 0)
+        }
+        
+        print("Content Offset is \(collectionView.contentOffset) \(contentSizeWidth)")
     }
     
     func prepareFetch() {
@@ -209,8 +219,8 @@ class MainViewController: DiaryBaseViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        scrollToCollectionViewRight()
-//        view.layoutIfNeeded()
+        
+        scrollToCollectionViewRight()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -553,12 +563,14 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, UINavigationCo
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+
         refetch()
-        self.collectionView?.reloadData()
         
-        self.collectionView?.collectionViewLayout.invalidateLayout()
+        self.collectionView.collectionViewLayout.invalidateLayout()
         
-//        scrollToCollectionViewRight()
+        self.collectionView.reloadData()
+        
+        scrollToCollectionViewRight()
     }
     
 
