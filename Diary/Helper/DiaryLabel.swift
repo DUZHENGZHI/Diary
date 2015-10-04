@@ -66,9 +66,6 @@ class DiaryLabel: UILabel {
             
             labelSize = sizeHeightWithText(labelText, fontSize: fontSize ,textAttributes: textAttributes)
             
-            self.frame = CGRectMake(0, 0, labelSize!.width,
-                labelSize!.height)
-            
             self.attributedText = NSAttributedString(
                 string: labelText,
                 attributes: textAttributes)
@@ -139,14 +136,7 @@ class DiaryLabel: UILabel {
     }
     
     func updateText(labelText: String) {
-        
-        let labelSize = sizeHeightWithText(labelText,
-            fontSize: self.font.pointSize,
-            textAttributes: textAttributes)
-        
-        self.frame = CGRectMake(0, 0, labelSize.width,
-            labelSize.height)
-        
+
         self.attributedText = NSAttributedString(
             string: labelText,
             attributes: textAttributes)

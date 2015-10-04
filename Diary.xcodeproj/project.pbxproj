@@ -234,7 +234,6 @@
 				0AE2022F1A8B0B310012AAED /* Diary.xcdatamodeld */,
 				0AE2022B1A8B0B310012AAED /* Supporting Files */,
 				0A0B10091A915F1F0012604C /* Diary-Bridging-Header.h */,
-				6AB5C54E1BBCD82B00D46B05 /* WeChatActivity.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -287,6 +286,7 @@
 		0AE202571A8B0E150012AAED /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				6AB5C54E1BBCD82B00D46B05 /* WeChatActivity.swift */,
 				0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */,
 				0AE202581A8B0E420012AAED /* DiaryHelper.swift */,
 				0A9170011AA6216D00E987A4 /* DiaryLabel.swift */,

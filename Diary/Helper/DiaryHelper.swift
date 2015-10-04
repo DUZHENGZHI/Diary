@@ -67,11 +67,9 @@ var collectionViewLeftInsets: CGFloat {
         
         if interfaceOrientation == .Portrait ||  interfaceOrientation == .PortraitUpsideDown{
             let portrait = (screenRect.width - collectionViewWidth)/2.0
-            print("portrait inset \(portrait)")
             return portrait
         }else {
             let landInset = (screenRect.height - collectionViewWidth)/2.0
-            print("Land inset \(landInset)")
             return landInset
         }
     }
