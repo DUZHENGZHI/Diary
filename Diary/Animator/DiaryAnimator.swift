@@ -12,6 +12,8 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     var operation:UINavigationControllerOperation!
     
+    var newSize: CGSize?
+    
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 0.4
     }
@@ -28,6 +30,9 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         if (operation ==  UINavigationControllerOperation.Pop) {
             toView.transform = CGAffineTransformMakeScale(1.0,1.0)
+            if let newSize = newSize {
+                toView.frame = CGRect(x: toView.frame.origin.x, y: toView.frame.origin.y, width: newSize.width, height: newSize.height)
+            }
         }else{
             toView.transform = CGAffineTransformMakeScale(0.3,0.3);
         }

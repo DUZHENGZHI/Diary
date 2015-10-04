@@ -19,6 +19,8 @@ class MainViewController: DiaryBaseViewController {
         case Year
         case Month
     }
+    
+    let animator = DiaryAnimator()
 
     @IBOutlet weak var titleLabel: DiaryLabel!
     
@@ -545,7 +547,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, UINavigationCo
     
     func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
-        let animator = DiaryAnimator()
+
         animator.operation = operation
         return animator
     }
@@ -569,6 +571,8 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, UINavigationCo
             subLabelCenter.constant = 50
             collectionView.contentInset = calInsets(false)
         }
+        
+        animator.newSize = size
         
         view.layoutIfNeeded()
         
