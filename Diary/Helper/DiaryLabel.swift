@@ -106,35 +106,6 @@ class DiaryLabel: UILabel {
             self.numberOfLines = 0
     }
     
-    
-    func resizeLabelWithFontName(fontname:String,
-        labelText:String,
-        fontSize : CGFloat,
-        lineHeight: CGFloat ){
-            let font = UIFont(name: fontname, size: fontSize)
-                as UIFont!
-            
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = lineHeight
-            
-            textAttributes = [NSFontAttributeName: font,
-                NSForegroundColorAttributeName: UIColor.blackColor(),
-                NSParagraphStyleAttributeName: paragraphStyle]
-            
-            let labelSize = sizeHeightWithText(labelText, fontSize: fontSize
-                ,textAttributes: textAttributes)
-            
-            self.frame = CGRectMake(0, 0, labelSize.width,
-                labelSize.height)
-            
-            self.attributedText = NSAttributedString(
-                string: labelText,
-                attributes: textAttributes)
-            
-            self.lineBreakMode = NSLineBreakMode.ByCharWrapping
-            self.numberOfLines = 0
-    }
-    
     func updateText(labelText: String) {
 
         self.attributedText = NSAttributedString(
