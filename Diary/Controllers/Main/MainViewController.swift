@@ -76,6 +76,14 @@ class MainViewController: DiaryBaseViewController {
         self.collectionView.addGestureRecognizer(mDoubleUpRecognizer)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCollectionView", name: "DiaryChangeFont", object: nil)
+        
+        if portrait {
+            collectionView.contentInset = calInsets(true)
+        } else {
+            collectionView.contentInset = calInsets(false)
+        }
+        
+        view.layoutIfNeeded()
         // Do any additional setup after loading the view.
     }
     
@@ -205,8 +213,10 @@ class MainViewController: DiaryBaseViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+
         self.navigationController!.delegate = self
     }
+    
     
     func refetch() {
         
@@ -265,7 +275,7 @@ class MainViewController: DiaryBaseViewController {
                 }
             }
             
-            //            moveToThisMonth()
+            moveToThisMonth()
         } catch _ {
             
         }
@@ -302,7 +312,7 @@ class MainViewController: DiaryBaseViewController {
         composeButton.addTarget(self, action: "newCompose", forControlEvents: UIControlEvents.TouchUpInside)
         
         titleLabel.config("TpldKhangXiDictTrial", labelText: "二零一五年", fontSize: 20.0, lineHeight: 5.0)
-        subLabel.config(defaultFont, labelText: "\(numberToChineseWithUnit(2))月", fontSize: 16.0, lineHeight: 5.0)
+        subLabel.config(defaultFont, labelText: "\(numberToChineseWithUnit(month))月", fontSize: 16.0, lineHeight: 5.0)
         subLabel.updateLabelColor(DiaryRed)
         
         if let titleLabelSize = titleLabel.labelSize {
@@ -312,7 +322,11 @@ class MainViewController: DiaryBaseViewController {
         
         if let subLabelSize = subLabel.labelSize {
             subLabelHeight.constant = subLabelSize.height + 1
-            subLabelCenter.constant = -15
+            if portrait {
+                subLabelCenter.constant = -15
+            }else {
+                subLabelCenter.constant = 50
+            }
         }
         
         if let interfaceType = interfaceType {
@@ -502,7 +516,15 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, UINavigationCo
 
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func calInsets(portrait: Bool) -> UIEdgeInsets {
+        
+        var insetLeft =  (screenRect.width - collectionViewWidth)/2.0
+        
+        if portrait {
+            insetLeft = (screenRect.width - collectionViewWidth)/2.0
+        }else {
+            insetLeft = (screenRect.height - collectionViewWidth)/2.0
+        }
         
         var numberOfCells:Int = fetchedResultsController.sections!.count > 0 ? fetchedResultsController.sections!.count : 1
         
@@ -510,23 +532,15 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, UINavigationCo
             numberOfCells = self.diarys.count
         }
         
-        var edgeInsets = collectionViewLeftInsets + (collectionViewWidth - (CGFloat(numberOfCells)*itemWidth))/2.0
+        var edgeInsets = insetLeft + (collectionViewWidth - (CGFloat(numberOfCells)*itemWidth))/2.0
         
         if (numberOfCells > collectionViewDisplayedCells) {
             
-            edgeInsets = collectionViewLeftInsets
+            edgeInsets = insetLeft
             
         }
         
-        print("Cell is \(numberOfCells)")
-        
-        return UIEdgeInsetsMake(0, edgeInsets, 0, edgeInsets);
-    }
-    
-    
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
-
+        return UIEdgeInsetsMake(0, edgeInsets, 0, edgeInsets)
     }
     
     func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -550,8 +564,10 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, UINavigationCo
         
         if size.height == screenRect.height {
             subLabelCenter.constant = -15
+            collectionView.contentInset = calInsets(true)
         }else {
             subLabelCenter.constant = 50
+            collectionView.contentInset = calInsets(false)
         }
         
         view.layoutIfNeeded()

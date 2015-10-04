@@ -63,14 +63,25 @@ let collectionViewWidth = itemWidth * 3 + itemSpacing * 2
 let collectionViewDisplayedCells: Int = 3
 var collectionViewLeftInsets: CGFloat {
     get {
-        let interfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
-        
-        if interfaceOrientation == .Portrait ||  interfaceOrientation == .PortraitUpsideDown{
+
+        if portrait {
             let portrait = (screenRect.width - collectionViewWidth)/2.0
             return portrait
         }else {
             let landInset = (screenRect.height - collectionViewWidth)/2.0
             return landInset
+        }
+    }
+}
+
+var portrait: Bool {
+    get {
+        let interfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
+        
+        if interfaceOrientation == .Portrait ||  interfaceOrientation == .PortraitUpsideDown{
+            return true
+        }else {
+            return false
         }
     }
 }
