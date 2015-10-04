@@ -13,6 +13,8 @@ class DiaryAutoLayoutCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var textLabel: DiaryLabel!
     
+    @IBOutlet weak var popView: DiaryPopView!
+    
     var selectCell : (() -> Void)?
     
     var labelText: String = "" {
@@ -39,7 +41,11 @@ class DiaryAutoLayoutCollectionViewCell: UICollectionViewCell {
         
         mDoubleUpRecognizer.numberOfTapsRequired = 1
         
-        self.textLabel.addGestureRecognizer(mDoubleUpRecognizer)
+        popView.userInteractionEnabled = true
+        
+        self.textLabel.userInteractionEnabled = false
+        
+        self.popView.addGestureRecognizer(mDoubleUpRecognizer)
     }
     
     override func layoutSubviews() {
