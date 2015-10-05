@@ -11,7 +11,7 @@ import CoreData
 import CoreLocation
 
 let firstFont = "Wyue-GutiFangsong-NC"
-let secondFont = "STSongti-SC-Bold"
+let secondFont = "Wyue-GutiFangsong-NC"
 let janpan = "HiraMinProN-W3"
 
 let defaults = NSUserDefaults.standardUserDefaults()
@@ -232,6 +232,7 @@ extension UIButton {
         let font = UIFont(name: defaultFont, size: fontSize) as UIFont!
         let textAttributes: [String : AnyObject] = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
         let attributedText = NSAttributedString(string: text, attributes: textAttributes)
+        
         self.setAttributedTitle(attributedText, forState: UIControlState.Normal)
         
         self.setBackgroundImage(UIImage(named: normalImageName), forState: UIControlState.Normal)
