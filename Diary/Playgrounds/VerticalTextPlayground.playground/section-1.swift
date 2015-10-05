@@ -2,7 +2,7 @@
 
 import UIKit
 
-func sizeHeightWithText(labelText: NSString, fontSize: CGFloat, textAttributes: [NSObject : AnyObject]) -> CGRect {
+func sizeHeightWithText(labelText: NSString, fontSize: CGFloat, textAttributes: [String : AnyObject]) -> CGRect {
     
     return labelText.boundingRectWithSize(CGSizeMake(fontSize, 480), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: textAttributes, context: nil)
 }
@@ -12,8 +12,8 @@ extension UILabel {
     convenience init(fontname:String ,labelText:String, fontSize : CGFloat){
         let font = UIFont(name: fontname, size: fontSize) as UIFont!
         
-        let textAttributes: [NSObject : AnyObject] = [NSFontAttributeName: font]
-        var labelSize = sizeHeightWithText(labelText, fontSize ,textAttributes)
+        let textAttributes: [String : AnyObject] = [NSFontAttributeName: font]
+        let labelSize = sizeHeightWithText(labelText, fontSize: fontSize ,textAttributes: textAttributes)
         
         self.init(frame: labelSize)
         

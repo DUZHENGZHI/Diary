@@ -309,14 +309,17 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         do {
             try managedContext.save()
         } catch _ {
+            
         }
         hideDiary()
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
-        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+        
+        UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
         {
             self.webview.alpha = 1.0
+            
         }, completion: nil)
 
         webview.scrollView.contentOffset = CGPointMake(webview.scrollView.contentSize.width - webview.frame.size.width, 0)
