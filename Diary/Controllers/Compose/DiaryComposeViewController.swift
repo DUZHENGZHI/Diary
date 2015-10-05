@@ -38,24 +38,26 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8
+        
+        let textAttributes: [String : AnyObject]! = [NSFontAttributeName: DiaryFont, NSVerticalGlyphFormAttributeName: 1, NSParagraphStyleAttributeName: paragraphStyle, NSKernAttributeName: 3.0]
 
-        composeView.font = DiaryFont
-        composeView.editable = true
-        composeView.userInteractionEnabled = true
+        composeView.typingAttributes = textAttributes
+        composeView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         //Add LocationTextView
-        locationTextView.font = DiaryLocationFont
-        locationTextView.editable = true
-        locationTextView.userInteractionEnabled = true
+        locationTextView.font = DiaryFont
         locationTextView.alpha = 0.0
         locationTextView.bounces = false
+        locationTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         //Add titleView
 
-        titleTextView.font = DiaryTitleFont
-        titleTextView.editable = true
-        titleTextView.userInteractionEnabled = true
+        titleTextView.font = DiaryFont
         titleTextView.bounces = false
+        titleTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         if let diary = diary {
             composeView.text = diary.content

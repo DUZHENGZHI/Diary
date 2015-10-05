@@ -14,13 +14,15 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
     @IBOutlet weak var webview: UIWebView!
     var diary:Diary!
     
-    var saveButton:UIButton!
+    @IBOutlet weak var saveButton: UIButton!
     
-    var deleteButton:UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
     
-    var editButton:UIButton!
+    @IBOutlet weak var editButton: UIButton!
     
-    var buttonsView:UIView!
+    @IBOutlet weak var buttonsView: UIView!
+    
+    @IBOutlet weak var buttonsViewToBottom: NSLayoutConstraint!
     
     var pullView: DiaryPullView!
     
@@ -61,7 +63,6 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         mTapUpRecognizer.requireGestureRecognizerToFail(mDoubleUpRecognizer)
         //Add buttons
         
-        buttonsView = UIView(frame: CGRectMake(0, screenRect.height, screenRect.width, 80.0))
         buttonsView.backgroundColor = UIColor.clearColor()
         buttonsView.alpha = 0.0
         
@@ -71,32 +72,23 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
             buttonFontSize = 16.0
         }
         
-        saveButton = diaryButtonWith(text: "存",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        saveButton.customButtonWith(text: "存",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
-        saveButton.center = CGPointMake(buttonsView.frame.width/2.0, buttonsView.frame.height/2.0)
         
         saveButton.addTarget(self, action: "saveToRoll", forControlEvents: UIControlEvents.TouchUpInside)
         
-        buttonsView.addSubview(saveButton)
         
-        
-        editButton = diaryButtonWith(text: "改",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
-        
-        editButton.center = CGPointMake(saveButton.center.x - 56.0, saveButton.center.y)
+        editButton.customButtonWith(text: "改",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+    
         
         editButton.addTarget(self, action: "editDiary", forControlEvents: UIControlEvents.TouchUpInside)
+    
         
-        buttonsView.addSubview(editButton)
+        deleteButton.customButtonWith(text: "刪",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
-        deleteButton = diaryButtonWith(text: "刪",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
-        
-        deleteButton.center = CGPointMake(saveButton.center.x + 56.0, saveButton.center.y)
         
         deleteButton.addTarget(self, action: "deleteThisDiary", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        buttonsView.addSubview(deleteButton)
-        
-        self.view.addSubview(buttonsView)
+    
         
         webview.alpha = 0.0
         
@@ -210,8 +202,10 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         if(buttonsView.alpha == 0.0) {
             UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
                 {
-                    self.buttonsView.center = CGPointMake(self.buttonsView.center.x, screenRect.height - self.buttonsView.frame.size.height/2.0)
+                    self.buttonsViewToBottom.constant = 100
                     self.buttonsView.alpha = 1.0
+                    
+                    self.view.layoutIfNeeded()
                     
                 }, completion: nil)
             
@@ -219,8 +213,10 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
             
             UIView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
                 {
-                    self.buttonsView.center = CGPointMake(self.buttonsView.center.x, screenRect.height + self.buttonsView.frame.size.height/2.0)
+                    self.buttonsViewToBottom.constant = 0
                     self.buttonsView.alpha = 0.0
+                    self.view.layoutIfNeeded()
+                    
                 }, completion: nil)
             
         }

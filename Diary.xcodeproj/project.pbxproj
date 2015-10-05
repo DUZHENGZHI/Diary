@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0A0B100F1A9180460012604C /* DiaryLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0B100E1A9180460012604C /* DiaryLayout.swift */; };
 		0A0C8A7D1AEB630500A36F20 /* DiaryPullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0C8A7C1AEB630500A36F20 /* DiaryPullView.swift */; };
-		0A10DBB71AA8AF0D00B23F9E /* DiaryTextStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A10DBB61AA8AF0D00B23F9E /* DiaryTextStorage.swift */; };
 		0A1D91E21AEA85A600347F0A /* Wyue-GutiFangsong-NC_deliverable.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A3504B31ADE5CBA00728264 /* Wyue-GutiFangsong-NC_deliverable.otf */; };
 		0A2111121AF503DE007647BD /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2111111AF503DE007647BD /* Diary.swift */; };
 		0A222A871AB89E3F000A1DEF /* poem.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A222A861AB89E3F000A1DEF /* poem.json */; };
@@ -59,7 +58,6 @@
 		0A0B10091A915F1F0012604C /* Diary-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Diary-Bridging-Header.h"; sourceTree = "<group>"; };
 		0A0B100E1A9180460012604C /* DiaryLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryLayout.swift; path = Layout/DiaryLayout.swift; sourceTree = "<group>"; };
 		0A0C8A7C1AEB630500A36F20 /* DiaryPullView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryPullView.swift; path = UIView/DiaryPullView.swift; sourceTree = "<group>"; };
-		0A10DBB61AA8AF0D00B23F9E /* DiaryTextStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryTextStorage.swift; path = Helper/DiaryTextStorage.swift; sourceTree = "<group>"; };
 		0A2111111AF503DE007647BD /* Diary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Diary.swift; path = Models/Diary.swift; sourceTree = "<group>"; };
 		0A222A831AB88931000A1DEF /* Diary 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Diary 2.xcdatamodel"; sourceTree = "<group>"; };
 		0A222A861AB89E3F000A1DEF /* poem.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = poem.json; sourceTree = "<group>"; };
@@ -304,7 +302,6 @@
 				0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */,
 				0AE202581A8B0E420012AAED /* DiaryHelper.swift */,
 				0A9170011AA6216D00E987A4 /* DiaryLabel.swift */,
-				0A10DBB61AA8AF0D00B23F9E /* DiaryTextStorage.swift */,
 				0A28B4FC1AAB53C30037240C /* DiaryLocationHelper.swift */,
 				0A7645791AF4AF620078749E /* DiaryCloud.swift */,
 				6A9B00DD1BC1C8AD00C405EF /* DiaryPopView.swift */,
@@ -527,7 +524,6 @@
 				0AE202311A8B0B310012AAED /* Diary.xcdatamodeld in Sources */,
 				0A9170021AA6216D00E987A4 /* DiaryLabel.swift in Sources */,
 				0A76457A1AF4AF620078749E /* DiaryCloud.swift in Sources */,
-				0A10DBB71AA8AF0D00B23F9E /* DiaryTextStorage.swift in Sources */,
 				0A3572E11A9467E70037C6A0 /* DiaryAnimator.swift in Sources */,
 				6A9B00E41BC2719100C405EF /* DiaryFetchManager.swift in Sources */,
 				0A9170071AA6297600E987A4 /* DiaryComposeViewController.swift in Sources */,
