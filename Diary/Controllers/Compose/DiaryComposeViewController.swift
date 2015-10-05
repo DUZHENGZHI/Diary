@@ -12,25 +12,25 @@ import NCChineseConverter
 
 let titleTextViewHeight:CGFloat = 30.0
 let contentMargin:CGFloat = 20.0
+let locationHelper: DiaryLocationHelper = DiaryLocationHelper()
 
 class DiaryComposeViewController: DiaryBaseViewController{
 
-    var composeView:UITextView!
-    var locationTextView:UITextView!
-    var titleTextView:UITextView!
-    var storage:NSTextStorage!
-    var keyboardSize:CGSize = CGSizeMake(0, 0)
-    var finishButton:UIButton!
-    var imageView:UIImageView!
-    var imageButton:UIButton!
+    @IBOutlet weak var locationTextViewToBottom: NSLayoutConstraint!
     
-    var imagePicker = UIImagePickerController()
+    @IBOutlet var composeView: UITextView!
+    
+    @IBOutlet weak var locationTextView: UITextView!
+    
+    @IBOutlet weak var titleTextView: UITextView!
+    
+    @IBOutlet weak var finishButton: UIButton!
+    
+    var keyboardSize:CGSize = CGSizeMake(0, 0)
     
     var diaryKeyString: String?
     
     var diary:Diary?
-    
-    var locationHelper: DiaryLocationHelper = DiaryLocationHelper()
     
     var changeText = false
     
@@ -38,45 +38,24 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        storage = DiaryTextStorage()
-        imagePicker.delegate = self
-        
-        let containerSize = CGSize(width: screenRect.width, height: CGFloat.max)
-        let container = NSTextContainer(size: containerSize)
 
-        container.widthTracksTextView = true
-        let layoutManager = NSLayoutManager()
-//        layoutManager.delegate = self
-
-        storage.addLayoutManager(layoutManager)
-        layoutManager.addTextContainer(container)
-
-        composeView = UITextView(frame: CGRectMake(0, contentMargin + titleTextViewHeight, screenRect.width, screenRect.height), textContainer: container)
         composeView.font = DiaryFont
         composeView.editable = true
         composeView.userInteractionEnabled = true
-        composeView.delegate = self
-        composeView.textContainerInset = UIEdgeInsetsMake(contentMargin, contentMargin, contentMargin, contentMargin)
-        
-        print("\(DiaryFont.fontName)")
 
         //Add LocationTextView
-        locationTextView = UITextView(frame: CGRectMake(0, composeView.frame.size.height - 30.0, screenRect.width - 60.0, 30.0))
         locationTextView.font = DiaryLocationFont
         locationTextView.editable = true
         locationTextView.userInteractionEnabled = true
         locationTextView.alpha = 0.0
         locationTextView.bounces = false
-        locationTextView.delegate = self
 
         //Add titleView
 
-        titleTextView = UITextView(frame: CGRectMake(contentMargin, contentMargin/2, screenRect.width - 60.0, titleTextViewHeight))
         titleTextView.font = DiaryTitleFont
         titleTextView.editable = true
         titleTextView.userInteractionEnabled = true
         titleTextView.bounces = false
-        titleTextView.delegate = self
 
         if let diary = diary {
             composeView.text = diary.content
@@ -95,57 +74,26 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
         composeView.becomeFirstResponder()
 
-        self.view.addSubview(composeView)
-
-        self.view.addSubview(locationTextView)
-
-        self.view.addSubview(titleTextView)
 
         //Add finish button
 
-        finishButton = diaryButtonWith(text: "完",  fontSize: 18.0,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
-
-        finishButton.center = CGPointMake(screenRect.width - 20, screenRect.height - 30)
+        finishButton.customButtonWith(text: "完",  fontSize: 18.0,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
 
         finishButton.addTarget(self, action: "finishCompose:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        //Add image button
-        
-//        imageButton = diaryButtonWith(text: "圖",  fontSize: 18.0,  width: 50.0,  normalImageName: "OvalBlack", highlightedImageName: "OvalBlack", color: UIColor.blackColor())
-        
-//        imageButton.addTarget(self, action: "pickImage", forControlEvents: UIControlEvents.TouchUpInside)
-
-        self.view.addSubview(finishButton)
-        
-//        self.view.addSubview(imageButton)
-        
-        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 34.0, height: 34.0))
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
-        imageView.layer.cornerRadius = imageView.frame.size.height/2.0
-        imageView.layer.masksToBounds = true
-        imageView.hidden = true
-        self.view.addSubview(imageView)
-
-        self.finishButton.center = CGPointMake(self.view.frame.width - self.finishButton.frame.size.height/2.0 - 10, self.view.frame.height  - self.finishButton.frame.size.height/2.0 - 10)
-//        
-//        imageButton.center = CGPointMake(finishButton.center.x, finishButton.center.y - finishButton.frame.size.height)
-//        
-//        imageView.center = imageButton.center
-
-        self.locationTextView.center = CGPointMake(self.locationTextView.frame.size.width/2.0 + 20.0, self.finishButton.center.y)
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name:UIKeyboardWillChangeFrameNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateAddress:", name: "DiaryLocationUpdated", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateAddress", name: "DiaryLocationUpdated", object: nil)
 
+        updateAddress()
         // Do any additional setup after loading the view.
     }
 
-    func updateAddress(notification: NSNotification) {
+    func updateAddress() {
 
-        if let address = notification.object as? String {
+        if let address = locationHelper.address {
 
             print("Author at \(address)")
 
@@ -154,7 +102,6 @@ class DiaryComposeViewController: DiaryBaseViewController{
             }else {
                 locationTextView.text = "于 \(address)"
             }
-
 
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
                 {
@@ -165,11 +112,9 @@ class DiaryComposeViewController: DiaryBaseViewController{
             locationHelper.locationManager.stopUpdatingLocation()
         }
 
-
     }
 
     func finishCompose(button: UIButton) {
-        print("Finish compose \n", terminator: "")
 
         self.composeView.endEditing(true)
         
@@ -229,34 +174,16 @@ class DiaryComposeViewController: DiaryBaseViewController{
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
-    func pickImage() {
-        self.pickImageFromAlbum()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     func updateTextViewSizeForKeyboardHeight(keyboardHeight: CGFloat) {
 
         let newKeyboardHeight = keyboardHeight
 
-        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
             {
-                if (self.locationTextView.text == nil) {
-                    self.composeView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height - newKeyboardHeight)
-                }else{
-                    self.composeView.frame = CGRectMake(0, contentMargin + titleTextViewHeight, self.composeView.frame.size.width,  self.view.frame.height - newKeyboardHeight - 40.0 - self.finishButton.frame.size.height/2.0 - (contentMargin + titleTextViewHeight))
-                }
 
-                self.finishButton.center = CGPointMake(self.view.frame.width - self.finishButton.frame.size.height/2.0 - 10, self.view.frame.height - newKeyboardHeight - self.finishButton.frame.size.height/2.0 - 10)
+                self.locationTextViewToBottom.constant = newKeyboardHeight
                 
-//                self.imageButton.center = CGPointMake(self.finishButton.center.x, self.finishButton.center.y - self.finishButton.frame.size.height)
-                
-//                self.imageView.center = self.imageButton.center
-
-                self.locationTextView.center = CGPointMake(self.locationTextView.frame.size.width/2.0 + 20.0, self.finishButton.center.y)
+                self.view.layoutIfNeeded()
 
             }, completion: nil)
     }
@@ -273,61 +200,5 @@ class DiaryComposeViewController: DiaryBaseViewController{
         updateTextViewSizeForKeyboardHeight(0)
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
-extension DiaryComposeViewController: UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate  {
-
-
-    func pickImageFromAlbum(){
-        
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum){
-            
-            imagePicker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum;
-            
-            self.presentViewController(imagePicker, animated: true, completion: nil)
-        }
-        
-    }
-    
-    
-    func pickImageFromCamera(){
-        
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
-
-            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
-            
-            self.presentViewController(imagePicker, animated: true, completion: nil)
-        }
-        
-    }
-    
-    
-//    func textViewDidChange(textView: UITextView) {
-//        
-//        if textView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
-//            
-//            var text = textView.text.substringFromIndex(textView.text.endIndex.predecessor())
-//            var s = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_")
-//            if let r = text.rangeOfCharacterFromSet(s) {
-//                println("Skip Convert")
-//            }else{
-//                println("Do Convert")
-//                textView.text = (textView.text as NSString).chineseStringHK()
-//            }
-//        }
-//
-//        updateTextViewSizeForKeyboardHeight(keyboardSize.height)
-//    }
-
-
-}

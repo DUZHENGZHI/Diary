@@ -81,6 +81,13 @@ class MainViewController: DiaryBaseViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCollectionView", name: "DiaryChangeFont", object: nil)
         
+        resetCollectionView()
+        
+        view.layoutIfNeeded()
+        // Do any additional setup after loading the view.
+    }
+    
+    func resetCollectionView() {
         if portrait {
             collectionView.contentInset = calInsets(true)
         } else {
@@ -89,9 +96,6 @@ class MainViewController: DiaryBaseViewController {
         
         // Reset CollectionView Offset
         collectionView.contentOffset = CGPoint(x: -collectionView.contentInset.left, y: 0)
-        
-        view.layoutIfNeeded()
-        // Do any additional setup after loading the view.
     }
     
     func reloadCollectionView() {

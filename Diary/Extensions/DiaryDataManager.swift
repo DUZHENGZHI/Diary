@@ -262,6 +262,8 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
             collectionView.contentInset = calInsets(false)
         }
         
+        collectionView.contentOffset = CGPoint(x: -collectionView.contentInset.left, y: 0)
+        
         DiaryNavTransactionAnimator.animator.newSize = size
         
         view.layoutIfNeeded()

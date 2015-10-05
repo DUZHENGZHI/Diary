@@ -56,7 +56,7 @@ class DiaryCloud: NSObject {
                     
                     if let _ = OldRecord {
 //                        updateRecord(record, OldRecord)
-                        print("Already Have")
+//                        print("Already Have")
                     } else {
                         if let _ = record.title {
                             saveNewRecord(record)

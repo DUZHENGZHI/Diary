@@ -37,7 +37,6 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
     func setupUI() {
         
         webview.scrollView.bounces = true
-        
         webview.delegate = self
         webview.backgroundColor = UIColor.whiteColor()
         webview.scrollView.delegate = self
@@ -105,7 +104,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         showTut()
         
-
+        reloadWebView()
     }
     
     func showTut() {
@@ -126,12 +125,6 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
             })
         }
         
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        reloadWebView()
     }
     
     func reloadWebView() {
@@ -348,6 +341,21 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
     func scrollViewDidScroll(scrollView: UIScrollView) {
         pullView.alpha = (-scrollView.contentOffset.y/100.0)
         pullView.center = CGPointMake(self.view.center.x, -scrollView.contentOffset.y - 20)
+    }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        
+        coordinator.animateAlongsideTransitionInView(view, animation: { (content) -> Void in
+            
+        }) { (content) -> Void in
+            self.reloadWebView()
+        }
+        
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return .Portrait
     }
 
 }

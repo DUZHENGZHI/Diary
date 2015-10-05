@@ -34,9 +34,74 @@
                     <view key="view" contentMode="scaleToFill" id="dHZ-Eg-OpB">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" text="二十日" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nEm-xM-ewi">
+                                <rect key="frame" x="15" y="8" width="570" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="ZgC-9B-spm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Kka-Jh-Nc8">
+                                <rect key="frame" x="15" y="48" width="570" height="502"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3Av-T6-b2z">
+                                <rect key="frame" x="15" y="550" width="240" height="50"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="9RD-Zn-Pl8"/>
+                                    <constraint firstAttribute="height" constant="50" id="x5Y-An-4RG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqn-MQ-SbG">
+                                <rect key="frame" x="540" y="547.5" width="45" height="45"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="cnP-03-wc2"/>
+                                    <constraint firstAttribute="width" constant="45" id="oPm-IF-fgn"/>
+                                </constraints>
+                            </button>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5ix-xC-Xms" firstAttribute="top" secondItem="Kka-Jh-Nc8" secondAttribute="bottom" constant="94" id="3Vw-2T-8jB"/>
+                            <constraint firstItem="Kka-Jh-Nc8" firstAttribute="top" secondItem="nEm-xM-ewi" secondAttribute="bottom" constant="10" id="4da-Ol-7L1"/>
+                            <constraint firstAttribute="trailing" secondItem="zqn-MQ-SbG" secondAttribute="trailing" constant="15" id="5JI-Bt-eza"/>
+                            <constraint firstItem="3Av-T6-b2z" firstAttribute="leading" secondItem="dHZ-Eg-OpB" secondAttribute="leading" constant="15" id="68F-0R-Rm8"/>
+                            <constraint firstItem="nEm-xM-ewi" firstAttribute="top" secondItem="dHZ-Eg-OpB" secondAttribute="top" constant="8" id="9BT-fR-Q0h"/>
+                            <constraint firstItem="5ix-xC-Xms" firstAttribute="top" secondItem="3Av-T6-b2z" secondAttribute="bottom" id="GKY-Tm-yCE"/>
+                            <constraint firstAttribute="trailing" secondItem="nEm-xM-ewi" secondAttribute="trailing" constant="15" id="UtA-tk-pi5"/>
+                            <constraint firstItem="Kka-Jh-Nc8" firstAttribute="width" secondItem="nEm-xM-ewi" secondAttribute="width" id="Xlm-4g-3fq"/>
+                            <constraint firstItem="3Av-T6-b2z" firstAttribute="top" secondItem="Kka-Jh-Nc8" secondAttribute="bottom" id="ZF8-a6-UWV"/>
+                            <constraint firstItem="nEm-xM-ewi" firstAttribute="leading" secondItem="dHZ-Eg-OpB" secondAttribute="leading" constant="15" id="d8m-RT-IBC"/>
+                            <constraint firstItem="3Av-T6-b2z" firstAttribute="leading" secondItem="Kka-Jh-Nc8" secondAttribute="leading" id="hMF-FK-DPI"/>
+                            <constraint firstItem="zqn-MQ-SbG" firstAttribute="centerY" secondItem="3Av-T6-b2z" secondAttribute="centerY" constant="-5" id="oKx-nN-ALz"/>
+                            <constraint firstItem="Kka-Jh-Nc8" firstAttribute="trailing" secondItem="nEm-xM-ewi" secondAttribute="trailing" id="qMC-Um-wZl"/>
+                            <constraint firstItem="Kka-Jh-Nc8" firstAttribute="centerX" secondItem="nEm-xM-ewi" secondAttribute="centerX" id="xcA-tG-b73"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="qMC-Um-wZl"/>
+                                <exclude reference="hMF-FK-DPI"/>
+                                <exclude reference="3Vw-2T-8jB"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="composeView" destination="Kka-Jh-Nc8" id="P2w-9e-AGZ"/>
+                        <outlet property="finishButton" destination="zqn-MQ-SbG" id="bjs-dv-Uog"/>
+                        <outlet property="locationTextView" destination="3Av-T6-b2z" id="Bxt-gT-LCv"/>
+                        <outlet property="locationTextViewToBottom" destination="GKY-Tm-yCE" id="qeG-Xa-hLe"/>
+                        <outlet property="titleTextView" destination="nEm-xM-ewi" id="m5A-4T-byb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tAI-cx-1yg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -158,7 +223,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fhb-DM-jJH">
+                            <webView contentMode="scaleToFill" paginationMode="rightToLeft" translatesAutoresizingMaskIntoConstraints="NO" id="Fhb-DM-jJH">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -180,82 +245,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QdC-ZG-FDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="214" y="1038"/>
-        </scene>
-        <!--Diary Year Collection View Controller-->
-        <scene sceneID="eBc-gf-cNu">
-            <objects>
-                <collectionViewController storyboardIdentifier="DiaryYearCollectionViewController" id="M5W-eO-DcG" customClass="DiaryYearCollectionViewController" customModule="Diary" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="3tl-cr-wRH">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="n3g-2c-t3G">
-                            <size key="itemSize" width="50" height="50"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="YearMonthCollectionViewCell" id="94W-vz-g5l" customClass="DiaryCollectionViewCell" customModule="Diary" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <animations/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <animations/>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="M5W-eO-DcG" id="HpR-n5-Elx"/>
-                            <outlet property="delegate" destination="M5W-eO-DcG" id="0nl-N0-TQY"/>
-                        </connections>
-                    </collectionView>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="b2C-wc-pyp" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="880" y="369"/>
-        </scene>
-        <!--Diary Month Day Collection View Controller-->
-        <scene sceneID="QQx-xc-Vnw">
-            <objects>
-                <collectionViewController storyboardIdentifier="DiaryMonthDayCollectionViewController" id="O7r-Gr-6jW" customClass="DiaryMonthDayCollectionViewController" customModule="Diary" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="hIu-9p-JVW">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Al4-Db-crQ">
-                            <size key="itemSize" width="50" height="50"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MonthDayCollectionViewCell" id="DUe-7z-OHV" customClass="DiaryCollectionViewCell" customModule="Diary" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <animations/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <animations/>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="O7r-Gr-6jW" id="IX8-Zv-njd"/>
-                            <outlet property="delegate" destination="O7r-Gr-6jW" id="Vtl-uq-5XK"/>
-                        </connections>
-                    </collectionView>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="03d-tT-M6q" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1537" y="369"/>
         </scene>
     </scenes>
 </document>
