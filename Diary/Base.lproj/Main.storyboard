@@ -61,11 +61,11 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqn-MQ-SbG">
-                                <rect key="frame" x="540" y="547.5" width="45" height="45"/>
+                                <rect key="frame" x="535" y="540" width="50" height="50"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="cnP-03-wc2"/>
-                                    <constraint firstAttribute="width" constant="45" id="oPm-IF-fgn"/>
+                                    <constraint firstAttribute="height" constant="50" id="cnP-03-wc2"/>
+                                    <constraint firstAttribute="width" constant="50" id="oPm-IF-fgn"/>
                                 </constraints>
                             </button>
                         </subviews>
@@ -83,7 +83,7 @@
                             <constraint firstItem="3Av-T6-b2z" firstAttribute="top" secondItem="Kka-Jh-Nc8" secondAttribute="bottom" id="ZF8-a6-UWV"/>
                             <constraint firstItem="nEm-xM-ewi" firstAttribute="leading" secondItem="dHZ-Eg-OpB" secondAttribute="leading" constant="15" id="d8m-RT-IBC"/>
                             <constraint firstItem="3Av-T6-b2z" firstAttribute="leading" secondItem="Kka-Jh-Nc8" secondAttribute="leading" id="hMF-FK-DPI"/>
-                            <constraint firstItem="zqn-MQ-SbG" firstAttribute="centerY" secondItem="3Av-T6-b2z" secondAttribute="centerY" constant="-5" id="oKx-nN-ALz"/>
+                            <constraint firstItem="zqn-MQ-SbG" firstAttribute="centerY" secondItem="3Av-T6-b2z" secondAttribute="centerY" constant="-10" id="oKx-nN-ALz"/>
                             <constraint firstItem="Kka-Jh-Nc8" firstAttribute="trailing" secondItem="nEm-xM-ewi" secondAttribute="trailing" id="qMC-Um-wZl"/>
                             <constraint firstItem="Kka-Jh-Nc8" firstAttribute="centerX" secondItem="nEm-xM-ewi" secondAttribute="centerX" id="xcA-tG-b73"/>
                         </constraints>

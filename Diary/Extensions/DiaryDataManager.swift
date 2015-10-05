@@ -246,9 +246,11 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
         
         refetch()
         
+        self.collectionView.reloadData()
+        
         self.collectionView.collectionViewLayout.invalidateLayout()
         
-        self.collectionView.reloadData()
+        resetCollectionView()
     }
     
     
