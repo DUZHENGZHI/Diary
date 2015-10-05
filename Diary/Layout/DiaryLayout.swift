@@ -22,13 +22,12 @@ class DiaryLayout: UICollectionViewFlowLayout {
         
         let layoutAttributes = super.layoutAttributesForElementsInRect(rect)
         let contentOffset = collectionView!.contentOffset
-
         
         for (_, attributes) in layoutAttributes!.enumerate() {
             
             let center = attributes.center
             
-            let cellPositinOnScreen = (center.x - itemWidth/2.0) - contentOffset.x
+            let cellPositinOnScreen = (center.x - itemWidth/2.0) - contentOffset.x 
             
             if cellPositinOnScreen >= (collectionViewLeftInsets - itemWidth/2.0) && cellPositinOnScreen < (collectionViewLeftInsets + collectionViewWidth ) {
                 

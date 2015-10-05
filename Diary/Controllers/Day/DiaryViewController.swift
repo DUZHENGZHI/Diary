@@ -136,11 +136,25 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
     
     func reloadWebView() {
         
+        let mainHTML = NSBundle.mainBundle().URLForResource("DiaryTemplate", withExtension:"html")
+        var contents: NSString = ""
+        
+        do {
+            contents = try NSString(contentsOfFile: mainHTML!.path!, encoding: NSUTF8StringEncoding)
+        } catch let error as NSError {
+            print(error)
+        }
+
+        
         let timeString = "\(numberToChinese(NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: diary.created_at)))年 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: diary.created_at)))月 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Day, fromDate: diary.created_at)))日"
+        
+        contents = contents.stringByReplacingOccurrencesOfString("#timeString#", withString: timeString)
         
         //WebView method
         
         let newDiaryString = diary.content.stringByReplacingOccurrencesOfString("\n", withString: "<br>", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        
+        contents = contents.stringByReplacingOccurrencesOfString("#newDiaryString#", withString: newDiaryString)
         
         var title = ""
         var contentWidthOffset = 140
@@ -167,20 +181,17 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
             }
         }
         
+        contents = contents.stringByReplacingOccurrencesOfString("#contentMargin#", withString: "\(contentMargin)")
+        
+        contents = contents.stringByReplacingOccurrencesOfString("#title#", withString: title)
+        
         var minWidth = self.view.frame.size.width - CGFloat(contentWidthOffset)
         
+        contents = contents.stringByReplacingOccurrencesOfString("#minWidth#", withString: "\(minWidth)")
+        
         let fontStr = defaultFont
-        let coverImage = ""
         
-        let bodyPadding = 0
-        
-        let containerCSS = " padding:25px 10px 25px 25px; "
-        
-//        if let coverURL = diary.coverCloudKey {
-//            bodyPadding = 35
-//            containerCSS = " padding: 0px 0px 0px 0px; "
-//            coverImage = "<div class='cover'><img src='\(coverURL).jpg'></div>"
-//        }
+        contents = contents.stringByReplacingOccurrencesOfString("#fontStr#", withString: fontStr)
         
         var titleMarginRight:CGFloat = 15
         
@@ -189,24 +200,16 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
             titleMarginRight = 25
         }
         
-        let headertags = "<!DOCTYPE html><html><meta charset='utf-8'><head><title></title><style>"
-        let bodyCSS = "body{padding:\(bodyPadding)px;} "
-        let allCSS = "* {-webkit-text-size-adjust: 100%; margin:0; font-family: '\(fontStr)'; -webkit-writing-mode: vertical-rl; letter-spacing: 3px;}"
-        let contentCSS = ".content { min-width: \(minWidth)px; margin-right: \(contentMargin)px;} .content p{ font-size: 12pt; line-height: 24pt;}"
-        let titleCSS = ".title {font-size: 12pt; font-weight:bold; line-height: 24pt; margin-right: \(titleMarginRight)px; padding-left: 20px;} "
-        let extraCSS = ".extra{ font-size:12pt; line-height: 24pt; margin-right:30px; }"
-        let stampCSS = ".stamp {width:24px; height:auto; position:fixed; bottom:20px;}"
-        let coverCSS = ".cover {position: relative; width: 224px; overflow:hidden;} .cover img {height:100%; width:auto; position: absolute; top: -9999px; bottom: -9999px; left: -9999px; right: -9999px; margin: auto;} "
-        
-        var extraHTML = "<div class='extra'><br>\(timeString) </div>"
+        contents = contents.stringByReplacingOccurrencesOfString("#titleMarginRight#", withString: "\(titleMarginRight)")
         
         if let location = diary.location {
-            extraHTML = "<div class='extra'>\(location)<br>\(timeString) </div>"
+            contents = contents.stringByReplacingOccurrencesOfString("#location#", withString: location)
+        } else {
+            contents = contents.stringByReplacingOccurrencesOfString("#location#", withString: "")
         }
         
-        let contentHTML = "<div class='container'>\(title)<div class='content'><p>\(newDiaryString)</p></div>"
         
-        webview.loadHTMLString("\(headertags)\(bodyCSS) \(allCSS) \(contentCSS) \(titleCSS) \(extraCSS) .container { \(containerCSS) } \(stampCSS) \(coverCSS) </style></head> <body>\(coverImage) \(contentHTML) \(extraHTML)</body></html>", baseURL: nil)
+        webview.loadHTMLString(contents as String, baseURL: nil)
     }
     
     func showButtons() {
@@ -248,8 +251,6 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         let offset = self.webview.scrollView.contentOffset.x
         
         let image =  webview.captureView()
-        
-//        image = image.drawImage(UIImage(named: "Fingerprint")!, frame: CGRect(x: image.size.width/2.0 - 25.0, y: image.size.height - 75.0, width: 50.0, height: 50.0))
         
         self.webview.scrollView.contentOffset.x = offset
 
@@ -345,15 +346,5 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         pullView.alpha = (-scrollView.contentOffset.y/100.0)
         pullView.center = CGPointMake(self.view.center.x, -scrollView.contentOffset.y - 20)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
