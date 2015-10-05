@@ -199,10 +199,14 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
     
     func showButtons() {
 
+        view.bringSubviewToFront(buttonsView)
+        
         if(buttonsView.alpha == 0.0) {
+            
             UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
                 {
-                    self.buttonsViewToBottom.constant = 100
+                    self.buttonsViewToBottom.constant = 0
+                    
                     self.buttonsView.alpha = 1.0
                     
                     self.view.layoutIfNeeded()
@@ -213,8 +217,10 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
             
             UIView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
                 {
-                    self.buttonsViewToBottom.constant = 0
+                    self.buttonsViewToBottom.constant = -100
+                    
                     self.buttonsView.alpha = 0.0
+                    
                     self.view.layoutIfNeeded()
                     
                 }, completion: nil)

@@ -241,7 +241,7 @@
                                         <state key="normal" title="存"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vkl-Em-5Jq">
-                                        <rect key="frame" x="350" y="15" width="50" height="50"/>
+                                        <rect key="frame" x="335" y="15" width="50" height="50"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="LER-fz-iHY"/>
@@ -250,7 +250,7 @@
                                         <state key="normal" title="删"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VgM-DY-Mac">
-                                        <rect key="frame" x="200" y="15" width="50" height="50"/>
+                                        <rect key="frame" x="215" y="15" width="50" height="50"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="crP-RZ-F4e"/>
@@ -262,11 +262,11 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="Rh2-NV-ysP" firstAttribute="leading" secondItem="VgM-DY-Mac" secondAttribute="trailing" constant="25" id="0YD-Dh-9l5"/>
+                                    <constraint firstItem="Rh2-NV-ysP" firstAttribute="leading" secondItem="VgM-DY-Mac" secondAttribute="trailing" constant="10" id="0YD-Dh-9l5"/>
                                     <constraint firstItem="Rh2-NV-ysP" firstAttribute="centerX" secondItem="4wb-cm-7Ho" secondAttribute="centerX" id="2cN-IA-4WZ"/>
                                     <constraint firstAttribute="height" constant="80" id="2mb-5w-c19"/>
                                     <constraint firstItem="Rh2-NV-ysP" firstAttribute="centerY" secondItem="4wb-cm-7Ho" secondAttribute="centerY" id="AIi-CC-OdY"/>
-                                    <constraint firstItem="vkl-Em-5Jq" firstAttribute="leading" secondItem="Rh2-NV-ysP" secondAttribute="trailing" constant="25" id="lir-fF-9qf"/>
+                                    <constraint firstItem="vkl-Em-5Jq" firstAttribute="leading" secondItem="Rh2-NV-ysP" secondAttribute="trailing" constant="10" id="lir-fF-9qf"/>
                                     <constraint firstItem="vkl-Em-5Jq" firstAttribute="centerY" secondItem="4wb-cm-7Ho" secondAttribute="centerY" id="m2l-Ds-RTI"/>
                                     <constraint firstItem="VgM-DY-Mac" firstAttribute="centerY" secondItem="4wb-cm-7Ho" secondAttribute="centerY" id="nC3-PM-L3F"/>
                                 </constraints>
