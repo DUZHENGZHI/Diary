@@ -48,7 +48,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
         composeView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         //Add LocationTextView
-        locationTextView.font = UIFont(name: defaultFont, size: 14) as UIFont!
+        locationTextView.font = UIFont(name: defaultFont, size: 16) as UIFont!
 
         locationTextView.alpha = 0.0
         locationTextView.bounces = false
@@ -184,7 +184,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
             {
 
-                self.locationTextViewToBottom.constant = newKeyboardHeight
+                self.locationTextViewToBottom.constant = newKeyboardHeight + 25.0
                 
                 self.view.layoutIfNeeded()
 
