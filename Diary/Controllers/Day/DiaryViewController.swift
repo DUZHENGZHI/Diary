@@ -145,11 +145,6 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         var contentWidthOffset = 140
         var contentMargin:CGFloat = 10
         
-        if defaultFont == secondFont {
-            contentWidthOffset = 115
-            contentMargin = 20
-        }
-        
         if let titleStr = diary?.title {
             let parsedTime = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Day, fromDate: diary.created_at))) 日"
             if titleStr != parsedTime {
@@ -157,12 +152,6 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
                 contentWidthOffset = 205
                 contentMargin = 10
                 title = "<div class='title'>\(title)</div>"
-            }else{
-                
-                if defaultFont == secondFont {
-                    contentWidthOffset+=15
-                }
-                
             }
         }
         
@@ -170,7 +159,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         contents = contents.stringByReplacingOccurrencesOfString("#title#", withString: title)
         
-        var minWidth = self.view.frame.size.width - CGFloat(contentWidthOffset)
+        let minWidth = self.view.frame.size.width - CGFloat(contentWidthOffset)
         
         contents = contents.stringByReplacingOccurrencesOfString("#minWidth#", withString: "\(minWidth)")
         
@@ -178,12 +167,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         contents = contents.stringByReplacingOccurrencesOfString("#fontStr#", withString: fontStr)
         
-        var titleMarginRight:CGFloat = 15
-        
-        if defaultFont == secondFont {
-            minWidth = minWidth - 10.0
-            titleMarginRight = 25
-        }
+        let titleMarginRight:CGFloat = 15
         
         contents = contents.stringByReplacingOccurrencesOfString("#titleMarginRight#", withString: "\(titleMarginRight)")
         
@@ -204,24 +188,24 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         if(buttonsView.alpha == 0.0) {
             
             UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
-                {
-                    self.buttonsViewToBottom.constant = 0
+                { [weak self] in
+                    self?.buttonsViewToBottom.constant = 0
                     
-                    self.buttonsView.alpha = 1.0
+                    self?.buttonsView.alpha = 1.0
                     
-                    self.view.layoutIfNeeded()
+                    self?.view.layoutIfNeeded()
                     
                 }, completion: nil)
             
         }else{
             
             UIView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
-                {
-                    self.buttonsViewToBottom.constant = -100
+                { [weak self] in
+                    self?.buttonsViewToBottom.constant = -100
                     
-                    self.buttonsView.alpha = 0.0
+                    self?.buttonsView.alpha = 0.0
                     
-                    self.view.layoutIfNeeded()
+                    self?.view.layoutIfNeeded()
                     
                 }, completion: nil)
             
@@ -312,9 +296,8 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
     func webViewDidFinishLoad(webView: UIWebView) {
         
         UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
-        {
-            self.webview.alpha = 1.0
-            
+        {[weak self] in
+            self?.webview.alpha = 1.0
         }, completion: nil)
 
         webview.scrollView.contentOffset = CGPointMake(webview.scrollView.contentSize.width - webview.frame.size.width, 0)
@@ -349,8 +332,8 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         coordinator.animateAlongsideTransitionInView(view, animation: { (content) -> Void in
             
-        }) { (content) -> Void in
-            self.reloadWebView()
+        }) {[weak self] (content) -> Void in
+            self?.reloadWebView()
         }
         
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)

@@ -107,8 +107,8 @@ class DiaryComposeViewController: DiaryBaseViewController{
             }
 
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
-                {
-                    self.locationTextView.alpha = 1.0
+                { [weak self] in
+                    self?.locationTextView.alpha = 1.0
 
                 }, completion: nil)
 
@@ -182,11 +182,11 @@ class DiaryComposeViewController: DiaryBaseViewController{
         let newKeyboardHeight = keyboardHeight
 
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
-            {
+            { [weak self] in
 
-                self.locationTextViewToBottom.constant = newKeyboardHeight + 25.0
+                self?.locationTextViewToBottom.constant = newKeyboardHeight + 25.0
                 
-                self.view.layoutIfNeeded()
+                self?.view.layoutIfNeeded()
 
             }, completion: nil)
     }
