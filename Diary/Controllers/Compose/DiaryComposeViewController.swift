@@ -127,49 +127,52 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
             let translationtext = (composeView.text as NSString).chineseStringHK()
             
-            if let diary = diary {
+            if let managedContext = managedContext {
+            
+                if let diary = diary {
 
-                diary.content = translationtext
-                diary.location = locationTextView.text
-                diary.title = titleTextView.text
-                
-                if let DiaryID = diary.id {
+                    diary.content = translationtext
+                    diary.location = locationTextView.text
+                    diary.title = titleTextView.text
                     
-                    fetchCloudRecordWithID(DiaryID, complete: { (record) -> Void in
-                        if let record = record {
-                            updateRecord(diary, record: record)
-                        }
-                    })
+                    if let DiaryID = diary.id {
+                        
+                        fetchCloudRecordWithID(DiaryID, complete: { (record) -> Void in
+                            if let record = record {
+                                updateRecord(diary, record: record)
+                            }
+                        })
+                    }
+                    
+                }else{
+
+                    let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
+
+                    let newdiary = Diary(entity: entity!,
+                        insertIntoManagedObjectContext:managedContext)
+                    
+                    newdiary.id = randomStringWithLength(32) as String
+                    
+                    newdiary.content = translationtext
+
+                    if let address  = locationHelper.address {
+                        newdiary.location = address
+                    }
+
+                    if let title = titleTextView.text {
+                        newdiary.title = title
+                    }
+                    
+                    newdiary.updateTimeWithDate(NSDate())
+                    
+                    saveNewRecord(newdiary)
                 }
-                
-            }else{
 
-                let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
-
-                let newdiary = Diary(entity: entity!,
-                    insertIntoManagedObjectContext:managedContext)
-                
-                newdiary.id = randomStringWithLength(32) as String
-                
-                newdiary.content = translationtext
-
-                if let address  = locationHelper.address {
-                    newdiary.location = address
+                do {
+                    try managedContext.save()
+                } catch let error as NSError {
+                    print("Could not save \(error), \(error.userInfo)")
                 }
-
-                if let title = titleTextView.text {
-                    newdiary.title = title
-                }
-                
-                newdiary.updateTimeWithDate(NSDate())
-                
-                saveNewRecord(newdiary)
-            }
-
-            do {
-                try managedContext.save()
-            } catch let error as NSError {
-                print("Could not save \(error), \(error.userInfo)")
             }
 
         }

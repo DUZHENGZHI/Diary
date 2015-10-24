@@ -21,19 +21,21 @@ extension MainViewController {
                 let fetchRequest = NSFetchRequest(entityName:"Diary")
                 
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
-                
-                fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-                    managedObjectContext: managedContext, sectionNameKeyPath: "year",
-                    cacheName: nil)
+                if let managedContext = managedContext {
+                    fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+                        managedObjectContext: managedContext, sectionNameKeyPath: "year",
+                        cacheName: nil)
+                }
             case .Year:
                 let fetchRequest = NSFetchRequest(entityName:"Diary")
                 fetchRequest.predicate = NSPredicate(format: "year = \(year)")
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
-                
-                fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-                    managedObjectContext: managedContext, sectionNameKeyPath: "month",
-                    cacheName: nil)
-                fetchedResultsController.delegate = self
+                if let managedContext = managedContext {
+                    fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+                        managedObjectContext: managedContext, sectionNameKeyPath: "month",
+                        cacheName: nil)
+                    fetchedResultsController.delegate = self
+                }
             case .Month:
                 let fetchRequest = NSFetchRequest(entityName:"Diary")
                 
@@ -41,12 +43,13 @@ extension MainViewController {
                 
                 fetchRequest.predicate = NSPredicate(format: "year = \(year) AND month = \(month)")
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
-                
-                fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-                    managedObjectContext: managedContext, sectionNameKeyPath: "year",
-                    cacheName: nil)
-                
-                fetchedResultsController.delegate = self
+                if let managedContext = managedContext {
+                    fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+                        managedObjectContext: managedContext, sectionNameKeyPath: "year",
+                        cacheName: nil)
+                    
+                    fetchedResultsController.delegate = self
+                }
             }
             
         }

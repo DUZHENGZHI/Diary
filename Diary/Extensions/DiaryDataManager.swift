@@ -46,35 +46,36 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
             var poemsCollection = jsonObject.valueForKey("poems") as! [String: AnyObject]
             
             let poems = currentLanguage == "ja" ?  (poemsCollection["ja"] as! NSArray) : ( poemsCollection["cn"] as! NSArray)
-            
-            for poem in poems{
+            if let managedContext = managedContext {
+                for poem in poems{
+                    
+                    let poem =  poem as! NSDictionary
+                    let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
+                    
+                    let newdiary = Diary(entity: entity!,
+                        insertIntoManagedObjectContext:managedContext)
+                    
+                    newdiary.id = randomStringWithLength(32) as String
+                    
+                    newdiary.content = poem.valueForKey("content") as! String
+                    newdiary.title = poem.valueForKey("title") as? String
+                    newdiary.location = poem.valueForKey("location") as? String
+                    
+                    newdiary.updateTimeWithDate(NSDate())
+                    
+                    dvc.interfaceType = .Month
+                    dvc.month = newdiary.month.integerValue
+                    dvc.year = newdiary.year.integerValue
+                    
+                }
                 
-                let poem =  poem as! NSDictionary
-                let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
-                
-                let newdiary = Diary(entity: entity!,
-                    insertIntoManagedObjectContext:managedContext)
-                
-                newdiary.id = randomStringWithLength(32) as String
-                
-                newdiary.content = poem.valueForKey("content") as! String
-                newdiary.title = poem.valueForKey("title") as? String
-                newdiary.location = poem.valueForKey("location") as? String
-                
-                newdiary.updateTimeWithDate(NSDate())
-                
-                dvc.interfaceType = .Month
-                dvc.month = newdiary.month.integerValue
-                dvc.year = newdiary.year.integerValue
-                
-            }
-            
-            do {
-                try managedContext.save()
-                
-                self.navigationController!.pushViewController(dvc, animated: true)
-            } catch let error as NSError {
-                print("Could not save \(error), \(error.userInfo)")
+                do {
+                    try managedContext.save()
+                    
+                    self.navigationController!.pushViewController(dvc, animated: true)
+                } catch let error as NSError {
+                    print("Could not save \(error), \(error.userInfo)")
+                }
             }
         }
         
@@ -217,15 +218,9 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
         
     }
     
-    func calInsets(portrait: Bool) -> UIEdgeInsets {
+    func calInsets(portrait: Bool, forSize size: CGSize) -> UIEdgeInsets {
         
-        var insetLeft =  (screenRect.width - collectionViewWidth)/2.0
-        
-        if portrait {
-            insetLeft = (screenRect.width - collectionViewWidth)/2.0
-        }else {
-            insetLeft = (screenRect.height - collectionViewWidth)/2.0
-        }
+        let insetLeft = (size.width - collectionViewWidth)/2.0
         
         var numberOfCells:Int = fetchedResultsController.sections!.count > 0 ? fetchedResultsController.sections!.count : 1
         
@@ -233,13 +228,17 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
             numberOfCells = self.diarys.count
         }
         
-        var edgeInsets = insetLeft + (collectionViewWidth - (CGFloat(numberOfCells)*itemWidth))/2.0
+        var edgeInsets: CGFloat = 0
         
-        if (numberOfCells > collectionViewDisplayedCells) {
+        if (numberOfCells >= collectionViewDisplayedCells) {
             
             edgeInsets = insetLeft
             
+        } else {
+            edgeInsets = insetLeft + (collectionViewWidth - (CGFloat(numberOfCells)*itemWidth))/2.0
         }
+        
+        print(edgeInsets)
         
         return UIEdgeInsetsMake(0, edgeInsets, 0, edgeInsets)
     }
@@ -259,12 +258,14 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         
-        if size.height == screenRect.height {
+        print(size)
+        
+        if portrait {
             subLabelCenter.constant = -15
-            collectionView.contentInset = calInsets(true)
+            collectionView.contentInset = calInsets(true, forSize: size)
         }else {
             subLabelCenter.constant = 50
-            collectionView.contentInset = calInsets(false)
+            collectionView.contentInset = calInsets(false, forSize: size)
         }
         
         collectionView.contentOffset = CGPoint(x: -collectionView.contentInset.left, y: 0)

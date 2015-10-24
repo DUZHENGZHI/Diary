@@ -23,12 +23,14 @@ class DiaryCloud: NSObject {
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
         
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-            managedObjectContext: managedContext, sectionNameKeyPath: nil,
-            cacheName: nil)
-        
-        fetchedResultsController.delegate = self
-        
+        if let managedContext = managedContext {
+            
+            fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+                managedObjectContext: managedContext, sectionNameKeyPath: nil,
+                cacheName: nil)
+            
+            fetchedResultsController.delegate = self
+        }
     }
     
     func startFetch() {
@@ -95,7 +97,7 @@ class DiaryCloud: NSObject {
         }
         
         do {
-            try managedContext.save()
+            try managedContext?.save()
         } catch _ {
             
         }
@@ -104,31 +106,34 @@ class DiaryCloud: NSObject {
 }
 
 func saveDiaryWithCKRecord(record: CKRecord) {
-    let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
+    if let managedContext = managedContext {
+        
+        let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
 
-    if let ID = record.objectForKey("id") as? String,
-        Content = record.objectForKey("Content") as? String,
-        Location = record.objectForKey("Location") as? String,
-        Title = record.objectForKey("Title") as? String,
-        Date = record.objectForKey("Created_at") as? NSDate {
-            
-            let newdiary = Diary(entity: entity!,
-                insertIntoManagedObjectContext:managedContext)
-            
-            newdiary.id = ID
-            
-            newdiary.content = Content
-            
-            newdiary.location = Location
-            
-            newdiary.title = Title
-            
-            newdiary.updateTimeWithDate(Date)
-    }
-    
-    do {
-        try managedContext.save()
-    } catch _ {
+        if let ID = record.objectForKey("id") as? String,
+            Content = record.objectForKey("Content") as? String,
+            Location = record.objectForKey("Location") as? String,
+            Title = record.objectForKey("Title") as? String,
+            Date = record.objectForKey("Created_at") as? NSDate {
+                
+                let newdiary = Diary(entity: entity!,
+                    insertIntoManagedObjectContext:managedContext)
+                
+                newdiary.id = ID
+                
+                newdiary.content = Content
+                
+                newdiary.location = Location
+                
+                newdiary.title = Title
+                
+                newdiary.updateTimeWithDate(Date)
+        }
+        
+        do {
+            try managedContext.save()
+        } catch _ {
+        }
     }
 }
 
@@ -139,7 +144,7 @@ func fetchDiaryByID(id: String) -> Diary? {
     
     do {
         let fetchedResults =
-        try managedContext.executeFetchRequest(fetchRequest) as? [Diary]
+        try managedContext?.executeFetchRequest(fetchRequest) as? [Diary]
         
         if let results = fetchedResults {
             return results.first
