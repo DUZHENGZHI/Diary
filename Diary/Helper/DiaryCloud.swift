@@ -45,56 +45,61 @@ class DiaryCloud: NSObject {
     
     func startSync() {
         
-        print("New sycn")
+        print("New sync")
         
         let allRecords  = fetchedResultsController.fetchedObjects as! [Diary]
-        
-        for record in allRecords {
-            if let recordID = record.id {
-                
-                fetchCloudRecordWithID(recordID, complete: { (OldRecord) -> Void in
-                    
-                    if let _ = OldRecord {
-//                        updateRecord(record, OldRecord)
-//                        print("Already Have")
-                    } else {
-                        if let _ = record.title {
-                            saveNewRecord(record)
-                        }
-                    }
-                    
-                })
-                
-            } else {
-                
-                record.id = randomStringWithLength(32) as String
-                
-                if  let _ = record.title {
-                    saveNewRecord(record)
-                }
-
-            }
-        }
-        
-        do {
-            try managedContext.save()
-        } catch _ {
-        }
         
         fetchCloudRecords { (records) -> Void in
             if let records = records {
                 for fetchRecord in records {
+                    
+                    // Find Cloud Thing in Local
+                    
                     if let diaryID = fetchRecord.objectForKey("id") as? String {
+                        
                         if let _ = fetchDiaryByID(diaryID) {
-//                            println("No need to do thing")
+                            //                            println("No need to do thing")
                         } else {
                             print("Create Diary With CKRecords")
                             saveDiaryWithCKRecord(fetchRecord)
                         }
                     }
                 }
+                
+                for record in allRecords {
+                    //Find local in Cloud
+                    
+                    let filteredArray = records.filter { cloud_record -> Bool in
+                        if let recordID = cloud_record["id"] as? String {
+                            if recordID == record.id {
+                                return false
+                            } else {
+                                
+                                record.id = randomStringWithLength(32) as String
+                                
+                                if let _ = record.title {
+                                    saveNewRecord(record)
+                                }
+                                
+                                return true
+                            }
+                            
+                        } else {
+                            return true
+                        }
+                    }
+                    
+                    print(filteredArray)
+                }
             }
         }
+        
+        do {
+            try managedContext.save()
+        } catch _ {
+            
+        }
+    
     }
 }
 

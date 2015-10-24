@@ -37,6 +37,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
             
             self.navigationController!.pushViewController(dvc, animated: true)
         }else{
+            
             let dvc = self.storyboard?.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
             
             let filePath = NSBundle.mainBundle().pathForResource("poem", ofType: "json")
@@ -61,6 +62,8 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
                 newdiary.location = poem.valueForKey("location") as? String
                 
                 newdiary.updateTimeWithDate(NSDate())
+                
+                dvc.interfaceType = .Month
                 dvc.month = newdiary.month.integerValue
                 dvc.year = newdiary.year.integerValue
                 

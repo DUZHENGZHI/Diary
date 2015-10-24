@@ -37,7 +37,7 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             toView.transform = CGAffineTransformMakeScale(0.3,0.3);
         }
 
-        containerView!.insertSubview(toView, aboveSubview: fromView)
+        containerView?.insertSubview(toView, aboveSubview: fromView)
 
         UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
             {

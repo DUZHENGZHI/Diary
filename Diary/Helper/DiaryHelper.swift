@@ -147,6 +147,8 @@ func getTutView() -> UIView {
     
     let label = DiaryLabel(fontname: defaultFont, labelText: "雙擊返回", fontSize: 24.0, lineHeight: 15.0)
     
+    label.frame = CGRectMake(0, 0, label.labelSize!.width, label.labelSize!.height)
+    
     let labelContainer = UIView(frame: CGRectInset(label.frame, -10.0, -10.0))
     
     labelContainer.layer.borderColor = UIColor.blackColor().CGColor
