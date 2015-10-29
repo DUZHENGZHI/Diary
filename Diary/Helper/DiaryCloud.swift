@@ -38,7 +38,7 @@ class DiaryCloud: NSObject {
         do {
             try fetchedResultsController.performFetch()
             let fetchedResults = fetchedResultsController.fetchedObjects as! [Diary]
-            print("All Diary is \(fetchedResults.count)")
+            debugPrint("All Diary is \(fetchedResults.count)")
             startSync()
         } catch _ {
             
@@ -47,22 +47,32 @@ class DiaryCloud: NSObject {
     
     func startSync() {
         
-        print("New sync")
+        debugPrint("New sync")
         
         let allRecords  = fetchedResultsController.fetchedObjects as! [Diary]
         
-        fetchCloudRecords { (records) -> Void in
+//        removeDupicated()
+        
+        fetchCloudRecords { [weak self] records  in
+            
+            print(records?.count)
+            print(allRecords.count)
+            
             if let records = records {
+                
                 for fetchRecord in records {
                     
                     // Find Cloud Thing in Local
                     
-                    if let diaryID = fetchRecord.objectForKey("id") as? String {
+                    if let diaryID = fetchRecord.objectForKey("id") as? String,
+                        title = fetchRecord.objectForKey("Title") as? String{
+                        
+                        debugPrint("Processing \(diaryID) \(title)")
                         
                         if let _ = fetchDiaryByID(diaryID) {
-                            //                            println("No need to do thing")
+                            debugPrint("No need to do thing")
                         } else {
-                            print("Create Diary With CKRecords")
+                            debugPrint("Create Diary With CKRecords")
                             saveDiaryWithCKRecord(fetchRecord)
                         }
                     }
@@ -71,19 +81,19 @@ class DiaryCloud: NSObject {
                 for record in allRecords {
                     //Find local in Cloud
                     
-                    let filteredArray = records.filter { cloud_record -> Bool in
-                        if let recordID = cloud_record["id"] as? String {
+                    let filterArray = records.filter { cloud_record -> Bool in
+
+                        if let recordID = cloud_record.objectForKey("id") as? String, title = cloud_record.objectForKey("Title") as? String {
+                            
                             if recordID == record.id {
-                                return false
-                            } else {
                                 
-                                record.id = randomStringWithLength(32) as String
-                                
-                                if let _ = record.title {
-                                    saveNewRecord(record)
-                                }
+                                debugPrint("OK Processing \(recordID) \(title)")
                                 
                                 return true
+                                
+                            } else {
+                                
+                                return false
                             }
                             
                         } else {
@@ -91,8 +101,61 @@ class DiaryCloud: NSObject {
                         }
                     }
                     
-                    print(filteredArray)
+                    if filterArray.count == 0 {
+
+                        if let _ = record.title {
+                            saveNewRecord(record)
+                        }
+                        
+                    } else {
+                        debugPrint("No need to upload")
+                    }
+                    
                 }
+            }
+            
+            do {
+                try managedContext?.save()
+            } catch _ {
+                
+            }
+            
+            self?.removeDupicated()
+        }
+    }
+    
+    func removeDupicated() {
+        let allRecords  = fetchedResultsController.fetchedObjects as! [Diary]
+        
+        for record in allRecords {
+            
+            guard let recordID = record.id else {
+                return
+            }
+            
+//            fetchCloudRecordWithTitle(recordID, complete: { (records) -> Void in
+//                guard let records = records else {
+//                    return
+//                }
+//                for record in records {
+//                    deleteCloudRecord(record)
+//                }
+//
+//            })
+            
+            var toDelete = [Diary]()
+            
+            if let fetchedRecords = fetchsDiaryByID(recordID) {
+                for (index, fetchedRecord) in fetchedRecords.enumerate() {
+                    if index != 0 {
+                        
+                        toDelete.append(fetchedRecord)
+                    }
+                }
+            }
+            
+            for diary in toDelete {
+                managedContext?.deleteObject(diary)
             }
         }
         
@@ -101,9 +164,11 @@ class DiaryCloud: NSObject {
         } catch _ {
             
         }
-    
+        
     }
+
 }
+
 
 func saveDiaryWithCKRecord(record: CKRecord) {
     if let managedContext = managedContext {
@@ -155,6 +220,47 @@ func fetchDiaryByID(id: String) -> Diary? {
         return nil
     }
 
+}
+
+func fetchsDiaryByID(id: String) -> [Diary]? {
+    
+    let fetchRequest = NSFetchRequest(entityName:"Diary")
+    fetchRequest.predicate = NSPredicate(format: "id = %@", id)
+    
+    do {
+        let fetchedResults =
+        try managedContext?.executeFetchRequest(fetchRequest) as? [Diary]
+        
+        if let results = fetchedResults {
+            return results
+        } else {
+            return nil
+        }
+    } catch _ {
+        return nil
+    }
+    
+}
+
+
+func fetchsDiaryByTitle(title: String) -> [Diary]? {
+    
+    let fetchRequest = NSFetchRequest(entityName:"Diary")
+    fetchRequest.predicate = NSPredicate(format: "title = %@", title)
+    
+    do {
+        let fetchedResults =
+        try managedContext?.executeFetchRequest(fetchRequest) as? [Diary]
+        
+        if let results = fetchedResults {
+            return results
+        } else {
+            return nil
+        }
+    } catch _ {
+        return nil
+    }
+    
 }
 
 extension DiaryCloud: NSFetchedResultsControllerDelegate {

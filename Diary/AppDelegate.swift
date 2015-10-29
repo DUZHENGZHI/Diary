@@ -13,6 +13,7 @@ import Crashlytics
 import MonkeyKing
 
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
 
     var window: UIWindow?
@@ -33,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
             defaults.setObject(true, forKey: "defaultCloudConfig")
             
         } else {
-            print("No iCloud")
+            debugPrint("No iCloud")
             
             let message = UIAlertView(title: "iCloud 未开启", message: "为了备份您的数据，请在系统设置里登录 iCloud 以免发生记录丢失", delegate: nil, cancelButtonTitle: nil, otherButtonTitles: "好的")
             message.show()
@@ -51,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
     func defaultConfig() {
         
         if let _ = defaults.objectForKey("defaultConfig") {
-            print("Configed")
+            debugPrint("Configed")
         }else{
             defaults.setObject(currentLanguage == "ja" ? janpan : firstFont, forKey: "defaultFont")
             

@@ -98,7 +98,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
         if let address = locationHelper.address {
 
-            print("Author at \(address)")
+            debugPrint("Author at \(address)")
 
             if let _ = diary?.location {
                 locationTextView.text = diary?.location
@@ -171,7 +171,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
                 do {
                     try managedContext.save()
                 } catch let error as NSError {
-                    print("Could not save \(error), \(error.userInfo)")
+                    debugPrint("Could not save \(error), \(error.userInfo)")
                 }
             }
 

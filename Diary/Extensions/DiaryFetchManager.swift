@@ -39,7 +39,7 @@ extension MainViewController {
             case .Month:
                 let fetchRequest = NSFetchRequest(entityName:"Diary")
                 
-                print("year = \(year) AND month = \(month)")
+                debugPrint("year = \(year) AND month = \(month)")
                 
                 fetchRequest.predicate = NSPredicate(format: "year = \(year) AND month = \(month)")
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
@@ -100,7 +100,7 @@ extension MainViewController {
             let fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
             
             if (fetchedResults.count == 0){
-                print("Present empty year")
+                debugPrint("Present empty year")
             }else{
                 
                 if let sectionsCount = fetchedResultsController.sections?.count {

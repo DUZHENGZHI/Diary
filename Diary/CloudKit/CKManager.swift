@@ -16,7 +16,7 @@ let privateDB = container.privateCloudDatabase
 func saveNewRecord(diary: Diary) {
     
     let newDiary = CKRecord(recordType: "Diary")
-    print("Add New Diary")
+    debugPrint("Add New Diary To iCloud")
     updateRecord(diary, record: newDiary)
 }
 
@@ -38,10 +38,10 @@ func updateRecord(diary: Diary, record: CKRecord) {
     
     privateDB.saveRecord(record, completionHandler: { (newDiary, error) -> Void in
         
-        print("Diary Updated")
+        debugPrint("Diary Updated")
         
         if let error = error {
-            print("error \(error.description)")
+            debugPrint("error \(error.description)")
         }
         
     })
@@ -64,9 +64,32 @@ func fetchCloudRecordWithID(recordID: String , complete: (CKRecord?) -> Void) {
     }
 }
 
+func deleteCloudRecord(record: CKRecord) {
+    privateDB.deleteRecordWithID(record.recordID) { (recordID, error) -> Void in
+        print("Delete \(recordID?.recordName) \(error?.description)")
+    }
+}
+
+func fetchCloudRecordWithTitle(title: String , complete: ([CKRecord]?) -> Void) {
+    
+    let predicate = NSPredicate(format: "Title == %@", title)
+    
+    let query = CKQuery(recordType: "Diary",
+        predicate: predicate )
+    
+    privateDB.performQuery(query, inZoneWithID: nil) {
+        results, error in
+        if let results = results {
+            complete(results)
+        } else {
+            complete(nil)
+        }
+    }
+}
+
 func fetchCloudRecords(complete: ([CKRecord]?) -> Void) {
     
-        let predicate = NSPredicate(format: "TRUEPREDICATE", argumentArray: nil)
+        let predicate = NSPredicate(value: true)
     
         let query = CKQuery(recordType: "Diary",
             predicate: predicate )

@@ -23,7 +23,7 @@ class DiaryLocationHelper: NSObject, CLLocationManagerDelegate {
         locationManager.pausesLocationUpdatesAutomatically = true
         locationManager.headingFilter = kCLHeadingFilterNone
         locationManager.requestWhenInUseAuthorization()
-        print("Location Right")
+        debugPrint("Location Right")
         if (CLLocationManager.locationServicesEnabled()){
             locationManager.startUpdatingLocation()
         }
@@ -34,7 +34,7 @@ class DiaryLocationHelper: NSObject, CLLocationManagerDelegate {
         geocoder.reverseGeocodeLocation(newLocation, completionHandler: { (placemarks, error) in
             
             if let error = error {
-                print("reverse geodcode fail: \(error.localizedDescription)")
+                debugPrint("reverse geodcode fail: \(error.localizedDescription)")
             }
             
             if let pm = placemarks {

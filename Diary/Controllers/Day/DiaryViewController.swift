@@ -127,7 +127,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         do {
             contents = try NSString(contentsOfFile: mainHTML!.path!, encoding: NSUTF8StringEncoding)
         } catch let error as NSError {
-            print(error)
+            debugPrint(error)
         }
         
         let timeString = "\(numberToChinese(NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: diary.created_at)))年 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: diary.created_at)))月 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Day, fromDate: diary.created_at)))日"
@@ -216,7 +216,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         if let diary = diary {
             
-            print("Find \(diary.created_at)")
+            debugPrint("Find \(diary.created_at)")
             
             composeViewController.diary = diary
         }
@@ -247,7 +247,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
             type: .Session,
             message: sessionMessage,
             finish: { success in
-                print("share Image to WeChat Session success: \(success)")
+                debugPrint("share Image to WeChat Session success: \(success)")
             }
         )
         
@@ -257,7 +257,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
             type: .Timeline,
             message: timelineMessage,
             finish: { success in
-                print("share Image to WeChat Timeline success: \(success)")
+                debugPrint("share Image to WeChat Timeline success: \(success)")
             }
         )
         
@@ -276,9 +276,9 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
                 if let record = record {
                     privateDB.deleteRecordWithID(record.recordID, completionHandler: { (recordID, error) -> Void in
                         if let error = error {
-                            print("\(error.description)")
+                            debugPrint("\(error.description)")
                         } else {
-                            print("delete \(recordID)")
+                            debugPrint("delete \(recordID)")
                         }
                     })
                 }

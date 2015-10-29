@@ -78,7 +78,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
                     
                     self.navigationController!.pushViewController(dvc, animated: true)
                 } catch let error as NSError {
-                    print("Could not save \(error), \(error.userInfo)")
+                    debugPrint("Could not save \(error), \(error.userInfo)")
                 }
             }
         }
@@ -129,7 +129,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
                 var year = components
                 if sectionsCount > 0 {
                     let sectionInfo = fetchedResultsController.sections![indexPath.row]
-                    print("Section info \(sectionInfo.name)")
+                    debugPrint("Section info \(sectionInfo.name)")
                     year = Int(sectionInfo.name)!
                 }
                 
@@ -242,7 +242,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
             edgeInsets = insetLeft + (collectionViewWidth - (CGFloat(numberOfCells)*itemWidth))/2.0
         }
         
-        print(edgeInsets)
+        debugPrint(edgeInsets)
         
         return UIEdgeInsetsMake(0, edgeInsets, 0, edgeInsets)
     }
@@ -262,7 +262,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         
-        print(size)
+        debugPrint(size)
         
         if portrait {
             collectionView.contentInset = calInsets(true, forSize: size)

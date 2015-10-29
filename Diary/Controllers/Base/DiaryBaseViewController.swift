@@ -29,7 +29,7 @@ class DiaryBaseViewController: UIViewController {
     
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
         if motion == UIEventSubtype.MotionShake {
-            print("Device Shaked")
+            debugPrint("Device Shaked")
 //            showAlert()
         }
     }
@@ -41,13 +41,13 @@ class DiaryBaseViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "好的", style: .Default, handler: { action in
             switch action.style{
             case .Default:
-                print("default")
+                debugPrint("default")
                 toggleFont()
             case .Cancel:
-                print("cancel")
+                debugPrint("cancel")
                 
             case .Destructive:
-                print("destructive")
+                debugPrint("destructive")
             }
         }))
     }
