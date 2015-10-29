@@ -46,7 +46,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
             var poemsCollection = jsonObject.valueForKey("poems") as! [String: AnyObject]
             
             let poems = currentLanguage == "ja" ?  (poemsCollection["ja"] as! NSArray) : ( poemsCollection["cn"] as! NSArray)
-            if let managedContext = managedContext {
+            if let managedContext = DiaryCoreData.sharedInstance.managedContext {
                 for poem in poems{
                     
                     let poem =  poem as! NSDictionary

@@ -31,6 +31,7 @@
 		0AE202471A8B0B310012AAED /* DiaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202461A8B0B310012AAED /* DiaryTests.swift */; };
 		0AE202591A8B0E420012AAED /* DiaryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202581A8B0E420012AAED /* DiaryHelper.swift */; };
 		0AEDA8541AC2D50E00F2DC56 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEDA8531AC2D50E00F2DC56 /* CloudKit.framework */; };
+		6A31E2D11BE2B1D200920CC5 /* DiaryCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A31E2D01BE2B1D200920CC5 /* DiaryCoreData.swift */; };
 		6A9B00D21BC18DF100C405EF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00D11BC18DF100C405EF /* MainViewController.swift */; };
 		6A9B00DB1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00D91BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.swift */; };
 		6A9B00DC1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A9B00DA1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.xib */; };
@@ -91,6 +92,7 @@
 		0AF0E4271A903D6C0027592E /* VerticalTextPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = VerticalTextPlayground.playground; path = Playgrounds/VerticalTextPlayground.playground; sourceTree = "<group>"; };
 		18506CDA6A8669C3DB90CABE /* Pods-Diary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diary.release.xcconfig"; path = "Pods/Target Support Files/Pods-Diary/Pods-Diary.release.xcconfig"; sourceTree = "<group>"; };
 		37DBC7CC24E2BB3323B79181 /* Pods_Diary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Diary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A31E2D01BE2B1D200920CC5 /* DiaryCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryCoreData.swift; path = Helper/DiaryCoreData.swift; sourceTree = "<group>"; };
 		6A9B00D11BC18DF100C405EF /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = Controllers/Main/MainViewController.swift; sourceTree = "<group>"; };
 		6A9B00D91BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryAutoLayoutCollectionViewCell.swift; path = Cell/DiaryAutoLayoutCollectionViewCell.swift; sourceTree = "<group>"; };
 		6A9B00DA1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DiaryAutoLayoutCollectionViewCell.xib; path = Cell/DiaryAutoLayoutCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 				0A28B4FC1AAB53C30037240C /* DiaryLocationHelper.swift */,
 				0A7645791AF4AF620078749E /* DiaryCloud.swift */,
 				6A9B00DD1BC1C8AD00C405EF /* DiaryPopView.swift */,
+				6A31E2D01BE2B1D200920CC5 /* DiaryCoreData.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -515,6 +518,7 @@
 				6AB5C54F1BBCD82B00D46B05 /* WeChatActivity.swift in Sources */,
 				0A0B100F1A9180460012604C /* DiaryLayout.swift in Sources */,
 				6A9B00DB1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.swift in Sources */,
+				6A31E2D11BE2B1D200920CC5 /* DiaryCoreData.swift in Sources */,
 				0AE202591A8B0E420012AAED /* DiaryHelper.swift in Sources */,
 				0AE2022E1A8B0B310012AAED /* AppDelegate.swift in Sources */,
 				0AE202311A8B0B310012AAED /* Diary.xcdatamodeld in Sources */,

@@ -21,7 +21,7 @@ extension MainViewController {
                 let fetchRequest = NSFetchRequest(entityName:"Diary")
                 
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
-                if let managedContext = managedContext {
+                if let managedContext = DiaryCoreData.sharedInstance.managedContext {
                     fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
                         managedObjectContext: managedContext, sectionNameKeyPath: "year",
                         cacheName: nil)
@@ -30,7 +30,7 @@ extension MainViewController {
                 let fetchRequest = NSFetchRequest(entityName:"Diary")
                 fetchRequest.predicate = NSPredicate(format: "year = \(year)")
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
-                if let managedContext = managedContext {
+                if let managedContext = DiaryCoreData.sharedInstance.managedContext {
                     fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
                         managedObjectContext: managedContext, sectionNameKeyPath: "month",
                         cacheName: nil)
@@ -43,7 +43,7 @@ extension MainViewController {
                 
                 fetchRequest.predicate = NSPredicate(format: "year = \(year) AND month = \(month)")
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
-                if let managedContext = managedContext {
+                if let managedContext = DiaryCoreData.sharedInstance.managedContext {
                     fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
                         managedObjectContext: managedContext, sectionNameKeyPath: "year",
                         cacheName: nil)

@@ -44,8 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
         
         defaultConfig()
         
-        Crashlytics.startWithAPIKey("de004490005a062fa95a4d5676a7edbfbe42c582")
-        
         return true
     }
     
@@ -86,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
-        saveContext()
+        DiaryCoreData.sharedInstance.saveContext()
     }
 
     

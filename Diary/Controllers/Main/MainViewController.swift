@@ -80,10 +80,9 @@ class MainViewController: DiaryBaseViewController {
         self.collectionView.addGestureRecognizer(mDoubleUpRecognizer)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCollectionView", name: "DiaryChangeFont", object: nil)
-        
         resetCollectionView()
-        
         view.layoutIfNeeded()
+    
         // Do any additional setup after loading the view.
     }
     

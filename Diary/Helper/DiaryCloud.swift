@@ -23,7 +23,7 @@ class DiaryCloud: NSObject {
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
         
-        if let managedContext = managedContext {
+        if let managedContext = DiaryCoreData.sharedInstance.managedContext {
             
             fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
                 managedObjectContext: managedContext, sectionNameKeyPath: nil,
@@ -50,8 +50,6 @@ class DiaryCloud: NSObject {
         debugPrint("New sync")
         
         let allRecords  = fetchedResultsController.fetchedObjects as! [Diary]
-        
-//        removeDupicated()
         
         fetchCloudRecords { [weak self] records  in
             
@@ -115,7 +113,7 @@ class DiaryCloud: NSObject {
             }
             
             do {
-                try managedContext?.save()
+                try DiaryCoreData.sharedInstance.managedContext?.save()
             } catch _ {
                 
             }
@@ -155,12 +153,12 @@ class DiaryCloud: NSObject {
             }
             
             for diary in toDelete {
-                managedContext?.deleteObject(diary)
+                DiaryCoreData.sharedInstance.managedContext?.deleteObject(diary)
             }
         }
         
         do {
-            try managedContext?.save()
+            try DiaryCoreData.sharedInstance.managedContext?.save()
         } catch _ {
             
         }
@@ -171,7 +169,7 @@ class DiaryCloud: NSObject {
 
 
 func saveDiaryWithCKRecord(record: CKRecord) {
-    if let managedContext = managedContext {
+    if let managedContext = DiaryCoreData.sharedInstance.managedContext {
         
         let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
 
@@ -209,7 +207,7 @@ func fetchDiaryByID(id: String) -> Diary? {
     
     do {
         let fetchedResults =
-        try managedContext?.executeFetchRequest(fetchRequest) as? [Diary]
+        try DiaryCoreData.sharedInstance.managedContext?.executeFetchRequest(fetchRequest) as? [Diary]
         
         if let results = fetchedResults {
             return results.first
@@ -229,7 +227,7 @@ func fetchsDiaryByID(id: String) -> [Diary]? {
     
     do {
         let fetchedResults =
-        try managedContext?.executeFetchRequest(fetchRequest) as? [Diary]
+        try DiaryCoreData.sharedInstance.managedContext?.executeFetchRequest(fetchRequest) as? [Diary]
         
         if let results = fetchedResults {
             return results
@@ -250,7 +248,7 @@ func fetchsDiaryByTitle(title: String) -> [Diary]? {
     
     do {
         let fetchedResults =
-        try managedContext?.executeFetchRequest(fetchRequest) as? [Diary]
+        try DiaryCoreData.sharedInstance.managedContext?.executeFetchRequest(fetchRequest) as? [Diary]
         
         if let results = fetchedResults {
             return results
