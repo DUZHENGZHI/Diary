@@ -129,7 +129,6 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         } catch let error as NSError {
             print(error)
         }
-
         
         let timeString = "\(numberToChinese(NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: diary.created_at)))年 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: diary.created_at)))月 \(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Day, fromDate: diary.created_at)))日"
         

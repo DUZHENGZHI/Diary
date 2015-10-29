@@ -90,13 +90,19 @@ class MainViewController: DiaryBaseViewController {
     func resetCollectionView() {
         
         if portrait {
-            collectionView.contentInset = calInsets(true, forSize: CGSize(width: screenRect.size.width, height: screenRect.size.height))
+            collectionView.contentInset = calInsets(true, forSize: CGSize(width: view.frame.size.width, height: view.frame.size.height))
         } else {
-            collectionView.contentInset = calInsets(false, forSize:  CGSize(width: screenRect.size.height, height: screenRect.size.width))
+            collectionView.contentInset = calInsets(false, forSize:  CGSize(width: view.frame.size.width, height: view.frame.size.height))
+        }
+        
+        if let layout = collectionView.collectionViewLayout as? DiaryLayout {
+            layout.collectionViewLeftInsetsForLayout = collectionView.contentInset.left
         }
         
         // Reset CollectionView Offset
         collectionView.contentOffset = CGPoint(x: -collectionView.contentInset.left, y: 0)
+        
+        collectionView.reloadData()
         
         view.layoutIfNeeded()
     }

@@ -31,15 +31,15 @@
 		0AE202471A8B0B310012AAED /* DiaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202461A8B0B310012AAED /* DiaryTests.swift */; };
 		0AE202591A8B0E420012AAED /* DiaryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202581A8B0E420012AAED /* DiaryHelper.swift */; };
 		0AEDA8541AC2D50E00F2DC56 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEDA8531AC2D50E00F2DC56 /* CloudKit.framework */; };
-		6A9B00D21BC18DF100C405EF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00D11BC18DF100C405EF /* MainViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		6A9B00DB1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00D91BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		6A9B00DC1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A9B00DA1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.xib */; settings = {ASSET_TAGS = (); }; };
-		6A9B00DE1BC1C8AD00C405EF /* DiaryPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00DD1BC1C8AD00C405EF /* DiaryPopView.swift */; settings = {ASSET_TAGS = (); }; };
-		6A9B00E21BC2703300C405EF /* DiaryTransactionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00E11BC2703300C405EF /* DiaryTransactionAnimator.swift */; settings = {ASSET_TAGS = (); }; };
-		6A9B00E41BC2719100C405EF /* DiaryFetchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00E31BC2719100C405EF /* DiaryFetchManager.swift */; settings = {ASSET_TAGS = (); }; };
-		6A9B00E61BC2720000C405EF /* DiaryDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00E51BC2720000C405EF /* DiaryDataManager.swift */; settings = {ASSET_TAGS = (); }; };
-		6A9B00E81BC274A600C405EF /* DiaryTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 6A9B00E71BC274A600C405EF /* DiaryTemplate.html */; settings = {ASSET_TAGS = (); }; };
-		6AB5C54F1BBCD82B00D46B05 /* WeChatActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB5C54E1BBCD82B00D46B05 /* WeChatActivity.swift */; settings = {ASSET_TAGS = (); }; };
+		6A9B00D21BC18DF100C405EF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00D11BC18DF100C405EF /* MainViewController.swift */; };
+		6A9B00DB1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00D91BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.swift */; };
+		6A9B00DC1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A9B00DA1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.xib */; };
+		6A9B00DE1BC1C8AD00C405EF /* DiaryPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00DD1BC1C8AD00C405EF /* DiaryPopView.swift */; };
+		6A9B00E21BC2703300C405EF /* DiaryTransactionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00E11BC2703300C405EF /* DiaryTransactionAnimator.swift */; };
+		6A9B00E41BC2719100C405EF /* DiaryFetchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00E31BC2719100C405EF /* DiaryFetchManager.swift */; };
+		6A9B00E61BC2720000C405EF /* DiaryDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00E51BC2720000C405EF /* DiaryDataManager.swift */; };
+		6A9B00E81BC274A600C405EF /* DiaryTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 6A9B00E71BC274A600C405EF /* DiaryTemplate.html */; };
+		6AB5C54F1BBCD82B00D46B05 /* WeChatActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB5C54E1BBCD82B00D46B05 /* WeChatActivity.swift */; };
 		972426D91D564C76D413AB6C /* Pods_Diary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37DBC7CC24E2BB3323B79181 /* Pods_Diary.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 

@@ -9,6 +9,9 @@
 import UIKit
 
 class DiaryLayout: UICollectionViewFlowLayout {
+    
+    var collectionViewLeftInsetsForLayout = collectionViewLeftInsets
+    
     override func prepareLayout() {
         super.prepareLayout()
         let itemSize = CGSizeMake(itemWidth, itemHeight)
@@ -29,11 +32,11 @@ class DiaryLayout: UICollectionViewFlowLayout {
             
             let cellPositinOnScreen = (center.x - itemWidth/2.0) - contentOffset.x 
             
-            if cellPositinOnScreen >= (collectionViewLeftInsets - itemWidth/2.0) && cellPositinOnScreen < (collectionViewLeftInsets + collectionViewWidth ) {
+            if cellPositinOnScreen >= (collectionViewLeftInsetsForLayout - itemWidth/2.0) && cellPositinOnScreen < (collectionViewLeftInsetsForLayout + collectionViewWidth ) {
                 
                 let centerPoint = (collectionViewWidth)/2.0
                 
-                let positonInVisibleArea = cellPositinOnScreen - collectionViewLeftInsets
+                let positonInVisibleArea = cellPositinOnScreen - collectionViewLeftInsetsForLayout
                 
                 let distanceToCenterPoint = positonInVisibleArea - centerPoint
                 

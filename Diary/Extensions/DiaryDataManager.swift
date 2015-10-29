@@ -51,12 +51,16 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
                     
                     let poem =  poem as! NSDictionary
                     let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
+                    let diaryID = poem.valueForKey("id") as! String
+                    
+                    if let _ = fetchDiaryByID(diaryID) {
+                        return
+                    }
                     
                     let newdiary = Diary(entity: entity!,
                         insertIntoManagedObjectContext:managedContext)
                     
-                    newdiary.id = randomStringWithLength(32) as String
-                    
+                    newdiary.id = diaryID
                     newdiary.content = poem.valueForKey("content") as! String
                     newdiary.title = poem.valueForKey("title") as? String
                     newdiary.location = poem.valueForKey("location") as? String
@@ -261,14 +265,22 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
         print(size)
         
         if portrait {
-            subLabelCenter.constant = -15
             collectionView.contentInset = calInsets(true, forSize: size)
         }else {
-            subLabelCenter.constant = 50
             collectionView.contentInset = calInsets(false, forSize: size)
         }
         
+        if size.height < 480 {
+            subLabelCenter.constant = 50
+        } else {
+            subLabelCenter.constant = -15
+        }
+        
         collectionView.contentOffset = CGPoint(x: -collectionView.contentInset.left, y: 0)
+        
+        if let layout = collectionView.collectionViewLayout as? DiaryLayout {
+            layout.collectionViewLeftInsetsForLayout = collectionView.contentInset.left
+        }
         
         DiaryNavTransactionAnimator.animator.newSize = size
         
