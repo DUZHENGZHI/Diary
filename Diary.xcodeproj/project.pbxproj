@@ -41,7 +41,7 @@
 		6A9B00E61BC2720000C405EF /* DiaryDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00E51BC2720000C405EF /* DiaryDataManager.swift */; };
 		6A9B00E81BC274A600C405EF /* DiaryTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 6A9B00E71BC274A600C405EF /* DiaryTemplate.html */; };
 		6AB5C54F1BBCD82B00D46B05 /* WeChatActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB5C54E1BBCD82B00D46B05 /* WeChatActivity.swift */; };
-		972426D91D564C76D413AB6C /* Pods_Diary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37DBC7CC24E2BB3323B79181 /* Pods_Diary.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		972426D91D564C76D413AB6C /* Pods_Diary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37DBC7CC24E2BB3323B79181 /* Pods_Diary.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -698,7 +698,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Diary/Diary.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
