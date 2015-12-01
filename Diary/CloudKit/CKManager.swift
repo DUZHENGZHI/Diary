@@ -88,19 +88,43 @@ func fetchCloudRecordWithTitle(title: String , complete: ([CKRecord]?) -> Void) 
 }
 
 func fetchCloudRecords(complete: ([CKRecord]?) -> Void) {
-    
-        let predicate = NSPredicate(value: true)
-    
-        let query = CKQuery(recordType: "Diary",
-            predicate: predicate )
 
-        privateDB.performQuery(query, inZoneWithID: nil) {
-            results, error in
-            
-            if let results = results{
-                complete(results)
-            } else {
-                complete(nil)
-            }
+    let predicate = NSPredicate(value: true)
+
+    let query = CKQuery(recordType: "Diary",
+        predicate: predicate )
+    
+    let queryOpration = CKQueryOperation(query: query)
+    
+    queryOpration.resultsLimit = 20
+    
+    queryOpration.qualityOfService = NSQualityOfService.UserInteractive
+    
+    var results = [CKRecord]()
+    
+    let recordFetchedBlock = { (record: CKRecord) in
+        results.append(record)
+    }
+    
+    var queryCompleteBlockSelf = { (cursor: CKQueryCursor?, error: NSError?) in }
+    
+    let queryCompleteBlock = { (cursor: CKQueryCursor?, error: NSError?) in
+        if let cursor = cursor {
+            let queryMoreOpration = CKQueryOperation(cursor: cursor)
+            queryMoreOpration.queryCompletionBlock = queryCompleteBlockSelf
+            queryMoreOpration.recordFetchedBlock = recordFetchedBlock
+            privateDB.addOperation(queryMoreOpration)
+        } else {
+            complete(results)
         }
+    }
+    
+    queryCompleteBlockSelf = queryCompleteBlock
+
+    queryOpration.recordFetchedBlock = recordFetchedBlock
+    
+    queryOpration.queryCompletionBlock = queryCompleteBlockSelf
+    
+    privateDB.addOperation(queryOpration)
+
 }
