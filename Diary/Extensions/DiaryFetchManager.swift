@@ -77,15 +77,15 @@ extension MainViewController {
     func monthFetch() {
         
         do {
+            
             try fetchedResultsController.performFetch()
             
             let fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
+            
             if (fetchedResults.count == 0){
                 NSLog("Present empty year")
-            }else{
-                
-                diarys = fetchedResults
             }
+            diarys = fetchedResults
             
         } catch _ {
             
@@ -128,11 +128,8 @@ extension MainViewController {
             let fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
             if (fetchedResults.count == 0){
                 NSLog("Present empty year")
-            }else{
-                
-                diarys = fetchedResults
             }
-            
+            diarys = fetchedResults
         } catch _ {
             
         }

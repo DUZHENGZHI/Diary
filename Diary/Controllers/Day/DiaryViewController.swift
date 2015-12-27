@@ -269,7 +269,9 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
     
     
     func deleteThisDiary() {
+        
         DiaryCoreData.sharedInstance.managedContext?.deleteObject(diary)
+        
         if let DiaryID = diary.id {
             
             fetchCloudRecordWithID(DiaryID, complete: { (record) -> Void in
@@ -289,6 +291,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         } catch _ {
             
         }
+        
         hideDiary()
     }
     

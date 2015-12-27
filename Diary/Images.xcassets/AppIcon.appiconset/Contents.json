@@ -71,18 +71,23 @@
       "scale" : "2x"
     },
     {
+      "idiom" : "ipad",
+      "size" : "83.5x83.5",
+      "scale" : "2x"
+    },
+    {
       "size" : "24x24",
       "idiom" : "watch",
-      "scale" : "2x",
       "filename" : "Icon24@2x.png",
+      "scale" : "2x",
       "role" : "notificationCenter",
       "subtype" : "38mm"
     },
     {
       "size" : "27.5x27.5",
       "idiom" : "watch",
-      "scale" : "2x",
       "filename" : "Icon27.5@2x.png",
+      "scale" : "2x",
       "role" : "notificationCenter",
       "subtype" : "42mm"
     },
@@ -103,16 +108,16 @@
     {
       "size" : "40x40",
       "idiom" : "watch",
-      "scale" : "2x",
       "filename" : "Icon40@2x-2.png",
+      "scale" : "2x",
       "role" : "appLauncher",
       "subtype" : "38mm"
     },
     {
       "size" : "44x44",
       "idiom" : "watch",
-      "scale" : "2x",
       "filename" : "Icon44@2x.png",
+      "scale" : "2x",
       "role" : "longLook",
       "subtype" : "42mm"
     },
