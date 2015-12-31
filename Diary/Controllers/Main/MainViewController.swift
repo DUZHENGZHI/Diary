@@ -128,7 +128,13 @@ class MainViewController: DiaryBaseViewController {
         composeButton.customButtonWith(text: "撰",  fontSize: 14.0,  width: 40.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         composeButton.addTarget(self, action: "newCompose", forControlEvents: UIControlEvents.TouchUpInside)
         
-        titleLabel.config("TpldKhangXiDictTrial", labelText: "二零一五年", fontSize: 20.0, lineHeight: 5.0)
+        var yearTitleStirng = "二零一五"
+        
+        if year != 0 {
+            yearTitleStirng = numberToChinese(year)
+        }
+        
+        titleLabel.config("TpldKhangXiDictTrial", labelText: "\(yearTitleStirng)年", fontSize: 20.0, lineHeight: 5.0)
         subLabel.config(defaultFont, labelText: "\(numberToChineseWithUnit(month))月", fontSize: 16.0, lineHeight: 5.0)
         subLabel.updateLabelColor(DiaryRed)
         
