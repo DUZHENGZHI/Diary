@@ -127,7 +127,8 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
                 
                 let components = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: NSDate())
                 var year = components
-                if sectionsCount > 0 {
+                
+                if yearsCount > 0 {
                     let sectionInfo = fetchedResultsController.sections![indexPath.row]
                     debugPrint("Section info \(sectionInfo.name)")
                     year = Int(sectionInfo.name)!
@@ -139,23 +140,27 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
                 
                 cell.labelText = "\(numberToChinese(cell.textInt)) 年"
                 
-                cell.selectCell = {
-                    let dvc = self.storyboard?.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
+                cell.selectCell = { [weak self] in
                     
-                    dvc.interfaceType = .Year
-                    
-                    let components = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: NSDate())
-                    
-                    var year = components
-                    
-                    if self.sectionsCount > 0 {
-                        let sectionInfo = self.fetchedResultsController.sections![indexPath.row]
-                        year = Int(sectionInfo.name)!
+                    if let strongSelf = self {
+                        let dvc = strongSelf.storyboard?.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
+                        
+                        dvc.interfaceType = .Year
+                        
+                        let components = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: NSDate())
+                        
+                        var year = components
+                        
+                        if strongSelf.yearsCount > 0 {
+                            let sectionInfo = strongSelf.fetchedResultsController.sections![indexPath.row]
+                            year = Int(sectionInfo.name)!
+                        }
+                        
+                        dvc.year = year
+                        
+                        strongSelf.navigationController!.pushViewController(dvc, animated: true)
                     }
-                    
-                    dvc.year = year
-                    
-                    self.navigationController!.pushViewController(dvc, animated: true)
+
                 }
                 
                 // Configure the cell
@@ -165,6 +170,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
             case .Year:
                 
                 let cell = collectionView.dequeueReusableCellWithReuseIdentifier(DiaryCollectionViewCellIdentifier, forIndexPath: indexPath) as! DiaryAutoLayoutCollectionViewCell
+                
                 if fetchedResultsController.sections?.count == 0 {
                     
                     cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: NSDate()))) 月"
