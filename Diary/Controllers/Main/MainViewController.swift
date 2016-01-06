@@ -65,20 +65,17 @@ class MainViewController: DiaryBaseViewController {
         //Set Up CollectionView Layout
         let yearLayout = DiaryLayout()
         
-        collectionView.setCollectionViewLayout(yearLayout, animated: false)
+        self.collectionView.setCollectionViewLayout(yearLayout, animated: false)
+        self.collectionView.registerNib(UINib(nibName: "DiaryAutoLayoutCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: DiaryCollectionViewCellIdentifier)
         
-        collectionView.registerNib(UINib(nibName: "DiaryAutoLayoutCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: DiaryCollectionViewCellIdentifier)
+        // Add Fetch
+        self.prepareFetch()
+        self.setupUI()
         
-        prepareFetch()
-        
-        setupUI()
-        
+        // Add Gesture
         let mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: "popBack")
-        
         mDoubleUpRecognizer.numberOfTapsRequired = 2
-        
         self.collectionView.addGestureRecognizer(mDoubleUpRecognizer)
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCollectionView", name: "DiaryChangeFont", object: nil)
         resetCollectionView()
         view.layoutIfNeeded()
@@ -89,9 +86,9 @@ class MainViewController: DiaryBaseViewController {
     func resetCollectionView() {
         
         if portrait {
-            collectionView.contentInset = calInsets(true, forSize: CGSize(width: view.frame.size.width, height: view.frame.size.height))
+            self.collectionView.contentInset = calInsets(true, forSize: CGSize(width: view.frame.size.width, height: view.frame.size.height))
         } else {
-            collectionView.contentInset = calInsets(false, forSize:  CGSize(width: view.frame.size.width, height: view.frame.size.height))
+            self.collectionView.contentInset = calInsets(false, forSize:  CGSize(width: view.frame.size.width, height: view.frame.size.height))
         }
         
         if let layout = collectionView.collectionViewLayout as? DiaryLayout {
@@ -99,20 +96,20 @@ class MainViewController: DiaryBaseViewController {
         }
         
         // Reset CollectionView Offset
-        collectionView.contentOffset = CGPoint(x: -collectionView.contentInset.left, y: 0)
+        self.collectionView.contentOffset = CGPoint(x: -collectionView.contentInset.left, y: 0)
         
-        collectionView.reloadData()
+        self.collectionView.reloadData()
         
         view.layoutIfNeeded()
     }
     
     func reloadCollectionView() {
-
         self.collectionView.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
     }
     
     func popBack() {
+        fetchedResultsController.delegate = nil
         self.navigationController?.popViewControllerAnimated(true)
     }
 

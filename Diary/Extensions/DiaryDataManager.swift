@@ -87,12 +87,6 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
     
     // MARK: UICollectionViewDataSource
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        //#warning Incomplete method implementation -- Return the number of sections
-        return 1
-    }
-    
-    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if let interfaceType = interfaceType {
@@ -109,11 +103,8 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
                 return diarys.count
             }
         } else {
-            
             return 0
-            
         }
-        
         
     }
     
@@ -128,8 +119,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
                 let components = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: NSDate())
                 var year = components
                 
-                if yearsCount > 0 {
-                    let sectionInfo = fetchedResultsController.sections![indexPath.row]
+                if let sectionInfo = fetchedResultsController.sections?[safe: indexPath.row] {
                     debugPrint("Section info \(sectionInfo.name)")
                     year = Int(sectionInfo.name)!
                 }
@@ -151,9 +141,8 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
                         
                         var year = components
                         
-                        if strongSelf.yearsCount > 0 {
-                            let sectionInfo = strongSelf.fetchedResultsController.sections![indexPath.row]
-                            year = Int(sectionInfo.name)!
+                        if let sectionInfo = strongSelf.fetchedResultsController.sections?[safe: indexPath.row], tempYear = Int(sectionInfo.name) {
+                            year = tempYear
                         }
                         
                         dvc.year = year
@@ -170,52 +159,51 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
             case .Year:
                 
                 let cell = collectionView.dequeueReusableCellWithReuseIdentifier(DiaryCollectionViewCellIdentifier, forIndexPath: indexPath) as! DiaryAutoLayoutCollectionViewCell
-                
-                if fetchedResultsController.sections?.count == 0 {
                     
-                    cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: NSDate()))) 月"
-                    
-                }else{
-                    
-                    let sectionInfo = fetchedResultsController.sections![indexPath.row]
+                if let sectionInfo = fetchedResultsController.sections?[safe: indexPath.row] {
                     let month = Int(sectionInfo.name)
                     cell.labelText = "\(numberToChineseWithUnit(month!)) 月"
+                } else {
+                    cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: NSDate()))) 月"
                 }
-                
-                cell.selectCell = {
-                    let dvc = self.storyboard?.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
-                    dvc.interfaceType = .Month
-                    if self.fetchedResultsController.sections?.count == 0 {
-                        dvc.month = NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: NSDate())
-                    }else{
-                        let sectionInfo = self.fetchedResultsController.sections![indexPath.row]
-                        let month = Int(sectionInfo.name)
-                        dvc.month = month!
+
+                cell.selectCell = { [weak self] in
+                    if let strongSelf = self {
+                        let dvc = strongSelf.storyboard?.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
+                        dvc.interfaceType = .Month
+                        
+                        if let sectionInfo = strongSelf.fetchedResultsController.sections?[safe: indexPath.row], month = Int(sectionInfo.name) {
+                            dvc.month = month
+                        } else {
+                            dvc.month = NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: NSDate())
+                        }
+                        
+                        dvc.year = strongSelf.year
+                        strongSelf.navigationController!.pushViewController(dvc, animated: true)
                     }
-                    dvc.year = self.year
-                    self.navigationController!.pushViewController(dvc, animated: true)
+
                 }
                 
                 return cell
                 
             case .Month:
                 let cell = collectionView.dequeueReusableCellWithReuseIdentifier(DiaryCollectionViewCellIdentifier, forIndexPath: indexPath) as! DiaryAutoLayoutCollectionViewCell
-                let diary = fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
                 
-                if let title = diary.title {
-                    cell.labelText = title
-                }else{
-                    cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Day, fromDate: diary.created_at))) 日"
-                }
-                
-                cell.selectCell = {
-                    let dvc = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryViewController") as! DiaryViewController
+                if let diary = fetchedResultsController.objectAtIndexPath(indexPath) as? Diary {
                     
-                    let diary = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Diary
+                    if let title = diary.title {
+                        cell.labelText = title
+                    }else{
+                        cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Day, fromDate: diary.created_at))) 日"
+                    }
                     
-                    dvc.diary = diary
-                    
-                    self.navigationController!.pushViewController(dvc, animated: true)
+                    cell.selectCell = { [weak self] in
+                        if let strongSelf = self {
+                            let dvc = strongSelf.storyboard?.instantiateViewControllerWithIdentifier("DiaryViewController") as! DiaryViewController
+                            dvc.diary = diary
+                            strongSelf.navigationController!.pushViewController(dvc, animated: true)
+                        }
+                    }
                 }
                 
                 return cell
@@ -256,13 +244,13 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
-        refetch()
+        self.refetch()
         
         self.collectionView.reloadData()
         
         self.collectionView.collectionViewLayout.invalidateLayout()
         
-        resetCollectionView()
+        self.resetCollectionView()
     }
     
     
@@ -271,21 +259,21 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
         debugPrint(size)
         
         if portrait {
-            collectionView.contentInset = calInsets(true, forSize: size)
+            self.collectionView.contentInset = calInsets(true, forSize: size)
         }else {
-            collectionView.contentInset = calInsets(false, forSize: size)
+            self.collectionView.contentInset = calInsets(false, forSize: size)
         }
         
         if size.height < 480 {
-            subLabelCenter.constant = 50
+            self.subLabelCenter.constant = 50
         } else {
-            subLabelCenter.constant = -15
+            self.subLabelCenter.constant = -15
         }
         
-        collectionView.contentOffset = CGPoint(x: -collectionView.contentInset.left, y: 0)
+        self.collectionView.contentOffset = CGPoint(x: -collectionView.contentInset.left, y: 0)
         
-        if let layout = collectionView.collectionViewLayout as? DiaryLayout {
-            layout.collectionViewLeftInsetsForLayout = collectionView.contentInset.left
+        if let layout = self.collectionView.collectionViewLayout as? DiaryLayout {
+            layout.collectionViewLeftInsetsForLayout = self.collectionView.contentInset.left
         }
         
         DiaryNavTransactionAnimator.animator.newSize = size

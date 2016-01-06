@@ -83,12 +83,13 @@ extension MainViewController {
             let fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
             
             if (fetchedResults.count == 0){
-                NSLog("Present empty year")
+                NSLog("Present empty year and Month")
             }
+            
             diarys = fetchedResults
             
-        } catch _ {
-            
+        } catch let error as NSError {
+            print("Fetch Month Error \(error.description)")
         }
         
     }
@@ -100,7 +101,7 @@ extension MainViewController {
             let fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
             
             if (fetchedResults.count == 0){
-                debugPrint("Present empty year")
+                debugPrint("Present empty home")
             }else{
                 
                 if let sectionsCount = fetchedResultsController.sections?.count {
@@ -108,15 +109,16 @@ extension MainViewController {
                     yearsCount = sectionsCount
                     diarys = fetchedResults
                     
-                }else {
+                } else {
+                    
                     sectionsCount = 0
                     yearsCount = 1
                 }
             }
             
             moveToThisMonth()
-        } catch _ {
-            
+        } catch let error as NSError {
+            print("Fetch Home Error \(error.description)")
         }
     }
     
@@ -130,8 +132,8 @@ extension MainViewController {
                 NSLog("Present empty year")
             }
             diarys = fetchedResults
-        } catch _ {
-            
+        } catch let error as NSError {
+            print("Fetch Year Error \(error.description)")
         }
     }
     
