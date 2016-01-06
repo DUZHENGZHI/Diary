@@ -205,6 +205,11 @@ class DiaryComposeViewController: DiaryBaseViewController{
     func keyboardDidHide(notification: NSNotification) {
         updateTextViewSizeForKeyboardHeight(0)
     }
+    
+    deinit {
+        print("Diary Compose Deinit")
+    }
+
 
 }
 

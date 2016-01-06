@@ -344,5 +344,10 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return .Portrait
     }
+    
+    deinit {
+        print("Diary Deinit")
+    }
+
 
 }

@@ -167,5 +167,8 @@ class MainViewController: DiaryBaseViewController {
 
     }
 
+    deinit {
+        print("Controller Deinit")
+    }
 
 }
