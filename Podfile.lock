@@ -5,7 +5,6 @@ PODS:
   - Fabric/Base (1.5.1)
   - GVUserDefaults (1.0.1)
   - MonkeyKing (0.0.2)
-  - NCChineseConverter (1.0.3)
   - pop (1.0.8)
 
 DEPENDENCIES:
@@ -13,7 +12,6 @@ DEPENDENCIES:
   - Fabric
   - GVUserDefaults
   - MonkeyKing
-  - NCChineseConverter (~> 1.0)
   - pop
 
 SPEC CHECKSUMS:
@@ -21,7 +19,6 @@ SPEC CHECKSUMS:
   Fabric: 03c3b3fe77e11a2bc31421b989a9c7adaa4779a5
   GVUserDefaults: acb40729f70984008d0650e49d7e422f1bbfa597
   MonkeyKing: 9be24307843a80f4cd3eca66adc12c67aefb83bb
-  NCChineseConverter: a8928afce6012994d25f2e183233f1111476a4a3
   pop: bb773ae2c791ca2629de13b347e7a8b450fa6a57
 
 COCOAPODS: 0.39.0
