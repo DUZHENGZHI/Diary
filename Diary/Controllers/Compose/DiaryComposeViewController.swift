@@ -125,7 +125,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
         if (composeView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 1){
 
-            let translationtext = (composeView.text as NSString).chineseStringHK()
+            let translationtext = composeView.text
             
             if let managedContext = DiaryCoreData.sharedInstance.managedContext {
             

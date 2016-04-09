@@ -7,7 +7,6 @@ pod 'MonkeyKing'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'pop'
-pod 'NCChineseConverter', '~> 1.0'
 pod 'GVUserDefaults'
 #pod 'CrashlyticsLumberjack'
 end

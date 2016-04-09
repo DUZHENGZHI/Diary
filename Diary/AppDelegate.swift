@@ -53,12 +53,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
             debugPrint("Configed")
         }else{
             defaults.setObject(currentLanguage == "ja" ? janpan : firstFont, forKey: "defaultFont")
-            
             defaults.setObject(firstFont, forKey: "firstFont")
             defaults.setObject(secondFont, forKey: "secondFont")
             defaults.setObject(janpan, forKey: "japan")
             defaults.setObject(true, forKey: "defaultConfig")
-            
         }
         
     }
