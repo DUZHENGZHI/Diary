@@ -73,10 +73,10 @@ class MainViewController: DiaryBaseViewController {
         self.setupUI()
         
         // Add Gesture
-        let mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: "popBack")
+        let mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: #selector(popBack))
         mDoubleUpRecognizer.numberOfTapsRequired = 2
         self.collectionView.addGestureRecognizer(mDoubleUpRecognizer)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCollectionView", name: "DiaryChangeFont", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadCollectionView), name: "DiaryChangeFont", object: nil)
         resetCollectionView()
         view.layoutIfNeeded()
     
@@ -123,7 +123,7 @@ class MainViewController: DiaryBaseViewController {
     
     func setupUI() {
         composeButton.customButtonWith(text: "撰",  fontSize: 14.0,  width: 40.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
-        composeButton.addTarget(self, action: "newCompose", forControlEvents: UIControlEvents.TouchUpInside)
+        composeButton.addTarget(self, action: #selector(newCompose), forControlEvents: UIControlEvents.TouchUpInside)
         
         var yearTitleStirng = "二零一五"
         

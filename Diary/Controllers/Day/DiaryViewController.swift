@@ -50,13 +50,13 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         self.view.addSubview(pullView)
         
-        let mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: "hideDiary")
+        let mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideDiary))
         mDoubleUpRecognizer.delegate = self
         mDoubleUpRecognizer.numberOfTapsRequired = 2
         self.webview.addGestureRecognizer(mDoubleUpRecognizer)
         
         
-        let mTapUpRecognizer = UITapGestureRecognizer(target: self, action: "showButtons")
+        let mTapUpRecognizer = UITapGestureRecognizer(target: self, action: #selector(showButtons))
         mTapUpRecognizer.delegate = self
         mTapUpRecognizer.numberOfTapsRequired = 1
         self.webview.addGestureRecognizer(mTapUpRecognizer)
@@ -75,24 +75,24 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         saveButton.customButtonWith(text: "存",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
         
-        saveButton.addTarget(self, action: "saveToRoll", forControlEvents: UIControlEvents.TouchUpInside)
+        saveButton.addTarget(self, action: #selector(saveToRoll), forControlEvents: UIControlEvents.TouchUpInside)
         
         
         editButton.customButtonWith(text: "改",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
     
         
-        editButton.addTarget(self, action: "editDiary", forControlEvents: UIControlEvents.TouchUpInside)
+        editButton.addTarget(self, action: #selector(editDiary), forControlEvents: UIControlEvents.TouchUpInside)
     
         
         deleteButton.customButtonWith(text: "刪",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
         
-        deleteButton.addTarget(self, action: "deleteThisDiary", forControlEvents: UIControlEvents.TouchUpInside)
+        deleteButton.addTarget(self, action: #selector(deleteThisDiary), forControlEvents: UIControlEvents.TouchUpInside)
     
         
         webview.alpha = 0.0
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadWebView", name: "DiaryChangeFont", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadWebView), name: "DiaryChangeFont", object: nil)
         
         showTut()
         

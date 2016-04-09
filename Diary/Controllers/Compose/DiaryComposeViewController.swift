@@ -82,13 +82,13 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
         finishButton.customButtonWith(text: "完",  fontSize: 18.0,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
 
-        finishButton.addTarget(self, action: "finishCompose:", forControlEvents: UIControlEvents.TouchUpInside)
+        finishButton.addTarget(self, action: #selector(finishCompose(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name:UIKeyboardWillChangeFrameNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidShow(_:)), name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidShow(_:)), name:UIKeyboardWillChangeFrameNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidHide(_:)), name: UIKeyboardDidHideNotification, object: nil)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateAddress", name: "DiaryLocationUpdated", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateAddress), name: "DiaryLocationUpdated", object: nil)
 
         updateAddress()
         // Do any additional setup after loading the view.
