@@ -57,15 +57,7 @@
 	<string>在撰写日记的时候自动添加位置</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>FZYingXueFW.TTF</string>
-		<string>FZYingXueJW.TTF</string>
 		<string>FZLongZhaoFW.ttf</string>
-		<string>FZLongZhaoJW.ttf</string>
-		<string>FZXiJinLJW.ttf</string>
-		<string>FZXiJinLFW.ttf</string>
-		<string>MFKeSong_Noncommercial-Regular.ttf</string>
-		<string>STFangsong.ttf</string>
-		<string>Wyue-GutiFangsong-NC_deliverable.otf</string>
 		<string>TpldKhangXiDictTrial.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
