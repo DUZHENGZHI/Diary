@@ -84,7 +84,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         editButton.addTarget(self, action: #selector(editDiary), forControlEvents: UIControlEvents.TouchUpInside)
     
         
-        deleteButton.customButtonWith(text: "刪",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
+        deleteButton.customButtonWith(text: "删",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
         
         deleteButton.addTarget(self, action: #selector(deleteThisDiary), forControlEvents: UIControlEvents.TouchUpInside)

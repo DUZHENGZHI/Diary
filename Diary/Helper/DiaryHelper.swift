@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import CoreLocation
 
-let firstFont = "Wyue-GutiFangsong-NC"
+let firstFont = "FZLONGZFW--GB1-0"
 let secondFont = "Wyue-GutiFangsong-NC"
 let janpan = "HiraMinProN-W3"
 
@@ -22,7 +22,7 @@ typealias CancelableTask = (cancel: Bool) -> Void
 
 var defaultFont: String {
     get {
-        return defaults.objectForKey("defaultFont") as! String
+        return firstFont
     }
 
     set (newValue) {

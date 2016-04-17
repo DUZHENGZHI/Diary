@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0A0B100F1A9180460012604C /* DiaryLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0B100E1A9180460012604C /* DiaryLayout.swift */; };
 		0A0C8A7D1AEB630500A36F20 /* DiaryPullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0C8A7C1AEB630500A36F20 /* DiaryPullView.swift */; };
-		0A1D91E21AEA85A600347F0A /* Wyue-GutiFangsong-NC_deliverable.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A3504B31ADE5CBA00728264 /* Wyue-GutiFangsong-NC_deliverable.otf */; };
 		0A2111121AF503DE007647BD /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2111111AF503DE007647BD /* Diary.swift */; };
 		0A222A871AB89E3F000A1DEF /* poem.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A222A861AB89E3F000A1DEF /* poem.json */; };
 		0A28B4FD1AAB53C30037240C /* DiaryLocationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A28B4FC1AAB53C30037240C /* DiaryLocationHelper.swift */; };
@@ -31,6 +30,7 @@
 		0AE202591A8B0E420012AAED /* DiaryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE202581A8B0E420012AAED /* DiaryHelper.swift */; };
 		0AEDA8541AC2D50E00F2DC56 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEDA8531AC2D50E00F2DC56 /* CloudKit.framework */; };
 		6A31E2D11BE2B1D200920CC5 /* DiaryCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A31E2D01BE2B1D200920CC5 /* DiaryCoreData.swift */; };
+		6A90C36C1CC35B23001F8059 /* FZLongZhaoFW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A90C36B1CC35B23001F8059 /* FZLongZhaoFW.ttf */; };
 		6A9B00D21BC18DF100C405EF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00D11BC18DF100C405EF /* MainViewController.swift */; };
 		6A9B00DB1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00D91BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.swift */; };
 		6A9B00DC1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A9B00DA1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.xib */; };
@@ -63,7 +63,6 @@
 		0A222A891AB8ACBA000A1DEF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		0A28B4FC1AAB53C30037240C /* DiaryLocationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryLocationHelper.swift; path = Helper/DiaryLocationHelper.swift; sourceTree = "<group>"; };
 		0A2ECFD91AEC394000398EBE /* DiaryBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryBaseViewController.swift; path = Controllers/Base/DiaryBaseViewController.swift; sourceTree = "<group>"; };
-		0A3504B31ADE5CBA00728264 /* Wyue-GutiFangsong-NC_deliverable.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Wyue-GutiFangsong-NC_deliverable.otf"; sourceTree = "<group>"; };
 		0A3572E01A9467E70037C6A0 /* DiaryAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryAnimator.swift; path = Animator/DiaryAnimator.swift; sourceTree = "<group>"; };
 		0A5E38101AA9E9B000935E29 /* DiaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewController.swift; path = Controllers/Day/DiaryViewController.swift; sourceTree = "<group>"; };
 		0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryVerticalTextView.swift; path = Helper/DiaryVerticalTextView.swift; sourceTree = "<group>"; };
@@ -91,6 +90,7 @@
 		18506CDA6A8669C3DB90CABE /* Pods-Diary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diary.release.xcconfig"; path = "Pods/Target Support Files/Pods-Diary/Pods-Diary.release.xcconfig"; sourceTree = "<group>"; };
 		37DBC7CC24E2BB3323B79181 /* Pods_Diary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Diary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A31E2D01BE2B1D200920CC5 /* DiaryCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryCoreData.swift; path = Helper/DiaryCoreData.swift; sourceTree = "<group>"; };
+		6A90C36B1CC35B23001F8059 /* FZLongZhaoFW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FZLongZhaoFW.ttf; sourceTree = "<group>"; };
 		6A9B00D11BC18DF100C405EF /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = Controllers/Main/MainViewController.swift; sourceTree = "<group>"; };
 		6A9B00D91BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryAutoLayoutCollectionViewCell.swift; path = Cell/DiaryAutoLayoutCollectionViewCell.swift; sourceTree = "<group>"; };
 		6A9B00DA1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DiaryAutoLayoutCollectionViewCell.xib; path = Cell/DiaryAutoLayoutCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -151,8 +151,8 @@
 		0A3504B21ADE5C6100728264 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				6A90C36B1CC35B23001F8059 /* FZLongZhaoFW.ttf */,
 				6A9B00E71BC274A600C405EF /* DiaryTemplate.html */,
-				0A3504B31ADE5CBA00728264 /* Wyue-GutiFangsong-NC_deliverable.otf */,
 				0A916FF91AA6097700E987A4 /* TpldKhangXiDictTrial.otf */,
 			);
 			name = Resource;
@@ -425,7 +425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A9B00E81BC274A600C405EF /* DiaryTemplate.html in Resources */,
-				0A1D91E21AEA85A600347F0A /* Wyue-GutiFangsong-NC_deliverable.otf in Resources */,
+				6A90C36C1CC35B23001F8059 /* FZLongZhaoFW.ttf in Resources */,
 				0AE202361A8B0B310012AAED /* Main.storyboard in Resources */,
 				0A222A871AB89E3F000A1DEF /* poem.json in Resources */,
 				0AE2023B1A8B0B310012AAED /* LaunchScreen.xib in Resources */,

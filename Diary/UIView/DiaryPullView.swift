@@ -10,7 +10,7 @@ import UIKit
 
 class DiaryPullView: UIView {
 
-    var closeLabel:UILabel!
+    var closeLabel: DiaryLabel!
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -36,12 +36,11 @@ class DiaryPullView: UIView {
         self.backgroundColor = UIColor.blackColor()
         
         closeLabel = DiaryLabel(fontname: defaultFont, labelText: "完", fontSize: 16.0,lineHeight: 5.0)
-        closeLabel.textColor = UIColor.whiteColor()
+        closeLabel.sizeToFit()
         closeLabel.center = CGPointMake(self.frame.size.width/2.0, self.frame.size.height/2.0)
-        if defaultFont == secondFont {
-            closeLabel.center = CGPointMake(self.frame.size.width/2.0, self.frame.size.height/2.0 - 1.0)
-        }
+
         closeLabel.alpha = 1
+        closeLabel.updateLabelColor(UIColor.whiteColor())
         self.addSubview(closeLabel)
     }
 }
