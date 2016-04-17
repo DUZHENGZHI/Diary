@@ -99,9 +99,9 @@ class DiaryCoreData: NSObject {
     
     func registerForiCloudNotifications() {
         let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self, selector: #selector(DiaryCoreData.storesWillChange(_:)), name: NSPersistentStoreCoordinatorStoresWillChangeNotification, object: persistentStoreCoordinator)
-        notificationCenter.addObserver(self, selector: #selector(DiaryCoreData.storesDidChange(_:)), name: NSPersistentStoreCoordinatorStoresDidChangeNotification, object: persistentStoreCoordinator)
-        notificationCenter.addObserver(self, selector: #selector(DiaryCoreData.persistentStoreDidImportUbiquitousContentChanges(_:)), name: NSPersistentStoreDidImportUbiquitousContentChangesNotification, object: persistentStoreCoordinator)
+        notificationCenter.addObserver(self, selector: #selector(storesWillChange(_:)), name: NSPersistentStoreCoordinatorStoresWillChangeNotification, object: persistentStoreCoordinator)
+        notificationCenter.addObserver(self, selector: #selector(storesDidChange(_:)), name: NSPersistentStoreCoordinatorStoresDidChangeNotification, object: persistentStoreCoordinator)
+        notificationCenter.addObserver(self, selector: #selector(persistentStoreDidImportUbiquitousContentChanges(_:)), name: NSPersistentStoreDidImportUbiquitousContentChangesNotification, object: persistentStoreCoordinator)
     }
     
     func persistentStoreDidImportUbiquitousContentChanges(notification:NSNotification){
