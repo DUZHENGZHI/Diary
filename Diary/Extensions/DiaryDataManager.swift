@@ -251,6 +251,8 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
         self.collectionView.collectionViewLayout.invalidateLayout()
         
         self.resetCollectionView()
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("DiaryChange", object: nil)
     }
     
     

@@ -88,7 +88,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         
         webview.alpha = 0.0
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadWebView), name: "DiaryChangeFont", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadWebView), name: "DiaryChange", object: nil)
         
         showTut()
         
