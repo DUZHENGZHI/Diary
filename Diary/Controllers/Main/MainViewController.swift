@@ -73,9 +73,16 @@ class MainViewController: DiaryBaseViewController {
         self.setupUI()
         
         // Add Gesture
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(popToYear))
+        titleLabel.addGestureRecognizer(tapRecognizer)
+        let tapSubRecognizer = UITapGestureRecognizer(target: self, action: #selector(popBack))
+        subLabel.addGestureRecognizer(tapSubRecognizer)
+        
         let mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: #selector(popBack))
         mDoubleUpRecognizer.numberOfTapsRequired = 2
         self.collectionView.addGestureRecognizer(mDoubleUpRecognizer)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadCollectionView), name: "DiaryChangeFont", object: nil)
         resetCollectionView()
         view.layoutIfNeeded()
@@ -111,6 +118,11 @@ class MainViewController: DiaryBaseViewController {
     func popBack() {
         fetchedResultsController.delegate = nil
         self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func popToYear() {
+        fetchedResultsController.delegate = nil
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
 
     func newCompose() {
