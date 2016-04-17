@@ -144,7 +144,7 @@ class MainViewController: DiaryBaseViewController {
         }
         
         titleLabel.config("TpldKhangXiDictTrial", labelText: "\(yearTitleStirng)年", fontSize: 20.0, lineHeight: 5.0)
-        subLabel.config(defaultFont, labelText: "\(numberToChineseWithUnit(month))月", fontSize: 16.0, lineHeight: 5.0)
+        subLabel.config(defaultFont, labelText: "\(numberToChineseWithUnit(month))月", fontSize: 18.0, lineHeight: 5.0)
         subLabel.updateLabelColor(DiaryRed)
         
         if let titleLabelSize = titleLabel.labelSize {
