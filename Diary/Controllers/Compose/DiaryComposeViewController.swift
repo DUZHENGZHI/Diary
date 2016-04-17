@@ -52,12 +52,14 @@ class DiaryComposeViewController: DiaryBaseViewController{
         locationTextView.alpha = 0.0
         locationTextView.bounces = false
         locationTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        locationTextView.delegate = self
 
         //Add titleView
 
         titleTextView.font = DiaryFont
         titleTextView.bounces = false
         titleTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        titleTextView.delegate = self
 
         if let diary = diary {
             composeView.text = diary.content
@@ -212,3 +214,13 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
 }
 
+extension DiaryComposeViewController: UITextViewDelegate {
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            composeView.becomeFirstResponder()
+            return false
+        }
+        
+        return true
+    }
+}

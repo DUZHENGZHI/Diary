@@ -31,7 +31,7 @@ class DiaryAutoLayoutCollectionViewCell: UICollectionViewCell {
         
         let lineHeight:CGFloat = 5.0
         
-        self.textLabel.config(defaultFont, labelText: labelText, fontSize: 16.0, lineHeight: lineHeight)
+        self.textLabel.config(defaultFont, labelText: labelText, fontSize: 18.0, lineHeight: lineHeight)
         
         let mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: #selector(DiaryAutoLayoutCollectionViewCell.click))
         
