@@ -13,6 +13,11 @@ class DiaryCoreData: NSObject {
     
     static let sharedInstance = DiaryCoreData()
     
+    override init() {
+        super.init()
+        registerForiCloudNotifications()
+    }
+    
     //Coredata
     
     lazy var managedContext: NSManagedObjectContext? = {
@@ -92,6 +97,101 @@ class DiaryCoreData: NSObject {
             NSPersistentStoreUbiquitousPeerTokenOption: "c405d8e8a24s11e3bbec425861s862bs"]
     }()
     
+    func registerForiCloudNotifications() {
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: #selector(DiaryCoreData.storesWillChange(_:)), name: NSPersistentStoreCoordinatorStoresWillChangeNotification, object: persistentStoreCoordinator)
+        notificationCenter.addObserver(self, selector: #selector(DiaryCoreData.storesDidChange(_:)), name: NSPersistentStoreCoordinatorStoresDidChangeNotification, object: persistentStoreCoordinator)
+        notificationCenter.addObserver(self, selector: #selector(DiaryCoreData.persistentStoreDidImportUbiquitousContentChanges(_:)), name: NSPersistentStoreDidImportUbiquitousContentChangesNotification, object: persistentStoreCoordinator)
+    }
+    
+    func persistentStoreDidImportUbiquitousContentChanges(notification:NSNotification){
+        let context = self.managedObjectContext!
+        debugPrint("Perform icloud data change")
+        context.performBlockAndWait({
+            context.mergeChangesFromContextDidSaveNotification(notification)
+        })
+    }
+    
+    func storesWillChange(notification:NSNotification) {
+        debugPrint("Store Will change")
+        let context:NSManagedObjectContext! = self.managedObjectContext
+        context?.performBlockAndWait({
+            if (context.hasChanges) {
+                do {
+                    try context.save()
+                } catch let error as NSError {
+                    debugPrint(error.localizedDescription)
+                    self.showAlert()
+                }
+            }
+            context.reset()
+        })
+        
+    }
+    
+    func showAlert() {
+        let message = UIAlertView(title: "iCloud 同步错误", message: "是否使用 iCloud 版本备份覆盖本地记录", delegate: self, cancelButtonTitle: "不要", otherButtonTitles: "好的")
+        message.show()
+    }
+
+    
+    func storesDidChange(notification:NSNotification){
+        debugPrint("Store did change")
+        NSNotificationCenter.defaultCenter().postNotificationName("CoreDataDidUpdated", object: nil)
+    }
+    
+    func migrateLocalStoreToiCloudStore() {
+        debugPrint("Migrate local to icloud")
+    
+        if let oldStore = persistentStoreCoordinator?.persistentStores.first {
+            var localStoreOptions = self.storeOptions
+            localStoreOptions[NSPersistentStoreRemoveUbiquitousMetadataOption] = true
+            
+            do {
+                let newStore = try persistentStoreCoordinator?.migratePersistentStore(oldStore, toURL: cloudDirectory, options: localStoreOptions, withType: NSSQLiteStoreType)
+                reloadStore(newStore)
+            } catch let error as NSError {
+                debugPrint(error.localizedDescription)
+            }
+        }
+        
+
+    }
+    
+    func migrateiCloudStoreToLocalStore() {
+        debugPrint("Migrate icloud to local")
+        if let oldStore = persistentStoreCoordinator?.persistentStores.first {
+            var localStoreOptions = self.storeOptions
+            localStoreOptions[NSPersistentStoreRemoveUbiquitousMetadataOption] = true
+            
+            do {
+                let newStore = try persistentStoreCoordinator?.migratePersistentStore(oldStore, toURL:  self.applicationDocumentsDirectory.URLByAppendingPathComponent("Diary.sqlite"), options: localStoreOptions, withType: NSSQLiteStoreType)
+                reloadStore(newStore)
+            } catch let error as NSError {
+                debugPrint(error.localizedDescription)
+            }
+        }
+
+    }
+    
+    
+    func reloadStore(store: NSPersistentStore?) {
+
+        if let store = store {
+            do {
+                try persistentStoreCoordinator?.removePersistentStore(store)
+                try persistentStoreCoordinator?.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: self.applicationDocumentsDirectory.URLByAppendingPathComponent("Diary.sqlite"), options: self.storeOptions)
+            } catch let error as NSError {
+                debugPrint(error.localizedDescription)
+            }
+
+        }
+    
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("CoreDataDidUpdated", object: nil)
+    }
+    
+    
     // MARK: - Core Data Saving support
     
     func saveContext () {
@@ -111,4 +211,17 @@ class DiaryCoreData: NSObject {
         }
     }
 
+}
+
+extension DiaryCoreData: UIAlertViewDelegate {
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        switch buttonIndex {
+        case 0:
+            self.migrateLocalStoreToiCloudStore()
+        case 1:
+            self.migrateiCloudStoreToLocalStore()
+        default:
+            debugPrint("Do nothing")
+        }
+    }
 }
