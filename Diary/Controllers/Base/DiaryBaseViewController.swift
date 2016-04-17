@@ -34,23 +34,6 @@ class DiaryBaseViewController: UIViewController {
         }
     }
     
-    func showAlert() {
-        let alert = UIAlertController(title: "设置", message: "希望切换字体吗", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "算啦", style: .Cancel, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
-        alert.addAction(UIAlertAction(title: "好的", style: .Default, handler: { action in
-            switch action.style{
-            case .Default:
-                debugPrint("default")
-                toggleFont()
-            case .Cancel:
-                debugPrint("cancel")
-                
-            case .Destructive:
-                debugPrint("destructive")
-            }
-        }))
-    }
     /*
     // MARK: - Navigation
 

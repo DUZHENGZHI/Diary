@@ -11,7 +11,6 @@ import CoreData
 import CoreLocation
 
 let firstFont = "FZLONGZFW--GB1-0"
-let secondFont = "Wyue-GutiFangsong-NC"
 let janpan = "HiraMinProN-W3"
 
 let defaults = NSUserDefaults.standardUserDefaults()
@@ -195,29 +194,6 @@ func getTutView() -> UIView {
     
     return view
 }
-
-
-func toggleFont() {
-
-    if let fontName = defaults.objectForKey("defaultFont") as? String {
-        switch fontName {
-        case firstFont:
-            defaults.setObject(secondFont, forKey: "defaultFont")
-            defaultFont = secondFont
-        case secondFont:
-            defaults.setObject(firstFont, forKey: "defaultFont")
-            defaultFont = firstFont
-        case janpan:
-            defaults.setObject(janpan, forKey: "defaultFont")
-            defaultFont = janpan
-        default:
-            break
-        }
-    }
-    
-    NSNotificationCenter.defaultCenter().postNotificationName("DiaryChangeFont", object: nil)
-}
-
 
 
 func randomStringWithLength (len : Int) -> NSString {

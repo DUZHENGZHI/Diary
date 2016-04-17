@@ -29,11 +29,7 @@ class DiaryAutoLayoutCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         
-        var lineHeight:CGFloat = 5.0
-        
-        if defaultFont == secondFont {
-            lineHeight = 2.0
-        }
+        let lineHeight:CGFloat = 5.0
         
         self.textLabel.config(defaultFont, labelText: labelText, fontSize: 16.0, lineHeight: lineHeight)
         

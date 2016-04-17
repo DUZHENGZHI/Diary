@@ -66,11 +66,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         buttonsView.backgroundColor = UIColor.clearColor()
         buttonsView.alpha = 0.0
         
-        var buttonFontSize:CGFloat = 18.0
-        
-        if defaultFont == secondFont {
-            buttonFontSize = 16.0
-        }
+        let buttonFontSize:CGFloat = 18.0
         
         saveButton.customButtonWith(text: "存",  fontSize: buttonFontSize,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         
