@@ -46,7 +46,7 @@ class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, 
         self.view.addSubview(self.webview)
         
         pullView = DiaryPullView(frame: CGRectMake(0, 0, 30.0, 30.0))
-        pullView.center = CGPoint(x: screenRect.width/2.0, y: pullView.frame.size.height/2.0)
+        pullView.center = CGPoint(x: screenRect().width/2.0, y: pullView.frame.size.height/2.0)
         
         self.view.addSubview(pullView)
         

@@ -29,7 +29,9 @@ var defaultFont: String {
     }
 }
 
-let screenRect = UIScreen.mainScreen().bounds
+func screenRect() -> CGRect {
+    return UIScreen.mainScreen().bounds
+}
 
 var DiaryFont: UIFont {
 
@@ -52,11 +54,15 @@ var DiaryTitleFont: UIFont {
     }
 }
 
-let collectionViewTopInset = (screenRect.height - itemHeight)/2.0
+let collectionViewTopInset = (screenRect().height - itemHeight())/2.0
 
 
 let DiaryRed = UIColor(red: 192.0/255.0, green: 23.0/255.0, blue: 48.0/255.0, alpha: 1.0)
-let itemHeight:CGFloat = screenRect.height
+
+func itemHeight() -> CGFloat {
+    return screenRect().height - 100
+}
+
 let itemSpacing:CGFloat = 0
 let itemWidth:CGFloat = 60
 let collectionViewWidth = itemWidth * 3
@@ -66,10 +72,10 @@ var collectionViewLeftInsets: CGFloat {
     get {
 
         if portrait {
-            let portrait = (screenRect.width - collectionViewWidth)/2.0
+            let portrait = (screenRect().width - collectionViewWidth)/2.0
             return portrait
         }else {
-            let landInset = (screenRect.height - collectionViewWidth)/2.0
+            let landInset = (screenRect().height - collectionViewWidth)/2.0
             return landInset
         }
     }
@@ -170,7 +176,7 @@ extension UIImage {
 
 func getTutView() -> UIView {
     
-    let view = UIView(frame: screenRect)
+    let view = UIView(frame: screenRect())
     
     view.backgroundColor = UIColor.whiteColor()
     
