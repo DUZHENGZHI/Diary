@@ -53,7 +53,7 @@ class DiaryCloud: NSObject {
         
         fetchCloudRecords { [weak self] records  in
             
-            print("Records in CloudKit is \(records?.count)")
+            print("Records in CloudKit is \(String(describing: records?.count))")
             print(allRecords.count)
             
             if let records = records {

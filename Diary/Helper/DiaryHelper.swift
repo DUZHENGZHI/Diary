@@ -228,7 +228,7 @@ extension UIButton {
 
 
 func numberToChinese(number:Int) -> String {
-    let numbers = Array(String(number).characters)
+    let numbers = Array(String(number))
     var finalString = ""
     for singleNumber in numbers {
         let string = singleNumberToChinese(number: singleNumber)
@@ -238,7 +238,7 @@ func numberToChinese(number:Int) -> String {
 }
 
 func numberToChineseWithUnit(number:Int) -> String {
-    let numbers = Array(String(number).characters)
+    let numbers = Array(String(number))
     var units = unitParser(unit: numbers.count)
     var finalString = ""
     
