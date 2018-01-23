@@ -16,14 +16,13 @@ import Crashlytics
 class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
 
     var window: UIWindow?
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
 
-    private func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
         application.applicationSupportsShakeToEdit = true
         
         Fabric.with([Crashlytics.self()])
     
-
         if let _ = FileManager.default.ubiquityIdentityToken {
             // iCloud is available
             DiaryCloud.sharedInstance.startFetch()
@@ -40,7 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
         }
         
         defaultConfig()
-        
         return true
     }
     

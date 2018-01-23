@@ -15,7 +15,6 @@ class DiaryCoreData: NSObject {
     
     override init() {
         super.init()
-        registerForiCloudNotifications()
     }
     
     //Coredata
@@ -30,14 +29,6 @@ class DiaryCoreData: NSObject {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "kevinzhow.Diary" in the application's documents Application Support directory.
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return urls[urls.count-1] as NSURL
-    }()
-    
-    lazy var cloudDirectory: NSURL = {
-        // The directory the application uses to store the Core Data store file. This code uses a directory named "kevinzhow.Diary" in the application's documents Application Support directory.
-        var cloudRoot = icloudIdentifier()
-        let url = FileManager.default.url(forUbiquityContainerIdentifier: "\(cloudRoot)")
-        debugPrint("\(url)")
-        return url! as NSURL
     }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
@@ -92,105 +83,8 @@ class DiaryCoreData: NSObject {
     lazy var storeOptions: [NSObject : AnyObject] = {
         return [
             NSMigratePersistentStoresAutomaticallyOption:true,
-            NSInferMappingModelAutomaticallyOption: true,
-            NSPersistentStoreUbiquitousContentNameKey : "CatchDiary",
-            NSPersistentStoreUbiquitousPeerTokenOption: "c405d8e8a24s11e3bbec425861s862bs"]
+            NSInferMappingModelAutomaticallyOption: true]
         }() as [NSObject : AnyObject]
-    
-    func registerForiCloudNotifications() {
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(storesWillChange(notification:)), name: NSNotification.Name.NSPersistentStoreCoordinatorStoresWillChange, object: persistentStoreCoordinator)
-        notificationCenter.addObserver(self, selector: #selector(storesDidChange(notification:)), name: NSNotification.Name.NSPersistentStoreCoordinatorStoresDidChange, object: persistentStoreCoordinator)
-        notificationCenter.addObserver(self, selector: #selector(persistentStoreDidImportUbiquitousContentChanges(notification:)), name: NSNotification.Name.NSPersistentStoreDidImportUbiquitousContentChanges, object: persistentStoreCoordinator)
-    }
-    
-    @objc func persistentStoreDidImportUbiquitousContentChanges(notification:NSNotification){
-        let context = self.managedObjectContext!
-        debugPrint("Perform icloud data change")
-        context.performAndWait({
-            context.mergeChanges(fromContextDidSave: notification as Notification)
-        })
-    }
-    
-    @objc func storesWillChange(notification:NSNotification) {
-        debugPrint("Store Will change")
-        let context:NSManagedObjectContext! = self.managedObjectContext
-        context?.performAndWait({
-            if (context.hasChanges) {
-                do {
-                    try context.save()
-                } catch let error as NSError {
-                    debugPrint(error.localizedDescription)
-                    self.showAlert()
-                }
-            }
-            context.reset()
-        })
-        
-    }
-    
-    func showAlert() {
-        let message = UIAlertView(title: "iCloud 同步错误", message: "是否使用 iCloud 版本备份覆盖本地记录", delegate: self, cancelButtonTitle: "不要", otherButtonTitles: "好的")
-        message.show()
-    }
-
-    
-    @objc func storesDidChange(notification:NSNotification){
-        debugPrint("Store did change")
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CoreDataDidUpdated"), object: nil)
-    }
-    
-    func migrateLocalStoreToiCloudStore() {
-        debugPrint("Migrate local to icloud")
-    
-        if let oldStore = persistentStoreCoordinator?.persistentStores.first {
-            var localStoreOptions = self.storeOptions
-            localStoreOptions[NSPersistentStoreRemoveUbiquitousMetadataOption as NSString] = true as AnyObject
-            
-            do {
-                let newStore = try persistentStoreCoordinator?.migratePersistentStore(oldStore, to: cloudDirectory as URL, options: localStoreOptions, withType: NSSQLiteStoreType)
-                reloadStore(store: newStore)
-            } catch let error as NSError {
-                debugPrint(error.localizedDescription)
-            }
-        }
-        
-
-    }
-    
-    func migrateiCloudStoreToLocalStore() {
-        debugPrint("Migrate icloud to local")
-        if let oldStore = persistentStoreCoordinator?.persistentStores.first {
-            var localStoreOptions = self.storeOptions
-            localStoreOptions[NSPersistentStoreRemoveUbiquitousMetadataOption as NSString ] = true as AnyObject
-            
-            do {
-                let newStore = try persistentStoreCoordinator?.migratePersistentStore(oldStore, to:  self.applicationDocumentsDirectory.appendingPathComponent("Diary.sqlite")!, options: localStoreOptions, withType: NSSQLiteStoreType)
-                reloadStore(store: newStore)
-            } catch let error as NSError {
-                debugPrint(error.localizedDescription)
-            }
-        }
-
-    }
-    
-    
-    func reloadStore(store: NSPersistentStore?) {
-
-        if let store = store {
-            do {
-                let targetURL = self.applicationDocumentsDirectory.appendingPathComponent("Diary.sqlite")
-                try persistentStoreCoordinator?.remove(store)
-                try persistentStoreCoordinator?.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: targetURL, options: self.storeOptions)
-            } catch let error as NSError {
-                debugPrint(error.localizedDescription)
-            }
-
-        }
-    
-        
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CoreDataDidUpdated"), object: nil)
-    }
     
     
     // MARK: - Core Data Saving support
@@ -212,17 +106,4 @@ class DiaryCoreData: NSObject {
         }
     }
 
-}
-
-extension DiaryCoreData: UIAlertViewDelegate {
-    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
-        switch buttonIndex {
-        case 0:
-            self.migrateLocalStoreToiCloudStore()
-        case 1:
-            self.migrateiCloudStoreToLocalStore()
-        default:
-            debugPrint("Do nothing")
-        }
-    }
 }

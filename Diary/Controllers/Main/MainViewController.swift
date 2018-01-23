@@ -86,7 +86,7 @@ class MainViewController: DiaryBaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionView), name: NSNotification.Name(rawValue: "DiaryChangeFont"), object: nil)
         resetCollectionView()
         view.layoutIfNeeded()
-    
+
         // Do any additional setup after loading the view.
     }
     
@@ -113,6 +113,12 @@ class MainViewController: DiaryBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         // Refetch when navigation
         refetch()
+        
+        self.collectionView.reloadData()
+        
+        self.collectionView.collectionViewLayout.invalidateLayout()
+        
+        self.resetCollectionView()
     }
     
     @objc func reloadCollectionView() {

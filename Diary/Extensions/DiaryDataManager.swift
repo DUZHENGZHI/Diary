@@ -171,7 +171,6 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
             
             self.navigationController!.pushViewController(dvc, animated: true)
         }else{
-            
             let dvc = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
             
             let filePath = Bundle.main.path(forResource: "poem", ofType: "json")

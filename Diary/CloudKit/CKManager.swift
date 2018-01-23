@@ -96,35 +96,54 @@ func fetchCloudRecords(complete: @escaping ([CKRecord]?) -> Void) {
     
     let queryOpration = CKQueryOperation(query: query)
     
-    queryOpration.resultsLimit = 20
-    
     queryOpration.qualityOfService = QualityOfService.userInteractive
     
     var results = [CKRecord]()
-    
-    let recordFetchedBlock = { (record: CKRecord) in
+
+    queryOpration.recordFetchedBlock = { (record: CKRecord) in
         results.append(record)
     }
     
-    var queryCompleteBlockSelf = { (cursor: CKQueryCursor?, error: NSError?) in }
-    
-    let queryCompleteBlock = { (cursor: CKQueryCursor?, error: NSError?) in
+
+    queryOpration.queryCompletionBlock = { cursor, error in
         if let cursor = cursor {
-            let queryMoreOpration = CKQueryOperation(cursor: cursor)
-            queryMoreOpration.queryCompletionBlock = queryCompleteBlockSelf as? (CKQueryCursor?, Error?) -> Void
-            queryMoreOpration.recordFetchedBlock = recordFetchedBlock
-            privateDB.add(queryMoreOpration)
+            queryRecordsWithCursor(cursor: cursor, newRecord: { (record) in
+                if let record = record {
+                    results.append(record)
+                }
+            }, complete: {
+                complete(results)
+            })
         } else {
             complete(results)
         }
     }
     
-    queryCompleteBlockSelf = queryCompleteBlock
-
-    queryOpration.recordFetchedBlock = recordFetchedBlock
-    
-    queryOpration.queryCompletionBlock = queryCompleteBlockSelf as? (CKQueryCursor?, Error?) -> Void
-    
     privateDB.add(queryOpration)
 
+}
+
+func queryRecordsWithCursor(cursor: CKQueryCursor?, newRecord: @escaping (CKRecord?) -> Void , complete: @escaping () -> Void) {
+    if let cursor = cursor {
+        let queryMoreOpration = CKQueryOperation(cursor: cursor)
+        queryMoreOpration.recordFetchedBlock = { (record: CKRecord) in
+            newRecord(record)
+        }
+        queryMoreOpration.queryCompletionBlock = {cursor, error in
+            if let cursor = cursor {
+                queryRecordsWithCursor(cursor: cursor, newRecord: { (record) in
+                    if let record = record {
+                        newRecord(record)
+                    }
+                }, complete: {
+                    complete()
+                })
+            } else {
+                complete()
+            }
+        }
+        privateDB.add(queryMoreOpration)
+    } else {
+        complete()
+    }
 }

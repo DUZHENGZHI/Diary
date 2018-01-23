@@ -53,7 +53,7 @@ class DiaryCloud: NSObject {
         
         fetchCloudRecords { [weak self] records  in
             
-            print(records?.count)
+            print("Records in CloudKit is \(records?.count)")
             print(allRecords.count)
             
             if let records = records {
@@ -175,27 +175,29 @@ func saveDiaryWithCKRecord(record: CKRecord) {
 
         if let ID = record.object(forKey: "id") as? String,
             let Content = record.object(forKey: "Content") as? String,
-            let Location = record.object(forKey: "Location") as? String,
             let Title = record.object(forKey: "Title") as? String,
             let Date = record.object(forKey: "Created_at") as? NSDate {
                 
-                let newdiary = Diary(entity: entity!,
-                                     insertInto:managedContext)
-                
-                newdiary.id = ID
-                
-                newdiary.content = Content
-                
-                newdiary.location = Location
-                
-                newdiary.title = Title
-                
-                newdiary.updateTimeWithDate(date: Date)
-        }
-        
-        do {
-            try managedContext.save()
-        } catch _ {
+            let newdiary = Diary(entity: entity!,
+                                 insertInto:managedContext)
+            
+            newdiary.id = ID
+            
+            newdiary.content = Content
+            
+            let Location = record.object(forKey: "Location") as? String
+            newdiary.location = Location
+            
+            newdiary.title = Title
+            
+            newdiary.updateTimeWithDate(date: Date)
+            
+            do {
+                try managedContext.save()
+                debugPrint("Save diary is \(newdiary)")
+            } catch let err {
+                debugPrint("Save CKRecord error \(err.localizedDescription)")
+            }
         }
     }
 }
