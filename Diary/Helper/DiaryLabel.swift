@@ -11,11 +11,11 @@ import pop
 
 func sizeHeightWithText(labelText: NSString,
     fontSize: CGFloat,
-    textAttributes: [String : AnyObject]) -> CGRect {
+    textAttributes: [NSAttributedStringKey : AnyObject]) -> CGRect {
         
-        return labelText.boundingRectWithSize(
-            CGSizeMake(fontSize, 480),
-            options: NSStringDrawingOptions.UsesLineFragmentOrigin,
+    return labelText.boundingRect(
+        with: CGSize(width: fontSize,height: 480),
+        options: NSStringDrawingOptions.usesLineFragmentOrigin,
             attributes: textAttributes, context: nil)
 }
 
@@ -34,7 +34,7 @@ class NumberPaser {
 
 class DiaryLabel: UILabel {
     
-    var textAttributes: [String : AnyObject]!
+    var textAttributes: [NSAttributedStringKey : AnyObject]!
     
     var labelSize: CGRect?
     
@@ -51,9 +51,9 @@ class DiaryLabel: UILabel {
         fontSize : CGFloat,
         lineHeight: CGFloat){
             
-            self.init(frame: CGRectZero)
+            self.init(frame: CGRect.zero)
             
-            self.userInteractionEnabled = true
+        self.isUserInteractionEnabled = true
             
             let font = UIFont(name: fontname,
                 size: fontSize) as UIFont!
@@ -61,16 +61,16 @@ class DiaryLabel: UILabel {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = lineHeight
             
-            textAttributes = [NSFontAttributeName: font,
-                NSParagraphStyleAttributeName: paragraphStyle]
+        textAttributes = [NSAttributedStringKey.font: font!,
+                NSAttributedStringKey.paragraphStyle: paragraphStyle]
             
-            labelSize = sizeHeightWithText(labelText, fontSize: fontSize ,textAttributes: textAttributes)
+        labelSize = sizeHeightWithText(labelText: labelText as NSString, fontSize: fontSize ,textAttributes: textAttributes)
             
             self.attributedText = NSAttributedString(
                 string: labelText,
                 attributes: textAttributes)
             
-            self.lineBreakMode = NSLineBreakMode.ByCharWrapping
+        self.lineBreakMode = NSLineBreakMode.byCharWrapping
             
             self.numberOfLines = 0
     }
@@ -80,7 +80,7 @@ class DiaryLabel: UILabel {
         fontSize : CGFloat,
         lineHeight: CGFloat){
             
-            self.userInteractionEnabled = true
+        self.isUserInteractionEnabled = true
             
             let font = UIFont(name: fontname,
                 size: fontSize) as UIFont!
@@ -88,16 +88,16 @@ class DiaryLabel: UILabel {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = lineHeight
             
-            paragraphStyle.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        paragraphStyle.lineBreakMode = NSLineBreakMode.byWordWrapping
             
             paragraphStyle.paragraphSpacing = 0
             
             paragraphStyle.paragraphSpacingBefore = 0
         
-            textAttributes = [NSFontAttributeName: font,
-                NSParagraphStyleAttributeName: paragraphStyle]
+        textAttributes = [NSAttributedStringKey.font: font!,
+                          NSAttributedStringKey.paragraphStyle: paragraphStyle]
             
-            labelSize = sizeHeightWithText(labelText, fontSize: fontSize ,textAttributes: textAttributes)
+        labelSize = sizeHeightWithText(labelText: labelText as NSString, fontSize: fontSize ,textAttributes: textAttributes)
             
             self.attributedText = NSAttributedString(
                 string: labelText,
@@ -115,42 +115,42 @@ class DiaryLabel: UILabel {
     
     func updateLabelColor(color: UIColor) {
         
-        textAttributes[NSForegroundColorAttributeName] = color
+        textAttributes[NSAttributedStringKey.foregroundColor] = color
         
         self.attributedText = NSAttributedString(
             string: self.attributedText!.string,
             attributes: textAttributes)
     }
-
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
-        anim.springBounciness = 10
-        anim.springSpeed = 15
-        anim.fromValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
-        anim.toValue = NSValue(CGPoint: CGPointMake(0.9, 0.9))
-        self.layer.pop_addAnimation(anim, forKey: "PopScale")
-        super.touchesBegan(touches as Set<UITouch>, withEvent: event)
+        anim?.springBounciness = 10
+        anim?.springSpeed = 15
+        anim?.fromValue = NSValue(cgPoint: CGPoint(x: 1.0, y: 1.0))
+        anim?.toValue = NSValue(cgPoint: CGPoint(x: 0.9, y: 0.9))
+        self.layer.pop_add(anim, forKey: "PopScale")
+        super.touchesBegan(touches as Set<UITouch>, with: event)
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
-        anim.springBounciness = 10
-        anim.springSpeed = 15
-        anim.fromValue = NSValue(CGPoint: CGPointMake(0.9, 0.9))
-        anim.toValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
-        self.layer.pop_addAnimation(anim, forKey: "PopScaleback")
-        super.touchesEnded(touches as Set<UITouch>, withEvent: event)
+        anim?.springBounciness = 10
+        anim?.springSpeed = 15
+        anim?.fromValue = NSValue(cgPoint: CGPoint(x: 0.9,y: 0.9))
+        anim?.toValue = NSValue(cgPoint: CGPoint(x: 1.0, y: 1.0))
+        self.layer.pop_add(anim, forKey: "PopScaleback")
+        super.touchesEnded(touches as Set<UITouch>, with: event)
     }
     
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+    override func touchesCancelled(_ touches: Set<UITouch>?, with event: UIEvent?) {
         let anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
-        anim.springBounciness = 10
-        anim.springSpeed = 15
-        anim.fromValue = NSValue(CGPoint: CGPointMake(0.9, 0.9))
-        anim.toValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
-        self.layer.pop_addAnimation(anim, forKey: "PopScaleback")
-        super.touchesCancelled(touches, withEvent: event)
+        anim?.springBounciness = 10
+        anim?.springSpeed = 15
+        anim?.fromValue = NSValue(cgPoint: CGPoint(x: 0.9, y: 0.9))
+        anim?.toValue = NSValue(cgPoint: CGPoint(x: 1.0,y: 1.0))
+        self.layer.pop_add(anim, forKey: "PopScaleback")
+        super.touchesCancelled(touches!, with: event)
     }
 
     /*

@@ -28,22 +28,22 @@ class DiaryCoreData: NSObject {
     
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "kevinzhow.Diary" in the application's documents Application Support directory.
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1]
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return urls[urls.count-1] as NSURL
     }()
     
     lazy var cloudDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "kevinzhow.Diary" in the application's documents Application Support directory.
         var cloudRoot = icloudIdentifier()
-        let url = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier("\(cloudRoot)")
+        let url = FileManager.default.url(forUbiquityContainerIdentifier: "\(cloudRoot)")
         debugPrint("\(url)")
-        return url!
+        return url! as NSURL
     }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = NSBundle.mainBundle().URLForResource("Diary", withExtension: "momd")!
-        return NSManagedObjectModel(contentsOfURL: modelURL)!
+        let modelURL = Bundle.main.url(forResource: "Diary", withExtension: "momd")!
+        return NSManagedObjectModel(contentsOf: modelURL)!
     }()
     
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
@@ -52,23 +52,23 @@ class DiaryCoreData: NSObject {
         
         
         var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Diary.sqlite")
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("Diary.sqlite")
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: self.storeOptions)
+            try coordinator!.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: self.storeOptions)
         } catch var error1 as NSError {
             error = error1
             coordinator = nil
             // Report any error we got.
             var dict = [String: AnyObject]()
-            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
-            dict[NSLocalizedFailureReasonErrorKey] = failureReason
+            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject
+            dict[NSLocalizedFailureReasonErrorKey] = failureReason as AnyObject
             dict[NSUnderlyingErrorKey] = error
             error = NSError(domain: "Catch.Diary.Error", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog("Unresolved error \(error), \(error!.userInfo)")
+            NSLog("Unresolved error \(String(describing: error)), \(error!.userInfo)")
             abort()
         } catch {
             fatalError()
@@ -83,7 +83,7 @@ class DiaryCoreData: NSObject {
         if coordinator == nil {
             return nil
         }
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
         managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
@@ -95,27 +95,27 @@ class DiaryCoreData: NSObject {
             NSInferMappingModelAutomaticallyOption: true,
             NSPersistentStoreUbiquitousContentNameKey : "CatchDiary",
             NSPersistentStoreUbiquitousPeerTokenOption: "c405d8e8a24s11e3bbec425861s862bs"]
-    }()
+        }() as [NSObject : AnyObject]
     
     func registerForiCloudNotifications() {
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self, selector: #selector(storesWillChange(_:)), name: NSPersistentStoreCoordinatorStoresWillChangeNotification, object: persistentStoreCoordinator)
-        notificationCenter.addObserver(self, selector: #selector(storesDidChange(_:)), name: NSPersistentStoreCoordinatorStoresDidChangeNotification, object: persistentStoreCoordinator)
-        notificationCenter.addObserver(self, selector: #selector(persistentStoreDidImportUbiquitousContentChanges(_:)), name: NSPersistentStoreDidImportUbiquitousContentChangesNotification, object: persistentStoreCoordinator)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(storesWillChange(notification:)), name: NSNotification.Name.NSPersistentStoreCoordinatorStoresWillChange, object: persistentStoreCoordinator)
+        notificationCenter.addObserver(self, selector: #selector(storesDidChange(notification:)), name: NSNotification.Name.NSPersistentStoreCoordinatorStoresDidChange, object: persistentStoreCoordinator)
+        notificationCenter.addObserver(self, selector: #selector(persistentStoreDidImportUbiquitousContentChanges(notification:)), name: NSNotification.Name.NSPersistentStoreDidImportUbiquitousContentChanges, object: persistentStoreCoordinator)
     }
     
-    func persistentStoreDidImportUbiquitousContentChanges(notification:NSNotification){
+    @objc func persistentStoreDidImportUbiquitousContentChanges(notification:NSNotification){
         let context = self.managedObjectContext!
         debugPrint("Perform icloud data change")
-        context.performBlockAndWait({
-            context.mergeChangesFromContextDidSaveNotification(notification)
+        context.performAndWait({
+            context.mergeChanges(fromContextDidSave: notification as Notification)
         })
     }
     
-    func storesWillChange(notification:NSNotification) {
+    @objc func storesWillChange(notification:NSNotification) {
         debugPrint("Store Will change")
         let context:NSManagedObjectContext! = self.managedObjectContext
-        context?.performBlockAndWait({
+        context?.performAndWait({
             if (context.hasChanges) {
                 do {
                     try context.save()
@@ -135,9 +135,9 @@ class DiaryCoreData: NSObject {
     }
 
     
-    func storesDidChange(notification:NSNotification){
+    @objc func storesDidChange(notification:NSNotification){
         debugPrint("Store did change")
-        NSNotificationCenter.defaultCenter().postNotificationName("CoreDataDidUpdated", object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CoreDataDidUpdated"), object: nil)
     }
     
     func migrateLocalStoreToiCloudStore() {
@@ -145,11 +145,11 @@ class DiaryCoreData: NSObject {
     
         if let oldStore = persistentStoreCoordinator?.persistentStores.first {
             var localStoreOptions = self.storeOptions
-            localStoreOptions[NSPersistentStoreRemoveUbiquitousMetadataOption] = true
+            localStoreOptions[NSPersistentStoreRemoveUbiquitousMetadataOption as NSString] = true as AnyObject
             
             do {
-                let newStore = try persistentStoreCoordinator?.migratePersistentStore(oldStore, toURL: cloudDirectory, options: localStoreOptions, withType: NSSQLiteStoreType)
-                reloadStore(newStore)
+                let newStore = try persistentStoreCoordinator?.migratePersistentStore(oldStore, to: cloudDirectory as URL, options: localStoreOptions, withType: NSSQLiteStoreType)
+                reloadStore(store: newStore)
             } catch let error as NSError {
                 debugPrint(error.localizedDescription)
             }
@@ -162,11 +162,11 @@ class DiaryCoreData: NSObject {
         debugPrint("Migrate icloud to local")
         if let oldStore = persistentStoreCoordinator?.persistentStores.first {
             var localStoreOptions = self.storeOptions
-            localStoreOptions[NSPersistentStoreRemoveUbiquitousMetadataOption] = true
+            localStoreOptions[NSPersistentStoreRemoveUbiquitousMetadataOption as NSString ] = true as AnyObject
             
             do {
-                let newStore = try persistentStoreCoordinator?.migratePersistentStore(oldStore, toURL:  self.applicationDocumentsDirectory.URLByAppendingPathComponent("Diary.sqlite"), options: localStoreOptions, withType: NSSQLiteStoreType)
-                reloadStore(newStore)
+                let newStore = try persistentStoreCoordinator?.migratePersistentStore(oldStore, to:  self.applicationDocumentsDirectory.appendingPathComponent("Diary.sqlite")!, options: localStoreOptions, withType: NSSQLiteStoreType)
+                reloadStore(store: newStore)
             } catch let error as NSError {
                 debugPrint(error.localizedDescription)
             }
@@ -179,8 +179,9 @@ class DiaryCoreData: NSObject {
 
         if let store = store {
             do {
-                try persistentStoreCoordinator?.removePersistentStore(store)
-                try persistentStoreCoordinator?.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: self.applicationDocumentsDirectory.URLByAppendingPathComponent("Diary.sqlite"), options: self.storeOptions)
+                let targetURL = self.applicationDocumentsDirectory.appendingPathComponent("Diary.sqlite")
+                try persistentStoreCoordinator?.remove(store)
+                try persistentStoreCoordinator?.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: targetURL, options: self.storeOptions)
             } catch let error as NSError {
                 debugPrint(error.localizedDescription)
             }
@@ -188,7 +189,7 @@ class DiaryCoreData: NSObject {
         }
     
         
-        NSNotificationCenter.defaultCenter().postNotificationName("CoreDataDidUpdated", object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CoreDataDidUpdated"), object: nil)
     }
     
     
@@ -204,7 +205,7 @@ class DiaryCoreData: NSObject {
                     error = error1
                     // Replace this implementation with code to handle the error appropriately.
                     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                    NSLog("Unresolved error \(error), \(error!.userInfo)")
+                    NSLog("Unresolved error \(String(describing: error)), \(error!.userInfo)")
                     abort()
                 }
             }
@@ -214,7 +215,7 @@ class DiaryCoreData: NSObject {
 }
 
 extension DiaryCoreData: UIAlertViewDelegate {
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         switch buttonIndex {
         case 0:
             self.migrateLocalStoreToiCloudStore()

@@ -19,34 +19,34 @@ class DiaryPopView: UIView {
     }
     */
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
-        anim.springBounciness = 10
-        anim.springSpeed = 15
-        anim.fromValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
-        anim.toValue = NSValue(CGPoint: CGPointMake(0.9, 0.9))
-        self.layer.pop_addAnimation(anim, forKey: "PopScale")
-        super.touchesBegan(touches as Set<UITouch>, withEvent: event)
+        anim?.springBounciness = 10
+        anim?.springSpeed = 15
+        anim?.fromValue = NSValue(cgPoint: CGPoint(x:1.0, y: 1.0))
+        anim?.toValue = NSValue(cgPoint: CGPoint(x:0.9,y: 0.9))
+        self.layer.pop_add(anim, forKey: "PopScale")
+        super.touchesBegan(touches as Set<UITouch>, with: event)
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
-        anim.springBounciness = 10
-        anim.springSpeed = 15
-        anim.fromValue = NSValue(CGPoint: CGPointMake(0.9, 0.9))
-        anim.toValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
-        self.layer.pop_addAnimation(anim, forKey: "PopScaleback")
-        super.touchesEnded(touches as Set<UITouch>, withEvent: event)
+        anim?.springBounciness = 10
+        anim?.springSpeed = 15
+        anim?.fromValue = NSValue(cgPoint: CGPoint(x:0.9, y:0.9))
+        anim?.toValue = NSValue(cgPoint: CGPoint(x:1.0, y:1.0))
+        self.layer.pop_add(anim, forKey: "PopScaleback")
+        super.touchesEnded(touches as Set<UITouch>, with: event)
     }
     
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+    override func touchesCancelled(_ touches: Set<UITouch>?, with event: UIEvent?) {
         let anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
-        anim.springBounciness = 10
-        anim.springSpeed = 15
-        anim.fromValue = NSValue(CGPoint: CGPointMake(0.9, 0.9))
-        anim.toValue = NSValue(CGPoint: CGPointMake(1.0, 1.0))
-        self.layer.pop_addAnimation(anim, forKey: "PopScaleback")
-        super.touchesCancelled(touches, withEvent: event)
+        anim?.springBounciness = 10
+        anim?.springSpeed = 15
+        anim?.fromValue = NSValue(cgPoint: CGPoint(x:0.9, y:0.9))
+        anim?.toValue = NSValue(cgPoint: CGPoint(x:1.0, y:1.0))
+        self.layer.pop_add(anim, forKey: "PopScaleback")
+        super.touchesCancelled(touches!, withEvent: event)
     }
 
 

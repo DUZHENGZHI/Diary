@@ -372,9 +372,9 @@ extension NSDate {
         let calender = NSCalendar.current
         let components = NSDateComponents()
         components.day = 1
-        let date = calender.date(components, toDate: self.beginningOfDay(), options: [])
-        date?.dateByAddingTimeInterval(-1)
-        return date!
+        var date = calender.date(byAdding: components as DateComponents, to: self.beginningOfDay() as Date)
+        date?.addTimeInterval(-1)
+        return date! as NSDate
     }
 }
 

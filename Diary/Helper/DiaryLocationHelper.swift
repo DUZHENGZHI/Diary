@@ -44,7 +44,7 @@ class DiaryLocationHelper: NSObject, CLLocationManagerDelegate {
                     
                     self.address = placemark?.locality
                     
-                    NSNotificationCenter.defaultCenter().postNotificationName("DiaryLocationUpdated", object: self.address)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "DiaryLocationUpdated"), object: self.address)
                 }
             }
             

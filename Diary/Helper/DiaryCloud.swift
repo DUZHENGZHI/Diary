@@ -13,13 +13,13 @@ import CloudKit
 class DiaryCloud: NSObject {
     static let sharedInstance = DiaryCloud()
     
-    var fetchedResultsController : NSFetchedResultsController!
+    var fetchedResultsController : NSFetchedResultsController<NSFetchRequestResult>!
     
     override init() {
         
         super.init()
         
-        let fetchRequest = NSFetchRequest(entityName:"Diary")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
         
@@ -62,16 +62,16 @@ class DiaryCloud: NSObject {
                     
                     // Find Cloud Thing in Local
                     
-                    if let diaryID = fetchRecord.objectForKey("id") as? String,
-                        title = fetchRecord.objectForKey("Title") as? String{
+                    if let diaryID = fetchRecord.object(forKey: "id") as? String,
+                        let title = fetchRecord.object(forKey: "Title") as? String{
                         
                         debugPrint("Processing \(diaryID) \(title)")
                         
-                        if let _ = fetchDiaryByID(diaryID) {
+                        if let _ = fetchDiaryByID(id: diaryID) {
                             debugPrint("No need to do thing")
                         } else {
                             debugPrint("Create Diary With CKRecords")
-                            saveDiaryWithCKRecord(fetchRecord)
+                            saveDiaryWithCKRecord(record: fetchRecord)
                         }
                     }
                 }
@@ -81,7 +81,7 @@ class DiaryCloud: NSObject {
                     
                     let filterArray = records.filter { cloud_record -> Bool in
 
-                        if let recordID = cloud_record.objectForKey("id") as? String, title = cloud_record.objectForKey("Title") as? String {
+                        if let recordID = cloud_record.object(forKey: "id") as? String, let title = cloud_record.object(forKey: "Title") as? String {
                             
                             if recordID == record.id {
                                 
@@ -102,7 +102,7 @@ class DiaryCloud: NSObject {
                     if filterArray.count == 0 {
 
                         if let _ = record.title {
-                            saveNewRecord(record)
+                            saveNewRecord(diary: record)
                         }
                         
                     } else {
@@ -143,8 +143,8 @@ class DiaryCloud: NSObject {
             
             var toDelete = [Diary]()
             
-            if let fetchedRecords = fetchsDiaryByID(recordID) {
-                for (index, fetchedRecord) in fetchedRecords.enumerate() {
+            if let fetchedRecords = fetchsDiaryByID(id: recordID) {
+                for (index, fetchedRecord) in fetchedRecords.enumerated() {
                     if index != 0 {
                         
                         toDelete.append(fetchedRecord)
@@ -153,7 +153,7 @@ class DiaryCloud: NSObject {
             }
             
             for diary in toDelete {
-                DiaryCoreData.sharedInstance.managedContext?.deleteObject(diary)
+                DiaryCoreData.sharedInstance.managedContext?.delete(diary)
             }
         }
         
@@ -171,16 +171,16 @@ class DiaryCloud: NSObject {
 func saveDiaryWithCKRecord(record: CKRecord) {
     if let managedContext = DiaryCoreData.sharedInstance.managedContext {
         
-        let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
+        let entity =  NSEntityDescription.entity(forEntityName: "Diary", in: managedContext)
 
-        if let ID = record.objectForKey("id") as? String,
-            Content = record.objectForKey("Content") as? String,
-            Location = record.objectForKey("Location") as? String,
-            Title = record.objectForKey("Title") as? String,
-            Date = record.objectForKey("Created_at") as? NSDate {
+        if let ID = record.object(forKey: "id") as? String,
+            let Content = record.object(forKey: "Content") as? String,
+            let Location = record.object(forKey: "Location") as? String,
+            let Title = record.object(forKey: "Title") as? String,
+            let Date = record.object(forKey: "Created_at") as? NSDate {
                 
                 let newdiary = Diary(entity: entity!,
-                    insertIntoManagedObjectContext:managedContext)
+                                     insertInto:managedContext)
                 
                 newdiary.id = ID
                 
@@ -190,7 +190,7 @@ func saveDiaryWithCKRecord(record: CKRecord) {
                 
                 newdiary.title = Title
                 
-                newdiary.updateTimeWithDate(Date)
+                newdiary.updateTimeWithDate(date: Date)
         }
         
         do {
@@ -202,12 +202,12 @@ func saveDiaryWithCKRecord(record: CKRecord) {
 
 func fetchDiaryByID(id: String) -> Diary? {
     
-    let fetchRequest = NSFetchRequest(entityName:"Diary")
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
     fetchRequest.predicate = NSPredicate(format: "id = %@", id)
     
     do {
         let fetchedResults =
-        try DiaryCoreData.sharedInstance.managedContext?.executeFetchRequest(fetchRequest) as? [Diary]
+            try DiaryCoreData.sharedInstance.managedContext?.fetch(fetchRequest) as? [Diary]
         
         if let results = fetchedResults {
             return results.first
@@ -222,12 +222,12 @@ func fetchDiaryByID(id: String) -> Diary? {
 
 func fetchsDiaryByID(id: String) -> [Diary]? {
     
-    let fetchRequest = NSFetchRequest(entityName:"Diary")
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
     fetchRequest.predicate = NSPredicate(format: "id = %@", id)
     
     do {
         let fetchedResults =
-        try DiaryCoreData.sharedInstance.managedContext?.executeFetchRequest(fetchRequest) as? [Diary]
+            try DiaryCoreData.sharedInstance.managedContext?.fetch(fetchRequest) as? [Diary]
         
         if let results = fetchedResults {
             return results
@@ -243,12 +243,12 @@ func fetchsDiaryByID(id: String) -> [Diary]? {
 
 func fetchsDiaryByTitle(title: String) -> [Diary]? {
     
-    let fetchRequest = NSFetchRequest(entityName:"Diary")
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
     fetchRequest.predicate = NSPredicate(format: "title = %@", title)
     
     do {
         let fetchedResults =
-        try DiaryCoreData.sharedInstance.managedContext?.executeFetchRequest(fetchRequest) as? [Diary]
+            try DiaryCoreData.sharedInstance.managedContext?.fetch(fetchRequest) as? [Diary]
         
         if let results = fetchedResults {
             return results
@@ -262,7 +262,7 @@ func fetchsDiaryByTitle(title: String) -> [Diary]? {
 }
 
 extension DiaryCloud: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
 
     }
 }
