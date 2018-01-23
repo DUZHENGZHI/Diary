@@ -18,7 +18,7 @@ extension MainViewController {
             switch interfaceType {
             case .Home:
                 
-                let fetchRequest = NSFetchRequest(entityName:"Diary")
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
                 
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
                 if let managedContext = DiaryCoreData.sharedInstance.managedContext {
@@ -27,7 +27,7 @@ extension MainViewController {
                         cacheName: nil)
                 }
             case .Year:
-                let fetchRequest = NSFetchRequest(entityName:"Diary")
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
                 fetchRequest.predicate = NSPredicate(format: "year = \(year)")
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
                 if let managedContext = DiaryCoreData.sharedInstance.managedContext {
@@ -37,7 +37,7 @@ extension MainViewController {
                     fetchedResultsController.delegate = self
                 }
             case .Month:
-                let fetchRequest = NSFetchRequest(entityName:"Diary")
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
                 
                 debugPrint("year = \(year) AND month = \(month)")
                 

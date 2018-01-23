@@ -25,7 +25,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
     
     @IBOutlet weak var finishButton: UIButton!
     
-    var keyboardSize:CGSize = CGSizeMake(0, 0)
+    var keyboardSize:CGSize = CGSize(width:0 , height: 0)
     
     var diaryKeyString: String?
     
@@ -41,7 +41,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 8
         
-        let textAttributes: [String : AnyObject]! = [NSFontAttributeName: DiaryFont, NSVerticalGlyphFormAttributeName: 1, NSParagraphStyleAttributeName: paragraphStyle, NSKernAttributeName: 3.0]
+        let textAttributes: [String : Any]! = [NSAttributedStringKey.font.rawValue: DiaryFont, NSAttributedStringKey.verticalGlyphForm.rawValue: 1, NSAttributedStringKey.paragraphStyle.rawValue: paragraphStyle, NSAttributedStringKey.kern.rawValue: 3.0]
 
         composeView.typingAttributes = textAttributes
         composeView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -63,17 +63,17 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
         if let diary = diary {
             composeView.text = diary.content
-            self.composeView.contentOffset = CGPointMake(0, self.composeView.contentSize.height)
+            self.composeView.contentOffset = CGPoint(x: 0, y: self.composeView.contentSize.height)
             locationTextView.text = diary.location
             locationTextView.alpha = 1.0
             if let title = diary.title {
                 titleTextView.text = title
             }else{
-                titleTextView.text = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Day, fromDate: diary.created_at))) 日"
+                titleTextView.text = "\(numberToChineseWithUnit(number: NSCalendar.current.component(Calendar.Component.day, from: diary.created_at as Date))) 日"
             }
         }else{
             let date = NSDate()
-            titleTextView.text = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Day, fromDate: date))) 日"
+            titleTextView.text = "\(numberToChineseWithUnit(number: NSCalendar.current.component(Calendar.Component.day, from: date as Date))) 日"
         }
 
         composeView.becomeFirstResponder()
@@ -83,19 +83,18 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
         finishButton.customButtonWith(text: "完",  fontSize: 18.0,  width: 50.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
 
-        finishButton.addTarget(self, action: #selector(finishCompose(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        finishButton.addTarget(self, action: #selector(finishCompose(button:)), for: UIControlEvents.touchUpInside)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidShow(_:)), name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidShow(_:)), name:UIKeyboardWillChangeFrameNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidHide(_:)), name: UIKeyboardDidHideNotification, object: nil)
-
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateAddress), name: "DiaryLocationUpdated", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(notification:)), name:NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateAddress), name: NSNotification.Name(rawValue: "DiaryLocationUpdated"), object: nil)
 
         updateAddress()
         // Do any additional setup after loading the view.
     }
 
-    func updateAddress() {
+    @objc func updateAddress() {
 
         if let address = locationHelper.address {
 
@@ -107,7 +106,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
                 locationTextView.text = "于 \(address)"
             }
 
-            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+            UIView.animate(withDuration: 0.5, delay: 0, options: [UIViewAnimationOptions.curveEaseInOut], animations:
                 { [weak self] in
                     self?.locationTextView.alpha = 1.0
 
@@ -118,13 +117,13 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
     }
 
-    func finishCompose(button: UIButton) {
+    @objc func finishCompose(button: UIButton) {
 
         self.composeView.endEditing(true)
         
         self.locationTextView.endEditing(true)
 
-        if (composeView.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 1){
+        if (composeView.text.lengthOfBytes(using: String.Encoding.utf8) > 1){
 
             let translationtext = composeView.text
             
@@ -132,29 +131,29 @@ class DiaryComposeViewController: DiaryBaseViewController{
             
                 if let diary = diary {
 
-                    diary.content = translationtext
+                    diary.content = translationtext!
                     diary.location = locationTextView.text
                     diary.title = titleTextView.text
                     
                     if let DiaryID = diary.id {
                         
-                        fetchCloudRecordWithID(DiaryID, complete: { (record) -> Void in
+                        fetchCloudRecordWithID(recordID: DiaryID, complete: { (record) -> Void in
                             if let record = record {
-                                updateRecord(diary, record: record)
+                                updateRecord(diary: diary, record: record)
                             }
                         })
                     }
                     
                 }else{
 
-                    let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
+                    let entity =  NSEntityDescription.entity(forEntityName: "Diary", in: managedContext)
 
                     let newdiary = Diary(entity: entity!,
-                        insertIntoManagedObjectContext:managedContext)
+                                         insertInto:managedContext)
                     
-                    newdiary.id = randomStringWithLength(32) as String
+                    newdiary.id = randomStringWithLength(len: 32) as String
                     
-                    newdiary.content = translationtext
+                    newdiary.content = translationtext!
 
                     if let address  = locationHelper.address {
                         newdiary.location = address
@@ -164,9 +163,9 @@ class DiaryComposeViewController: DiaryBaseViewController{
                         newdiary.title = title
                     }
                     
-                    newdiary.updateTimeWithDate(NSDate())
+                    newdiary.updateTimeWithDate(date: NSDate())
                     
-                    saveNewRecord(newdiary)
+                    saveNewRecord(diary: newdiary)
                 }
 
                 do {
@@ -178,14 +177,14 @@ class DiaryComposeViewController: DiaryBaseViewController{
 
         }
 
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 
     func updateTextViewSizeForKeyboardHeight(keyboardHeight: CGFloat) {
 
         let newKeyboardHeight = keyboardHeight
 
-        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+        UIView.animate(withDuration: 0.5, delay: 0, options: [UIViewAnimationOptions.curveEaseInOut], animations:
             { [weak self] in
 
                 self?.locationTextViewToBottom.constant = newKeyboardHeight + 25.0
@@ -195,16 +194,16 @@ class DiaryComposeViewController: DiaryBaseViewController{
             }, completion: nil)
     }
 
-    func keyboardDidShow(notification: NSNotification) {
+    @objc func keyboardDidShow(notification: NSNotification) {
 
         if let rectValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            keyboardSize = rectValue.CGRectValue().size
-            updateTextViewSizeForKeyboardHeight(keyboardSize.height)
+            keyboardSize = rectValue.cgRectValue.size
+            updateTextViewSizeForKeyboardHeight(keyboardHeight: keyboardSize.height)
         }
     }
 
-    func keyboardDidHide(notification: NSNotification) {
-        updateTextViewSizeForKeyboardHeight(0)
+    @objc func keyboardDidHide(notification: NSNotification) {
+        updateTextViewSizeForKeyboardHeight(keyboardHeight: 0)
     }
     
     deinit {
@@ -215,7 +214,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
 }
 
 extension DiaryComposeViewController: UITextViewDelegate {
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             composeView.becomeFirstResponder()
             return false

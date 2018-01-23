@@ -34,7 +34,7 @@ class MainViewController: DiaryBaseViewController {
     
     var diarys = [NSManagedObject]()
     
-    var fetchedResultsController : NSFetchedResultsController!
+    var fetchedResultsController : NSFetchedResultsController<NSFetchRequestResult>!
     
     var yearsCount: Int = 1
     
@@ -66,7 +66,7 @@ class MainViewController: DiaryBaseViewController {
         let yearLayout = DiaryLayout()
         
         self.collectionView.setCollectionViewLayout(yearLayout, animated: false)
-        self.collectionView.registerNib(UINib(nibName: "DiaryAutoLayoutCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: DiaryCollectionViewCellIdentifier)
+        self.collectionView.register(UINib(nibName: "DiaryAutoLayoutCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: DiaryCollectionViewCellIdentifier)
         
         // Add Fetch
         self.prepareFetch()
@@ -83,7 +83,7 @@ class MainViewController: DiaryBaseViewController {
         mDoubleUpRecognizer.numberOfTapsRequired = 2
         self.collectionView.addGestureRecognizer(mDoubleUpRecognizer)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadCollectionView), name: "DiaryChangeFont", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionView), name: NSNotification.Name(rawValue: "DiaryChangeFont"), object: nil)
         resetCollectionView()
         view.layoutIfNeeded()
     
@@ -93,9 +93,9 @@ class MainViewController: DiaryBaseViewController {
     func resetCollectionView() {
         
         if portrait {
-            self.collectionView.contentInset = calInsets(true, forSize: CGSize(width: view.frame.size.width, height: view.frame.size.height))
+            self.collectionView.contentInset = calInsets(portrait: true, forSize: CGSize(width: view.frame.size.width, height: view.frame.size.height))
         } else {
-            self.collectionView.contentInset = calInsets(false, forSize:  CGSize(width: view.frame.size.width, height: view.frame.size.height))
+            self.collectionView.contentInset = calInsets(portrait: false, forSize:  CGSize(width: view.frame.size.width, height: view.frame.size.height))
         }
         
         if let layout = collectionView.collectionViewLayout as? DiaryLayout {
@@ -110,42 +110,42 @@ class MainViewController: DiaryBaseViewController {
         view.layoutIfNeeded()
     }
     
-    func reloadCollectionView() {
+    @objc func reloadCollectionView() {
         self.collectionView.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
     }
     
-    func popBack() {
+    @objc func popBack() {
         fetchedResultsController.delegate = nil
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
-    func popToYear() {
+    @objc func popToYear() {
         fetchedResultsController.delegate = nil
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
 
-    func newCompose() {
+    @objc func newCompose() {
         
-        let composeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("DiaryComposeViewController") as! DiaryComposeViewController
+        let composeViewController = self.storyboard?.instantiateViewController(withIdentifier: "DiaryComposeViewController") as! DiaryComposeViewController
         
-        self.presentViewController(composeViewController, animated: true, completion: nil)
+        self.present(composeViewController, animated: true, completion: nil)
         
     }
     
     func setupUI() {
         composeButton.customButtonWith(text: "撰",  fontSize: 14.0,  width: 40.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
-        composeButton.addTarget(self, action: #selector(newCompose), forControlEvents: UIControlEvents.TouchUpInside)
+        composeButton.addTarget(self, action: #selector(newCompose), for: UIControlEvents.touchUpInside)
         
         var yearTitleStirng = "二零一五"
         
         if year != 0 {
-            yearTitleStirng = numberToChinese(year)
+            yearTitleStirng = numberToChinese(number: year)
         }
         
-        titleLabel.config("TpldKhangXiDictTrial", labelText: "\(yearTitleStirng)年", fontSize: 20.0, lineHeight: 5.0)
-        subLabel.config(defaultFont, labelText: "\(numberToChineseWithUnit(month))月", fontSize: 18.0, lineHeight: 5.0)
-        subLabel.updateLabelColor(DiaryRed)
+        titleLabel.config(fontname: "TpldKhangXiDictTrial", labelText: "\(yearTitleStirng)年", fontSize: 20.0, lineHeight: 5.0)
+        subLabel.config(fontname: defaultFont, labelText: "\(numberToChineseWithUnit(number: month))月", fontSize: 18.0, lineHeight: 5.0)
+        subLabel.updateLabelColor(color: DiaryRed)
         
         if let titleLabelSize = titleLabel.labelSize {
             titleLabelHeight.constant = titleLabelSize.height
@@ -165,12 +165,12 @@ class MainViewController: DiaryBaseViewController {
             
             switch interfaceType {
             case .Home:
-                titleLabel.hidden = true
-                subLabel.hidden = true
-                composeButton.hidden = true
+                titleLabel.isHidden = true
+                subLabel.isHidden = true
+                composeButton.isHidden = true
                 
             case .Year:
-                subLabel.hidden = true
+                subLabel.isHidden = true
             default:
                 break
             }

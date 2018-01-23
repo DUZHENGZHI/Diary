@@ -22,15 +22,14 @@ class DiaryBaseViewController: UIViewController {
     }
     
     
-    override func canBecomeFirstResponder() -> Bool {
-        return true
+    override var canBecomeFirstResponder: Bool {
+        return true;
     }
     
-    
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
-        if motion == UIEventSubtype.MotionShake {
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == UIEventSubtype.motionShake {
             debugPrint("Device Shaked")
-//            showAlert()
+            //            showAlert()
         }
     }
     

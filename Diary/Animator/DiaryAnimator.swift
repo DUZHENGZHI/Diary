@@ -14,41 +14,41 @@ class DiaryAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     var newSize: CGSize?
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.4
     }
     
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
 
-        let containerView = transitionContext.containerView()
-        let fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
+        let containerView = transitionContext.containerView
+        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)
         let fromView = fromVC!.view
-        let toVC   = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
+        let toVC   = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
         let toView = toVC!.view
 
-        toView.alpha = 0.0
+        toView?.alpha = 0.0
         
-        if (operation ==  UINavigationControllerOperation.Pop) {
-            toView.transform = CGAffineTransformMakeScale(1.0,1.0)
+        if (operation ==  UINavigationControllerOperation.pop) {
+            toView?.transform = CGAffineTransform(scaleX: 1.0,y: 1.0)
             if let newSize = newSize {
-                toView.frame = CGRect(x: toView.frame.origin.x, y: toView.frame.origin.y, width: newSize.width, height: newSize.height)
+                toView?.frame = CGRect(x: (toView?.frame.origin.x)!, y: (toView?.frame.origin.y)!, width: newSize.width, height: newSize.height)
             }
         }else{
-            toView.transform = CGAffineTransformMakeScale(0.3,0.3);
+            toView?.transform = CGAffineTransform(scaleX: 0.3,y: 0.3);
         }
 
-        containerView?.insertSubview(toView, aboveSubview: fromView)
+        containerView.insertSubview(toView!, aboveSubview: fromView!)
 
-        UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: [UIViewAnimationOptions.curveEaseInOut], animations:
             {
-                if (self.operation ==  UINavigationControllerOperation.Pop) {
-                    fromView.transform = CGAffineTransformMakeScale(3.3,3.3)
+                if (self.operation ==  UINavigationControllerOperation.pop) {
+                    fromView?.transform = CGAffineTransform(scaleX: 3.3,y: 3.3)
 
                 }else{
-                    toView.transform = CGAffineTransformMakeScale(1.0,1.0);
+                    toView?.transform = CGAffineTransform(scaleX: 1.0,y: 1.0);
                 }
 
-                toView.alpha = 1.0
+                toView?.alpha = 1.0
 
             }, completion: { finished in
                  transitionContext.completeTransition(true)

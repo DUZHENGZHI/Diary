@@ -33,14 +33,14 @@ class DiaryPullView: UIView {
         self.alpha = 0.0
         self.layer.cornerRadius = self.frame.size.height/2.0
         self.layer.masksToBounds = true
-        self.backgroundColor = UIColor.blackColor()
+        self.backgroundColor = UIColor.black
         
         closeLabel = DiaryLabel(fontname: defaultFont, labelText: "完", fontSize: 16.0,lineHeight: 5.0)
         closeLabel.sizeToFit()
-        closeLabel.center = CGPointMake(self.frame.size.width/2.0, self.frame.size.height/2.0)
+        closeLabel.center = CGPoint(x:self.frame.size.width/2.0, y:self.frame.size.height/2.0)
 
         closeLabel.alpha = 1
-        closeLabel.updateLabelColor(UIColor.whiteColor())
+        closeLabel.updateLabelColor(color: UIColor.white)
         self.addSubview(closeLabel)
     }
 }

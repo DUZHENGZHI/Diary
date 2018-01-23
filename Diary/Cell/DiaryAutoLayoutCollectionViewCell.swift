@@ -19,7 +19,7 @@ class DiaryAutoLayoutCollectionViewCell: UICollectionViewCell {
     
     var labelText: String = "" {
         didSet {
-            self.textLabel.updateText(labelText)
+            self.textLabel.updateText(labelText: labelText)
         }
     }
     
@@ -31,15 +31,15 @@ class DiaryAutoLayoutCollectionViewCell: UICollectionViewCell {
         
         let lineHeight:CGFloat = 5.0
         
-        self.textLabel.config(defaultFont, labelText: labelText, fontSize: 18.0, lineHeight: lineHeight)
+        self.textLabel.config(fontname: defaultFont, labelText: labelText, fontSize: 18.0, lineHeight: lineHeight)
         
         let mDoubleUpRecognizer = UITapGestureRecognizer(target: self, action: #selector(DiaryAutoLayoutCollectionViewCell.click))
         
         mDoubleUpRecognizer.numberOfTapsRequired = 1
         
-        popView.userInteractionEnabled = true
+        popView.isUserInteractionEnabled = true
         
-        self.textLabel.userInteractionEnabled = false
+        self.textLabel.isUserInteractionEnabled = false
         
         self.popView.addGestureRecognizer(mDoubleUpRecognizer)
     }
@@ -47,11 +47,11 @@ class DiaryAutoLayoutCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         if isYear {
-            self.textLabel.config("TpldKhangXiDictTrial", labelText: labelText, fontSize: 16.0,lineHeight: 5.0)
+            self.textLabel.config(fontname: "TpldKhangXiDictTrial", labelText: labelText, fontSize: 16.0,lineHeight: 5.0)
         }
     }
     
-    func click() {
+    @objc func click() {
         if let selectCell = selectCell {
             selectCell()
         }

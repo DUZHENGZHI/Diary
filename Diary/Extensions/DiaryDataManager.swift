@@ -9,85 +9,9 @@
 import UIKit
 import CoreData
 
-extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
+extension MainViewController: UICollectionViewDataSource {
     
-    
-    func moveToThisMonth() {
-        
-        let currentMonth = NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: NSDate())
-        
-        if (diarys.count > 0){
-            let diary = diarys.last as! Diary
-            
-            let dvc = self.storyboard?.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
-            
-            if (currentMonth >  diary.month.integerValue) {
-                
-                //Move To Year Beacuse Lack of currentMonth Diary
-                
-                dvc.interfaceType = .Year
-                dvc.year = diary.year.integerValue
-                
-            }else{
-                
-                dvc.interfaceType = .Month
-                dvc.year = diary.year.integerValue
-                dvc.month = diary.month.integerValue
-            }
-            
-            self.navigationController!.pushViewController(dvc, animated: true)
-        }else{
-            
-            let dvc = self.storyboard?.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
-            
-            let filePath = NSBundle.mainBundle().pathForResource("poem", ofType: "json")
-            let JSONData = try? NSData(contentsOfFile: filePath!, options: NSDataReadingOptions.MappedRead)
-            let jsonObject = (try! NSJSONSerialization.JSONObjectWithData(JSONData!, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
-            var poemsCollection = jsonObject.valueForKey("poems") as! [String: AnyObject]
-            
-            let poems = currentLanguage == "ja" ?  (poemsCollection["ja"] as! NSArray) : ( poemsCollection["cn"] as! NSArray)
-            if let managedContext = DiaryCoreData.sharedInstance.managedContext {
-                for poem in poems{
-                    
-                    let poem =  poem as! NSDictionary
-                    let entity =  NSEntityDescription.entityForName("Diary", inManagedObjectContext: managedContext)
-                    let diaryID = poem.valueForKey("id") as! String
-                    
-                    if let _ = fetchDiaryByID(diaryID) {
-                        return
-                    }
-                    
-                    let newdiary = Diary(entity: entity!,
-                        insertIntoManagedObjectContext:managedContext)
-                    
-                    newdiary.id = diaryID
-                    newdiary.content = poem.valueForKey("content") as! String
-                    newdiary.title = poem.valueForKey("title") as? String
-                    newdiary.location = poem.valueForKey("location") as? String
-                    
-                    newdiary.updateTimeWithDate(NSDate())
-                    
-                    dvc.interfaceType = .Month
-                    dvc.month = newdiary.month.integerValue
-                    dvc.year = newdiary.year.integerValue
-                    
-                }
-                
-                do {
-                    try managedContext.save()
-                    
-                    self.navigationController!.pushViewController(dvc, animated: true)
-                } catch let error as NSError {
-                    debugPrint("Could not save \(error), \(error.userInfo)")
-                }
-            }
-        }
-        
-    }
-    
-    // MARK: UICollectionViewDataSource
-    
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if let interfaceType = interfaceType {
             switch interfaceType {
@@ -108,15 +32,17 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
         
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if let interfaceType = interfaceType {
             switch interfaceType {
             case .Home:
                 
-                let cell = collectionView.dequeueReusableCellWithReuseIdentifier(DiaryCollectionViewCellIdentifier, forIndexPath: indexPath) as! DiaryAutoLayoutCollectionViewCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiaryCollectionViewCellIdentifier, for: indexPath as IndexPath) as! DiaryAutoLayoutCollectionViewCell
                 
-                let components = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: NSDate())
+                let components = NSCalendar.current.component(Calendar.Component.year, from: NSDate() as Date)
                 var year = components
                 
                 if let sectionInfo = fetchedResultsController.sections?[safe: indexPath.row] {
@@ -128,20 +54,20 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
                 
                 cell.isYear = true
                 
-                cell.labelText = "\(numberToChinese(cell.textInt)) 年"
+                cell.labelText = "\(numberToChinese(number: cell.textInt)) 年"
                 
                 cell.selectCell = { [weak self] in
                     
                     if let strongSelf = self {
-                        let dvc = strongSelf.storyboard?.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
+                        let dvc = strongSelf.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
                         
                         dvc.interfaceType = .Year
                         
-                        let components = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: NSDate())
+                        let components = NSCalendar.current.component(Calendar.Component.year, from: Date())
                         
                         var year = components
                         
-                        if let sectionInfo = strongSelf.fetchedResultsController.sections?[safe: indexPath.row], tempYear = Int(sectionInfo.name) {
+                        if let sectionInfo = strongSelf.fetchedResultsController.sections?[safe: indexPath.row], let tempYear = Int(sectionInfo.name) {
                             year = tempYear
                         }
                         
@@ -149,7 +75,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
                         
                         strongSelf.navigationController!.pushViewController(dvc, animated: true)
                     }
-
+                    
                 }
                 
                 // Configure the cell
@@ -158,48 +84,48 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
                 
             case .Year:
                 
-                let cell = collectionView.dequeueReusableCellWithReuseIdentifier(DiaryCollectionViewCellIdentifier, forIndexPath: indexPath) as! DiaryAutoLayoutCollectionViewCell
-                    
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiaryCollectionViewCellIdentifier, for: indexPath) as! DiaryAutoLayoutCollectionViewCell
+                
                 if let sectionInfo = fetchedResultsController.sections?[safe: indexPath.row] {
                     let month = Int(sectionInfo.name)
-                    cell.labelText = "\(numberToChineseWithUnit(month!)) 月"
+                    cell.labelText = "\(numberToChineseWithUnit(number: month!)) 月"
                 } else {
-                    cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: NSDate()))) 月"
+                    cell.labelText = "\(numberToChineseWithUnit(number: NSCalendar.current.component(Calendar.Component.month, from: Date()))) 月"
                 }
-
+                
                 cell.selectCell = { [weak self] in
                     if let strongSelf = self {
-                        let dvc = strongSelf.storyboard?.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
+                        let dvc = strongSelf.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
                         dvc.interfaceType = .Month
                         
-                        if let sectionInfo = strongSelf.fetchedResultsController.sections?[safe: indexPath.row], month = Int(sectionInfo.name) {
+                        if let sectionInfo = strongSelf.fetchedResultsController.sections?[safe: indexPath.row], let month = Int(sectionInfo.name) {
                             dvc.month = month
                         } else {
-                            dvc.month = NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: NSDate())
+                            dvc.month = NSCalendar.current.component(Calendar.Component.month, from: Date())
                         }
                         
                         dvc.year = strongSelf.year
                         strongSelf.navigationController!.pushViewController(dvc, animated: true)
                     }
-
+                    
                 }
                 
                 return cell
                 
             case .Month:
-                let cell = collectionView.dequeueReusableCellWithReuseIdentifier(DiaryCollectionViewCellIdentifier, forIndexPath: indexPath) as! DiaryAutoLayoutCollectionViewCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiaryCollectionViewCellIdentifier, for: indexPath) as! DiaryAutoLayoutCollectionViewCell
                 
-                if let diary = fetchedResultsController.objectAtIndexPath(indexPath) as? Diary {
+                if let diary = fetchedResultsController.object(at: indexPath) as? Diary {
                     
                     if let title = diary.title {
                         cell.labelText = title
                     }else{
-                        cell.labelText = "\(numberToChineseWithUnit(NSCalendar.currentCalendar().component(NSCalendarUnit.Day, fromDate: diary.created_at))) 日"
+                        cell.labelText = "\(numberToChineseWithUnit(number: NSCalendar.current.component(Calendar.Component.day, from: diary.created_at as Date))) 日"
                     }
                     
                     cell.selectCell = { [weak self] in
                         if let strongSelf = self {
-                            let dvc = strongSelf.storyboard?.instantiateViewControllerWithIdentifier("DiaryViewController") as! DiaryViewController
+                            let dvc = strongSelf.storyboard?.instantiateViewController(withIdentifier: "DiaryViewController") as! DiaryViewController
                             dvc.diary = diary
                             strongSelf.navigationController!.pushViewController(dvc, animated: true)
                         }
@@ -212,6 +138,83 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
             
             return UICollectionViewCell()
             
+        }
+        
+    }
+}
+
+extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
+    
+    
+    func moveToThisMonth() {
+        
+        let currentMonth = NSCalendar.current.component(Calendar.Component.month, from: NSDate() as Date)
+        
+        if (diarys.count > 0){
+            let diary = diarys.last as! Diary
+            
+            let dvc = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
+            
+            if (currentMonth >  diary.month.intValue) {
+                
+                //Move To Year Beacuse Lack of currentMonth Diary
+                
+                dvc.interfaceType = .Year
+                dvc.year = diary.year.intValue
+                
+            }else{
+                
+                dvc.interfaceType = .Month
+                dvc.year = diary.year.intValue
+                dvc.month = diary.month.intValue
+            }
+            
+            self.navigationController!.pushViewController(dvc, animated: true)
+        }else{
+            
+            let dvc = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
+            
+            let filePath = Bundle.main.path(forResource: "poem", ofType: "json")
+            let JSONData = try? NSData(contentsOfFile: filePath!, options: NSData.ReadingOptions.mappedRead)
+            let jsonObject = (try! JSONSerialization.jsonObject(with: JSONData! as Data, options: JSONSerialization.ReadingOptions.mutableContainers)) as! NSDictionary
+            var poemsCollection = jsonObject.value(forKey: "poems") as! [String: AnyObject]
+            
+            let poems = currentLanguage == "ja" ?  (poemsCollection["ja"] as! NSArray) : ( poemsCollection["cn"] as! NSArray)
+            if let managedContext = DiaryCoreData.sharedInstance.managedContext {
+                for poem in poems{
+                    
+                    let poem =  poem as! NSDictionary
+                    let entity =  NSEntityDescription.entity(forEntityName: "Diary", in: managedContext)
+                    let diaryID = poem.value(forKey: "id") as! String
+                    
+                    if let _ = fetchDiaryByID(id: diaryID) {
+                        return
+                    }
+                    
+                    let newdiary = Diary(entity: entity!,
+                                         insertInto:managedContext)
+                    
+                    newdiary.id = diaryID
+                    newdiary.content = poem.value(forKey: "content") as! String
+                    newdiary.title = poem.value(forKey: "title") as? String
+                    newdiary.location = poem.value(forKey: "location") as? String
+                    
+                    newdiary.updateTimeWithDate(date: NSDate())
+                    
+                    dvc.interfaceType = .Month
+                    dvc.month = newdiary.month.intValue
+                    dvc.year = newdiary.year.intValue
+                    
+                }
+                
+                do {
+                    try managedContext.save()
+                    
+                    self.navigationController!.pushViewController(dvc, animated: true)
+                } catch let error as NSError {
+                    debugPrint("Could not save \(error), \(error.userInfo)")
+                }
+            }
         }
         
     }
@@ -242,7 +245,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
     }
     
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
         self.refetch()
         
@@ -252,18 +255,17 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
         
         self.resetCollectionView()
         
-        NSNotificationCenter.defaultCenter().postNotificationName("DiaryChange", object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "DiaryChange"), object: nil)
     }
     
-    
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
         debugPrint(size)
         
         if portrait {
-            self.collectionView.contentInset = calInsets(true, forSize: size)
+            self.collectionView.contentInset = calInsets(portrait: true, forSize: size)
         }else {
-            self.collectionView.contentInset = calInsets(false, forSize: size)
+            self.collectionView.contentInset = calInsets(portrait: false, forSize: size)
         }
         
         if size.height < 480 {
@@ -282,7 +284,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
         
         view.layoutIfNeeded()
         
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        super.viewWillTransition(to: size, with: coordinator)
     }
     
 }

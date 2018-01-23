@@ -46,7 +46,7 @@ class DiaryPopView: UIView {
         anim?.fromValue = NSValue(cgPoint: CGPoint(x:0.9, y:0.9))
         anim?.toValue = NSValue(cgPoint: CGPoint(x:1.0, y:1.0))
         self.layer.pop_add(anim, forKey: "PopScaleback")
-        super.touchesCancelled(touches!, withEvent: event)
+        super.touchesCancelled(touches!, with: event)
     }
 
 

@@ -78,7 +78,7 @@ class DiaryLayout: UICollectionViewFlowLayout {
         return layoutAttributes
     }
     
-    override func shouldInvalidateLayoutForBoundsChange(_ newBounds: CGRect) -> Bool {
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
     }
 }
