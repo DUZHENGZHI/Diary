@@ -484,7 +484,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" de004490005a062fa95a4d5676a7edbfbe42c582 e6c5af0aba758898c348300b43fb0df9f786dd1222c7b68a38eb37743eb450e2";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" de004490005a062fa95a4d5676a7edbfbe42c582 e6c5af0aba758898c348300b43fb0df9f786dd1222c7b68a38eb37743eb450e2";
 		};
 		53FB514A929FFED5C79F3536 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -753,6 +753,7 @@
 				CODE_SIGN_ENTITLEMENTS = Diary/Diary.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ZF6B5F34CY;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -781,6 +782,7 @@
 				CODE_SIGN_ENTITLEMENTS = Diary/Diary.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ZF6B5F34CY;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
