@@ -26,29 +26,34 @@ class DiaryLocationHelper: NSObject, CLLocationManagerDelegate {
         debugPrint("Location Right")
         if (CLLocationManager.locationServicesEnabled()){
             locationManager.startUpdatingLocation()
+        } else {
+            debugPrint("Location Can not be access")
         }
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-        
-        geocoder.reverseGeocodeLocation(newLocation, completionHandler: { (placemarks, error) in
-            
-            if let error = error {
-                debugPrint("reverse geodcode fail: \(error.localizedDescription)")
-            }
-            
-            if let pm = placemarks {
-                if pm.count > 0 {
-                    
-                    let placemark = pm.first
-                    
-                    self.address = placemark?.locality
-                    
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "DiaryLocationUpdated"), object: self.address)
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+
+        if let newLocation = locations.first {
+            geocoder.reverseGeocodeLocation(newLocation, completionHandler: { (placemarks, error) in
+                
+                if let error = error {
+                    debugPrint("reverse geodcode fail: \(error.localizedDescription)")
                 }
-            }
-            
-        })
+                
+                if let pm = placemarks {
+                    if pm.count > 0 {
+                        
+                        let placemark = pm.first
+                        
+                        self.address = placemark?.locality
+                        
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "DiaryLocationUpdated"), object: self.address)
+                    }
+                }
+                
+            })
+        }
+
     }
 }
 
