@@ -17,9 +17,9 @@ let DiaryCollectionViewCellIdentifier = "DiaryCollectionViewCell"
 class MainViewController: DiaryBaseViewController {
     
     enum InterfaceType: Int {
-        case Year
-        case Month
-        case Day
+        case Year = 0
+        case Month = 1
+        case Day = 2
     }
 
     @IBOutlet weak var titleLabel: DiaryLabel!
@@ -92,6 +92,14 @@ class MainViewController: DiaryBaseViewController {
     
     func resetCollectionView() {
         
+        configFrame()
+        
+        self.collectionView.reloadData()
+        
+        view.layoutIfNeeded()
+    }
+    
+    func configFrame() {
         if portrait {
             self.collectionView.contentInset = calInsets(portrait: true, forSize: CGSize(width: view.frame.size.width, height: view.frame.size.height))
         } else {
@@ -105,20 +113,23 @@ class MainViewController: DiaryBaseViewController {
         // Reset CollectionView Offset
         self.collectionView.contentOffset = CGPoint(x: -collectionView.contentInset.left, y: 0)
         
-        self.collectionView.reloadData()
-        
-        view.layoutIfNeeded()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         // Refetch when navigation
-        refetch()
-        
-        self.collectionView.reloadData()
-        
-        self.collectionView.collectionViewLayout.invalidateLayout()
-        
-        self.resetCollectionView()
+        if let interfaceType = interfaceType {
+
+            if interfaceType == .Month || interfaceType == .Year {
+                self.refetch()
+                
+                self.collectionView.reloadData()
+                
+                self.collectionView.collectionViewLayout.invalidateLayout()
+                
+                configFrame()
+            }
+        }
+
     }
     
     @objc func reloadCollectionView() {

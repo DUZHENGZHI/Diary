@@ -246,6 +246,10 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
+        if let interfaceType = interfaceType {
+            debugPrint("\(interfaceType.rawValue) recieve changes")
+        }
+        
         self.refetch()
         
         self.collectionView.reloadData()
