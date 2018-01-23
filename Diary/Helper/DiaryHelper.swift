@@ -13,11 +13,11 @@ import CoreLocation
 let firstFont = "FZLONGZFW--GB1-0"
 let janpan = "HiraMinProN-W3"
 
-let defaults = NSUserDefaults.standardUserDefaults()
+let defaults = UserDefaults.standard
 
-let currentLanguage = NSLocale.preferredLanguages()[0]
+let currentLanguage = NSLocale.preferredLanguages[0]
 
-typealias CancelableTask = (cancel: Bool) -> Void
+typealias CancelableTask = (_ cancel: Bool) -> Void
 
 var defaultFont: String {
     get {
@@ -25,12 +25,12 @@ var defaultFont: String {
     }
 
     set (newValue) {
-        defaults.setObject(newValue, forKey: "defaultFont")
+        defaults.set(newValue, forKey: "defaultFont")
     }
 }
 
 func screenRect() -> CGRect {
-    return UIScreen.mainScreen().bounds
+    return UIScreen.main.bounds
 }
 
 var DiaryFont: UIFont {
@@ -81,39 +81,13 @@ var collectionViewLeftInsets: CGFloat {
     }
 }
 
-func delay(time: NSTimeInterval, work: dispatch_block_t) -> CancelableTask? {
-    
-    var finalTask: CancelableTask?
-    
-    let cancelableTask: CancelableTask = { cancel in
-        if cancel {
-            finalTask = nil // key
-            
-        } else {
-            dispatch_async(dispatch_get_main_queue(), work)
-        }
-    }
-    
-    finalTask = cancelableTask
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(time * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
-        if let task = finalTask {
-            task(cancel: false)
-        }
-    }
-    
-    return finalTask
-}
 
-func cancel(cancelableTask: CancelableTask?) {
-    cancelableTask?(cancel: true)
-}
 
 var portrait: Bool {
     get {
-        let interfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
+        let interfaceOrientation = UIApplication.shared.statusBarOrientation
         
-        if interfaceOrientation == .Portrait ||  interfaceOrientation == .PortraitUpsideDown{
+        if interfaceOrientation == .portrait ||  interfaceOrientation == .portraitUpsideDown{
             return true
         }else {
             return false
@@ -125,7 +99,7 @@ var tutShowed: Bool {
 
     get {
         
-        if let tutShowed: Bool = defaults.objectForKey("tutshowed") as? Bool {
+        if let tutShowed: Bool = defaults.object(forKey: "tutshowed") as? Bool {
             if tutShowed {
                 return true
             } else {
@@ -138,7 +112,7 @@ var tutShowed: Bool {
     }
 
     set (newvalue){
-        defaults.setBool(newvalue, forKey: "tutshowed")
+        defaults.set(newvalue, forKey: "tutshowed")
     }
 
 }
@@ -146,15 +120,15 @@ var tutShowed: Bool {
 extension UIView {
     
     func pb_takeSnapshot() -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.mainScreen().scale)
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.main.scale)
         
-        drawViewHierarchyInRect(self.bounds, afterScreenUpdates: true)
+        drawHierarchy(in: self.bounds, afterScreenUpdates: true)
         
         // old style: layer.renderInContext(UIGraphicsGetCurrentContext())
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return image
+        return image!
     }
 }
 
@@ -164,11 +138,11 @@ extension UIImage {
         
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         
-        self.drawInRect(CGRectMake(0.0, 0.0, self.size.width, self.size.height))
-        inputImage.drawInRect(frame)
+        self.draw(in: CGRect(x: 0.0,y: 0.0,width: self.size.width,height: self.size.height))
+        inputImage.draw(in: frame)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return newImage
+        return newImage!
         
     }
 }
@@ -178,15 +152,16 @@ func getTutView() -> UIView {
     
     let view = UIView(frame: screenRect())
     
-    view.backgroundColor = UIColor.whiteColor()
+    view.backgroundColor = UIColor.white
     
     let label = DiaryLabel(fontname: defaultFont, labelText: "双击返回", fontSize: 24.0, lineHeight: 15.0)
     
-    label.frame = CGRectMake(0, 0, label.labelSize!.width, label.labelSize!.height)
+    label.frame = CGRect(x: 0, y: 0, width: label.labelSize!.width, height: label.labelSize!.height)
     
-    let labelContainer = UIView(frame: CGRectInset(label.frame, -10.0, -10.0))
+    let rect = label.frame
+    let labelContainer = UIView(frame: rect.insetBy(dx: -10, dy: -10))
     
-    labelContainer.layer.borderColor = UIColor.blackColor().CGColor
+    labelContainer.layer.borderColor = UIColor.black.cgColor
     
     labelContainer.layer.borderWidth = 1.0
     
@@ -211,24 +186,24 @@ func randomStringWithLength (len : Int) -> NSString {
     for _ in 0 ..< len {
         let length = UInt32 (letters.length)
         let rand = arc4random_uniform(length)
-        randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
+        randomString.appendFormat("%C", letters.character(at: Int(rand)))
     }
     
     return randomString
 }
 
-func diaryButtonWith(text text: String, fontSize: CGFloat, width: CGFloat, normalImageName: String, highlightedImageName: String) -> UIButton {
+func diaryButtonWith(text: String, fontSize: CGFloat, width: CGFloat, normalImageName: String, highlightedImageName: String) -> UIButton {
     
-    let button = UIButton(type: UIButtonType.Custom) //创建自定义 Button
-    button.frame = CGRectMake(0, 0, width, width) //设定 Button 的大小
+    let button = UIButton(type: UIButtonType.custom) //创建自定义 Button
+    button.frame = CGRect(x: 0, y:0, width: width, height: width) //设定 Button 的大小
     
     let font = UIFont(name: "Wyue-GutiFangsong-NC", size: fontSize) as UIFont!
-    let textAttributes: [String : AnyObject] = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
+    let textAttributes: [NSAttributedStringKey : AnyObject] = [NSAttributedStringKey.font: font!, NSAttributedStringKey.foregroundColor: UIColor.white]
     let attributedText = NSAttributedString(string: text, attributes: textAttributes)
-    button.setAttributedTitle(attributedText, forState: UIControlState.Normal) //设置 Button 字体
+    button.setAttributedTitle(attributedText, for: [UIControlState.normal]) //设置 Button 字体
     
-    button.setBackgroundImage(UIImage(named: normalImageName), forState: UIControlState.Normal) //设置默认 Button 样式
-    button.setBackgroundImage(UIImage(named: highlightedImageName), forState: UIControlState.Highlighted) // 设置 Button 被按下时候的样式
+    button.setBackgroundImage(UIImage(named: normalImageName), for: [UIControlState.normal]) //设置默认 Button 样式
+    button.setBackgroundImage(UIImage(named: highlightedImageName), for: [UIControlState.highlighted]) // 设置 Button 被按下时候的样式
     
     return button
     
@@ -236,16 +211,16 @@ func diaryButtonWith(text text: String, fontSize: CGFloat, width: CGFloat, norma
 
 
 extension UIButton {
-    func customButtonWith(text text: String, fontSize: CGFloat, width: CGFloat, normalImageName: String, highlightedImageName: String){
+    func customButtonWith(text: String, fontSize: CGFloat, width: CGFloat, normalImageName: String, highlightedImageName: String){
         
         let font = UIFont(name: defaultFont, size: fontSize) as UIFont!
-        let textAttributes: [String : AnyObject] = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
+        let textAttributes: [NSAttributedStringKey : AnyObject] = [NSAttributedStringKey.font: font!, NSAttributedStringKey.foregroundColor: UIColor.white]
         let attributedText = NSAttributedString(string: text, attributes: textAttributes)
         
-        self.setAttributedTitle(attributedText, forState: UIControlState.Normal)
+        self.setAttributedTitle(attributedText, for: [UIControlState.normal])
         
-        self.setBackgroundImage(UIImage(named: normalImageName), forState: UIControlState.Normal)
-        self.setBackgroundImage(UIImage(named: highlightedImageName), forState: UIControlState.Highlighted)
+        self.setBackgroundImage(UIImage(named: normalImageName), for: [UIControlState.normal])
+        self.setBackgroundImage(UIImage(named: highlightedImageName), for: [UIControlState.highlighted])
     }
 }
 
@@ -256,7 +231,7 @@ func numberToChinese(number:Int) -> String {
     let numbers = Array(String(number).characters)
     var finalString = ""
     for singleNumber in numbers {
-        let string = singleNumberToChinese(singleNumber)
+        let string = singleNumberToChinese(number: singleNumber)
         finalString = "\(finalString)\(string)"
     }
     return finalString
@@ -264,11 +239,11 @@ func numberToChinese(number:Int) -> String {
 
 func numberToChineseWithUnit(number:Int) -> String {
     let numbers = Array(String(number).characters)
-    var units = unitParser(numbers.count)
+    var units = unitParser(unit: numbers.count)
     var finalString = ""
     
-    for (index, singleNumber) in numbers.enumerate() {
-        let string = singleNumberToChinese(singleNumber)
+    for (index, singleNumber) in numbers.enumerated() {
+        let string = singleNumberToChinese(number: singleNumber)
         if (!(string == "零" && (index+1) == numbers.count)){
             finalString = "\(finalString)\(string)\(units[index])"
         }
@@ -279,16 +254,15 @@ func numberToChineseWithUnit(number:Int) -> String {
 
 func unitParser(unit:Int) -> [String] {
     
-    var units = Array(["万","千","百","十",""].reverse())
-    let parsedUnits = units[0..<(unit)].reverse()
-    let slicedUnits: ArraySlice<String> = ArraySlice(parsedUnits)
+    let units = Array(["万","千","百","十",""].reversed())
+    let slicedUnits: ArraySlice<String> = ArraySlice(units)
     let final: [String] = Array(slicedUnits)
     return final
 }
 
 func icloudIdentifier() -> String {
     let teamID = "iCloud."
-    let bundleID = NSBundle.mainBundle().bundleIdentifier!
+    let bundleID = Bundle.main.bundleIdentifier!
     let cloudRoot = "\(teamID)\(bundleID).sync"
     
     return cloudRoot
@@ -323,7 +297,7 @@ func singleNumberToChinese(number:Character) -> String {
 
 func findLastDayDiary() -> Diary? {
     //2
-    let fetchRequest = NSFetchRequest(entityName:"Diary")
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
     
     debugPrint("\(NSDate().beginningOfDay()) \(NSDate().endOfDay())")
     
@@ -331,11 +305,11 @@ func findLastDayDiary() -> Diary? {
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
 
     do {
-        var fetchedResults = try DiaryCoreData.sharedInstance.managedContext?.executeFetchRequest(fetchRequest) as! [Diary]
+        var fetchedResults = try DiaryCoreData.sharedInstance.managedContext?.fetch(fetchRequest) as! [Diary]
         while(fetchedResults.count > 1){
             let lastDiary = fetchedResults.last!
-            DiaryCoreData.sharedInstance.managedContext?.deleteObject(lastDiary)
-            fetchedResults = try DiaryCoreData.sharedInstance.managedContext?.executeFetchRequest(fetchRequest) as! [Diary]
+            DiaryCoreData.sharedInstance.managedContext?.delete(lastDiary)
+            fetchedResults = try DiaryCoreData.sharedInstance.managedContext?.fetch(fetchRequest) as! [Diary]
         }
         do {
             try DiaryCoreData.sharedInstance.managedContext?.save()
@@ -360,44 +334,45 @@ extension UIWebView {
         let tmpFrame = self.frame
         // set new Frame
         var aFrame = self.frame
-        aFrame.size.width = self.sizeThatFits(UIScreen.mainScreen().bounds.size).width
+        aFrame.size.width = self.sizeThatFits(UIScreen.main.bounds.size).width
         self.frame = aFrame
         // do image magic
-        UIGraphicsBeginImageContextWithOptions(self.sizeThatFits(UIScreen.mainScreen().bounds.size), false, UIScreen.mainScreen().scale)
+        UIGraphicsBeginImageContextWithOptions(self.sizeThatFits(UIScreen.main.bounds.size), false, UIScreen.main.scale)
         let resizedContext = UIGraphicsGetCurrentContext()
-        self.layer.renderInContext(resizedContext!)
+        self.layer.render(in: resizedContext!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         // reset Frame of view to origin
         self.frame = tmpFrame
         
-        return image
+        return image!
     }
 }
 
 extension Diary {
     func updateTimeWithDate(date: NSDate){
         self.created_at = date
-        self.year = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: date)
-        self.month = NSCalendar.currentCalendar().component(NSCalendarUnit.Month, fromDate: date)
+        self.year = NSCalendar.current.component(Calendar.Component.year, from: date as Date) as NSNumber
+        self.month = NSCalendar.current.component(Calendar.Component.month, from: date as Date) as NSNumber
     }
 }
 
 extension NSDate {
     func beginningOfDay() -> NSDate{
-        let calender = NSCalendar.currentCalendar()
-        let components = calender.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day], fromDate: self)
+        let calender = NSCalendar.current
+        let componentsUnits: Set = [Calendar.Component.year, Calendar.Component.month, Calendar.Component.day]
+        var components = calender.dateComponents(componentsUnits, from: self as Date)
         components.hour = 00
         components.minute = 00
         components.second = 00
-        return calender.dateFromComponents(components)!
+        return calender.date(from: components)! as NSDate
     }
     
     func endOfDay() -> NSDate {
-        let calender = NSCalendar.currentCalendar()
+        let calender = NSCalendar.current
         let components = NSDateComponents()
         components.day = 1
-        let date = calender.dateByAddingComponents(components, toDate: self.beginningOfDay(), options: [])
+        let date = calender.date(components, toDate: self.beginningOfDay(), options: [])
         date?.dateByAddingTimeInterval(-1)
         return date!
     }

@@ -15,7 +15,6 @@
 		0A2ECFDA1AEC394000398EBE /* DiaryBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2ECFD91AEC394000398EBE /* DiaryBaseViewController.swift */; };
 		0A3572E11A9467E70037C6A0 /* DiaryAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3572E01A9467E70037C6A0 /* DiaryAnimator.swift */; };
 		0A5E38111AA9E9B000935E29 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5E38101AA9E9B000935E29 /* DiaryViewController.swift */; };
-		0A5E38151AA9EB0500935E29 /* DiaryVerticalTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */; };
 		0A76457A1AF4AF620078749E /* DiaryCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7645791AF4AF620078749E /* DiaryCloud.swift */; };
 		0A7B7F071B4BB34B0046C934 /* CKManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7B7F061B4BB34B0046C934 /* CKManager.swift */; };
 		0A916FFA1AA6097700E987A4 /* TpldKhangXiDictTrial.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A916FF91AA6097700E987A4 /* TpldKhangXiDictTrial.otf */; };
@@ -40,7 +39,6 @@
 		6A9B00E41BC2719100C405EF /* DiaryFetchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00E31BC2719100C405EF /* DiaryFetchManager.swift */; };
 		6A9B00E61BC2720000C405EF /* DiaryDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B00E51BC2720000C405EF /* DiaryDataManager.swift */; };
 		6A9B00E81BC274A600C405EF /* DiaryTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 6A9B00E71BC274A600C405EF /* DiaryTemplate.html */; };
-		6AB5C54F1BBCD82B00D46B05 /* WeChatActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB5C54E1BBCD82B00D46B05 /* WeChatActivity.swift */; };
 		B6F73635AC71EF3227297275 /* Pods_Diary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E253C2126F4F8CA08DFFDF9C /* Pods_Diary.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,7 +64,6 @@
 		0A2ECFD91AEC394000398EBE /* DiaryBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryBaseViewController.swift; path = Controllers/Base/DiaryBaseViewController.swift; sourceTree = "<group>"; };
 		0A3572E01A9467E70037C6A0 /* DiaryAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryAnimator.swift; path = Animator/DiaryAnimator.swift; sourceTree = "<group>"; };
 		0A5E38101AA9E9B000935E29 /* DiaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewController.swift; path = Controllers/Day/DiaryViewController.swift; sourceTree = "<group>"; };
-		0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryVerticalTextView.swift; path = Helper/DiaryVerticalTextView.swift; sourceTree = "<group>"; };
 		0A605C291AA893330030B493 /* Diary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Diary.entitlements; sourceTree = "<group>"; };
 		0A7645791AF4AF620078749E /* DiaryCloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryCloud.swift; path = Helper/DiaryCloud.swift; sourceTree = "<group>"; };
 		0A76457B1AF4AFC00078749E /* Diary 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Diary 3.xcdatamodel"; sourceTree = "<group>"; };
@@ -99,7 +96,6 @@
 		6A9B00E31BC2719100C405EF /* DiaryFetchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryFetchManager.swift; path = Extensions/DiaryFetchManager.swift; sourceTree = "<group>"; };
 		6A9B00E51BC2720000C405EF /* DiaryDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryDataManager.swift; path = Extensions/DiaryDataManager.swift; sourceTree = "<group>"; };
 		6A9B00E71BC274A600C405EF /* DiaryTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = DiaryTemplate.html; sourceTree = "<group>"; };
-		6AB5C54E1BBCD82B00D46B05 /* WeChatActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeChatActivity.swift; sourceTree = "<group>"; };
 		79B1F77F62FAC60E96CB68EF /* Pods-Diary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Diary/Pods-Diary.debug.xcconfig"; sourceTree = "<group>"; };
 		A1F33FE3E903D47F6C56F7C0 /* Pods-DiaryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiaryTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DiaryTests/Pods-DiaryTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CBC26DBC7F07DDD5C4B544F1 /* Pods-DiaryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiaryTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiaryTests/Pods-DiaryTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -299,8 +295,6 @@
 		0AE202571A8B0E150012AAED /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				6AB5C54E1BBCD82B00D46B05 /* WeChatActivity.swift */,
-				0A5E38141AA9EB0500935E29 /* DiaryVerticalTextView.swift */,
 				0AE202581A8B0E420012AAED /* DiaryHelper.swift */,
 				0A9170011AA6216D00E987A4 /* DiaryLabel.swift */,
 				0A28B4FC1AAB53C30037240C /* DiaryLocationHelper.swift */,
@@ -393,7 +387,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = kevinzhow;
 				TargetAttributes = {
 					0AE202271A8B0B310012AAED = {
@@ -580,7 +574,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6AB5C54F1BBCD82B00D46B05 /* WeChatActivity.swift in Sources */,
 				0A0B100F1A9180460012604C /* DiaryLayout.swift in Sources */,
 				6A9B00DB1BC1BC6C00C405EF /* DiaryAutoLayoutCollectionViewCell.swift in Sources */,
 				6A31E2D11BE2B1D200920CC5 /* DiaryCoreData.swift in Sources */,
@@ -602,7 +595,6 @@
 				0A2111121AF503DE007647BD /* Diary.swift in Sources */,
 				6A9B00E21BC2703300C405EF /* DiaryTransactionAnimator.swift in Sources */,
 				0A2ECFDA1AEC394000398EBE /* DiaryBaseViewController.swift in Sources */,
-				0A5E38151AA9EB0500935E29 /* DiaryVerticalTextView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -649,17 +641,26 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -670,6 +671,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -687,6 +689,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -694,17 +697,26 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -714,6 +726,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -723,6 +736,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -731,6 +746,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 79B1F77F62FAC60E96CB68EF /* Pods-Diary.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
@@ -758,6 +774,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DE778F126051E54E748D87DC /* Pods-Diary.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;

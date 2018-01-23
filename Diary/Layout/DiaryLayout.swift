@@ -12,21 +12,21 @@ class DiaryLayout: UICollectionViewFlowLayout {
     
     var collectionViewLeftInsetsForLayout = collectionViewLeftInsets
     
-    override func prepareLayout() {
-        super.prepareLayout()
-        let itemSize = CGSizeMake(itemWidth, itemHeight())
+    override func prepare() {
+        super.prepare()
+        let itemSize = CGSize(width: itemWidth, height: itemHeight())
         self.itemSize = itemSize
         self.minimumInteritemSpacing = 0.0
         self.minimumLineSpacing = itemSpacing
-        self.scrollDirection = .Horizontal
+        self.scrollDirection = .horizontal
     }
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
-        let layoutAttributes = super.layoutAttributesForElementsInRect(rect)
+        let layoutAttributes = super.layoutAttributesForElements(in: rect)
         let contentOffset = collectionView!.contentOffset
         
-        for (_, attributes) in layoutAttributes!.enumerate() {
+        for (_, attributes) in layoutAttributes!.enumerated() {
             
             let center = attributes.center
             
@@ -78,7 +78,7 @@ class DiaryLayout: UICollectionViewFlowLayout {
         return layoutAttributes
     }
     
-    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+    override func shouldInvalidateLayoutForBoundsChange(_ newBounds: CGRect) -> Bool {
         return true
     }
 }
