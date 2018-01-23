@@ -3,23 +3,20 @@ PODS:
     - Fabric (~> 1.7.2)
   - Fabric (1.7.2)
   - GVUserDefaults (1.0.2)
-  - MonkeyKing (1.5.0)
   - pop (1.0.10)
 
 DEPENDENCIES:
   - Crashlytics
   - Fabric
   - GVUserDefaults
-  - MonkeyKing
   - pop
 
 SPEC CHECKSUMS:
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   GVUserDefaults: 52d48cf8ba578b40a1a76312b196dfc9134ba36a
-  MonkeyKing: 6e1230a0d3cc41cc5b2a46fb9f4076f38a266704
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
 
-PODFILE CHECKSUM: 3caa3041d4b5777c1aefa5d69afec5ac7206519a
+PODFILE CHECKSUM: 8edef49b66311cc20289ff7409ab1aab6b378ea9
 
 COCOAPODS: 1.4.0

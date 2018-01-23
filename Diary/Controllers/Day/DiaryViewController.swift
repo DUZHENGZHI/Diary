@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MonkeyKing
 
 class DiaryViewController: DiaryBaseViewController,UIGestureRecognizerDelegate, UIWebViewDelegate, UIScrollViewDelegate{
     

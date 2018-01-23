@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 import Fabric
 import Crashlytics
-import MonkeyKing
 
 @UIApplicationMain
 
