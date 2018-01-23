@@ -17,9 +17,9 @@ let DiaryCollectionViewCellIdentifier = "DiaryCollectionViewCell"
 class MainViewController: DiaryBaseViewController {
     
     enum InterfaceType: Int {
-        case Home
         case Year
         case Month
+        case Day
     }
 
     @IBOutlet weak var titleLabel: DiaryLabel!
@@ -59,7 +59,7 @@ class MainViewController: DiaryBaseViewController {
         if let interfaceType = interfaceType {
             print(interfaceType)
         } else {
-            interfaceType = .Home
+            interfaceType = .Year
         }
         
         //Set Up CollectionView Layout
@@ -164,12 +164,12 @@ class MainViewController: DiaryBaseViewController {
         if let interfaceType = interfaceType {
             
             switch interfaceType {
-            case .Home:
+            case .Year:
                 titleLabel.isHidden = true
                 subLabel.isHidden = true
                 composeButton.isHidden = true
                 
-            case .Year:
+            case .Month:
                 subLabel.isHidden = true
             default:
                 break

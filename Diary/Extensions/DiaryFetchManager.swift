@@ -16,7 +16,7 @@ extension MainViewController {
         if let interfaceType = interfaceType {
             
             switch interfaceType {
-            case .Home:
+            case .Year:
                 
                 let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
                 
@@ -26,7 +26,7 @@ extension MainViewController {
                         managedObjectContext: managedContext, sectionNameKeyPath: "year",
                         cacheName: nil)
                 }
-            case .Year:
+            case .Month:
                 let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
                 fetchRequest.predicate = NSPredicate(format: "year = \(year)")
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
@@ -36,7 +36,7 @@ extension MainViewController {
                         cacheName: nil)
                     fetchedResultsController.delegate = self
                 }
-            case .Month:
+            case .Day:
                 let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
                 
                 debugPrint("year = \(year) AND month = \(month)")
@@ -62,11 +62,11 @@ extension MainViewController {
         if let interfaceType = interfaceType {
             
             switch interfaceType {
-            case .Home:
-                homeFetch()
             case .Year:
-                yearFetch()
+                homeFetch()
             case .Month:
+                yearFetch()
+            case .Day:
                 monthFetch()
             }
             

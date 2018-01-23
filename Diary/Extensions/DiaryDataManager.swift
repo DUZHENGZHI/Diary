@@ -15,15 +15,15 @@ extension MainViewController: UICollectionViewDataSource {
         
         if let interfaceType = interfaceType {
             switch interfaceType {
-            case .Home:
-                return yearsCount
             case .Year:
+                return yearsCount
+            case .Month:
                 if fetchedResultsController.sections!.count == 0 {
                     return 1
                 }else{
                     return fetchedResultsController.sections!.count
                 }
-            case .Month:
+            case .Day:
                 return diarys.count
             }
         } else {
@@ -38,7 +38,7 @@ extension MainViewController: UICollectionViewDataSource {
         
         if let interfaceType = interfaceType {
             switch interfaceType {
-            case .Home:
+            case .Year:
                 
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiaryCollectionViewCellIdentifier, for: indexPath as IndexPath) as! DiaryAutoLayoutCollectionViewCell
                 
@@ -61,7 +61,7 @@ extension MainViewController: UICollectionViewDataSource {
                     if let strongSelf = self {
                         let dvc = strongSelf.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
                         
-                        dvc.interfaceType = .Year
+                        dvc.interfaceType = .Month
                         
                         let components = NSCalendar.current.component(Calendar.Component.year, from: Date())
                         
@@ -82,7 +82,7 @@ extension MainViewController: UICollectionViewDataSource {
                 
                 return cell
                 
-            case .Year:
+            case .Month:
                 
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiaryCollectionViewCellIdentifier, for: indexPath) as! DiaryAutoLayoutCollectionViewCell
                 
@@ -96,7 +96,7 @@ extension MainViewController: UICollectionViewDataSource {
                 cell.selectCell = { [weak self] in
                     if let strongSelf = self {
                         let dvc = strongSelf.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
-                        dvc.interfaceType = .Month
+                        dvc.interfaceType = .Day
                         
                         if let sectionInfo = strongSelf.fetchedResultsController.sections?[safe: indexPath.row], let month = Int(sectionInfo.name) {
                             dvc.month = month
@@ -112,7 +112,7 @@ extension MainViewController: UICollectionViewDataSource {
                 
                 return cell
                 
-            case .Month:
+            case .Day:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiaryCollectionViewCellIdentifier, for: indexPath) as! DiaryAutoLayoutCollectionViewCell
                 
                 if let diary = fetchedResultsController.object(at: indexPath) as? Diary {
@@ -159,12 +159,12 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
                 
                 //Move To Year Beacuse Lack of currentMonth Diary
                 
-                dvc.interfaceType = .Year
+                dvc.interfaceType = .Month
                 dvc.year = diary.year.intValue
                 
             }else{
                 
-                dvc.interfaceType = .Month
+                dvc.interfaceType = .Day
                 dvc.year = diary.year.intValue
                 dvc.month = diary.month.intValue
             }
@@ -201,7 +201,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
                     
                     newdiary.updateTimeWithDate(date: NSDate())
                     
-                    dvc.interfaceType = .Month
+                    dvc.interfaceType = .Day
                     dvc.month = newdiary.month.intValue
                     dvc.year = newdiary.year.intValue
                     
@@ -225,7 +225,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout, NSFetchedResul
         
         var numberOfCells:Int = fetchedResultsController.sections!.count > 0 ? fetchedResultsController.sections!.count : 1
         
-        if interfaceType == .Month {
+        if interfaceType == .Day {
             numberOfCells = self.diarys.count
         }
         
