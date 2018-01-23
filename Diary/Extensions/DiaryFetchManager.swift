@@ -11,50 +11,15 @@ import CoreData
 
 extension MainViewController {
     
-    
     func prepareFetch() {
-        if let interfaceType = interfaceType {
-            
-            switch interfaceType {
-            case .Year:
-                
-                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
-                
-                fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
-                if let managedContext = DiaryCoreData.sharedInstance.managedContext {
-                    fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-                        managedObjectContext: managedContext, sectionNameKeyPath: "year",
-                        cacheName: nil)
-                }
-            case .Month:
-                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
-                fetchRequest.predicate = NSPredicate(format: "year = \(year)")
-                fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
-                if let managedContext = DiaryCoreData.sharedInstance.managedContext {
-                    fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-                        managedObjectContext: managedContext, sectionNameKeyPath: "month",
-                        cacheName: nil)
-                    fetchedResultsController.delegate = self
-                }
-            case .Day:
-                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
-                
-                debugPrint("year = \(year) AND month = \(month)")
-                
-                fetchRequest.predicate = NSPredicate(format: "year = \(year) AND month = \(month)")
-                fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
-                if let managedContext = DiaryCoreData.sharedInstance.managedContext {
-                    fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-                        managedObjectContext: managedContext, sectionNameKeyPath: "year",
-                        cacheName: nil)
-                    
-                    fetchedResultsController.delegate = self
-                }
-            }
-            
-        }
         
         refetch()
+    
+        if let interfaceType = interfaceType {
+            if interfaceType == .Year {
+                moveToThisMonth()
+            }
+        }
     }
     
     func refetch() {
@@ -63,20 +28,31 @@ extension MainViewController {
             
             switch interfaceType {
             case .Year:
-                homeFetch()
+                yearsFetch()
             case .Month:
-                yearFetch()
+                yearMonthsFetch()
             case .Day:
-                monthFetch()
+                monthDaysFetch()
             }
-            
         }
-        
     }
     
-    func monthFetch() {
+    func monthDaysFetch() {
         
         do {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
+            
+            debugPrint("year = \(year) AND month = \(month)")
+            
+            fetchRequest.predicate = NSPredicate(format: "year = \(year) AND month = \(month)")
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
+            if let managedContext = DiaryCoreData.sharedInstance.managedContext {
+                fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                                      managedObjectContext: managedContext, sectionNameKeyPath: "year",
+                                                                      cacheName: nil)
+                
+                fetchedResultsController.delegate = self
+            }
             
             try fetchedResultsController.performFetch()
             
@@ -94,8 +70,17 @@ extension MainViewController {
         
     }
     
-    func homeFetch() {
+    func yearsFetch() {
         do {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
+            
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: true)]
+            if let managedContext = DiaryCoreData.sharedInstance.managedContext {
+                fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                                      managedObjectContext: managedContext, sectionNameKeyPath: "year",
+                                                                      cacheName: nil)
+            }
+            
             try fetchedResultsController.performFetch()
             
             let fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]
@@ -115,16 +100,24 @@ extension MainViewController {
                     yearsCount = 1
                 }
             }
-            
-            moveToThisMonth()
+
         } catch let error as NSError {
             print("Fetch Home Error \(error.description)")
         }
     }
     
-    func yearFetch() {
+    func yearMonthsFetch() {
         
         do {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
+            fetchRequest.predicate = NSPredicate(format: "year = \(year)")
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
+            if let managedContext = DiaryCoreData.sharedInstance.managedContext {
+                fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                                      managedObjectContext: managedContext, sectionNameKeyPath: "month",
+                                                                      cacheName: nil)
+                fetchedResultsController.delegate = self
+            }
             try fetchedResultsController.performFetch()
             
             let fetchedResults = fetchedResultsController.fetchedObjects as! [NSManagedObject]

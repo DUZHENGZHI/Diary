@@ -110,6 +110,11 @@ class MainViewController: DiaryBaseViewController {
         view.layoutIfNeeded()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        // Refetch when navigation
+        refetch()
+    }
+    
     @objc func reloadCollectionView() {
         self.collectionView.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
@@ -137,7 +142,7 @@ class MainViewController: DiaryBaseViewController {
         composeButton.customButtonWith(text: "撰",  fontSize: 14.0,  width: 40.0,  normalImageName: "Oval", highlightedImageName: "Oval_pressed")
         composeButton.addTarget(self, action: #selector(newCompose), for: UIControlEvents.touchUpInside)
         
-        var yearTitleStirng = "二零一五"
+        var yearTitleStirng = "二零一八"
         
         if year != 0 {
             yearTitleStirng = numberToChinese(number: year)
