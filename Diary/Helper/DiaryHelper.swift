@@ -245,7 +245,11 @@ func numberToChineseWithUnit(number:Int) -> String {
     for (index, singleNumber) in numbers.enumerated() {
         let string = singleNumberToChinese(number: singleNumber)
         if (!(string == "零" && (index+1) == numbers.count)){
-            finalString = "\(finalString)\(string)\(units[index])"
+            if (index == numbers.count - 1) {
+                finalString = "\(finalString)\(string)"
+            } else {
+                finalString = "\(finalString)\(string)\(units[2*index + 1])"
+            }
         }
     }
 
@@ -253,7 +257,6 @@ func numberToChineseWithUnit(number:Int) -> String {
 }
 
 func unitParser(unit:Int) -> [String] {
-    
     let units = Array(["万","千","百","十",""].reversed())
     let slicedUnits: ArraySlice<String> = ArraySlice(units)
     let final: [String] = Array(slicedUnits)

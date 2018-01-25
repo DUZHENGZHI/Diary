@@ -187,7 +187,7 @@ class DiaryComposeViewController: DiaryBaseViewController{
         UIView.animate(withDuration: 0.5, delay: 0, options: [UIViewAnimationOptions.curveEaseInOut], animations:
             { [weak self] in
 
-                self?.locationTextViewToBottom.constant = newKeyboardHeight
+                self?.locationTextViewToBottom.constant = newKeyboardHeight + 20
                 
                 self?.view.layoutIfNeeded()
 

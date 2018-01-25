@@ -38,7 +38,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" text="二十日" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nEm-xM-ewi">
-                                <rect key="frame" x="15" y="15" width="345" height="30"/>
+                                <rect key="frame" x="15" y="35" width="345" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="ZgC-9B-spm"/>
                                 </constraints>
@@ -46,7 +46,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Kka-Jh-Nc8">
-                                <rect key="frame" x="15" y="50" width="345" height="573"/>
+                                <rect key="frame" x="15" y="70" width="345" height="553"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -79,7 +79,7 @@
                             <constraint firstItem="3Av-T6-b2z" firstAttribute="top" secondItem="Kka-Jh-Nc8" secondAttribute="bottom" id="ZF8-a6-UWV"/>
                             <constraint firstItem="nEm-xM-ewi" firstAttribute="leading" secondItem="dHZ-Eg-OpB" secondAttribute="leading" constant="15" id="d8m-RT-IBC"/>
                             <constraint firstItem="3Av-T6-b2z" firstAttribute="leading" secondItem="Kka-Jh-Nc8" secondAttribute="leading" id="hMF-FK-DPI"/>
-                            <constraint firstItem="nEm-xM-ewi" firstAttribute="top" secondItem="siZ-kO-A4Y" secondAttribute="bottom" constant="-5" id="mxp-iB-833"/>
+                            <constraint firstItem="nEm-xM-ewi" firstAttribute="top" secondItem="siZ-kO-A4Y" secondAttribute="bottom" constant="15" id="mxp-iB-833"/>
                             <constraint firstItem="zqn-MQ-SbG" firstAttribute="centerY" secondItem="3Av-T6-b2z" secondAttribute="centerY" id="oKx-nN-ALz"/>
                             <constraint firstItem="Kka-Jh-Nc8" firstAttribute="trailing" secondItem="nEm-xM-ewi" secondAttribute="trailing" id="qMC-Um-wZl"/>
                             <constraint firstItem="Kka-Jh-Nc8" firstAttribute="centerX" secondItem="nEm-xM-ewi" secondAttribute="centerX" id="xcA-tG-b73"/>
@@ -183,10 +183,10 @@
                             <mask key="constraints">
                                 <exclude reference="12d-9z-fF7"/>
                                 <exclude reference="muK-AK-daW"/>
-                                <exclude reference="mFA-fd-g0h"/>
                                 <exclude reference="Xgv-cu-Y0c"/>
                                 <exclude reference="tQ6-Qr-WY8"/>
                                 <exclude reference="yeI-Sr-al3"/>
+                                <exclude reference="mFA-fd-g0h"/>
                             </mask>
                         </variation>
                     </view>
