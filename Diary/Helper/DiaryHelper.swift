@@ -224,9 +224,6 @@ extension UIButton {
     }
 }
 
-
-
-
 func numberToChinese(number:Int) -> String {
     let numbers = Array(String(number))
     var finalString = ""

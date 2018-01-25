@@ -84,7 +84,6 @@
 		0AE202461A8B0B310012AAED /* DiaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTests.swift; sourceTree = "<group>"; };
 		0AE202581A8B0E420012AAED /* DiaryHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryHelper.swift; path = Helper/DiaryHelper.swift; sourceTree = "<group>"; };
 		0AEDA8531AC2D50E00F2DC56 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		0AF0E4271A903D6C0027592E /* VerticalTextPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = VerticalTextPlayground.playground; path = Playgrounds/VerticalTextPlayground.playground; sourceTree = "<group>"; };
 		3D54E1730FFF5420D5F3B842 /* Pods_DiaryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DiaryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A31E2D01BE2B1D200920CC5 /* DiaryCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryCoreData.swift; path = Helper/DiaryCoreData.swift; sourceTree = "<group>"; };
 		6A90C36B1CC35B23001F8059 /* FZLongZhaoFW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FZLongZhaoFW.ttf; sourceTree = "<group>"; };
@@ -229,7 +228,6 @@
 				0A9CD0441A9643990082D677 /* Models */,
 				0A3572DF1A9467CB0037C6A0 /* Animator */,
 				0A0B10101A91804F0012604C /* Layout */,
-				0AF0E4261A9032500027592E /* Playgrounds */,
 				0A7B7F081B4BB3510046C934 /* CKManager */,
 				0AE202571A8B0E150012AAED /* Helper */,
 				0AE202541A8B0D9E0012AAED /* Cell */,
@@ -303,14 +301,6 @@
 				6A31E2D01BE2B1D200920CC5 /* DiaryCoreData.swift */,
 			);
 			name = Helper;
-			sourceTree = "<group>";
-		};
-		0AF0E4261A9032500027592E /* Playgrounds */ = {
-			isa = PBXGroup;
-			children = (
-				0AF0E4271A903D6C0027592E /* VerticalTextPlayground.playground */,
-			);
-			name = Playgrounds;
 			sourceTree = "<group>";
 		};
 		4E18DA4E2140B7CB1F28D3C2 /* Pods */ = {
