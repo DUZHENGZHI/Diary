@@ -114,6 +114,7 @@ class DiaryCoreDataLegacy: NSObject {
     
     @objc func storesWillChange(notification:NSNotification) {
         debugPrint("Store Will change")
+        
         let context:NSManagedObjectContext! = self.managedObjectContext
         context?.performAndWait({
             if (context.hasChanges) {
@@ -187,7 +188,6 @@ class DiaryCoreDataLegacy: NSObject {
             }
             
         }
-        
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CoreDataDidUpdated"), object: nil)
     }

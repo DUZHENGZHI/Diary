@@ -56,7 +56,7 @@ extension DiaryBaseViewController: UIAlertViewDelegate {
     func fetchLagecyRecords() {
         do {
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
-            
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
             let oldFetchedRecords = try DiaryCoreDataLegacy.sharedInstance.managedContext?.fetch(fetchRequest) as! [Diary]
             
             NSLog("Lagecy Fetched \(oldFetchedRecords.count)")

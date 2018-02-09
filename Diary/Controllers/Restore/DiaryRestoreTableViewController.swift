@@ -10,7 +10,12 @@ import UIKit
 import CoreData
 
 class DiaryRestoreTableViewController: UITableViewController {
-
+    
+    var activityIndicator = UIActivityIndicatorView()
+    var strLabel = UILabel()
+    
+    let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    
     @IBAction func backbuttonClicled(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -20,7 +25,8 @@ class DiaryRestoreTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(coredataUpdated), name: NSNotification.Name(rawValue: "CoreDataDidUpdated"), object: nil)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -28,9 +34,57 @@ class DiaryRestoreTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
+    @objc func coredataUpdated()  {
+        strLabel.removeFromSuperview()
+        activityIndicator.removeFromSuperview()
+        effectView.removeFromSuperview()
+        
+        do {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "created_at", ascending: false)]
+            let oldFetchedRecords = try DiaryCoreDataLegacy.sharedInstance.managedContext?.fetch(fetchRequest) as! [Diary]
+            
+            diarys = oldFetchedRecords
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        } catch {
+            debugPrint("Lagecy Fetched")
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         tableView.reloadData()
+        
+        if diarys.count == 0 {
+            activityIndicator("iCloud 同步中")
+        }
+    }
+    
+    func activityIndicator(_ title: String) {
+        
+        strLabel.removeFromSuperview()
+        activityIndicator.removeFromSuperview()
+        effectView.removeFromSuperview()
+        
+        strLabel = UILabel(frame: CGRect(x: 50, y: 0, width: 160, height: 46))
+        strLabel.text = title
+        strLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
+        strLabel.textColor = UIColor(white: 0.9, alpha: 0.7)
+        
+        effectView.frame = CGRect(x: view.frame.midX - strLabel.frame.width/2, y: view.frame.midY - strLabel.frame.height , width: 160, height: 46)
+        effectView.layer.cornerRadius = 8
+        effectView.layer.masksToBounds = true
+        
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 46, height: 46)
+        activityIndicator.startAnimating()
+        
+        effectView.contentView.addSubview(activityIndicator)
+        effectView.contentView.addSubview(strLabel)
+        view.addSubview(effectView)
     }
 
     override func didReceiveMemoryWarning() {
