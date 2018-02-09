@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate{
         application.applicationSupportsShakeToEdit = true
         
         Fabric.with([Crashlytics.self()])
-    
+
         if let _ = FileManager.default.ubiquityIdentityToken {
             // iCloud is available
             DiaryCloud.sharedInstance.startFetch()

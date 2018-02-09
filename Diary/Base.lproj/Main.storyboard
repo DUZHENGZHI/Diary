@@ -205,6 +205,73 @@
             </objects>
             <point key="canvasLocation" x="198" y="383"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wQB-oI-ein">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7a1-nG-GJt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="vCj-iK-Dcg" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="yqV-FC-Omy">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Mxd-jJ-RBI" kind="relationship" relationship="rootViewController" id="dwJ-1j-aOE"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="1199" y="383"/>
+        </scene>
+        <!--数据还原-->
+        <scene sceneID="nxJ-1J-Asf">
+            <objects>
+                <tableViewController storyboardIdentifier="DiaryRestoreTableViewController" id="Mxd-jJ-RBI" customClass="DiaryRestoreTableViewController" customModule="Diary" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Hw0-lE-wSr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RestoreDiaryCell" textLabel="A61-0c-gBj" detailTextLabel="bjW-Fl-9Ob" style="IBUITableViewCellStyleSubtitle" id="iWW-Yd-LaV">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iWW-Yd-LaV" id="p1c-tO-Gzm">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A61-0c-gBj">
+                                            <rect key="frame" x="16" y="5" width="33.5" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bjW-Fl-9Ob">
+                                            <rect key="frame" x="16" y="25.5" width="33" height="14.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Mxd-jJ-RBI" id="CDZ-7e-NIe"/>
+                            <outlet property="delegate" destination="Mxd-jJ-RBI" id="xHH-CI-vAI"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="数据还原" id="DXs-C5-8SN">
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="ktK-QH-vrz">
+                            <connections>
+                                <action selector="backbuttonClicled:" destination="Mxd-jJ-RBI" id="LX7-hK-KWO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m5c-wc-T5G" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1945" y="383"/>
+        </scene>
         <!--Diary View Controller-->
         <scene sceneID="sve-Kb-sHC">
             <objects>

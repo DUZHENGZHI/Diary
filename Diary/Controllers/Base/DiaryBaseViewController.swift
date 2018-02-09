@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class DiaryBaseViewController: UIViewController {
 
@@ -29,10 +30,16 @@ class DiaryBaseViewController: UIViewController {
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == UIEventSubtype.motionShake {
             debugPrint("Device Shaked")
-            //            showAlert()
+            showAlert()
         }
     }
     
+    func showAlert() {
+        
+        let message = UIAlertView(title: "特别事项", message: "", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "还原数据")
+        message.show()
+        
+    }
     /*
     // MARK: - Navigation
 
@@ -42,5 +49,36 @@ class DiaryBaseViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+}
 
+extension DiaryBaseViewController: UIAlertViewDelegate {
+    
+    func fetchLagecyRecords() {
+        do {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"Diary")
+            
+            let oldFetchedRecords = try DiaryCoreDataLegacy.sharedInstance.managedContext?.fetch(fetchRequest) as! [Diary]
+            
+            NSLog("Lagecy Fetched \(oldFetchedRecords.count)")
+            
+            let restoreViewController = self.storyboard?.instantiateViewController(withIdentifier: "DiaryRestoreTableViewController") as! DiaryRestoreTableViewController
+            restoreViewController.diarys = oldFetchedRecords
+            let nav = UINavigationController(rootViewController: restoreViewController)
+            self.present(nav, animated: true, completion: nil)
+        } catch {
+            debugPrint("Lagecy Fetched")
+        }
+    }
+    
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
+        switch buttonIndex {
+        case 0:
+            debugPrint("Cancle")
+        case 1:
+            debugPrint("Restore")
+            fetchLagecyRecords()
+        default:
+            debugPrint("Do nothing")
+        }
+    }
 }
