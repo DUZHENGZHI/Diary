@@ -96,6 +96,8 @@ extension DiaryRestoreTableViewController: UIAlertViewDelegate {
             
             newdiary.title = diary.title
             newdiary.created_at = diary.created_at
+            newdiary.year = diary.year
+            newdiary.month = diary.month
             
             saveNewRecord(diary: newdiary)
             
