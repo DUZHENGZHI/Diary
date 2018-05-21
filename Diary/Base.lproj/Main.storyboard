@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Bqa-Uf-RSR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Bqa-Uf-RSR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -208,7 +208,6 @@
         <!--Navigation Controller-->
         <scene sceneID="wQB-oI-ein">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7a1-nG-GJt" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="vCj-iK-Dcg" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="yqV-FC-Omy">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -218,6 +217,7 @@
                         <segue destination="Mxd-jJ-RBI" kind="relationship" relationship="rootViewController" id="dwJ-1j-aOE"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7a1-nG-GJt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1199" y="383"/>
         </scene>
@@ -266,7 +266,15 @@
                                 <action selector="backbuttonClicled:" destination="Mxd-jJ-RBI" id="LX7-hK-KWO"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="导出" id="chQ-YV-0Lo">
+                            <connections>
+                                <action selector="exportText:" destination="Mxd-jJ-RBI" id="5On-BK-pGa"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="exportText" destination="chQ-YV-0Lo" id="nj5-qT-zXa"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m5c-wc-T5G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

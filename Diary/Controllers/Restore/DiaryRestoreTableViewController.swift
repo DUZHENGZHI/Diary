@@ -8,6 +8,9 @@
 
 import UIKit
 import CoreData
+import SQLite
+import FileBrowser
+import MessageUI
 
 class DiaryRestoreTableViewController: UITableViewController {
     
@@ -20,6 +23,42 @@ class DiaryRestoreTableViewController: UITableViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func exportText(_ sender: Any) {
+        // Do any additional setup after loading the view.
+        let fileBrowser = FileBrowser(initialPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
+        fileBrowser.didSelectFile = { (file: FBFile) in
+            print(file.displayName)
+            
+            let db = try! Connection(file.filePath.path)
+            
+            let diarys = Table("ZDIARY")
+            let content = Expression<String>("ZCONTENT")
+            let location = Expression<String?>("ZLOCATION")
+            let time = Expression<Double>("ZCREATED_AT")
+            let title = Expression<String>("ZTITLE")
+            
+            var allContents = ""
+            for diary in try! db.prepare(diarys) {
+                let content = diary[content]
+                let time = diary[time]
+                let title = diary[title]
+                let date = NSDate(timeInterval: time, since: Date(timeIntervalSince1970: 978307200))
+                guard let location = diary[location] else {
+                    continue
+                }
+                
+                let timeString = "\(numberToChinese(number: NSCalendar.current.component(Calendar.Component.year, from: date as Date)))年 \(numberToChineseWithUnit(number: NSCalendar.current.component(Calendar.Component.month, from: date as Date)))月 \(numberToChineseWithUnit(number: NSCalendar.current.component(Calendar.Component.day, from: date as Date)))日"
+                
+                allContents += "------------------------\n\(title)\n\(content)\n\(timeString)\n\(location)\n------------------------"
+            }
+            
+            let activityViewController = UIActivityViewController(activityItems: [allContents], applicationActivities: nil)
+            self.present(activityViewController, animated: true, completion: {})
+        }
+        present(fileBrowser, animated: true, completion: nil)
+    }
+    
+    @IBOutlet weak var exportText: UIBarButtonItem!
     var diarys = [Diary]()
     var currentDiary: Diary?
     
@@ -130,6 +169,11 @@ class DiaryRestoreTableViewController: UITableViewController {
 
 }
 
+extension DiaryRestoreTableViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+}
 
 extension DiaryRestoreTableViewController: UIAlertViewDelegate {
     

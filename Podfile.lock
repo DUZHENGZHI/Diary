@@ -2,21 +2,38 @@ PODS:
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - Fabric (1.7.2)
+  - FileBrowser (1.0.0)
   - GVUserDefaults (1.0.2)
   - pop (1.0.10)
+  - SQLite.swift (0.11.5):
+    - SQLite.swift/standard (= 0.11.5)
+  - SQLite.swift/standard (0.11.5)
 
 DEPENDENCIES:
   - Crashlytics
   - Fabric
+  - FileBrowser (~> 1.0)
   - GVUserDefaults
   - pop
+  - SQLite.swift (~> 0.11.5)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Crashlytics
+    - Fabric
+    - FileBrowser
+    - GVUserDefaults
+    - pop
+    - SQLite.swift
 
 SPEC CHECKSUMS:
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
+  FileBrowser: 2ca91ff61c9ea09665eb3b8f9e64a7a77e66a0bf
   GVUserDefaults: 52d48cf8ba578b40a1a76312b196dfc9134ba36a
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
+  SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
 
-PODFILE CHECKSUM: 8edef49b66311cc20289ff7409ab1aab6b378ea9
+PODFILE CHECKSUM: 1f2cc9e123234955e5a347d883099db52cf4ceb9
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0

@@ -54,6 +54,7 @@ class MainViewController: DiaryBaseViewController {
         
         super.viewDidLoad()
         
+        
         self.navigationController?.delegate = DiaryNavTransactionAnimator
         
         if let interfaceType = interfaceType {
@@ -87,7 +88,6 @@ class MainViewController: DiaryBaseViewController {
         resetCollectionView()
         view.layoutIfNeeded()
 
-        // Do any additional setup after loading the view.
     }
     
     func resetCollectionView() {
